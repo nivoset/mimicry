@@ -123,10 +123,8 @@ export async function mimic(_page: Page, _brain: LanguageModel, input: string) {
 
   // now lets process each step
   for (const step of steps) {
-    console.log(`Processing step: ${step}`);
 
     const baseAction = await getBaseAction(_page, _brain, step);
-    console.log(`Base action: ${baseAction.kind}`);
     switch (baseAction.kind) {
       case 'navigation':
         const navigationAction = await getNavigationAction(_page, _brain, step);
@@ -137,7 +135,6 @@ export async function mimic(_page: Page, _brain: LanguageModel, input: string) {
         const clickActionResult = await getClickAction(_page, _brain, step, targetElements);
 
         const clickable = await buildSelectorForTarget(_page, clickActionResult.candidates.find(Boolean) as any);
-        console.log('Clicking on', step, " with candidates: ", clickActionResult.candidates);
         await clickable?.click();
         
         break;

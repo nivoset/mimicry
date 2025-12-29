@@ -11,6 +11,9 @@ import { LanguageModel } from 'ai';
 
 const _brain = ollama('qwen2.5') as LanguageModel
 
+// Using gpt-4o-mini with structured outputs enabled (default)
+// If you encounter schema errors with optional/nullable fields, you can disable structured outputs:
+// const brain = openai('gpt-4o-mini', { structuredOutputs: false });
 const brain = openai('gpt-4o-mini');
 
 test.describe('Minimal Flow Example', () => {
@@ -22,7 +25,7 @@ test.describe('Minimal Flow Example', () => {
     `);
 
     expect(result.success).toBe(true);
-    expect(page.url()).toBe('https://playwright.dev/docs/intro');
+    expect(page.url()).toBe('https://playwright.dev/docs/trace-viewer-intro');
 
     
     await mimic(page, brain, `go back`);

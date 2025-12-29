@@ -141,14 +141,12 @@ ${elementsDescription}
 
 ## Reason and return up to the top 5 most likely elements that the Gherkin step is referring to.
 `;
-// console.log('Prompt: \n', prompt);
 
   const res = await generateText({
     model: brain,
     prompt,
     output: Output.object({ schema: zClickActionResult, name: 'clickActionResult' }),
   });
-  console.log('Response: \n', res.output);
   
 
   return res.output;

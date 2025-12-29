@@ -37,27 +37,27 @@ export const executeNavigationAction = async (
 ): Promise<void> => {
   switch (navigationAction.type) {
     case 'openPage':
-      console.log('Opening page', navigationAction.params.url);
+      // console.log('Opening page', navigationAction.params.url);
       await page.goto(navigationAction.params.url, { waitUntil: 'networkidle' });
       break;
     case 'navigate':
-      console.log('Navigating to', navigationAction.params.url);
+      // console.log('Navigating to', navigationAction.params.url);
       await page.goto(navigationAction.params.url, { waitUntil: 'networkidle' });
       break;
     case 'closePage':
-      console.log('Closing page');
+      // console.log('Closing page');
       await page.close();
       break;
     case 'goBack':
-      console.log('Going back');  
+      // console.log('Going back');  
       await page.goBack();
       break;
     case 'goForward':
-      console.log('Going forward');
+      // console.log('Going forward');
       await page.goForward();
       break;
     case 'refresh':
-      console.log('Refreshing page');
+      // console.log('Refreshing page');
       await page.reload();
       break;
     default:

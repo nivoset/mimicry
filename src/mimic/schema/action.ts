@@ -33,7 +33,6 @@ export const zGeneralActionPlan = z.object({
   kind: zActionKind.describe("Coarse action category chosen first."),
   description: z
     .string()
-    .nullish()
     .describe("the reasoning behind the classification based on the literal intent of the Gherkin step."),
 });
 
@@ -124,8 +123,9 @@ export const zClickActionResult = z.object({
         ariaLabel: z.string().nullable().describe("aria-label attribute value"),
         /**
          * Optional confidence score (0-1) indicating match likelihood
+         * Using nullable instead of optional for compatibility with OpenAI structured outputs
          */
-        confidence: z.number().min(0).optional().describe("Confidence score (0-1) indicating match likelihood"),
+        confidence: z.number().min(0).nullable().describe("Confidence score (0-1) indicating match likelihood"),
       })
     )
     .max(5)

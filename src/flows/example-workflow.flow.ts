@@ -15,7 +15,6 @@ interface ExampleContext extends BaseContext {
 const preprocessNode = NodeFactory.simple<ExampleContext, string>(
   'preprocess',
   function(this: ExampleContext) {
-    console.log('🔄 Preprocessing input:', this.input);
     return this.input.toLowerCase().trim();
   }
 );
@@ -31,7 +30,6 @@ const processNode = NodeFactory.withPrep<ExampleContext, string, string>(
     return this.processed || '';
   },
   function(this: ExampleContext, input: string) {
-    console.log('⚙️  Processing:', input);
     return `Processed: ${input.toUpperCase()}`;
   }
 );
