@@ -1,13 +1,17 @@
 /**
  * Playwright test suite for mimic flow
  */
+import "dotenv/config";
 
 import { test, expect } from '@playwright/test';
 import { mimic } from './mimic.js';
 import { ollama } from 'ollama-ai-provider-v2'
+import { openai } from '@ai-sdk/openai';
 import { LanguageModel } from 'ai';
 
-const brain = ollama('qwen2.5') as LanguageModel
+const _brain = ollama('qwen2.5') as LanguageModel
+
+const brain = openai('gpt-4o-mini');
 
 test.describe('Minimal Flow Example', () => {
   test('should execute flow and validate with Zod', async ({ page }) => {
