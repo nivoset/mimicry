@@ -12,12 +12,18 @@ const brain = ollama('qwen2.5') as LanguageModel
 test.describe('Minimal Flow Example', () => {
   test('should execute flow and validate with Zod', async ({ page }) => {
     const result = await mimic(page, brain, `
-      navigate to https://jpmcworkers.com/
-      click on "join the alliance"
+      navigate to https://playwright.dev/
+      click on "get started"
     `);
 
     expect(result.success).toBe(true);
-    expect(page.url()).toBe('https://jpmcworkers.com/');
+    expect(page.url()).toBe('https://playwright.dev/docs/intro');
+
+    
+    await mimic(page, brain, `navigate to previous page`);
+
+    
+    expect(page.url()).toBe('https://playwright.dev/');
   });
 
   test.skip('should handle empty input validation', async ({ page }) => {

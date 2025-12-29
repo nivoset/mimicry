@@ -10,7 +10,7 @@ import { BaseContext, Node } from './core/types.js';
 import type { LanguageModel } from 'ai';
 import { getBaseAction } from './mimic/actionType.js';
 import { getNavigationAction, executeNavigationAction } from './mimic/navigation.js';
-import { captureTargets } from './mimic/selector.js';
+import { buildSelectorForTarget, captureTargets, TargetInfo } from './mimic/selector.js';
 import { getClickAction } from './mimic/click.js';
 
 /**
@@ -135,12 +135,11 @@ export async function mimic(_page: Page, _brain: LanguageModel, input: string) {
       case 'click':
         const targetElements = await captureTargets(_page, { interactableOnly: true });
         const clickActionResult = await getClickAction(_page, _brain, step, targetElements);
-        console.log(`Click action result:`, {
-          clickType: clickActionResult.clickType,
-          candidateCount: clickActionResult.candidates.length,
-          reasoning: clickActionResult.reasoning,
-          topCandidate: clickActionResult.candidates?.at(0) || null,
-        });
+
+        const clickable = await buildSelectorForTarget(_page, clickActionResult.candidates.find(Boolean) as any);
+        
+        await clickable?.click();
+        
         break;
       case 'form update':
         const formElements = await captureTargets(_page);

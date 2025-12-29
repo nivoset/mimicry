@@ -585,4 +585,317 @@ export async function captureTargets(
   }, interactableOnly);
 }
 
+/**
+ * Escape special characters in CSS selector attribute values
+ * 
+ * @param value - The attribute value to escape
+ * @returns Escaped value safe for use in CSS selectors
+ */
+function escapeSelectorValue(value: string): string {
+  // Escape quotes and backslashes for CSS attribute selectors
+  return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+/**
+ * Build the best Playwright selector for a given target element
+ * 
+ * Selectors are prioritized by stability:
+ * 1. ID selector (most stable)
+ * 2. Role + aria-label or label
+ * 3. Data attributes (data-testid, data-id, etc.)
+ * 4. Name attribute (for form elements)
+ * 5. Role + text content
+ * 6. Tag + nth-of-type (least stable, fallback)
+ * 
+ * @param target - TargetInfo object containing element metadata
+ * @returns Playwright selector string optimized for stability and reliability
+ */
+/**
+ * Score how well an element matches the target information
+ * Higher score = better match
+ * 
+ * @param elementIndex - Index of the element in the locator's matches
+ * @param locator - Playwright Locator that matches multiple elements
+ * @param target - TargetInfo to match against
+ * @returns Score indicating match quality (0-100)
+ */
+async function scoreElementMatch(
+  elementIndex: number,
+  locator: any,
+  target: TargetInfo
+): Promise<number> {
+  // Get element properties by evaluating on the specific element
+  // Note: Inside evaluate(), we're in the browser context where DOM APIs are available
+  const elementInfo = await locator.nth(elementIndex).evaluate((el: any) => {
+    const getVisibleText = (element: any): string => {
+      // @ts-ignore - window is available in browser context
+      const style = window.getComputedStyle(element);
+      if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
+        return '';
+      }
+      return (element.textContent || '').trim().replace(/\s+/g, ' ');
+    };
+
+    const getLabel = (element: any): string | null => {
+      const ariaLabel = element.getAttribute('aria-label');
+      if (ariaLabel) return ariaLabel.trim();
+      
+      const labelledBy = element.getAttribute('aria-labelledby');
+      if (labelledBy) {
+        // @ts-ignore - document is available in browser context
+        const labelEl = document.getElementById(labelledBy);
+        if (labelEl) return (labelEl.textContent || '').trim();
+      }
+      
+      if (element.id) {
+        // @ts-ignore - document is available in browser context
+        const label = document.querySelector(`label[for="${element.id}"]`);
+        if (label) return (label.textContent || '').trim();
+      }
+      
+      const parentLabel = element.closest('label');
+      if (parentLabel) return (parentLabel.textContent || '').trim();
+      
+      return null;
+    };
+
+    const dataset: Record<string, string> = {};
+    for (const attr of el.attributes) {
+      if (attr.name.startsWith('data-')) {
+        const key = attr.name.replace(/^data-/, '').replace(/-([a-z])/g, (_: string, letter: string) => letter.toUpperCase());
+        dataset[key] = attr.value;
+      }
+    }
+
+    return {
+      tag: el.tagName.toLowerCase(),
+      text: getVisibleText(el),
+      id: el.id || null,
+      role: el.getAttribute('role') || null,
+      label: getLabel(el),
+      ariaLabel: el.getAttribute('aria-label') || null,
+      typeAttr: el.type || null,
+      nameAttr: el.getAttribute('name') || null,
+      dataset,
+    };
+  });
+
+  if (!elementInfo) return 0;
+
+  let score = 0;
+
+  // Tag match (10 points)
+  if (elementInfo.tag === target.tag) {
+    score += 10;
+  }
+
+  // ID match (30 points - very specific)
+  if (target.id && elementInfo.id === target.id) {
+    score += 30;
+  }
+
+  // Role match (15 points)
+  if (target.role && elementInfo.role === target.role) {
+    score += 15;
+  }
+
+  // Text match (20 points)
+  if (target.text && elementInfo.text) {
+    const targetText = target.text.trim().toLowerCase();
+    const elementText = elementInfo.text.trim().toLowerCase();
+    if (targetText === elementText) {
+      score += 20; // Exact match
+    } else if (elementText.includes(targetText) || targetText.includes(elementText)) {
+      score += 10; // Partial match
+    }
+  }
+
+  // Aria-label match (15 points)
+  if (target.ariaLabel && elementInfo.ariaLabel) {
+    if (target.ariaLabel.trim().toLowerCase() === elementInfo.ariaLabel.trim().toLowerCase()) {
+      score += 15;
+    }
+  }
+
+  // Label match (15 points)
+  if (target.label && elementInfo.label) {
+    if (target.label.trim().toLowerCase() === elementInfo.label.trim().toLowerCase()) {
+      score += 15;
+    }
+  }
+
+  // Type attribute match (10 points)
+  if (target.typeAttr && elementInfo.typeAttr === target.typeAttr) {
+    score += 10;
+  }
+
+  // Name attribute match (15 points)
+  if (target.nameAttr && elementInfo.nameAttr === target.nameAttr) {
+    score += 15;
+  }
+
+  // Dataset match (10 points for testid, 5 for others)
+  if (target.dataset && elementInfo.dataset) {
+    if (target.dataset.testid && elementInfo.dataset.testid === target.dataset.testid) {
+      score += 10;
+    }
+    // Check other dataset keys
+    for (const key in target.dataset) {
+      if (target.dataset[key] && elementInfo.dataset[key] === target.dataset[key]) {
+        score += 5;
+      }
+    }
+  }
+
+  return score;
+}
+
+/**
+ * Build the best Playwright locator for a given target element
+ * 
+ * Follows Playwright's recommended selector priority:
+ * 1. data-testid (use page.getByTestId()) - #1 recommendation, most stable
+ * 2. Role-based (use page.getByRole()) - #2 recommendation, accessibility-based
+ * 3. Text-based (use page.getByText()) - #3 recommendation, good for visible text
+ * 4. CSS selectors as fallback (ID, data attributes, name, tag selectors)
+ * 
+ * If a locator matches multiple elements, this function will evaluate each
+ * and return the one that best matches the target information.
+ * 
+ * @param page - Playwright Page object
+ * @param target - TargetInfo object containing element metadata
+ * @returns Playwright Locator for the target element, prioritized by Playwright's best practices
+ */
+export async function buildSelectorForTarget(page: Page, target?: TargetInfo) {
+  if (!target) {
+    return null;
+  }
+  /**
+   * Helper function to check if locator matches multiple elements and pick the best one
+   */
+  const resolveBestLocator = async (locator: any): Promise<any> => {
+    const count = await locator.count();
+    
+    // If only one match, return it directly
+    if (count <= 1) {
+      return locator;
+    }
+
+    // If multiple matches, score each one and pick the best
+    const scores: Array<{ index: number; score: number }> = [];
+    
+    for (let i = 0; i < count; i++) {
+      const score = await scoreElementMatch(i, locator, target);
+      scores.push({ index: i, score });
+    }
+
+    // Sort by score (highest first)
+    scores.sort((a, b) => b.score - a.score);
+
+    // Return the best matching element using .nth()
+    // We know scores has at least one element since count > 1
+    const bestMatch = scores[0];
+    if (!bestMatch) {
+      // Fallback to first element if somehow scores is empty
+      return locator.first();
+    }
+    return locator.nth(bestMatch.index);
+  };
+
+  // Priority 1: data-testid (Playwright's #1 recommendation)
+  // Use page.getByTestId() - most stable and recommended
+  if (target.dataset && target.dataset.testid) {
+    const locator = page.getByTestId(target.dataset.testid);
+    return await resolveBestLocator(locator);
+  }
+
+  // Priority 2: Role-based selector (Playwright's #2 recommendation)
+  // Use page.getByRole() - accessibility-based, very stable
+  if (target.role) {
+    let locator: any;
+    // If we have aria-label, use it as the name parameter for getByRole
+    if (target.ariaLabel) {
+      locator = page.getByRole(target.role as any, { name: target.ariaLabel });
+    }
+    // If we have a label, use it as the name parameter
+    else if (target.label) {
+      locator = page.getByRole(target.role as any, { name: target.label });
+    }
+    // If we have text content, use it as the name parameter
+    else if (target.text && target.text.trim().length > 0) {
+      locator = page.getByRole(target.role as any, { name: target.text.trim() });
+    }
+    // Just role without name
+    else {
+      locator = page.getByRole(target.role as any);
+    }
+    return await resolveBestLocator(locator);
+  }
+
+  // Priority 3: Text-based selector (Playwright's #3 recommendation)
+  // Use page.getByText() - good for elements with visible text
+  if (target.text && target.text.trim().length > 0) {
+    const trimmedText = target.text.trim();
+    // For short, specific text, use exact match
+    // For longer text, use partial match
+    const useExact = trimmedText.length < 50 && !trimmedText.includes('\n');
+    const locator = page.getByText(trimmedText, { exact: useExact });
+    return await resolveBestLocator(locator);
+  }
+
+  // Priority 4: ID selector (CSS fallback)
+  // Still stable but not Playwright's preferred method
+  if (target.id) {
+    const locator = page.locator(`#${target.id}`);
+    return await resolveBestLocator(locator);
+  }
+
+  // Priority 5: Other data attributes (CSS fallback)
+  if (target.dataset && Object.keys(target.dataset).length > 0) {
+    let locator: any;
+    // Prefer data-id if available
+    if (target.dataset.id) {
+      const escapedValue = escapeSelectorValue(target.dataset.id);
+      locator = page.locator(`[data-id="${escapedValue}"]`);
+    } else {
+      // Use first data attribute as fallback
+      const dataKeys = Object.keys(target.dataset);
+      if (dataKeys.length > 0) {
+        const firstKey = dataKeys[0];
+        if (firstKey) {
+          // Convert camelCase to kebab-case: testId -> test-id
+          const dataKey = firstKey
+            .replace(/([A-Z])/g, '-$1')
+            .toLowerCase();
+          const value = target.dataset[firstKey];
+          if (value) {
+            const escapedValue = escapeSelectorValue(value);
+            locator = page.locator(`[data-${dataKey}="${escapedValue}"]`);
+          }
+        }
+      }
+    }
+    if (locator) {
+      return await resolveBestLocator(locator);
+    }
+  }
+
+  // Priority 6: Name attribute (CSS fallback, useful for form elements)
+  if (target.nameAttr) {
+    const escapedName = escapeSelectorValue(target.nameAttr);
+    const locator = page.locator(`[name="${escapedName}"]`);
+    return await resolveBestLocator(locator);
+  }
+
+  // Priority 7: Tag + type attribute (CSS fallback, for inputs)
+  if (target.tag === 'input' && target.typeAttr) {
+    const locator = page.locator(`input[type="${target.typeAttr}"]`);
+    return await resolveBestLocator(locator);
+  }
+
+  // Priority 8: Tag + nth-of-type (CSS fallback, least stable)
+  // This is the most fragile selector but ensures we can always find something
+  // No need to check for multiple matches here since nth-of-type is already specific
+  return page.locator(`${target.tag}:nth-of-type(${target.nthOfType})`);
+}
 
