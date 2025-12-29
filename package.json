@@ -1,7 +1,7 @@
 {
   "name": "mimic",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Mimic is an ai tester who takes instructions and reasons through them to operate the browser and run tests. best used with standard final verification step/screenshots",
   "main": "index.js",
   "scripts": {
     "test": "playwright test",

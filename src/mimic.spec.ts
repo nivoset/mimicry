@@ -14,13 +14,14 @@ test.describe('Minimal Flow Example', () => {
     const result = await mimic(page, brain, `
       navigate to https://playwright.dev/
       click on "get started"
+      and click on "trace viewer"
     `);
 
     expect(result.success).toBe(true);
     expect(page.url()).toBe('https://playwright.dev/docs/intro');
 
     
-    await mimic(page, brain, `navigate to previous page`);
+    await mimic(page, brain, `go back`);
 
     
     expect(page.url()).toBe('https://playwright.dev/');

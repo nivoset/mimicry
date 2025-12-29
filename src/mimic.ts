@@ -137,12 +137,13 @@ export async function mimic(_page: Page, _brain: LanguageModel, input: string) {
         const clickActionResult = await getClickAction(_page, _brain, step, targetElements);
 
         const clickable = await buildSelectorForTarget(_page, clickActionResult.candidates.find(Boolean) as any);
-        
+        console.log('Clicking on', step, " with candidates: ", clickActionResult.candidates);
         await clickable?.click();
         
         break;
       case 'form update':
-        const formElements = await captureTargets(_page);
+        console.error('Form update not implemented yet');
+        const formElements = await captureTargets(_page, { interactableOnly: true });
         console.log(`Form element count: ${formElements.length}`);
         break;
       default:

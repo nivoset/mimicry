@@ -5,13 +5,7 @@ import { Page } from '@playwright/test';
  * These types represent the browser DOM APIs available in page.evaluate()
  */
 type BrowserElement = any;
-type BrowserNode = any;
-type BrowserHTMLElement = any;
-type BrowserBrowserElement = any;
-type BrowserHTMLButtonElement = any;
 type BrowserHTMLAnchorElement = any;
-type BrowserHTMLImageElement = any;
-type BrowserHTMLSelectElement = any;
 
 /**
  * TargetInfo: Normalized metadata for a candidate element
@@ -388,31 +382,29 @@ export async function captureTargets(
 
       const seen = new Set<Element>();
 
-      for (const selector of interactiveSelectors) {
-        const elements = doc.querySelectorAll(selector);
-        for (const el of elements) {
-          if (seen.has(el) || !isInteractive(el)) {
-            continue;
-          }
-          seen.add(el);
-
-          const text = getVisibleText(el);
-          const target: TargetInfo = {
-            tag: el.tagName.toLowerCase(),
-            text,
-            id: el.id || null,
-            role: inferRole(el),
-            label: getLabel(el),
-            ariaLabel: el.getAttribute('aria-label') || null,
-            typeAttr: (el as BrowserElement).type || null,
-            nameAttr: el.getAttribute('name') || null,
-            href: (el as BrowserHTMLAnchorElement).href || null,
-            dataset: getDataset(el),
-            nthOfType: getNthOfType(el),
-          };
-
-          targets.push(target);
+      const elements = doc.querySelectorAll(interactiveSelectors.join(','));
+      for (const el of elements) {
+        if (seen.has(el) || !isInteractive(el)) {
+          continue;
         }
+        seen.add(el);
+
+        const text = getVisibleText(el);
+        const target: TargetInfo = {
+          tag: el.tagName.toLowerCase(),
+          text,
+          id: el.id || null,
+          role: inferRole(el),
+          label: getLabel(el),
+          ariaLabel: el.getAttribute('aria-label') || null,
+          typeAttr: (el as BrowserElement).type || null,
+          nameAttr: el.getAttribute('name') || null,
+          href: (el as BrowserHTMLAnchorElement).href || null,
+          dataset: getDataset(el),
+          nthOfType: getNthOfType(el),
+        };
+
+        targets.push(target);
       }
     }
 
@@ -569,6 +561,7 @@ export async function captureTargets(
     
     // Collect content elements only if interactableOnly is false
     if (!interactableOnlyFlag) {
+      // console.log('Collecting content elements ------------------------------');
       collectContent();
     }
 

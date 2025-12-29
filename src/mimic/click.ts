@@ -14,14 +14,14 @@ import type { TargetInfo } from './selector.js'
  * all available target elements on the page. It returns the top 5 most
  * likely candidates along with the appropriate click type.
  * 
- * @param _page - Playwright Page object (currently unused but kept for consistency)
+ * @param page - Playwright Page object (currently unused but kept for consistency)
  * @param brain - LanguageModel instance for AI analysis
  * @param gherkinStep - The Gherkin step to match (e.g., "I click on the Submit button")
  * @param targetElements - Array of captured target elements from the page
  * @returns Promise resolving to ClickActionResult with top candidates and click type
  */
 export const getClickAction = async (
-  _page: Page,
+  page: Page,
   brain: LanguageModel,
   gherkinStep: string,
   targetElements: TargetInfo[]
@@ -43,42 +43,94 @@ export const getClickAction = async (
     nthOfType: element.nthOfType,
   }));
 
-  // Create prompt that explains the task and includes all element information
-  const elementsDescription = elementsWithIndices
-    .map(
-      (el) => `
-Index: ${el.index}
-Tag: ${el.tag}
-Text: "${el.text}"
-ID: ${el.id || 'null'}
-Role: ${el.role || 'null'}
-Label: ${el.label || 'null'}
-Aria Label: ${el.ariaLabel || 'null'}
-Type: ${el.typeAttr || 'null'}
-Name: ${el.nameAttr || 'null'}
-Href: ${el.href || 'null'}
-Data Attributes: ${Object.keys(el.dataset).length > 0 ? JSON.stringify(el.dataset) : 'none'}
-Nth of Type: ${el.nthOfType}`
-    )
-    .join('\n---\n');
+  // Group elements by tag type
+  const elementsByTag = new Map<string, typeof elementsWithIndices>();
+  for (const el of elementsWithIndices) {
+    const tagKey = el.tag === 'a' ? 'links' : el.tag === 'button' ? 'buttons' : el.tag === 'input' ? 'inputs' : el.tag;
+    if (!elementsByTag.has(tagKey)) {
+      elementsByTag.set(tagKey, []);
+    }
+    elementsByTag.get(tagKey)!.push(el);
+  }
 
-  const prompt = `You are an expert in matching Gherkin test steps to web page elements for automated testing.
+  // Format element fields in selector priority order, skipping null/empty values
+  const formatElement = (roleSection: string )  => (el: typeof elementsWithIndices[0]): string => {
+    const parts: string[] = [];
+    
+    // Priority order: testId → text → role → ariaLabel → label → name → type → href → dataAttributes → tag → id → nthOfType
+    if (el.dataset.testid) {
+      parts.push(`  testId: "${el.dataset.testid}"`);
+    }
+    if (el.text && el.text.trim()) {
+      parts.push(`  text: "${el.text.trim()}"`);
+    }
+    if (el.role && roleSection !== el.role) {
+      parts.push(`  role: ${el.role}`);
+    }
+    if (el.ariaLabel) {
+      parts.push(`  ariaLabel: "${el.ariaLabel}"`);
+    }
+    if (el.label) {
+      parts.push(`  label: "${el.label}"`);
+    }
+    if (el.nameAttr) {
+      parts.push(`  name: "${el.nameAttr}"`);
+    }
+    if (el.typeAttr) {
+      parts.push(`  type: ${el.typeAttr}`);
+    }
+    if (el.href) {
+      parts.push(`  href: "${el.href}"`);
+    }
+    if (Object.keys(el.dataset).length > 0) {
+      const dataKeys = Object.keys(el.dataset).filter(k => k !== 'testid');
+      if (dataKeys.length > 0) {
+        parts.push(`  dataAttributes: ${JSON.stringify(dataKeys)}`);
+      }
+    }
+    parts.push(`  tag: ${el.tag}`);
+    // if (el.id) {
+    //   parts.push(`  id: "${el.id}"`);
+    // }
+    parts.push(`  index: ${el.index}`);
+    if (el.nthOfType > 1) {
+      parts.push(`  nthOfType: ${el.nthOfType}`);
+    }
+    
+    return `  - ${parts.join('\n    ')}`;
+  };
 
-Your task is to analyze a Gherkin step and match it against all available target elements on the page. You must:
+  // Create formatted description grouped by tag
+  const elementsDescription = Array.from(elementsByTag.entries())
+    .map(([tagKey, elements]) => {
+      const formattedElements = elements.map(formatElement(tagKey)).join('\n');
+      return `${tagKey}:\n${formattedElements}`;
+    })
+    .join('\n\n');
 
-1. Understand the intent of the Gherkin step
-2. Compare it against all provided target elements
-3. Rank and select the top 5 most likely candidate elements
-4. Determine the appropriate click type based on the Gherkin step
+  const prompt = `You are an expert Playwright test engineer specializing in mapping Gherkin steps to concrete DOM interactions.
 
-**Important Rules:**
-- Each candidate MUST include its original array index (0-based) to reference back to the TargetInfo array
-- Return up to 5 candidates, ranked by likelihood (most likely first)
-- All candidates share the same click type, determined from the Gherkin step
-- Click types: "left" (default), "right", "double", "middle", or "hover"
-- Look for keywords in the Gherkin step like "right click", "double click", "hover over", etc.
-- Consider element text, labels, ARIA attributes, and semantic meaning when matching
-- Provide confidence scores (0-1) for each candidate if possible
+Your task is to analyze:
+1. A single Gherkin step that implies a click action.
+2. A list of candidate DOM elements extracted from the page.
+
+You must return the **top 5 most likely elements** that the Gherkin step is referring to.
+
+---
+
+### IMPORTANT RULES
+
+- Rank elements from **most likely (rank 1)** to **least likely (rank 5)**.
+- Prefer **semantic matches** first:
+  - Visible text
+  - Accessible name (label, aria-label, role)
+  - Button / link intent
+- Use "index" **only as a secondary disambiguation signal**, never as the primary reason.
+- Do NOT invent elements or field values.
+- Do NOT include more than 5 results.
+- If fewer than 5 reasonable matches exist, return fewer.
+- Do NOT assume navigation or side effects — this task is only about **what element is clicked**.
+
 
 **Gherkin Step:**
 ${gherkinStep}
@@ -86,13 +138,18 @@ ${gherkinStep}
 **Available Target Elements (${targetElements.length} total):**
 ${elementsDescription}
 
-Analyze the Gherkin step and return the top 5 most likely candidate elements with their indices, along with the appropriate click type and your reasoning.`;
+
+## Reason and return up to the top 5 most likely elements that the Gherkin step is referring to.
+`;
+// console.log('Prompt: \n', prompt);
 
   const res = await generateText({
     model: brain,
     prompt,
     output: Output.object({ schema: zClickActionResult, name: 'clickActionResult' }),
   });
+  console.log('Response: \n', res.output);
+  
 
   return res.output;
 };

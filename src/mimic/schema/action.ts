@@ -125,7 +125,7 @@ export const zClickActionResult = z.object({
         /**
          * Optional confidence score (0-1) indicating match likelihood
          */
-        confidence: z.number().min(0).max(1).optional().describe("Confidence score (0-1) indicating match likelihood"),
+        confidence: z.number().min(0).optional().describe("Confidence score (0-1) indicating match likelihood"),
       })
     )
     .max(5)
