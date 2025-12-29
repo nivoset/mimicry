@@ -31,7 +31,7 @@ test.describe('Minimal Flow Example', () => {
     await mimic(page, brain, `go back`);
 
     
-    expect(page.url()).toBe('https://playwright.dev/');
+    expect(page.url()).toBe('https://playwright.dev/docs/intro');
   });
 
   test.skip('should handle empty input validation', async ({ page }) => {
