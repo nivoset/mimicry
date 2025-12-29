@@ -74,7 +74,10 @@ export const zFormUpdateAction = z.object({
 export const zNavigationAction = z.object({
   type: zNavigationType,
   params: z.object({
-    url: z.string().describe("URL to navigate to. empty string if no url is needed."),
+    url: z
+      .string()
+      .nullable()
+      .describe("URL to navigate to. Must be a valid URL (starting with http:// or https://) for 'openPage' and 'navigate' types. Empty string for other navigation types (goBack, goForward, refresh, closePage)."),
   }),
 });
 

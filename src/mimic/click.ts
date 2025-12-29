@@ -145,6 +145,7 @@ ${elementsDescription}
   const res = await generateText({
     model: brain,
     prompt,
+    maxRetries: 3,
     output: Output.object({ schema: zClickActionResult, name: 'clickActionResult' }),
   });
   

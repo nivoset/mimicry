@@ -9,7 +9,7 @@ import { NodeFactory } from './core/node.js';
 import { BaseContext, Node } from './core/types.js';
 import type { LanguageModel } from 'ai';
 import { getBaseAction } from './mimic/actionType.js';
-import { getNavigationAction, executeNavigationAction } from './mimic/navigation.js';
+import { getNavigationAction, getNavigationUrl, executeNavigationAction } from './mimic/navigation.js';
 import { buildSelectorForTarget, captureTargets, TargetInfo } from './mimic/selector.js';
 import { getClickAction } from './mimic/click.js';
 
@@ -128,7 +128,13 @@ export async function mimic(_page: Page, _brain: LanguageModel, input: string) {
     switch (baseAction.kind) {
       case 'navigation':
         const navigationAction = await getNavigationAction(_page, _brain, step);
-        await executeNavigationAction(_page, navigationAction);
+        // If navigation type is "navigate", extract the URL separately
+        let url: string | undefined;
+        if (navigationAction.type === 'navigate') {
+          const urlResult = await getNavigationUrl(_page, _brain, step);
+          url = urlResult.url;
+        }
+        await executeNavigationAction(_page, navigationAction, url);
         break;
       case 'click':
         const targetElements = await captureTargets(_page, { interactableOnly: true });
