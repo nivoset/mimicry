@@ -81,6 +81,70 @@ export const zNavigationAction = z.object({
 
 export type NavigationAction = z.infer<typeof zNavigationAction>;
 
+/**
+ * Click action result schema
+ * Contains top candidate elements matched against a Gherkin step
+ */
+export const zClickActionResult = z.object({
+  /**
+   * Array of up to 5 candidate elements, ranked by likelihood
+   * Each candidate includes its index in the original TargetInfo array
+   */
+  candidates: z
+    .array(
+      z.object({
+        /**
+         * Index in the original TargetInfo array (0-based)
+         * Used to reference back to the captured element
+         */
+        index: z.number().int().min(0).describe("Index in the original TargetInfo array (0-based)"),
+        /**
+         * Element tag name (e.g., 'button', 'a', 'input')
+         */
+        tag: z.string().describe("Element tag name"),
+        /**
+         * Visible text content of the element
+         */
+        text: z.string().describe("Visible text content"),
+        /**
+         * Element ID attribute if present
+         */
+        id: z.string().nullable().describe("Element ID attribute if present"),
+        /**
+         * Inferred or explicit ARIA role
+         */
+        role: z.string().nullable().describe("Inferred or explicit ARIA role"),
+        /**
+         * Associated label text (from label element or aria-labelledby)
+         */
+        label: z.string().nullable().describe("Associated label text"),
+        /**
+         * aria-label attribute value
+         */
+        ariaLabel: z.string().nullable().describe("aria-label attribute value"),
+        /**
+         * Optional confidence score (0-1) indicating match likelihood
+         */
+        confidence: z.number().min(0).max(1).optional().describe("Confidence score (0-1) indicating match likelihood"),
+      })
+    )
+    .max(5)
+    .describe("Top 5 candidate elements ranked by likelihood"),
+  /**
+   * Single click type for all candidates
+   * Determined from the Gherkin step (e.g., "right click", "double click")
+   */
+  clickType: z
+    .enum(["left", "right", "double", "middle", "hover"])
+    .describe("Click type determined from the Gherkin step"),
+  /**
+   * Brief explanation of the matching logic and reasoning
+   */
+  reasoning: z.string().describe("Brief explanation of the matching logic and reasoning"),
+});
+
+export type ClickActionResult = z.infer<typeof zClickActionResult>;
+
 // TODO: this maybe needs to be more complex? to make sure it gives the right value and such
 export const zAssertionAction = z.object({
   type: zAssertionType,

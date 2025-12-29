@@ -7,11 +7,11 @@ import { mimic } from './mimic.js';
 import { ollama } from 'ollama-ai-provider-v2'
 import { LanguageModel } from 'ai';
 
-const brain = ollama('qwen2.5')
+const brain = ollama('qwen2.5') as LanguageModel
 
 test.describe('Minimal Flow Example', () => {
   test('should execute flow and validate with Zod', async ({ page }) => {
-    const result = await mimic(page, brain as LanguageModel, `
+    const result = await mimic(page, brain, `
       navigate to https://jpmcworkers.com/
       click on "join the alliance"
     `);
@@ -22,7 +22,7 @@ test.describe('Minimal Flow Example', () => {
 
   test.skip('should handle empty input validation', async ({ page }) => {
     await expect(async () => {
-      await mimic(page, brain as any, '');
+      await mimic(page, brain, '');
     }).rejects.toThrow();
   });
 

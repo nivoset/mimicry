@@ -10,6 +10,8 @@ import { BaseContext, Node } from './core/types.js';
 import type { LanguageModel } from 'ai';
 import { getBaseAction } from './mimic/actionType.js';
 import { getNavigationAction, executeNavigationAction } from './mimic/navigation.js';
+import { captureTargets } from './mimic/selector.js';
+import { getClickAction } from './mimic/click.js';
 
 /**
  * Context interface for the minimal flow example
@@ -129,6 +131,20 @@ export async function mimic(_page: Page, _brain: LanguageModel, input: string) {
       case 'navigation':
         const navigationAction = await getNavigationAction(_page, _brain, step);
         await executeNavigationAction(_page, navigationAction);
+        break;
+      case 'click':
+        const targetElements = await captureTargets(_page, { interactableOnly: true });
+        const clickActionResult = await getClickAction(_page, _brain, step, targetElements);
+        console.log(`Click action result:`, {
+          clickType: clickActionResult.clickType,
+          candidateCount: clickActionResult.candidates.length,
+          reasoning: clickActionResult.reasoning,
+          topCandidate: clickActionResult.candidates?.at(0) || null,
+        });
+        break;
+      case 'form update':
+        const formElements = await captureTargets(_page);
+        console.log(`Form element count: ${formElements.length}`);
         break;
       default:
         throw new Error(`Unknown base action type: ${baseAction.kind}`);
