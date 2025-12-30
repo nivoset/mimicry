@@ -5,6 +5,7 @@ import {
   zNavigationAction,
   type NavigationAction,
 } from './schema/action.js'
+import { countTokens } from '../utils/token-counter.js';
 
 export const getNavigationAction = async (
   _page: Page, 
@@ -28,6 +29,7 @@ Input Gherkin step: ${action}
     `,
     output: Output.object({ schema: zNavigationAction, name: 'navigation' }),
   });
+  await countTokens(res);
 
   return res.output;
 };
@@ -40,7 +42,7 @@ export const executeNavigationAction = async (
     case 'openPage':
     case 'navigate':
       // console.log('Navigating to', navigationAction.params.url);
-      await page.goto(navigationAction.params.url, { waitUntil: 'networkidle' });
+      await page.goto(navigationAction.params.url!, { waitUntil: 'networkidle' });
       break;
     case 'closePage':
       // console.log('Closing page');

@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 
 /**
  * Browser context types (used in page.evaluate)
@@ -759,7 +759,7 @@ async function scoreElementMatch(
  * @param target - TargetInfo object containing element metadata
  * @returns Playwright Locator for the target element, prioritized by Playwright's best practices
  */
-export async function buildSelectorForTarget(page: Page, target?: TargetInfo) {
+export async function buildSelectorForTarget(page: Page, target?: TargetInfo): Promise<Locator | null> {
   if (!target) {
     return null;
   }

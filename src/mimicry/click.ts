@@ -1,11 +1,12 @@
 import { type LanguageModel, generateText, Output } from 'ai'
-import { Page } from '@playwright/test'
+import { Locator, Page } from '@playwright/test'
 
 import {
   zClickActionResult,
   type ClickActionResult
 } from './schema/action.js'
 import type { TargetInfo } from './selector.js'
+import { countTokens } from '../utils/token-counter.js';
 
 /**
  * Get click action by matching Gherkin step against captured target elements
@@ -21,7 +22,7 @@ import type { TargetInfo } from './selector.js'
  * @returns Promise resolving to ClickActionResult with top candidates and click type
  */
 export const getClickAction = async (
-  page: Page,
+  _page: Page,
   brain: LanguageModel,
   gherkinStep: string,
   targetElements: TargetInfo[]
@@ -149,6 +150,27 @@ ${elementsDescription}
     output: Output.object({ schema: zClickActionResult, name: 'clickActionResult' }),
   });
   
+  await countTokens(res);
 
   return res.output;
+};
+
+export const executeClickAction = async (
+  element: Locator | null,
+  clickActionResult: ClickActionResult,
+): Promise<void> => {
+  switch (clickActionResult.clickType) {
+    case 'left':
+      return await element?.click();
+    case 'right':
+      return await element?.click({ button: 'right' });
+    case 'double':
+      return await element?.dblclick();
+    case 'middle':
+      return await element?.click({ button: 'middle' });
+    case 'hover':
+      return await element?.hover();
+    default:
+      throw new Error(`Unknown click type: ${clickActionResult.clickType}`);
+  }
 };

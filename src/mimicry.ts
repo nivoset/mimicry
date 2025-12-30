@@ -11,7 +11,7 @@ import { executeClickAction, getClickAction } from './mimicry/click.js';
 import { startTestCase } from './utils/token-counter.js';
 
 
-export type Mimic = (steps: TemplateStringsArray, ...args: unknown[]) => Promise<void>;
+export type Mimicry = (steps: TemplateStringsArray, ...args: unknown[]) => Promise<void>;
 
 
 /**
@@ -21,10 +21,9 @@ export type Mimic = (steps: TemplateStringsArray, ...args: unknown[]) => Promise
  * @param input - Input string to process
  * @returns Flow execution result with validated context
  */
-export async function mimic(input: string, { page, brains, testInfo }: {
+export async function mimicry(input: string, { page, brains, testInfo }: {
   page: Page,
   brains: LanguageModel,
-  eyes: LanguageModel,
   testInfo?: TestInfo,
 }) {
 
@@ -81,14 +80,13 @@ function trimTemplate(strings: TemplateStringsArray, ...values: any[]): string {
     .join('\n');
 }
 
-export const createMimic = (config: {
+export const createMimicry = (config: {
   page: Page,
   brains: LanguageModel,
-  eyes: LanguageModel,
   testInfo?: TestInfo,
 }) => {
   return async (prompt: TemplateStringsArray, ...args: unknown[]) => {
     const lines = trimTemplate(prompt, ...args);
-    return await mimic(lines, config);
+    return await mimicry(lines, config);
   }
 }

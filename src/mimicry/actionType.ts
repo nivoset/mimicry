@@ -5,6 +5,7 @@ import { Page } from '@playwright/test'
 import {
   zGeneralActionPlan, 
 } from './schema/action.js'
+import { countTokens } from '../utils/token-counter.js';
 
 
 
@@ -37,6 +38,7 @@ Input Gherkin step:: ${action}
     `,
     output: Output.object({ schema: zGeneralActionPlan, name: 'generalActionPlan' }),
   });
+  await countTokens(res);
 
   return res.output;
 };
