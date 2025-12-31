@@ -1,10 +1,10 @@
 /**
- * Playwright test suite for mimicry flow
+ * Playwright test suite for mimic flow
  */
 import "dotenv/config";
 import { test as base } from '@playwright/test';
 import { ollama } from 'ollama-ai-provider-v2'
-import { createMimicry, type Mimicry } from '../src/mimicry';
+import { createMimic, type Mimic } from '../src/mimic';
 
 import { openai } from '@ai-sdk/openai';
 import { LanguageModel } from 'ai';
@@ -16,15 +16,14 @@ const brains = openai('gpt-4o-mini');
 export * from '@playwright/test';
 
 export const test = base.extend<{
-  mimicry: Mimicry
+  mimic: Mimic
 }>({
-  mimicry: async ({ page }, use, testInfo) => {
-    const mimicry = createMimicry({
+  mimic: async ({ page }, use, testInfo) => {
+    const mimic = createMimic({
       page,
       brains,
-      eyes: brains,
       testInfo,
     })
-    await use(mimicry)
+    await use(mimic)
   }
 });

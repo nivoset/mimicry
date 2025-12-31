@@ -1,7 +1,7 @@
 {
-  "name": "mimicry",
-  "version": "0.1.0",
-  "description": "Mimicry is an ai tester who takes instructions and reasons through them to operate the browser and run tests. best used with standard final verification step/screenshots",
+  "name": "playwright-mimic",
+  "version": "0.1.1",
+  "description": "Playwright Mimic allows AI to connect LLM to help in maintaining test code based off of logical steps in the test file in English",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -25,16 +25,19 @@
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
+  "peerDependencies": {
+    "@playwright/test": "^1.57.0"
+  },
   "dependencies": {
-    "@ai-sdk/openai": "^3.0.1",
-    "@playwright/test": "^1.57.0",
     "ai": "^6.0.3",
     "dotenv": "^17.2.3",
-    "ollama-ai-provider-v2": "^1.5.5",
     "typescript": "^5.9.3",
     "zod": "^4.2.1"
   },
   "devDependencies": {
-    "@types/node": "^25.0.3"
+    "@ai-sdk/openai": "^3.0.1",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.3",
+    "ollama-ai-provider-v2": "^1.5.5"
   }
 }

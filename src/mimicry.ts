@@ -4,14 +4,14 @@
 
 import { Page, TestInfo, test } from '@playwright/test';
 import type { LanguageModel } from 'ai';
-import { getBaseAction } from './mimicry/actionType.js';
-import { getNavigationAction,  executeNavigationAction } from './mimicry/navigation.js';
-import { buildSelectorForTarget, captureTargets } from './mimicry/selector.js';
-import { executeClickAction, getClickAction } from './mimicry/click.js';
+import { getBaseAction } from './mimic/actionType.js';
+import { getNavigationAction,  executeNavigationAction } from './mimic/navigation.js';
+import { buildSelectorForTarget, captureTargets } from './mimic/selector.js';
+import { executeClickAction, getClickAction } from './mimic/click.js';
 import { startTestCase } from './utils/token-counter.js';
 
 
-export type Mimicry = (steps: TemplateStringsArray, ...args: unknown[]) => Promise<void>;
+export type Mimic = (steps: TemplateStringsArray, ...args: unknown[]) => Promise<void>;
 
 
 /**
@@ -21,7 +21,7 @@ export type Mimicry = (steps: TemplateStringsArray, ...args: unknown[]) => Promi
  * @param input - Input string to process
  * @returns Flow execution result with validated context
  */
-export async function mimicry(input: string, { page, brains, testInfo }: {
+export async function mimic(input: string, { page, brains, testInfo }: {
   page: Page,
   brains: LanguageModel,
   testInfo?: TestInfo,
@@ -80,13 +80,13 @@ function trimTemplate(strings: TemplateStringsArray, ...values: any[]): string {
     .join('\n');
 }
 
-export const createMimicry = (config: {
+export const createMimic = (config: {
   page: Page,
   brains: LanguageModel,
   testInfo?: TestInfo,
 }) => {
   return async (prompt: TemplateStringsArray, ...args: unknown[]) => {
     const lines = trimTemplate(prompt, ...args);
-    return await mimicry(lines, config);
+    return await mimic(lines, config);
   }
 }

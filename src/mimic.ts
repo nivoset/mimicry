@@ -4,10 +4,10 @@
 
 import { Page, TestInfo, test } from '@playwright/test';
 import type { LanguageModel } from 'ai';
-import { getBaseAction } from './mimicry/actionType.js';
-import { getNavigationAction,  executeNavigationAction } from './mimicry/navigation.js';
-import { buildSelectorForTarget, captureTargets } from './mimicry/selector.js';
-import { executeClickAction, getClickAction } from './mimicry/click.js';
+import { getBaseAction } from './mimic/actionType.js';
+import { getNavigationAction,  executeNavigationAction } from './mimic/navigation.js';
+import { buildSelectorForTarget, captureTargets } from './mimic/selector.js';
+import { executeClickAction, getClickAction } from './mimic/click.js';
 import { startTestCase } from './utils/token-counter.js';
 
 
@@ -24,7 +24,6 @@ export type Mimic = (steps: TemplateStringsArray, ...args: unknown[]) => Promise
 export async function mimic(input: string, { page, brains, testInfo }: {
   page: Page,
   brains: LanguageModel,
-  eyes: LanguageModel,
   testInfo?: TestInfo,
 }) {
 
@@ -84,7 +83,6 @@ function trimTemplate(strings: TemplateStringsArray, ...values: any[]): string {
 export const createMimic = (config: {
   page: Page,
   brains: LanguageModel,
-  eyes: LanguageModel,
   testInfo?: TestInfo,
 }) => {
   return async (prompt: TemplateStringsArray, ...args: unknown[]) => {

@@ -1,22 +1,22 @@
 /**
- * Mimicry - AI-powered browser testing framework
+ * Mimic - AI-powered browser testing framework
  * 
  * Main entry point exporting all public APIs
  */
 
-// Main mimicry functionality
-export { mimicry, createMimicry, type Mimicry } from './mimicry.js';
+// Main mimic functionality
+export { mimic, createMimic, type Mimic } from './mimic.js';
 
-// Mimicry action types and utilities
-export { getBaseAction } from './mimicry/actionType.js';
-export { getClickAction, executeClickAction } from './mimicry/click.js';
-export { getNavigationAction, executeNavigationAction } from './mimicry/navigation.js';
-export { getFormAction, executeFormAction, type FormActionResult } from './mimicry/forms.js';
-export { captureTargets, buildSelectorForTarget, type TargetInfo, type CaptureTargetsOptions } from './mimicry/selector.js';
+// Mimic action types and utilities
+export { getBaseAction } from './mimic/actionType.js';
+export { getClickAction, executeClickAction } from './mimic/click.js';
+export { getNavigationAction, executeNavigationAction } from './mimic/navigation.js';
+export { getFormAction, executeFormAction, type FormActionResult } from './mimic/forms.js';
+export { captureTargets, buildSelectorForTarget, type TargetInfo, type CaptureTargetsOptions } from './mimic/selector.js';
 
 // Schema types
 export type {
   NavigationAction,
   ClickActionResult,
   Point,
-} from './mimicry/schema/action.js';
+} from './mimic/schema/action.js';

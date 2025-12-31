@@ -1,24 +1,110 @@
-# Mimicry
+# Mimic
 
-**Mimicry** is an AI-powered browser testing framework that takes natural language instructions and reasons through them to operate the browser and run tests. It's designed to work seamlessly with Playwright, allowing you to write tests in plain English (Gherkin-style) that are automatically executed by AI.
+**Mimic** is an AI-powered browser testing framework that converts Gherkin or plain language tests into executable code, with self-repair capabilities when tests break due to code changes.
+
+> Mimic learns how your app works, remembers what succeeds, repeats it reliably — and only thinks again when something breaks.
 
 ## Features
 
-- 🤖 **AI-Powered**: Uses language models to understand and execute natural language test instructions
+- 🤖 **AI-Powered Conversion**: Uses language models to understand and execute natural language test instructions
 - 🎯 **Smart Element Selection**: Automatically finds and interacts with elements based on semantic understanding
 - 📝 **Gherkin-Style Syntax**: Write tests in natural language, one instruction per line
-- 🔄 **Multiple Action Types**: Supports navigation, clicks, form updates, and more
+- 🔄 **Self-Repair Capability**: Automatically repairs broken tests when application code changes
 - 🎭 **Playwright Integration**: Built on top of Playwright for reliable browser automation
 - 📊 **Token Tracking**: Built-in token usage tracking for AI model calls
+
+## How It Works
+
+Mimic follows a simple, human-readable lifecycle:
+
+**Learn → Remember → Repeat → Troubleshoot & Fix**
+
+AI is used to learn and adapt — not to waste tokens repeating work it has already done.
+
+### 1. Learn — Understand the Intent
+
+You write your test in plain English or Gherkin-style steps:
+
+```typescript
+await mimic`
+  navigate to https://playwright.dev/
+  click on "get started"
+  and click on "trace viewer"
+`;
+```
+
+During **Learn**, Mimic uses an AI model to:
+
+- Interpret your intent
+- Reason about the structure and semantics of the page
+- Identify the most likely elements to interact with
+- Generate executable Playwright steps
+
+This is the most flexible phase — it's where Mimic figures out what you meant, not just what to click.
+
+### 2. Remember — Capture a Verified Recording
+
+Once the test runs successfully, Mimic remembers what worked.
+
+It stores a verified recording of the execution, including:
+
+- The resolved interaction steps
+- Element identification data used during the run
+- Context needed to reliably repeat the behavior
+
+You can review the execution (for example, via Playwright's video output) to confirm it behaves exactly as expected. Once verified, this recording becomes the trusted reference for future runs.
+
+### 3. Repeat — Fast, Deterministic Execution
+
+On subsequent runs, Mimic simply repeats the recorded behavior.
+
+In this phase:
+
+- No AI calls are made
+- Token usage drops to near zero
+- Tests run faster and more deterministically
+- Behavior is repeatable because it's based on a known-good run
+
+As long as the application hasn't changed in a way that breaks the test, Mimic stays in Repeat mode.
+
+### 4. Troubleshoot & Fix — Adapt When Things Change
+
+When a test can no longer repeat successfully — due to UI or structural changes — Mimic detects the failure and switches back into reasoning mode.
+
+During **Troubleshoot & Fix**, Mimic:
+
+- Analyzes what failed and why
+- Re-learns the updated application structure
+- Repairs or regenerates the broken steps
+- Saves a new verified recording
+
+Once repaired and validated, the test returns to Repeat mode — stable, fast, and low-cost again.
+
+### The Full Loop
+
+**Learn → Remember → Repeat → Troubleshoot & Fix → Repeat**
+
+AI is invoked only when something is new or broken.  
+Everything else runs on verified knowledge.
+
+## Architecture
+
+Built on top of Playwright with AI model integration for natural language processing and test repair. Converts plain language or Gherkin syntax into executable Playwright test code, then monitors test execution to detect failures and automatically repair broken tests when application code changes.
+
+### Technology Stack
+
+- **TypeScript**
+- **Node.js**
+- **Playwright**
 
 ## Installation
 
 ```bash
-npm install mimicry
+npm install playwright-mimic
 # or
-pnpm install mimicry
+pnpm install playwright-mimic
 # or
-yarn add mimicry
+yarn add playwright-mimic
 ```
 
 ## Prerequisites
@@ -32,9 +118,9 @@ yarn add mimicry
 ### 1. Install Dependencies
 
 ```bash
-npm install @playwright/test mimicry @ai-sdk/openai ai
+npm install @playwright/test playwright-mimic @ai-sdk/openai ai
 # or for Ollama
-npm install @playwright/test mimicry ollama-ai-provider-v2 ai
+npm install @playwright/test playwright-mimic ollama-ai-provider-v2 ai
 ```
 
 ### 2. Set Up Environment Variables
@@ -54,7 +140,7 @@ Create a test utilities file (e.g., `test-utils.ts`):
 ```typescript
 import "dotenv/config";
 import { test as base } from '@playwright/test';
-import { createMimicry, type Mimicry } from 'mimicry';
+import { createMimic, type Mimic } from 'playwright-mimic';
 import { openai } from '@ai-sdk/openai';
 // or for Ollama: import { ollama } from 'ollama-ai-provider-v2';
 
@@ -64,18 +150,18 @@ const brains = openai('gpt-4o-mini');
 
 export * from '@playwright/test';
 
-// Extend Playwright's test with mimicry fixture
+// Extend Playwright's test with mimic fixture
 export const test = base.extend<{
-  mimicry: Mimicry
+  mimic: Mimic
 }>({
-  mimicry: async ({ page }, use, testInfo) => {
-    const mimicry = createMimicry({
+  mimic: async ({ page }, use, testInfo) => {
+    const mimic = createMimic({
       page,
       brains,
       eyes: brains, // Can use a different model for visual analysis
       testInfo,
     });
-    await use(mimicry);
+    await use(mimic);
   }
 });
 ```
@@ -87,8 +173,8 @@ Create a test file (e.g., `example.spec.ts`):
 ```typescript
 import { test, expect } from './test-utils';
 
-test('navigate and interact with Playwright docs', async ({ page, mimicry }) => {
-  await mimicry`
+test('navigate and interact with Playwright docs', async ({ page, mimic }) => {
+  await mimic`
     navigate to https://playwright.dev/
     click on "get started"
     and click on "trace viewer"
@@ -96,7 +182,7 @@ test('navigate and interact with Playwright docs', async ({ page, mimicry }) => 
 
   expect(page.url()).toBe('https://playwright.dev/docs/trace-viewer-intro');
   
-  await mimicry`go back`;
+  await mimic`go back`;
   
   expect(page.url()).toBe('https://playwright.dev/docs/intro');
 });
@@ -112,10 +198,10 @@ npx playwright test
 
 ### Basic Syntax
 
-Mimicry uses a simple line-by-line syntax where each line represents a test step:
+Mimic uses a simple line-by-line syntax where each line represents a test step:
 
 ```typescript
-await mimicry`
+await mimic`
   navigate to https://example.com
   click on "Sign In"
   type "username" into the email field
@@ -129,7 +215,7 @@ await mimicry`
 #### Navigation
 
 ```typescript
-await mimicry`
+await mimic`
   navigate to https://example.com
   go back
   go forward
@@ -140,14 +226,14 @@ await mimicry`
 
 #### Clicking Elements
 
-Mimicry can find elements by:
+Mimic can find elements by:
 - Visible text: `click on "Sign In"`
 - Button labels: `click on the submit button`
 - Link text: `click on "About Us"`
 - Semantic descriptions: `click on the login button in the header`
 
 ```typescript
-await mimicry`
+await mimic`
   click on "Get Started"
   click on the search icon
   click on the menu button
@@ -157,7 +243,7 @@ await mimicry`
 #### Form Interactions
 
 ```typescript
-await mimicry`
+await mimic`
   type "john@example.com" into the email field
   fill the password field with "secret123"
   select "United States" from the country dropdown
@@ -174,7 +260,7 @@ You can use template literals to inject variables:
 const username = 'testuser';
 const password = 'testpass';
 
-await mimicry`
+await mimic`
   type "${username}" into the username field
   type "${password}" into the password field
   click on "Login"
@@ -183,11 +269,11 @@ await mimicry`
 
 ### Combining with Playwright Assertions
 
-Mimicry works seamlessly with Playwright's built-in assertions:
+Mimic works seamlessly with Playwright's built-in assertions:
 
 ```typescript
-test('complete user registration', async ({ page, mimicry }) => {
-  await mimicry`
+test('complete user registration', async ({ page, mimic }) => {
+  await mimic`
     navigate to https://example.com/register
     type "John Doe" into the name field
     type "john@example.com" into the email field
@@ -203,17 +289,17 @@ test('complete user registration', async ({ page, mimicry }) => {
 
 ### Advanced: Direct API Usage
 
-If you need more control, you can use the `mimicry` function directly:
+If you need more control, you can use the `mimic` function directly:
 
 ```typescript
-import { mimicry } from 'mimicry';
+import { mimic } from 'playwright-mimic';
 import { openai } from '@ai-sdk/openai';
 import { test } from '@playwright/test';
 
 test('custom usage', async ({ page, testInfo }) => {
   const brains = openai('gpt-4o-mini');
   
-  await mimicry(
+  await mimic(
     'navigate to https://example.com\nclick on "Get Started"',
     {
       page,
@@ -227,9 +313,9 @@ test('custom usage', async ({ page, testInfo }) => {
 
 ## API Reference
 
-### `createMimicry(config)`
+### `createMimic(config)`
 
-Creates a mimicry function that can be used as a template literal tag.
+Creates a mimic function that can be used as a template literal tag.
 
 **Parameters:**
 - `config.page` (required): Playwright `Page` object
@@ -239,13 +325,13 @@ Creates a mimicry function that can be used as a template literal tag.
 
 **Returns:** A function that accepts template literals
 
-### `mimicry(input, config)`
+### `mimic(input, config)`
 
 Direct function call version.
 
 **Parameters:**
 - `input` (string): Newline-separated test steps
-- `config`: Same as `createMimicry`
+- `config`: Same as `createMimic`
 
 ### Exported Utilities
 
@@ -262,7 +348,7 @@ import {
   executeFormAction,
   captureTargets,
   buildSelectorForTarget,
-} from 'mimicry';
+} from 'playwright-mimic';
 ```
 
 ## Configuration
@@ -311,13 +397,13 @@ Be specific in your instructions:
 
 ```typescript
 // ✅ Good
-await mimicry`
+await mimic`
   click on the "Sign In" button in the header
   type "admin@example.com" into the email input field
 `;
 
 // ❌ Less clear
-await mimicry`
+await mimic`
   click button
   type email
 `;
@@ -328,7 +414,7 @@ await mimicry`
 Always verify the results:
 
 ```typescript
-await mimicry`
+await mimic`
   navigate to /dashboard
   click on "Create Project"
   type "My Project" into the project name field
@@ -340,11 +426,11 @@ await expect(page.locator('text=My Project')).toBeVisible();
 
 ### 3. Use Test Steps for Debugging
 
-Mimicry automatically creates Playwright test steps, making it easy to debug:
+Mimic automatically creates Playwright test steps, making it easy to debug:
 
 ```typescript
 // Each line becomes a test step in Playwright's trace viewer
-await mimicry`
+await mimic`
   navigate to https://example.com
   click on "Products"
   click on "View Details"
@@ -353,17 +439,17 @@ await mimicry`
 
 ### 4. Handle Dynamic Content
 
-For dynamic content, combine mimicry with Playwright waits:
+For dynamic content, combine mimic with Playwright waits:
 
 ```typescript
-await mimicry`click on "Load More"`;
+await mimic`click on "Load More"`;
 await page.waitForSelector('text=New Content');
-await mimicry`click on "New Content"`;
+await mimic`click on "New Content"`;
 ```
 
 ### 5. Token Usage
 
-Mimicry tracks token usage automatically. Monitor your AI provider's usage to optimize costs:
+Mimic tracks token usage automatically. Monitor your AI provider's usage to optimize costs:
 
 - Use smaller models (like `gpt-4o-mini`) for faster, cheaper tests
 - Use larger models only when needed for complex reasoning
@@ -372,7 +458,7 @@ Mimicry tracks token usage automatically. Monitor your AI provider's usage to op
 
 ### Element Not Found
 
-If mimicry can't find an element, try:
+If mimic can't find an element, try:
 1. Be more specific: `click on "Submit" button` instead of `click on "Submit"`
 2. Use unique identifiers: `click on the login button with id "submit-btn"`
 3. Check if the element is visible: Add a wait before the action
@@ -396,8 +482,8 @@ import "dotenv/config"; // At the top of your test-utils.ts
 ### E-commerce Checkout Flow
 
 ```typescript
-test('complete checkout process', async ({ page, mimicry }) => {
-  await mimicry`
+test('complete checkout process', async ({ page, mimic }) => {
+  await mimic`
     navigate to https://store.example.com
     click on "Add to Cart" for "Product Name"
     click on the shopping cart icon
@@ -421,8 +507,8 @@ test('complete checkout process', async ({ page, mimicry }) => {
 ### Form Validation Testing
 
 ```typescript
-test('validate required fields', async ({ page, mimicry }) => {
-  await mimicry`
+test('validate required fields', async ({ page, mimic }) => {
+  await mimic`
     navigate to https://example.com/contact
     click on "Submit" without filling fields
   `;
