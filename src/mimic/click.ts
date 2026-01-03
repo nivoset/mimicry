@@ -169,7 +169,7 @@ ${elementsDescription}
  * @param selectedCandidate - The selected candidate element with LLM-generated description
  * @param testInfo - Playwright TestInfo for adding annotations
  * @param gherkinStep - The original Gherkin step for annotation type
- * @returns Promise that resolves when the click action is complete
+ * @returns Promise that resolves to an object containing the action result and selector (for snapshot storage)
  */
 export const executeClickAction = async (
   element: Locator | null,
@@ -177,7 +177,7 @@ export const executeClickAction = async (
   selectedCandidate: ClickActionResult['candidates'][0],
   testInfo: TestInfo | undefined,
   gherkinStep: string,
-): Promise<void> => {
+): Promise<{ actionResult: ClickActionResult; selector: string | null }> => {
   // Use the LLM-generated description from the candidate
   // This description was created by the AI when matching the element
   const elementDescription = selectedCandidate.description || 'element';
@@ -212,19 +212,41 @@ export const executeClickAction = async (
   // Add annotation using centralized utility
   addAnnotation(testInfo, gherkinStep, annotationDescription);
 
+  // Get selector string for snapshot storage
+  // Try to get a CSS selector representation if possible
+  let selector: string | null = null;
+  try {
+    // Attempt to get a selector string from the locator
+    // This is best-effort and may not always work
+    const locatorString = element.toString();
+    if (locatorString && locatorString !== '[object Object]') {
+      selector = locatorString;
+    }
+  } catch (error) {
+    // If we can't get selector, that's okay - we'll rebuild from TargetInfo
+  }
+
   // Perform the click action
   switch (clickActionResult.clickType) {
     case 'left':
-      return await element.click();
+      await element.click();
+      break;
     case 'right':
-      return await element.click({ button: 'right' });
+      await element.click({ button: 'right' });
+      break;
     case 'double':
-      return await element.dblclick();
+      await element.dblclick();
+      break;
     case 'middle':
-      return await element.click({ button: 'middle' });
+      await element.click({ button: 'middle' });
+      break;
     case 'hover':
-      return await element.hover();
+      await element.hover();
+      break;
     default:
       throw new Error(`Unknown click type: ${clickActionResult.clickType}`);
   }
+  
+  // Return action result and selector for snapshot storage
+  return { actionResult: clickActionResult, selector };
 };

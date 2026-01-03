@@ -31,6 +31,7 @@ Your task is to process a single Gherkin step and determine whether it represent
 1. Determine the navigation type and extract the URL if applicable
 2. Provide a clear, human-readable description of what navigation is happening
    - For navigate/openPage: "Navigate to [page name or URL]" (e.g., "Navigate to login page", "Navigate to https://example.com")
+   - Do not hallucinate the domain, if none are mentioned, just pass the uri (e.g., "/login")
    - For goBack: "Go back to previous page in browser history"
    - For goForward: "Go forward to next page in browser history"
    - For refresh: "Refresh the current page"
@@ -54,14 +55,14 @@ Your task is to process a single Gherkin step and determine whether it represent
  * @param navigationAction - Navigation action containing type, parameters, and description
  * @param testInfo - Playwright TestInfo for adding annotations (optional)
  * @param gherkinStep - The original Gherkin step for annotation type (optional)
- * @returns Promise that resolves when the navigation action is complete
+ * @returns Promise that resolves to the navigation action (for snapshot storage)
  */
 export const executeNavigationAction = async (
   page: Page, 
   navigationAction: NavigationAction,
   testInfo?: TestInfo,
   gherkinStep?: string
-): Promise<void> => {
+): Promise<NavigationAction> => {
   // Use LLM-generated description or build a default one
   const actionDescription = navigationAction.description || 'navigation action';
 
@@ -96,4 +97,7 @@ export const executeNavigationAction = async (
     default:
       throw new Error(`Unknown navigation action type: ${navigationAction.type}`);
   }
+  
+  // Return the action for snapshot storage
+  return navigationAction;
 };

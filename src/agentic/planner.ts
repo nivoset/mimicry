@@ -12,20 +12,23 @@ import { countTokens } from '../utils/token-counter.js';
 
 /**
  * Schema for planning result validation
+ * 
+ * Note: All fields must be required (no .default()) for AI SDK structured output compatibility.
+ * Empty arrays should be provided by the AI model when there are no values.
  */
 const zPlanStep = z.object({
   order: z.number().int().positive().describe('Step number in execution order'),
   description: z.string().describe('Clear description of what this step should accomplish'),
   expectedActionType: z.enum(['navigation', 'click', 'form', 'assertion', 'wait']).describe('Type of action expected for this step'),
   successCriteria: z.string().describe('How to determine if this step was successful'),
-  dependencies: z.array(z.number().int().positive()).default([]).describe('Step numbers this step depends on (empty if no dependencies)'),
+  dependencies: z.array(z.number().int().positive()).describe('Step numbers this step depends on (provide empty array [] if no dependencies)'),
 });
 
 const zPlanningResult = z.object({
   steps: z.array(zPlanStep).min(1).describe('Ordered list of steps to achieve the goal'),
   complexity: z.enum(['low', 'medium', 'high']).describe('Estimated complexity of the overall plan'),
-  challenges: z.array(z.string()).default([]).describe('Potential challenges or risks identified'),
-  prerequisites: z.array(z.string()).default([]).describe('Prerequisites or requirements before starting'),
+  challenges: z.array(z.string()).describe('Potential challenges or risks identified (provide empty array [] if none)'),
+  prerequisites: z.array(z.string()).describe('Prerequisites or requirements before starting (provide empty array [] if none)'),
 });
 
 /**
@@ -87,9 +90,12 @@ ${stateContext}
 **Output Format:**
 Return a structured plan with:
 - Ordered steps (each with description, expected action type, success criteria, dependencies)
+  - dependencies: array of step numbers this step depends on (use empty array [] if no dependencies)
 - Overall complexity assessment
-- Potential challenges
-- Prerequisites
+- Potential challenges (use empty array [] if none)
+- Prerequisites (use empty array [] if none)
+
+**Important:** Always provide all fields, including empty arrays [] when there are no dependencies, challenges, or prerequisites.
 
 Think step-by-step and create a comprehensive plan.`;
 

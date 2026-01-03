@@ -183,41 +183,66 @@ export const executeFormAction = async (
   const elementDescription = formActionResult.elementDescription || 'form field';
   let annotationDescription = '';
 
+  // Get selector string for snapshot storage
+  // Try to get a CSS selector representation if possible
+  let selector: string | null = null;
+  try {
+    // Attempt to get a selector string from the locator
+    // This is best-effort and may not always work
+    const locatorString = targetElement.toString();
+    if (locatorString && locatorString !== '[object Object]') {
+      selector = locatorString;
+    }
+  } catch (error) {
+    // If we can't get selector, that's okay - we'll rebuild from TargetInfo
+  }
+
   // Perform the form action with appropriate plain English annotation
   switch (formActionResult.type) {
     case 'keypress':
       annotationDescription = `→ Pressing key "${formActionResult.params.value}" on the keyboard`;
       addAnnotation(testInfo, gherkinStep, annotationDescription);
-      return await page.keyboard.press(formActionResult.params.value);
+      await page.keyboard.press(formActionResult.params.value);
+      break;
     case 'type':
       annotationDescription = `→ Typing "${formActionResult.params.value}" using keyboard input`;
       addAnnotation(testInfo, gherkinStep, annotationDescription);
-      return await page.keyboard.type(formActionResult.params.value);
+      await page.keyboard.type(formActionResult.params.value);
+      break;
     case 'fill':
       annotationDescription = `→ Filling ${elementDescription} with value "${formActionResult.params.value}"`;
       addAnnotation(testInfo, gherkinStep, annotationDescription);
-      return await targetElement.fill(formActionResult.params.value);
+      await targetElement.fill(formActionResult.params.value);
+      break;
     case 'select':
       annotationDescription = `→ Selecting option "${formActionResult.params.value}" from ${elementDescription}`;
       addAnnotation(testInfo, gherkinStep, annotationDescription);
-      return await targetElement.selectOption(formActionResult.params.value);
+      await targetElement.selectOption(formActionResult.params.value);
+      break;
     case 'uncheck':
       annotationDescription = `→ Unchecking ${elementDescription} to deselect the option`;
       addAnnotation(testInfo, gherkinStep, annotationDescription);
-      return await targetElement.uncheck();
+      await targetElement.uncheck();
+      break;
     case 'check':
       annotationDescription = `→ Checking ${elementDescription} to select the option`;
       addAnnotation(testInfo, gherkinStep, annotationDescription);
-      return await targetElement.check();
+      await targetElement.check();
+      break;
     case 'setInputFiles':
       annotationDescription = `→ Uploading file "${formActionResult.params.value}" to ${elementDescription}`;
       addAnnotation(testInfo, gherkinStep, annotationDescription);
-      return await targetElement.setInputFiles(formActionResult.params.value);
+      await targetElement.setInputFiles(formActionResult.params.value);
+      break;
     case 'clear':
       annotationDescription = `→ Clearing the contents of ${elementDescription}`;
       addAnnotation(testInfo, gherkinStep, annotationDescription);
-      return await targetElement.clear();
+      await targetElement.clear();
+      break;
     default:
       throw new Error(`Unknown form action type: ${formActionResult.type}`);
   }
+  
+  // Return action result and selector for snapshot storage
+  return { actionResult: formActionResult, selector };
 }
