@@ -1,5 +1,5 @@
 import { type LanguageModel, generateText, Output } from 'ai'
-import { Locator, Page } from '@playwright/test'
+import { Locator, Page, TestInfo } from '@playwright/test'
 
 import {
   zClickActionResult,
@@ -7,6 +7,7 @@ import {
 } from './schema/action.js'
 import type { TargetInfo } from './selector.js'
 import { countTokens } from '../utils/token-counter.js';
+import { addAnnotation } from './annotations.js';
 
 /**
  * Get click action by matching Gherkin step against captured target elements
@@ -131,6 +132,7 @@ You must return the **top 5 most likely elements** that the Gherkin step is refe
 - Do NOT include more than 5 results.
 - If fewer than 5 reasonable matches exist, return fewer.
 - Do NOT assume navigation or side effects — this task is only about **what element is clicked**.
+- For each candidate, provide a **clear, human-readable description** that identifies the element (e.g., "Submit button", "Login link with text 'Sign in'", "Email input field labeled 'Email address'"). This description will be used in test annotations.
 
 
 **Gherkin Step:**
@@ -155,21 +157,73 @@ ${elementsDescription}
   return res.output;
 };
 
+/**
+ * Execute a click action on a page element with plain English annotation
+ * 
+ * This function performs the actual click interaction and logs what action
+ * is being performed in human-readable terms for better test traceability.
+ * Uses the LLM-generated description from the selected candidate.
+ * 
+ * @param element - Playwright Locator for the target element to interact with
+ * @param clickActionResult - Click action result containing click type and target information
+ * @param selectedCandidate - The selected candidate element with LLM-generated description
+ * @param testInfo - Playwright TestInfo for adding annotations
+ * @param gherkinStep - The original Gherkin step for annotation type
+ * @returns Promise that resolves when the click action is complete
+ */
 export const executeClickAction = async (
   element: Locator | null,
   clickActionResult: ClickActionResult,
+  selectedCandidate: ClickActionResult['candidates'][0],
+  testInfo: TestInfo | undefined,
+  gherkinStep: string,
 ): Promise<void> => {
+  // Use the LLM-generated description from the candidate
+  // This description was created by the AI when matching the element
+  const elementDescription = selectedCandidate.description || 'element';
+
+  // Check if element is valid before attempting click
+  if (!element) {
+    throw new Error(`Cannot click: element not found or page may be closed`);
+  }
+
+  // Build annotation description based on click type
+  let annotationDescription = '';
   switch (clickActionResult.clickType) {
     case 'left':
-      return await element?.click();
+      annotationDescription = `→ Clicking on ${elementDescription} with left mouse button`;
+      break;
     case 'right':
-      return await element?.click({ button: 'right' });
+      annotationDescription = `→ Right-clicking on ${elementDescription} to open context menu`;
+      break;
     case 'double':
-      return await element?.dblclick();
+      annotationDescription = `→ Double-clicking on ${elementDescription} to activate`;
+      break;
     case 'middle':
-      return await element?.click({ button: 'middle' });
+      annotationDescription = `→ Clicking on ${elementDescription} with middle mouse button`;
+      break;
     case 'hover':
-      return await element?.hover();
+      annotationDescription = `→ Hovering over ${elementDescription} to reveal additional options`;
+      break;
+    default:
+      throw new Error(`Unknown click type: ${clickActionResult.clickType}`);
+  }
+
+  // Add annotation using centralized utility
+  addAnnotation(testInfo, gherkinStep, annotationDescription);
+
+  // Perform the click action
+  switch (clickActionResult.clickType) {
+    case 'left':
+      return await element.click();
+    case 'right':
+      return await element.click({ button: 'right' });
+    case 'double':
+      return await element.dblclick();
+    case 'middle':
+      return await element.click({ button: 'middle' });
+    case 'hover':
+      return await element.hover();
     default:
       throw new Error(`Unknown click type: ${clickActionResult.clickType}`);
   }

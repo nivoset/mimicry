@@ -767,7 +767,16 @@ export async function buildSelectorForTarget(page: Page, target?: TargetInfo): P
    * Helper function to check if locator matches multiple elements and pick the best one
    */
   const resolveBestLocator = async (locator: any): Promise<any> => {
-    const count = await locator.count();
+    let count: number;
+    try {
+      count = await locator.count();
+    } catch (error) {
+      // If page is closed, throw a more descriptive error
+      if (error instanceof Error && error.message.includes('closed')) {
+        throw new Error('Cannot resolve locator: page, context or browser has been closed. This may happen if a previous action closed the page unexpectedly.');
+      }
+      throw error;
+    }
     
     // If only one match, return it directly
     if (count <= 1) {

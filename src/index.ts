@@ -20,3 +20,17 @@ export type {
   ClickActionResult,
   Point,
 } from './mimic/schema/action.js';
+
+// Agentic system exports
+export { createAgenticMimic, type AgenticMimic } from './agentic-mimic.js';
+export { Agent } from './agentic/agent.js';
+export type {
+  AgentState,
+  AgentConfig,
+  ActionRecord,
+  ActionReflection,
+  PlanningResult,
+  PlanStep,
+  ReasoningResult,
+  DecidedAction,
+} from './agentic/index.js';

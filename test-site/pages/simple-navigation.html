@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Navigation - Test Site</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="simple-navigation.html">Navigation</a></li>
+      <li><a href="forms-basic.html">Forms</a></li>
+      <li><a href="buttons-variety.html">Buttons</a></li>
+    </ul>
+  </nav>
+
+  <h1>Simple Navigation Test Page</h1>
+  <p>This page tests basic navigation scenarios including links, URL parameters, and browser history.</p>
+
+  <div class="card">
+    <h2>Internal Links</h2>
+    <p>Click on any of these links to navigate to other test pages:</p>
+    <ul>
+      <li><a href="forms-basic.html">Go to Forms Page</a></li>
+      <li><a href="buttons-variety.html">Go to Buttons Page</a></li>
+      <li><a href="dynamic-content.html">Go to Dynamic Content Page</a></li>
+      <li><a href="accessibility.html">Go to Accessibility Page</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Links with Parameters</h2>
+    <p>These links include URL parameters to test parameter handling:</p>
+    <ul>
+      <li><a href="simple-navigation.html?page=1&section=test">Page 1, Section Test</a></li>
+      <li><a href="simple-navigation.html?page=2&filter=active">Page 2, Filter Active</a></li>
+      <li><a href="simple-navigation.html?tab=settings&view=list">Settings Tab, List View</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>External Links</h2>
+    <p>Links to external websites:</p>
+    <ul>
+      <li><a href="https://playwright.dev" target="_blank">Playwright Documentation</a></li>
+      <li><a href="https://example.com" target="_blank">Example.com</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Navigation Actions</h2>
+    <p>Use browser navigation buttons or these controls:</p>
+    <button onclick="window.history.back()">Go Back</button>
+    <button onclick="window.history.forward()">Go Forward</button>
+    <button onclick="window.location.reload()">Refresh Page</button>
+  </div>
+
+  <div class="card">
+    <h2>Current URL Information</h2>
+    <p><strong>Current URL:</strong> <span id="current-url"></span></p>
+    <p><strong>URL Parameters:</strong> <span id="url-params"></span></p>
+  </div>
+
+  <script type="module">
+    import { getQueryParam } from '../assets/js/utils.js';
+    import { initVariations, randomChoice, VariationStrategy } from '../assets/js/variation.js';
+
+    // Display current URL information
+    document.getElementById('current-url').textContent = window.location.href;
+    
+    const params = new URLSearchParams(window.location.search);
+    if (params.toString()) {
+      document.getElementById('url-params').textContent = params.toString();
+    } else {
+      document.getElementById('url-params').textContent = 'None';
+    }
+
+    // Apply variations to link text
+    initVariations({
+      elementText: {
+        'nav a': {
+          text: ['Home', 'Main Page', 'Index', 'Start'],
+          count: 1
+        }
+      },
+      buttons: {
+        'button': randomChoice([
+          ['Go Back', 'Back', 'Previous', 'Return'],
+          ['Go Forward', 'Forward', 'Next'],
+          ['Refresh Page', 'Reload', 'Refresh']
+        ])
+      }
+    });
+  </script>
+</body>
+</html>

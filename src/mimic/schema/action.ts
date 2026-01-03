@@ -79,6 +79,11 @@ export const zNavigationAction = z.object({
       .nullable()
       .describe("URL to navigate to. Must be a valid URL (starting with http:// or https://) for 'openPage' and 'navigate' types. Empty string for other navigation types (goBack, goForward, refresh, closePage)."),
   }),
+  /**
+   * Human-readable description of this navigation action for test annotations
+   * Should clearly describe what navigation is happening (e.g., "Navigate to login page", "Go back to previous page")
+   */
+  description: z.string().describe("Human-readable description of this navigation action for test annotations"),
 });
 
 export type NavigationAction = z.infer<typeof zNavigationAction>;
@@ -129,6 +134,11 @@ export const zClickActionResult = z.object({
          * Using nullable instead of optional for compatibility with OpenAI structured outputs
          */
         confidence: z.number().min(0).nullable().describe("Confidence score (0-1) indicating match likelihood"),
+        /**
+         * Human-readable description of this element for test annotations
+         * Should be a clear, concise description that identifies the element (e.g., "Submit button", "Login link", "Email input field")
+         */
+        description: z.string().describe("Human-readable description of this element for test annotations"),
       })
     )
     .max(5)

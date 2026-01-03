@@ -11,7 +11,7 @@ import { LanguageModel } from 'ai';
 
 const _ollamaBrain = ollama('gpt-oss') as LanguageModel
 
-const brains = openai('gpt-4o-mini');
+export const brains = openai('gpt-4o-mini');
 
 export * from '@playwright/test';
 

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Forms - Test Site</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="simple-navigation.html">Navigation</a></li>
+      <li><a href="forms-basic.html">Forms</a></li>
+      <li><a href="forms-complex.html">Complex Forms</a></li>
+    </ul>
+  </nav>
+
+  <h1>Basic Forms Test Page</h1>
+  <p>This page tests basic form interactions including text inputs, selects, checkboxes, and radio buttons.</p>
+
+  <form id="basic-form" onsubmit="handleSubmit(event)">
+    <h2>Contact Form</h2>
+    
+    <div class="form-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+    </div>
+
+    <div class="form-group">
+      <label for="country">Country</label>
+      <select id="country" name="country" required>
+        <option value="">Select a country</option>
+        <option value="us">United States</option>
+        <option value="ca">Canada</option>
+        <option value="uk">United Kingdom</option>
+        <option value="au">Australia</option>
+        <option value="de">Germany</option>
+        <option value="fr">France</option>
+        <option value="jp">Japan</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Enter your message here"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Preferred Contact Method</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="contact-method" value="email" checked>
+          Email
+        </label>
+        <label>
+          <input type="radio" name="contact-method" value="phone">
+          Phone
+        </label>
+        <label>
+          <input type="radio" name="contact-method" value="sms">
+          SMS
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Newsletter Preferences</label>
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" name="newsletter" value="daily">
+          Daily Newsletter
+        </label>
+        <label>
+          <input type="checkbox" name="newsletter" value="weekly">
+          Weekly Digest
+        </label>
+        <label>
+          <input type="checkbox" name="newsletter" value="promotions">
+          Promotional Emails
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input type="checkbox" name="terms" required>
+        I agree to the terms and conditions
+      </label>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit Form</button>
+    <button type="reset">Reset Form</button>
+  </form>
+
+  <div id="form-result" data-testid="form-result" class="card hidden">
+    <h2>Form Submission Result</h2>
+    <pre id="form-data" data-testid="form-data"></pre>
+  </div>
+
+  <script type="module">
+    import { initVariations, randomChoice } from '../assets/js/variation.js';
+    import { showAlert } from '../assets/js/utils.js';
+
+    // Handle form submission
+    window.handleSubmit = function(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Handle checkboxes (can have multiple values)
+      const newsletters = formData.getAll('newsletter');
+      data.newsletter = newsletters;
+      
+      document.getElementById('form-data').textContent = JSON.stringify(data, null, 2);
+      document.getElementById('form-result').classList.remove('hidden');
+      
+      showAlert('Form submitted successfully!', 'success');
+    };
+
+    // Apply variations
+    initVariations({
+      formFields: {
+        '#name': {
+          labels: ['Full Name', 'Name', 'Your Name', 'Complete Name'],
+          placeholders: ['Enter your full name', 'Your name', 'John Doe', 'First and last name']
+        },
+        '#email': {
+          labels: ['Email Address', 'Email', 'E-mail', 'Email Address'],
+          placeholders: ['your.email@example.com', 'Enter email', 'email@domain.com', 'your@email.com']
+        },
+        '#country': {
+          labels: ['Country', 'Select Country', 'Your Country', 'Country of Residence']
+        }
+      },
+      buttons: {
+        '.submit-btn': randomChoice([
+          ['Submit Form', 'Send', 'Submit', 'Send Form'],
+          ['Submit', 'Send Message', 'Submit Form', 'Go']
+        ])
+      }
+    });
+  </script>
+</body>
+</html>

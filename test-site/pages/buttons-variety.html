@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Variety - Test Site</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="buttons-variety.html">Buttons</a></li>
+      <li><a href="forms-basic.html">Forms</a></li>
+    </ul>
+  </nav>
+
+  <h1>Button Variety Test Page</h1>
+  <p>This page tests button selection with various text labels, aria-labels, icons, and semantic HTML.</p>
+
+  <div class="card">
+    <h2>Buttons with Text Labels</h2>
+    <button class="primary-btn">Click Me</button>
+    <button class="primary-btn">Submit</button>
+    <button class="primary-btn">Save Changes</button>
+    <button class="primary-btn">Cancel</button>
+    <button class="primary-btn">Delete</button>
+  </div>
+
+  <div class="card">
+    <h2>Buttons with Icons Only (Aria Labels)</h2>
+    <button aria-label="Close dialog" class="icon-btn">✕</button>
+    <button aria-label="Edit item" class="icon-btn">✎</button>
+    <button aria-label="Delete item" class="icon-btn">🗑</button>
+    <button aria-label="Add new item" class="icon-btn">+</button>
+    <button aria-label="Search" class="icon-btn">🔍</button>
+  </div>
+
+  <div class="card">
+    <h2>Buttons with Similar Text</h2>
+    <p>Multiple buttons with similar or identical text to test disambiguation:</p>
+    <button class="similar-btn">Save</button>
+    <button class="similar-btn">Save</button>
+    <button class="similar-btn">Save Draft</button>
+    <button class="similar-btn">Save and Continue</button>
+    <button class="similar-btn">Save and Exit</button>
+  </div>
+
+  <div class="card">
+    <h2>Links Styled as Buttons</h2>
+    <a href="#" class="btn" onclick="handleLinkClick(event)">Link as Button</a>
+    <a href="#" class="btn secondary" onclick="handleLinkClick(event)">Secondary Link</a>
+    <a href="#" class="btn danger" onclick="handleLinkClick(event)">Danger Link</a>
+    <a href="forms-basic.html" class="btn">Navigate to Forms</a>
+  </div>
+
+  <div class="card">
+    <h2>Buttons with Different Styles</h2>
+    <button class="btn">Primary Button</button>
+    <button class="btn secondary">Secondary Button</button>
+    <button class="btn success">Success Button</button>
+    <button class="btn danger">Danger Button</button>
+  </div>
+
+  <div class="card">
+    <h2>Buttons with Data Attributes</h2>
+    <button data-testid="submit-action" data-action="submit">Submit Action</button>
+    <button data-testid="cancel-action" data-action="cancel">Cancel Action</button>
+    <button data-testid="delete-action" data-action="delete">Delete Action</button>
+  </div>
+
+  <div class="card">
+    <h2>Disabled Buttons</h2>
+    <button disabled>Disabled Button</button>
+    <button disabled class="btn secondary">Disabled Secondary</button>
+  </div>
+
+  <div class="card">
+    <h2>Button Click Results</h2>
+    <div id="click-results" data-testid="click-results">
+      <p class="text-secondary">Click any button above to see results here.</p>
+    </div>
+  </div>
+
+  <style>
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      font-size: 1.2rem;
+      border-radius: 50%;
+    }
+
+    .primary-btn,
+    .similar-btn {
+      margin: 0.5rem;
+    }
+  </style>
+
+  <script type="module">
+    import { initVariations, randomChoice, varyButtons } from '../assets/js/variation.js';
+    import { showAlert } from '../assets/js/utils.js';
+
+    // Handle button clicks
+    document.addEventListener('click', function(event) {
+      if (event.target.tagName === 'BUTTON' || event.target.classList.contains('btn')) {
+        const button = event.target;
+        const buttonText = button.textContent.trim() || button.getAttribute('aria-label') || 'Button';
+        const buttonId = button.id || button.getAttribute('data-testid') || 'unknown';
+        
+        const result = document.createElement('div');
+        result.className = 'alert info';
+        result.textContent = `Clicked: ${buttonText} (ID: ${buttonId})`;
+        document.getElementById('click-results').appendChild(result);
+        
+        // Remove result after 3 seconds
+        setTimeout(() => result.remove(), 3000);
+      }
+    });
+
+    // Handle link clicks (prevent navigation for demo)
+    window.handleLinkClick = function(event) {
+      event.preventDefault();
+      showAlert('Link button clicked!', 'info');
+    };
+
+    // Apply variations to button text
+    initVariations({
+      buttons: {
+        '.primary-btn': randomChoice([
+          ['Click Me', 'Press Here', 'Click This', 'Tap Me'],
+          ['Submit', 'Send', 'Go', 'Continue'],
+          ['Save Changes', 'Save', 'Store', 'Keep Changes'],
+          ['Cancel', 'Abort', 'Close', 'Dismiss'],
+          ['Delete', 'Remove', 'Erase', 'Clear']
+        ]),
+        '.similar-btn': randomChoice([
+          ['Save', 'Store', 'Keep'],
+          ['Save Draft', 'Save as Draft', 'Store Draft'],
+          ['Save and Continue', 'Save & Continue', 'Save then Continue'],
+          ['Save and Exit', 'Save & Exit', 'Save then Exit']
+        ])
+      },
+      elementText: {
+        'h2': {
+          text: ['Buttons with Text Labels', 'Text Buttons', 'Labeled Buttons', 'Standard Buttons'],
+          count: 1
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessibility - Test Site</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <nav role="navigation" aria-label="Main navigation">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="accessibility.html">Accessibility</a></li>
+    </ul>
+  </nav>
+
+  <main role="main">
+    <header>
+      <h1>Accessibility Test Page</h1>
+      <p>This page tests accessibility-first selection strategies using aria-labels, roles, semantic HTML, and proper label associations.</p>
+    </header>
+
+    <section aria-labelledby="aria-labels-heading">
+      <div class="card">
+        <h2 id="aria-labels-heading">Elements with Aria Labels</h2>
+        <button aria-label="Close this dialog">✕</button>
+        <button aria-label="Save the current document">💾</button>
+        <button aria-label="Print the current page">🖨</button>
+        <button aria-label="Search for items">🔍</button>
+        <button aria-label="Add a new item to the list">➕</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="semantic-html-heading">
+      <div class="card">
+        <h2 id="semantic-html-heading">Semantic HTML Elements</h2>
+        <article>
+          <h3>Article Title</h3>
+          <p>This is an article element with semantic meaning.</p>
+          <button>Read More</button>
+        </article>
+        
+        <aside role="complementary" aria-label="Sidebar information">
+          <h3>Related Information</h3>
+          <p>This is an aside element with complementary information.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section aria-labelledby="roles-heading">
+      <div class="card">
+        <h2 id="roles-heading">Elements with Role Attributes</h2>
+        <div role="button" tabindex="0" aria-label="Custom button with role">Custom Button</div>
+        <div role="link" tabindex="0" aria-label="Custom link with role">Custom Link</div>
+        <div role="alert" aria-live="polite">This is an alert message.</div>
+        <div role="status" aria-live="polite">Status: All systems operational.</div>
+      </div>
+    </section>
+
+    <section aria-labelledby="labels-heading">
+      <div class="card">
+        <h2 id="labels-heading">Proper Label Associations</h2>
+        <form>
+          <div class="form-group">
+            <label for="username-field">Username</label>
+            <input type="text" id="username-field" name="username" aria-describedby="username-help">
+            <small id="username-help">Enter your username or email address</small>
+          </div>
+
+          <div class="form-group">
+            <label for="password-field">Password</label>
+            <input type="password" id="password-field" name="password" aria-describedby="password-help">
+            <small id="password-help">Must be at least 8 characters</small>
+          </div>
+
+          <div class="form-group">
+            <label>
+              <input type="checkbox" name="remember" aria-label="Remember me on this device">
+              Remember me
+            </label>
+          </div>
+
+          <button type="submit" aria-label="Submit the login form">Login</button>
+        </form>
+      </div>
+    </section>
+
+    <section aria-labelledby="landmarks-heading">
+      <div class="card">
+        <h2 id="landmarks-heading">ARIA Landmarks</h2>
+        <nav role="navigation" aria-label="Secondary navigation">
+          <ul>
+            <li><a href="#section1">Section 1</a></li>
+            <li><a href="#section2">Section 2</a></li>
+            <li><a href="#section3">Section 3</a></li>
+          </ul>
+        </nav>
+
+        <form role="search" aria-label="Site search">
+          <input type="search" placeholder="Search..." aria-label="Search input">
+          <button type="submit" aria-label="Submit search">Search</button>
+        </form>
+      </div>
+    </section>
+
+    <section aria-labelledby="live-regions-heading">
+      <div class="card">
+        <h2 id="live-regions-heading">Live Regions</h2>
+        <button id="update-live-btn">Update Live Region</button>
+        <div role="status" aria-live="polite" id="live-status" style="padding: 1rem; background: var(--bg-secondary); border-radius: var(--border-radius); margin-top: 1rem;">
+          Initial status message.
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="descriptions-heading">
+      <div class="card">
+        <h2 id="descriptions-heading">ARIA Descriptions</h2>
+        <button 
+          aria-label="Delete item"
+          aria-describedby="delete-description">
+          Delete
+        </button>
+        <p id="delete-description" class="text-secondary">This action cannot be undone.</p>
+
+        <button 
+          aria-label="Save document"
+          aria-describedby="save-description">
+          Save
+        </button>
+        <p id="save-description" class="text-secondary">Saves your changes to the server.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <p class="text-center text-secondary">Accessibility Test Page Footer</p>
+  </footer>
+
+  <style>
+    [role="button"] {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      margin: 0.5rem;
+    }
+
+    [role="button"]:hover {
+      background-color: var(--primary-hover);
+    }
+
+    [role="link"] {
+      display: inline-block;
+      color: var(--primary-color);
+      text-decoration: underline;
+      cursor: pointer;
+      margin: 0.5rem;
+    }
+
+    [role="alert"],
+    [role="status"] {
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: var(--border-radius);
+    }
+
+    [role="alert"] {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+
+    [role="status"] {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+  </style>
+
+  <script type="module">
+    import { initVariations, randomChoice } from '../assets/js/variation.js';
+
+    // Update live region
+    const liveMessages = [
+      'Status updated: Operation completed.',
+      'Status updated: Processing request...',
+      'Status updated: All systems normal.',
+      'Status updated: New data available.'
+    ];
+
+    let liveCounter = 0;
+    document.getElementById('update-live-btn').addEventListener('click', function() {
+      const liveRegion = document.getElementById('live-status');
+      liveCounter = (liveCounter + 1) % liveMessages.length;
+      liveRegion.textContent = liveMessages[liveCounter];
+    });
+
+    // Apply variations
+    initVariations({
+      buttons: {
+        'button[aria-label*="Close"]': ['✕', '×', 'Close', 'X'],
+        'button[aria-label*="Save"]': ['💾', 'Save', 'Store', 'Keep'],
+        'button[type="submit"]': randomChoice([
+          ['Login', 'Sign In', 'Enter', 'Access'],
+          ['Submit', 'Send', 'Go', 'Continue']
+        ])
+      },
+      elementText: {
+        'label[for="username-field"]': ['Username', 'User Name', 'Login Name', 'Account Name'],
+        'label[for="password-field"]': ['Password', 'Passphrase', 'Secret Key', 'Access Code']
+      }
+    });
+  </script>
+</body>
+</html>

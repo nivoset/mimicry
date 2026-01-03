@@ -1,8 +1,9 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator, Page, TestInfo } from '@playwright/test';
 import { type LanguageModel, generateText, Output } from 'ai'
 import z from 'zod';
 import { countTokens } from '../utils/token-counter';
 import { TargetInfo } from './selector';
+import { addAnnotation } from './annotations.js';
 
 const zFormActionResult = z.object({
   type: z.enum(['keypress', 'type', 'fill', 'select', 'uncheck', 'check', 'setInputFiles', 'clear']),
@@ -10,6 +11,11 @@ const zFormActionResult = z.object({
     value: z.string().describe("Value to set for the form update."),
     modifiers: z.array(z.enum(['Alt', 'Control', 'Meta', 'Shift', 'none'])).describe("Optional modifier keys to use for the form update."),
   }),
+  /**
+   * Human-readable description of the target form element for test annotations
+   * Should clearly identify which form field is being interacted with (e.g., "Email input field", "Submit button", "Country dropdown")
+   */
+  elementDescription: z.string().describe("Human-readable description of the target form element for test annotations"),
 })
 
 
@@ -106,39 +112,40 @@ export const getFormAction = async (
 
   const res = await generateText({
     model: brain,
-    prompt: `You are an expert Playwright test engineer specializing in mapping Gherkin steps to concrete DOM interactions.
+    prompt: `You are an expert Playwright test engineer specializing in mapping Gherkin steps to form interactions.
 
 Your task is to analyze:
-1. A single Gherkin step that implies a click action.
-2. A list of candidate DOM elements extracted from the page.
+1. A single Gherkin step that implies a form update action (typing, filling, selecting, checking, etc.).
+2. A list of candidate form elements extracted from the page.
 
-You must return the **top 5 most likely elements** that the Gherkin step is referring to.
-
----
-
-### IMPORTANT RULES
-
-- Rank elements from **most likely (rank 1)** to **least likely (rank 5)**.
-- Prefer **semantic matches** first:
-  - Visible text
-  - Accessible name (label, aria-label, role)
-  - Button / link intent
-- Use "index" **only as a secondary disambiguation signal**, never as the primary reason.
-- Do NOT invent elements or field values.
-- Do NOT include more than 5 results.
-- If fewer than 5 reasonable matches exist, return fewer.
-- Do NOT assume navigation or side effects — this task is only about **what element is clicked**.
-
+You must determine:
+- The type of form action (fill, type, select, check, uncheck, clear, etc.)
+- The value to use (text to type, option to select, etc.)
 
 **Gherkin Step:**
 ${gherkinStep}
 
-**Available Target Elements (${targetElements.length} total):**
+**Available Form Elements (${targetElements.length} total):**
 ${elementsDescription}
 
+**Action Types:**
+- fill: Replace all content in a field
+- type: Type text character by character
+- select: Select an option from dropdown/select
+- check: Check a checkbox
+- uncheck: Uncheck a checkbox
+- clear: Clear field content
+- keypress: Press a specific key
+- setInputFiles: Upload a file
 
-## Reason and return up to the top 5 most likely elements that the Gherkin step is referring to.
-`,
+**Instructions:**
+1. Identify what form action is being requested
+2. Extract the value from the step (text to type, option to select, etc.)
+3. Identify which form element is being targeted (name field, email field, submit button, etc.)
+4. Return the appropriate action type, value, and a clear description of the target element
+   - The elementDescription should clearly identify the form field (e.g., "Email input field", "Name field labeled 'Full Name'", "Submit button", "Country dropdown")
+
+Think step-by-step about what the user wants to do with the form.`,
     output: Output.object({ schema: zFormActionResult, name: 'formActionResult' }),
     maxRetries: 3,
   });
@@ -147,30 +154,68 @@ ${elementsDescription}
 }
 
 
+/**
+ * Execute a form action on a page element with plain English annotation
+ * 
+ * This function performs form interactions (typing, selecting, checking, etc.)
+ * and adds test annotations for better traceability and validation.
+ * Uses the LLM-generated element description from the form action result.
+ * 
+ * @param page - Playwright Page object for keyboard actions
+ * @param formActionResult - Form action result containing action type, parameters, and element description
+ * @param targetElement - Playwright Locator for the target form element
+ * @param testInfo - Playwright TestInfo for adding annotations (optional)
+ * @param gherkinStep - The original Gherkin step for annotation type (optional)
+ * @returns Promise that resolves when the form action is complete
+ */
 export const executeFormAction = async (
   page: Page,
   formActionResult: FormActionResult,
-  targetElement: Locator | null
+  targetElement: Locator | null,
+  testInfo?: TestInfo,
+  gherkinStep?: string
 ): Promise<void | string[]> => {
   if (targetElement === null) {
     throw new Error('No target element found');
   }
+
+  // Use LLM-generated description from the form action result
+  const elementDescription = formActionResult.elementDescription || 'form field';
+  let annotationDescription = '';
+
+  // Perform the form action with appropriate plain English annotation
   switch (formActionResult.type) {
     case 'keypress':
+      annotationDescription = `→ Pressing key "${formActionResult.params.value}" on the keyboard`;
+      addAnnotation(testInfo, gherkinStep, annotationDescription);
       return await page.keyboard.press(formActionResult.params.value);
     case 'type':
+      annotationDescription = `→ Typing "${formActionResult.params.value}" using keyboard input`;
+      addAnnotation(testInfo, gherkinStep, annotationDescription);
       return await page.keyboard.type(formActionResult.params.value);
     case 'fill':
+      annotationDescription = `→ Filling ${elementDescription} with value "${formActionResult.params.value}"`;
+      addAnnotation(testInfo, gherkinStep, annotationDescription);
       return await targetElement.fill(formActionResult.params.value);
     case 'select':
+      annotationDescription = `→ Selecting option "${formActionResult.params.value}" from ${elementDescription}`;
+      addAnnotation(testInfo, gherkinStep, annotationDescription);
       return await targetElement.selectOption(formActionResult.params.value);
     case 'uncheck':
+      annotationDescription = `→ Unchecking ${elementDescription} to deselect the option`;
+      addAnnotation(testInfo, gherkinStep, annotationDescription);
       return await targetElement.uncheck();
     case 'check':
+      annotationDescription = `→ Checking ${elementDescription} to select the option`;
+      addAnnotation(testInfo, gherkinStep, annotationDescription);
       return await targetElement.check();
     case 'setInputFiles':
+      annotationDescription = `→ Uploading file "${formActionResult.params.value}" to ${elementDescription}`;
+      addAnnotation(testInfo, gherkinStep, annotationDescription);
       return await targetElement.setInputFiles(formActionResult.params.value);
     case 'clear':
+      annotationDescription = `→ Clearing the contents of ${elementDescription}`;
+      addAnnotation(testInfo, gherkinStep, annotationDescription);
       return await targetElement.clear();
     default:
       throw new Error(`Unknown form action type: ${formActionResult.type}`);

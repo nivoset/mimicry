@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complex Forms - Test Site</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="forms-basic.html">Basic Forms</a></li>
+      <li><a href="forms-complex.html">Complex Forms</a></li>
+    </ul>
+  </nav>
+
+  <h1>Complex Forms Test Page</h1>
+  <p>This page tests complex form scenarios including multi-step forms, conditional fields, validation, and file uploads.</p>
+
+  <form id="complex-form" onsubmit="handleComplexSubmit(event)">
+    <!-- Step 1: Personal Information -->
+    <div id="step-1" class="form-step active">
+      <h2>Step 1: Personal Information</h2>
+      
+      <div class="form-group">
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="firstName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="lastName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required>
+      </div>
+
+      <div class="form-group">
+        <label for="account-type">Account Type</label>
+        <select id="account-type" name="accountType" required onchange="handleAccountTypeChange(event)">
+          <option value="">Select account type</option>
+          <option value="personal">Personal</option>
+          <option value="business">Business</option>
+          <option value="organization">Organization</option>
+        </select>
+      </div>
+
+      <!-- Conditional fields based on account type -->
+      <div id="business-fields" class="form-group hidden">
+        <label for="company-name">Company Name</label>
+        <input type="text" id="company-name" name="companyName">
+      </div>
+
+      <div id="organization-fields" class="form-group hidden">
+        <label for="org-name">Organization Name</label>
+        <input type="text" id="org-name" name="orgName">
+        <label for="tax-id">Tax ID</label>
+        <input type="text" id="tax-id" name="taxId">
+      </div>
+
+      <button type="button" onclick="goToStep(2)" class="btn">Next Step</button>
+    </div>
+
+    <!-- Step 2: Contact Information -->
+    <div id="step-2" class="form-step hidden">
+      <h2>Step 2: Contact Information</h2>
+
+      <div class="form-group">
+        <label for="email-complex">Email Address</label>
+        <input type="email" id="email-complex" name="email" required>
+        <small class="text-secondary">We'll never share your email with anyone.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="phone-complex">Phone Number</label>
+        <input type="tel" id="phone-complex" name="phone" pattern="[0-9]{10}">
+        <small class="text-secondary">Format: 10 digits without dashes</small>
+      </div>
+
+      <div class="form-group">
+        <label for="preferred-contact">Preferred Contact Method</label>
+        <select id="preferred-contact" name="preferredContact" onchange="handleContactMethodChange(event)">
+          <option value="email">Email</option>
+          <option value="phone">Phone</option>
+          <option value="sms">SMS</option>
+          <option value="mail">Postal Mail</option>
+        </select>
+      </div>
+
+      <!-- Conditional field for SMS -->
+      <div id="sms-fields" class="form-group hidden">
+        <label for="sms-number">SMS Phone Number</label>
+        <input type="tel" id="sms-number" name="smsNumber">
+      </div>
+
+      <!-- Conditional field for postal mail -->
+      <div id="mail-fields" class="form-group hidden">
+        <label for="address">Street Address</label>
+        <input type="text" id="address" name="address">
+        <label for="city">City</label>
+        <input type="text" id="city" name="city">
+        <label for="zip">ZIP Code</label>
+        <input type="text" id="zip" name="zip">
+      </div>
+
+      <button type="button" onclick="goToStep(1)" class="btn secondary">Previous</button>
+      <button type="button" onclick="goToStep(3)" class="btn">Next Step</button>
+    </div>
+
+    <!-- Step 3: Additional Information -->
+    <div id="step-3" class="form-step hidden">
+      <h2>Step 3: Additional Information</h2>
+
+      <div class="form-group">
+        <label for="bio">Biography</label>
+        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="interests">Interests</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="interests" value="technology"> Technology</label>
+          <label><input type="checkbox" name="interests" value="sports"> Sports</label>
+          <label><input type="checkbox" name="interests" value="music"> Music</label>
+          <label><input type="checkbox" name="interests" value="travel"> Travel</label>
+          <label><input type="checkbox" name="interests" value="reading"> Reading</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="file-upload">Upload Profile Picture</label>
+        <input type="file" id="file-upload" name="profilePicture" accept="image/*">
+        <small class="text-secondary">Accepted formats: JPG, PNG, GIF (max 5MB)</small>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" name="newsletter" value="yes">
+          Subscribe to newsletter
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" name="terms" required>
+          I agree to the <a href="#">terms and conditions</a>
+        </label>
+      </div>
+
+      <button type="button" onclick="goToStep(2)" class="btn secondary">Previous</button>
+      <button type="submit" class="btn">Submit Form</button>
+    </div>
+  </form>
+
+  <!-- Progress indicator -->
+  <div class="card">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width: 33.33%"></div>
+    </div>
+    <p class="text-center text-secondary">Step <span id="current-step">1</span> of 3</p>
+  </div>
+
+  <!-- Validation messages -->
+  <div id="validation-messages"></div>
+
+  <!-- Form submission result -->
+  <div id="form-result" class="card hidden">
+    <h2>Form Submission Result</h2>
+    <pre id="form-data"></pre>
+  </div>
+
+  <style>
+    .form-step {
+      display: none;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .error-message {
+      color: var(--danger-color);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+
+  <script type="module">
+    import { initVariations, randomChoice } from '../assets/js/variation.js';
+    import { showAlert } from '../assets/js/utils.js';
+
+    let currentStep = 1;
+    const totalSteps = 3;
+
+    // Navigation between steps
+    window.goToStep = function(step) {
+      // Hide current step
+      document.getElementById(`step-${currentStep}`).classList.remove('active');
+      document.getElementById(`step-${currentStep}`).classList.add('hidden');
+
+      // Show new step
+      currentStep = step;
+      document.getElementById(`step-${step}`).classList.remove('hidden');
+      document.getElementById(`step-${step}`).classList.add('active');
+
+      // Update progress
+      const progress = (step / totalSteps) * 100;
+      document.getElementById('progress-fill').style.width = `${progress}%`;
+      document.getElementById('current-step').textContent = step;
+    };
+
+    // Handle account type change
+    window.handleAccountTypeChange = function(event) {
+      const accountType = event.target.value;
+      document.getElementById('business-fields').classList.toggle('hidden', accountType !== 'business');
+      document.getElementById('organization-fields').classList.toggle('hidden', accountType !== 'organization');
+    };
+
+    // Handle contact method change
+    window.handleContactMethodChange = function(event) {
+      const method = event.target.value;
+      document.getElementById('sms-fields').classList.toggle('hidden', method !== 'sms');
+      document.getElementById('mail-fields').classList.toggle('hidden', method !== 'mail');
+    };
+
+    // Handle form submission
+    window.handleComplexSubmit = function(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Handle checkboxes (can have multiple values)
+      const interests = formData.getAll('interests');
+      data.interests = interests;
+      
+      // Handle file upload
+      const fileInput = document.getElementById('file-upload');
+      if (fileInput.files.length > 0) {
+        data.profilePicture = fileInput.files[0].name;
+      }
+      
+      document.getElementById('form-data').textContent = JSON.stringify(data, null, 2);
+      document.getElementById('form-result').classList.remove('hidden');
+      
+      showAlert('Complex form submitted successfully!', 'success');
+    };
+
+    // Apply variations
+    initVariations({
+      formFields: {
+        '#first-name': {
+          labels: ['First Name', 'Given Name', 'Forename', 'First'],
+          placeholders: ['Enter first name', 'Your first name', 'John']
+        },
+        '#email-complex': {
+          labels: ['Email Address', 'Email', 'E-mail', 'Email Address'],
+          placeholders: ['your.email@example.com', 'Enter email', 'email@domain.com']
+        }
+      },
+      buttons: {
+        '.btn': randomChoice([
+          ['Next Step', 'Continue', 'Proceed', 'Next'],
+          ['Previous', 'Back', 'Go Back', 'Return'],
+          ['Submit Form', 'Submit', 'Send', 'Complete']
+        ])
+      }
+    });
+  </script>
+</body>
+</html>

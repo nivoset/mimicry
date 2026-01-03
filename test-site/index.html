@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mimic Test Site - Home</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Mimic Test Site</h1>
+    <p class="text-secondary">A collection of static HTML pages for testing Mimic's AI-powered browser automation capabilities.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>About This Test Site</h2>
+      <p>This test site provides various scenarios to test Mimic's ability to:</p>
+      <ul>
+        <li>Navigate between pages and handle browser history</li>
+        <li>Click buttons and links with various selectors</li>
+        <li>Interact with forms (text inputs, selects, checkboxes, radio buttons)</li>
+        <li>Handle dynamic content that loads after page load</li>
+        <li>Work with accessibility features (aria-labels, roles, semantic HTML)</li>
+        <li>Navigate multi-step flows and wizards</li>
+        <li>Interact with complex UI patterns (modals, tabs, accordions, dropdowns)</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Test Pages</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+        
+        <div class="card">
+          <h3>Simple Navigation</h3>
+          <p>Tests basic navigation scenarios including links, URL parameters, and browser history.</p>
+          <a href="pages/simple-navigation.html" class="btn">Go to Page</a>
+          <p class="text-secondary" style="margin-top: 0.5rem; font-size: 0.875rem;">
+            <strong>Tests:</strong> navigate to, go back, click on link
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Basic Forms</h3>
+          <p>Tests basic form interactions including text inputs, selects, checkboxes, and radio buttons.</p>
+          <a href="pages/forms-basic.html" class="btn">Go to Page</a>
+          <p class="text-secondary" style="margin-top: 0.5rem; font-size: 0.875rem;">
+            <strong>Tests:</strong> type into, select from, check, click submit
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Complex Forms</h3>
+          <p>Tests multi-step forms, conditional fields, validation, and file uploads.</p>
+          <a href="pages/forms-complex.html" class="btn">Go to Page</a>
+          <p class="text-secondary" style="margin-top: 0.5rem; font-size: 0.875rem;">
+            <strong>Tests:</strong> Complex form flows, conditional interactions
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Button Variety</h3>
+          <p>Tests button selection with various text labels, aria-labels, icons, and semantic HTML.</p>
+          <a href="pages/buttons-variety.html" class="btn">Go to Page</a>
+          <p class="text-secondary" style="margin-top: 0.5rem; font-size: 0.875rem;">
+            <strong>Tests:</strong> Semantic button selection, disambiguation
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Dynamic Content</h3>
+          <p>Tests handling of content that loads after page load, appears/disappears, and changes on interaction.</p>
+          <a href="pages/dynamic-content.html" class="btn">Go to Page</a>
+          <p class="text-secondary" style="margin-top: 0.5rem; font-size: 0.875rem;">
+            <strong>Tests:</strong> Waiting for dynamic content, handling state changes
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Accessibility</h3>
+          <p>Tests accessibility-first selection strategies using aria-labels, roles, semantic HTML, and proper label associations.</p>
+          <a href="pages/accessibility.html" class="btn">Go to Page</a>
+          <p class="text-secondary" style="margin-top: 0.5rem; font-size: 0.875rem;">
+            <strong>Tests:</strong> Accessibility-first selection strategies
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Multi-Step Flow</h3>
+          <p>Tests wizard-style multi-page flows with progress indicators and state persistence.</p>
+          <a href="pages/multi-step-flow.html" class="btn">Go to Page</a>
+          <p class="text-secondary" style="margin-top: 0.5rem; font-size: 0.875rem;">
+            <strong>Tests:</strong> Multi-step navigation, maintaining context
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Complex Layout</h3>
+          <p>Tests complex UI patterns including modals, dropdowns, tabs, accordions, and overlays.</p>
+          <a href="pages/layout-complex.html" class="btn">Go to Page</a>
+          <p class="text-secondary" style="margin-top: 0.5rem; font-size: 0.875rem;">
+            <strong>Tests:</strong> Complex UI patterns, nested interactions
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Variation System</h2>
+      <p>All pages include a variation system that can change content dynamically over time. This helps test Mimic's ability to handle changing content.</p>
+      <p>The variation system supports:</p>
+      <ul>
+        <li><strong>Random variation:</strong> Content changes randomly on each page load</li>
+        <li><strong>Time-based variation:</strong> Content changes based on time of day or day of week</li>
+        <li><strong>Rotation system:</strong> Cycles through predefined variations</li>
+        <li><strong>State persistence:</strong> Uses localStorage to track variations</li>
+      </ul>
+      <p class="text-secondary">See the <code>assets/js/variation.js</code> file for implementation details.</p>
+    </section>
+
+    <section class="card">
+      <h2>Quick Test Scenarios</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+        <div>
+          <h4>Navigation Test</h4>
+          <p class="text-secondary" style="font-size: 0.875rem;">Navigate to Simple Navigation page, click links, use browser back/forward</p>
+        </div>
+        <div>
+          <h4>Form Test</h4>
+          <p class="text-secondary" style="font-size: 0.875rem;">Fill out Basic Forms page, submit form, verify results</p>
+        </div>
+        <div>
+          <h4>Button Test</h4>
+          <p class="text-secondary" style="font-size: 0.875rem;">Click various buttons on Button Variety page, test disambiguation</p>
+        </div>
+        <div>
+          <h4>Dynamic Test</h4>
+          <p class="text-secondary" style="font-size: 0.875rem;">Interact with Dynamic Content page, wait for elements to appear</p>
+        </div>
+        <div>
+          <h4>Accessibility Test</h4>
+          <p class="text-secondary" style="font-size: 0.875rem;">Test aria-label selection on Accessibility page</p>
+        </div>
+        <div>
+          <h4>Wizard Test</h4>
+          <p class="text-secondary" style="font-size: 0.875rem;">Complete multi-step flow on Multi-Step Flow page</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+    <p class="text-center text-secondary">Mimic Test Site - For testing AI-powered browser automation</p>
+  </footer>
+</body>
+</html>

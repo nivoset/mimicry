@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complex Layout - Test Site</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="layout-complex.html">Complex Layout</a></li>
+    </ul>
+  </nav>
+
+  <h1>Complex Layout Test Page</h1>
+  <p>This page tests complex UI patterns including modals, dropdowns, tabs, accordions, and overlays.</p>
+
+  <!-- Modals/Dialogs -->
+  <div class="card">
+    <h2>Modals and Dialogs</h2>
+    <button onclick="openModal('modal1')" class="btn">Open Simple Modal</button>
+    <button onclick="openModal('modal2')" class="btn secondary">Open Confirmation Dialog</button>
+    <button onclick="openModal('modal3')" class="btn danger">Open Alert Dialog</button>
+  </div>
+
+  <!-- Modal 1: Simple Modal -->
+  <div id="modal1" data-testid="modal1" class="modal" role="dialog" aria-labelledby="modal1-title">
+    <div class="modal-content">
+      <h2 id="modal1-title">Simple Modal</h2>
+      <p>This is a simple modal dialog. Click outside or the close button to dismiss.</p>
+      <button onclick="closeModal('modal1')" class="btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Modal 2: Confirmation Dialog -->
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <h2>Confirm Action</h2>
+      <p>Are you sure you want to proceed with this action?</p>
+      <button onclick="closeModal('modal2')" class="btn secondary">Cancel</button>
+      <button onclick="handleConfirm()" class="btn">Confirm</button>
+    </div>
+  </div>
+
+  <!-- Modal 3: Alert Dialog -->
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <h2>Alert</h2>
+      <p>This is an alert message. Please read carefully.</p>
+      <button onclick="closeModal('modal3')" class="btn">OK</button>
+    </div>
+  </div>
+
+  <!-- Dropdown Menus -->
+  <div class="card">
+    <h2>Dropdown Menus</h2>
+    <div style="position: relative; display: inline-block;">
+      <button onclick="toggleDropdown('dropdown1')" class="btn">Actions Menu</button>
+      <div id="dropdown1" class="dropdown hidden">
+        <a href="#" onclick="handleDropdownAction(event, 'edit')">Edit</a>
+        <a href="#" onclick="handleDropdownAction(event, 'delete')">Delete</a>
+        <a href="#" onclick="handleDropdownAction(event, 'share')">Share</a>
+        <a href="#" onclick="handleDropdownAction(event, 'copy')">Copy</a>
+      </div>
+    </div>
+
+    <div style="position: relative; display: inline-block; margin-left: 1rem;">
+      <button onclick="toggleDropdown('dropdown2')" class="btn secondary">More Options</button>
+      <div id="dropdown2" class="dropdown hidden">
+        <a href="#" onclick="handleDropdownAction(event, 'option1')">Option 1</a>
+        <a href="#" onclick="handleDropdownAction(event, 'option2')">Option 2</a>
+        <a href="#" onclick="handleDropdownAction(event, 'option3')">Option 3</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="card">
+    <h2>Tabs</h2>
+    <div class="tabs">
+      <ul class="tab-list" role="tablist">
+        <li><button id="tab-1" class="tab-button active" onclick="switchTab(1, event)" role="tab" aria-selected="true" aria-controls="tab-content-1">Tab 1</button></li>
+        <li><button id="tab-2" class="tab-button" onclick="switchTab(2, event)" role="tab" aria-selected="false" aria-controls="tab-content-2">Tab 2</button></li>
+        <li><button id="tab-3" class="tab-button" onclick="switchTab(3, event)" role="tab" aria-selected="false" aria-controls="tab-content-3">Tab 3</button></li>
+      </ul>
+    </div>
+    <div id="tab-content-1" data-testid="tab-content-1" class="tab-content active" role="tabpanel" aria-labelledby="tab-1">
+      <h3>Tab 1 Content</h3>
+      <p>This is the content for tab 1.</p>
+      <button class="btn">Action in Tab 1</button>
+    </div>
+    <div id="tab-content-2" data-testid="tab-content-2" class="tab-content" role="tabpanel" aria-labelledby="tab-2">
+      <h3>Tab 2 Content</h3>
+      <p>This is the content for tab 2.</p>
+      <button class="btn secondary">Action in Tab 2</button>
+    </div>
+    <div id="tab-content-3" data-testid="tab-content-3" class="tab-content" role="tabpanel" aria-labelledby="tab-3">
+      <h3>Tab 3 Content</h3>
+      <p>This is the content for tab 3.</p>
+      <button class="btn success">Action in Tab 3</button>
+    </div>
+  </div>
+
+  <!-- Accordion -->
+  <div class="card">
+    <h2>Accordion</h2>
+    <div class="accordion-item">
+      <div class="accordion-header" onclick="toggleAccordion(1, event)">
+        <span>Section 1</span>
+        <span>▼</span>
+      </div>
+      <div class="accordion-content">
+        <p>Content for section 1. This can contain any HTML content.</p>
+        <button class="btn">Button in Accordion 1</button>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header" onclick="toggleAccordion(2, event)">
+        <span>Section 2</span>
+        <span>▼</span>
+      </div>
+      <div class="accordion-content">
+        <p>Content for section 2. This can contain any HTML content.</p>
+        <button class="btn secondary">Button in Accordion 2</button>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header" onclick="toggleAccordion(3, event)">
+        <span>Section 3</span>
+        <span>▼</span>
+      </div>
+      <div class="accordion-content">
+        <p>Content for section 3. This can contain any HTML content.</p>
+        <button class="btn success">Button in Accordion 3</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlays -->
+  <div class="card">
+    <h2>Overlays</h2>
+    <button onclick="showOverlay('overlay1')" class="btn">Show Loading Overlay</button>
+    <button onclick="showOverlay('overlay2')" class="btn secondary">Show Info Overlay</button>
+  </div>
+
+  <div id="overlay1" class="overlay hidden">
+    <div class="overlay-content">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+  </div>
+
+  <div id="overlay2" class="overlay hidden">
+    <div class="overlay-content">
+      <h3>Information Overlay</h3>
+      <p>This is an informational overlay that appears on top of the page.</p>
+      <button onclick="hideOverlay('overlay2')" class="btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Action Results -->
+  <div class="card">
+    <h2>Action Results</h2>
+    <div id="action-results"></div>
+  </div>
+
+  <style>
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      min-width: 150px;
+      margin-top: 0.5rem;
+      z-index: 100;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: var(--text-color);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .dropdown a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown a:hover {
+      background-color: var(--bg-secondary);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .overlay-content {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      text-align: center;
+    }
+
+    .spinner {
+      border: 4px solid var(--border-color);
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script type="module">
+    import { initVariations, randomChoice } from '../assets/js/variation.js';
+    import { showAlert } from '../assets/js/utils.js';
+
+    // Modal functions
+    window.openModal = function(modalId) {
+      document.getElementById(modalId).classList.add('active');
+    };
+
+    window.closeModal = function(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    };
+
+    window.handleConfirm = function() {
+      closeModal('modal2');
+      showAlert('Action confirmed!', 'success');
+      logAction('Confirmed action');
+    };
+
+    // Close modal when clicking outside
+    document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.classList.remove('active');
+      }
+    });
+
+    // Dropdown functions
+    window.toggleDropdown = function(dropdownId) {
+      const dropdown = document.getElementById(dropdownId);
+      dropdown.classList.toggle('hidden');
+      
+      // Close other dropdowns
+      document.querySelectorAll('.dropdown').forEach(dd => {
+        if (dd.id !== dropdownId) {
+          dd.classList.add('hidden');
+        }
+      });
+    };
+
+    window.handleDropdownAction = function(event, action) {
+      event.preventDefault();
+      document.querySelectorAll('.dropdown').forEach(dd => dd.classList.add('hidden'));
+      showAlert(`Action: ${action}`, 'info');
+      logAction(`Dropdown action: ${action}`);
+    };
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.dropdown') && !event.target.matches('button[onclick*="toggleDropdown"]')) {
+        document.querySelectorAll('.dropdown').forEach(dd => dd.classList.add('hidden'));
+      }
+    });
+
+    // Tab functions
+    window.switchTab = function(tabNumber, event) {
+      // Update tab buttons
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      if (event && event.target) {
+        event.target.classList.add('active');
+      } else {
+        // Fallback: find button by tab number
+        const buttons = document.querySelectorAll('.tab-button');
+        if (buttons[tabNumber - 1]) {
+          buttons[tabNumber - 1].classList.add('active');
+        }
+      }
+
+      // Update tab content
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(`tab-content-${tabNumber}`).classList.add('active');
+    };
+
+    // Accordion functions
+    window.toggleAccordion = function(sectionNumber, event) {
+      const item = (event && event.target ? event.target : window.event.target).closest('.accordion-item');
+      item.classList.toggle('active');
+    };
+
+    // Overlay functions
+    window.showOverlay = function(overlayId) {
+      document.getElementById(overlayId).classList.remove('hidden');
+      
+      if (overlayId === 'overlay1') {
+        setTimeout(() => hideOverlay('overlay1'), 2000);
+      }
+    };
+
+    window.hideOverlay = function(overlayId) {
+      document.getElementById(overlayId).classList.add('hidden');
+    };
+
+    // Log actions
+    function logAction(message) {
+      const results = document.getElementById('action-results');
+      const div = document.createElement('div');
+      div.className = 'alert info';
+      div.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+      results.appendChild(div);
+      
+      setTimeout(() => div.remove(), 5000);
+    }
+
+    // Apply variations
+    initVariations({
+      buttons: {
+        '.btn': randomChoice([
+          ['Open Simple Modal', 'Show Modal', 'Display Dialog', 'Open Dialog'],
+          ['Open Confirmation Dialog', 'Confirm', 'Show Confirmation', 'Confirm Action'],
+          ['Actions Menu', 'Menu', 'Options', 'Actions'],
+          ['Close', 'Dismiss', 'Cancel', 'OK']
+        ])
+      }
+    });
+  </script>
+</body>
+</html>

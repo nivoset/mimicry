@@ -19,7 +19,8 @@
     "build": "tsc",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
-    "test:debug": "playwright test --debug"
+    "test:debug": "playwright test --debug",
+    "serve": "http-server test-site -p 3000 -c-1"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,7 @@
   "dependencies": {
     "ai": "^6.0.3",
     "dotenv": "^17.2.3",
+    "http-server": "^14.1.1",
     "typescript": "^5.9.3",
     "zod": "^4.2.1"
   },
