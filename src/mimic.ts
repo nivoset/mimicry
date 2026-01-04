@@ -23,6 +23,29 @@ import type { StepExecutionResult } from './mimic/types.js';
 export type Mimic = (steps: TemplateStringsArray, ...args: unknown[]) => Promise<void>;
 
 /**
+ * Test context that tracks previous state and actions for better decision-making
+ */
+export interface TestContext {
+  /** Previous steps that have been executed */
+  previousSteps: Array<{
+    stepIndex: number;
+    stepText: string;
+    actionKind: string;
+    url?: string;
+    pageTitle?: string;
+  }>;
+  /** Current page state */
+  currentState: {
+    url: string;
+    pageTitle: string;
+  };
+  /** Total number of steps in the test */
+  totalSteps: number;
+  /** Current step index */
+  currentStepIndex: number;
+}
+
+/**
  * Schema for intent accomplishment check result
  * 
  * Note: All fields must be required (no .optional()) for AI SDK structured output compatibility.
@@ -237,6 +260,28 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
     
     try {
       await test.step(step, async () => {
+        // Build test context from previous steps and current state
+        const currentUrl = page.url();
+        const currentPageTitle = await page.title().catch(() => 'Unknown');
+        
+        const testContext: TestContext = {
+          previousSteps: executedSteps.map((executedStep) => ({
+            stepIndex: executedStep.stepIndex,
+            stepText: executedStep.stepText,
+            actionKind: executedStep.actionKind,
+            // Extract URL from navigation actions if available
+            url: executedStep.actionKind === 'navigation' 
+              ? (executedStep.actionDetails as any).params?.url || undefined
+              : undefined,
+          })),
+          currentState: {
+            url: currentUrl,
+            pageTitle: currentPageTitle,
+          },
+          totalSteps: steps.length,
+          currentStepIndex: stepIndex,
+        };
+        
         // Track all actions taken for this step
         const stepActions: StepExecutionResult[] = [];
         const maxActionsPerStep = 10; // Prevent infinite loops
@@ -258,14 +303,14 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
           }
           
           // Get the next action to execute for this step
-          const baseAction = await getBaseAction(page, brains, step);
+          const baseAction = await getBaseAction(page, brains, step, testContext);
           
           let stepResult: StepExecutionResult;
           
           switch (baseAction.kind) {
             case 'navigation':
               // Navigation actions will log their own plain English annotations
-              const navigationAction = await getNavigationAction(page, brains, step); 
+              const navigationAction = await getNavigationAction(page, brains, step, testContext); 
               const executedNavAction = await executeNavigationAction(page, navigationAction, testInfo, step);
               
               stepResult = {
@@ -279,7 +324,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
             case 'click':
               // Click actions will log their own plain English annotations
               const targetElements = await captureTargets(page, { interactableOnly: true });
-              const clickActionResult = await getClickAction(page, brains, step, targetElements);
+              const clickActionResult = await getClickAction(page, brains, step, targetElements, testContext);
               // TODO: better way to work out if the top priority candidate is a clickable element
               const selectedCandidate = clickActionResult.candidates.find(Boolean);
               if (!selectedCandidate) {
@@ -310,7 +355,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
             case 'form update':
               // Form actions will log their own plain English annotations
               const formElements = await captureTargets(page, { interactableOnly: true });
-              const formActionResult = await getFormAction(page, brains, step, formElements);
+              const formActionResult = await getFormAction(page, brains, step, formElements, testContext);
               
               // Find the target form element by matching step description
               // Try to find element that matches keywords from the step (name, email, etc.)

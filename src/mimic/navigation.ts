@@ -7,12 +7,28 @@ import {
 } from './schema/action.js'
 import { countTokens } from '../utils/token-counter.js';
 import { addAnnotation } from './annotations.js';
+import type { TestContext } from '../mimic.js';
 
 export const getNavigationAction = async (
   _page: Page, 
   brain: LanguageModel, 
-  action: string
+  action: string,
+  testContext?: TestContext
 ): Promise<NavigationAction> => {
+  // Build context description for the prompt
+  const contextDescription = testContext ? `
+**Test Context:**
+- Current URL: ${testContext.currentState.url}
+- Current Page Title: ${testContext.currentState.pageTitle}
+- Step ${testContext.currentStepIndex + 1} of ${testContext.totalSteps}
+${testContext.previousSteps.length > 0 ? `
+**Previous Steps Executed:**
+${testContext.previousSteps.map((prevStep, idx) => 
+  `${idx + 1}. Step ${prevStep.stepIndex + 1}: "${prevStep.stepText}" (${prevStep.actionKind}${prevStep.url ? ` → ${prevStep.url}` : ''})`
+).join('\n')}
+` : ''}
+` : '';
+
   const res = await generateText({
     model: brain,
     maxRetries: 3,
@@ -25,6 +41,7 @@ Your task is to process a single Gherkin step and determine whether it represent
 - goForward: go forward to the next page, or navigate forward in the browser history
 - refresh: refresh the current page, or reload the page
 
+${contextDescription}
 **Input Gherkin step:** ${action}
 
 **Instructions:**
@@ -32,10 +49,10 @@ Your task is to process a single Gherkin step and determine whether it represent
 2. Provide a clear, human-readable description of what navigation is happening
    - For navigate/openPage: "Navigate to [page name or URL]" (e.g., "Navigate to login page", "Navigate to https://example.com")
    - Do not hallucinate the domain, if none are mentioned, just pass the uri (e.g., "/login")
-   - For goBack: "Go back to previous page in browser history"
-   - For goForward: "Go forward to next page in browser history"
-   - For refresh: "Refresh the current page"
-   - For closePage: "Close the current browser page/tab"
+   - For goBack: "Go back to previous page in browser history" (the system will add the specific URL information)
+   - For goForward: "Go forward to next page in browser history" (the system will add the specific URL information)
+   - For refresh: "Refresh the current page" (the system will add the specific URL information)
+   - For closePage: "Close the current browser page/tab" (the system will add the specific URL information)
     
     `,
     output: Output.object({ schema: zNavigationAction, name: 'navigation' }),
@@ -77,21 +94,39 @@ export const executeNavigationAction = async (
       // Check if page is still open before closing
       if (page.isClosed()) {
         addAnnotation(testInfo, gherkinStep, `→ Page is already closed, cannot close again`);
-        return;
+        return navigationAction;
       }
-      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription}`);
+      // Capture current URL for better traceability
+      const currentUrlBeforeClose = page.url();
+      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (closing page at ${currentUrlBeforeClose})`);
       await page.close();
       break;
     case 'goBack':
-      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription}`);
+      // Capture current URL before going back for better traceability
+      const currentUrlBeforeBack = page.url();
       await page.goBack();
+      try {
+        const urlAfterBack = page.url();
+        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeBack} to ${urlAfterBack})`);
+      } catch {
+        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeBack})`);
+      }
       break;
     case 'goForward':
-      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription}`);
+      // Capture current URL before going forward for better traceability
+      const currentUrlBeforeForward = page.url();
       await page.goForward();
+      try {
+        const urlAfterForward = page.url();
+        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeForward} to ${urlAfterForward})`);
+      } catch {
+        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeForward})`);
+      }
       break;
     case 'refresh':
-      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} to reload all content`);
+      // Capture current URL for better traceability
+      const currentUrlBeforeRefresh = page.url();
+      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} to reload all content (refreshing ${currentUrlBeforeRefresh})`);
       await page.reload();
       break;
     default:

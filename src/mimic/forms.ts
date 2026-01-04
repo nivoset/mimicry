@@ -4,6 +4,7 @@ import z from 'zod';
 import { countTokens } from '../utils/token-counter';
 import { TargetInfo } from './selector';
 import { addAnnotation } from './annotations.js';
+import type { TestContext } from '../mimic.js';
 
 const zFormActionResult = z.object({
   type: z.enum(['keypress', 'type', 'fill', 'select', 'uncheck', 'check', 'setInputFiles', 'clear']),
@@ -25,7 +26,8 @@ export const getFormAction = async (
   _page: Page,
   brain: LanguageModel,
   gherkinStep: string,
-  targetElements: TargetInfo[]
+  targetElements: TargetInfo[],
+  testContext?: TestContext
 ): Promise<FormActionResult> => {
 
   // Format target elements with their indices for the prompt
@@ -110,6 +112,20 @@ export const getFormAction = async (
     })
     .join('\n\n');
 
+  // Build context description for the prompt
+  const contextDescription = testContext ? `
+**Test Context:**
+- Current URL: ${testContext.currentState.url}
+- Current Page Title: ${testContext.currentState.pageTitle}
+- Step ${testContext.currentStepIndex + 1} of ${testContext.totalSteps}
+${testContext.previousSteps.length > 0 ? `
+**Previous Steps Executed:**
+${testContext.previousSteps.map((prevStep, idx) => 
+  `${idx + 1}. Step ${prevStep.stepIndex + 1}: "${prevStep.stepText}" (${prevStep.actionKind}${prevStep.url ? ` → ${prevStep.url}` : ''})`
+).join('\n')}
+` : ''}
+` : '';
+
   const res = await generateText({
     model: brain,
     prompt: `You are an expert Playwright test engineer specializing in mapping Gherkin steps to form interactions.
@@ -122,6 +138,7 @@ You must determine:
 - The type of form action (fill, type, select, check, uncheck, clear, etc.)
 - The value to use (text to type, option to select, etc.)
 
+${contextDescription}
 **Gherkin Step:**
 ${gherkinStep}
 
@@ -129,14 +146,21 @@ ${gherkinStep}
 ${elementsDescription}
 
 **Action Types:**
-- fill: Replace all content in a field
-- type: Type text character by character
-- select: Select an option from dropdown/select
-- check: Check a checkbox
-- uncheck: Uncheck a checkbox
+- fill: Replace all content in a field with text (USE THIS for typing text like email addresses, names, etc.)
+- type: Type text character by character (slower, simulates real typing - use when needed for special cases)
+- select: Select an option from dropdown/select element
+- check: Check a checkbox (USE THIS when step says "check" or "select" a checkbox)
+- uncheck: Uncheck a checkbox (USE THIS when step says "uncheck" or "deselect" a checkbox)
 - clear: Clear field content
-- keypress: Press a specific key
+- keypress: Press a SINGLE KEY ONLY (e.g., "Enter", "Tab", "Escape", "ArrowDown") - DO NOT use for typing text strings or checkboxes
 - setInputFiles: Upload a file
+
+**IMPORTANT:**
+- For typing text (email addresses, names, messages, etc.), ALWAYS use "fill" or "type", NEVER "keypress"
+- For checkboxes, ALWAYS use "check" or "uncheck", NEVER "keypress"
+- "keypress" is ONLY for single keyboard keys like "Enter", "Tab", "Escape", "ArrowUp", "ArrowDown", etc.
+- If the step says "type X into Y" or "fill Y with X", use "fill" (preferred) or "type", NOT "keypress"
+- If the step says "check" or "select" a checkbox, use "check", NOT "keypress"
 
 **Instructions:**
 1. Identify what form action is being requested
@@ -200,9 +224,33 @@ export const executeFormAction = async (
   // Perform the form action with appropriate plain English annotation
   switch (formActionResult.type) {
     case 'keypress':
-      annotationDescription = `→ Pressing key "${formActionResult.params.value}" on the keyboard`;
-      addAnnotation(testInfo, gherkinStep, annotationDescription);
-      await page.keyboard.press(formActionResult.params.value);
+      // Validate that keypress is only used for single keys, not text strings
+      const keyValue = formActionResult.params.value;
+      const validSingleKeys = ['Enter', 'Tab', 'Escape', 'Backspace', 'Delete', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'];
+      
+      // Handle empty or invalid keypress values
+      if (!keyValue || keyValue.trim() === '') {
+        // If empty value and step mentions "check", convert to check action
+        const stepLower = (gherkinStep || '').toLowerCase();
+        if (stepLower.includes('check') || stepLower.includes('select')) {
+          console.warn(`⚠️  keypress action received empty value for checkbox operation - converting to check action`);
+          annotationDescription = `→ Checking ${elementDescription} to select the option`;
+          addAnnotation(testInfo, gherkinStep, annotationDescription);
+          await targetElement.check();
+        } else {
+          throw new Error(`keypress action requires a valid key value, but received empty string. Use 'check' for checkboxes, 'fill' for text input, etc.`);
+        }
+      } else if (keyValue.length > 1 && !validSingleKeys.includes(keyValue)) {
+        // If it's not a valid single key and looks like text, use fill instead
+        console.warn(`⚠️  keypress action received text "${keyValue}" - converting to fill action`);
+        annotationDescription = `→ Filling ${elementDescription} with value "${keyValue}"`;
+        addAnnotation(testInfo, gherkinStep, annotationDescription);
+        await targetElement.fill(keyValue);
+      } else {
+        annotationDescription = `→ Pressing key "${keyValue}" on the keyboard`;
+        addAnnotation(testInfo, gherkinStep, annotationDescription);
+        await page.keyboard.press(keyValue);
+      }
       break;
     case 'type':
       annotationDescription = `→ Typing "${formActionResult.params.value}" using keyboard input`;

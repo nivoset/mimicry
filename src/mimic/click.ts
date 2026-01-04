@@ -8,6 +8,7 @@ import {
 import type { TargetInfo } from './selector.js'
 import { countTokens } from '../utils/token-counter.js';
 import { addAnnotation } from './annotations.js';
+import type { TestContext } from '../mimic.js';
 
 /**
  * Get click action by matching Gherkin step against captured target elements
@@ -20,13 +21,15 @@ import { addAnnotation } from './annotations.js';
  * @param brain - LanguageModel instance for AI analysis
  * @param gherkinStep - The Gherkin step to match (e.g., "I click on the Submit button")
  * @param targetElements - Array of captured target elements from the page
+ * @param testContext - Optional test context with previous steps and current state
  * @returns Promise resolving to ClickActionResult with top candidates and click type
  */
 export const getClickAction = async (
   _page: Page,
   brain: LanguageModel,
   gherkinStep: string,
-  targetElements: TargetInfo[]
+  targetElements: TargetInfo[],
+  testContext?: TestContext
 ): Promise<ClickActionResult> => {
   // Format target elements with their indices for the prompt
   // Include all relevant identifying information
@@ -110,6 +113,20 @@ export const getClickAction = async (
     })
     .join('\n\n');
 
+  // Build context description for the prompt
+  const contextDescription = testContext ? `
+**Test Context:**
+- Current URL: ${testContext.currentState.url}
+- Current Page Title: ${testContext.currentState.pageTitle}
+- Step ${testContext.currentStepIndex + 1} of ${testContext.totalSteps}
+${testContext.previousSteps.length > 0 ? `
+**Previous Steps Executed:**
+${testContext.previousSteps.map((prevStep, idx) => 
+  `${idx + 1}. Step ${prevStep.stepIndex + 1}: "${prevStep.stepText}" (${prevStep.actionKind}${prevStep.url ? ` → ${prevStep.url}` : ''})`
+).join('\n')}
+` : ''}
+` : '';
+
   const prompt = `You are an expert Playwright test engineer specializing in mapping Gherkin steps to concrete DOM interactions.
 
 Your task is to analyze:
@@ -133,8 +150,9 @@ You must return the **top 5 most likely elements** that the Gherkin step is refe
 - If fewer than 5 reasonable matches exist, return fewer.
 - Do NOT assume navigation or side effects — this task is only about **what element is clicked**.
 - For each candidate, provide a **clear, human-readable description** that identifies the element (e.g., "Submit button", "Login link with text 'Sign in'", "Email input field labeled 'Email address'"). This description will be used in test annotations.
+- Consider the test context - what steps came before may help identify the correct element.
 
-
+${contextDescription}
 **Gherkin Step:**
 ${gherkinStep}
 
