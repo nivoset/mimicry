@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card System - Nested Selectors Test</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <style>
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .product-card {
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      background-color: var(--bg-color);
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .product-card h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    
+    .product-card .price {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--success-color);
+      margin: 1rem 0;
+    }
+    
+    .product-card .description {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      min-height: 60px;
+    }
+    
+    .product-card .actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .product-card button {
+      flex: 1;
+    }
+    
+    .product-card .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    
+    .badge-new {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .badge-sale {
+      background-color: #fee2e2;
+      color: #991b1b;
+    }
+    
+    .badge-popular {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="card-system.html">Card System</a></li>
+    </ul>
+  </nav>
+
+  <h1>Card System - Nested Selectors Test</h1>
+  <p>This page contains multiple product cards with identical structure. This tests the ability to use nested selectors to uniquely identify elements within each card.</p>
+  <p class="text-secondary">Each card has the same button labels ("Add to Cart", "View Details"), same text structure, but different content. Nested selectors are needed to target specific cards.</p>
+
+  <div class="card-grid">
+    <!-- Card 1: Laptop -->
+    <div class="product-card" data-testid="product-card-laptop" data-category="electronics" data-product-id="101">
+      <span class="badge badge-new">New</span>
+      <h3>Gaming Laptop Pro</h3>
+      <div class="price">$1,299.99</div>
+      <p class="description">High-performance gaming laptop with RTX 4070 graphics card, 16GB RAM, and 1TB SSD storage.</p>
+      <div class="actions">
+        <button class="btn" data-action="add-to-cart">Add to Cart</button>
+        <button class="btn btn-secondary" data-action="view-details">View Details</button>
+      </div>
+    </div>
+
+    <!-- Card 2: Phone -->
+    <div class="product-card" data-testid="product-card-phone" data-category="electronics" data-product-id="102">
+      <span class="badge badge-sale">Sale</span>
+      <h3>Smartphone Ultra</h3>
+      <div class="price">$899.99</div>
+      <p class="description">Latest flagship smartphone with 256GB storage, 8GB RAM, and triple camera system with 108MP main sensor.</p>
+      <div class="actions">
+        <button class="btn" data-action="add-to-cart">Add to Cart</button>
+        <button class="btn btn-secondary" data-action="view-details">View Details</button>
+      </div>
+    </div>
+
+    <!-- Card 3: Headphones -->
+    <div class="product-card" data-testid="product-card-headphones" data-category="audio" data-product-id="103">
+      <span class="badge badge-popular">Popular</span>
+      <h3>Wireless Headphones</h3>
+      <div class="price">$199.99</div>
+      <p class="description">Premium noise-cancelling wireless headphones with 30-hour battery life and premium sound quality.</p>
+      <div class="actions">
+        <button class="btn" data-action="add-to-cart">Add to Cart</button>
+        <button class="btn btn-secondary" data-action="view-details">View Details</button>
+      </div>
+    </div>
+
+    <!-- Card 4: Tablet -->
+    <div class="product-card" data-testid="product-card-tablet" data-category="electronics" data-product-id="104">
+      <span class="badge badge-new">New</span>
+      <h3>Tablet Pro 12.9"</h3>
+      <div class="price">$1,099.99</div>
+      <p class="description">Professional tablet with 12.9-inch display, M2 chip, and support for Apple Pencil and Magic Keyboard.</p>
+      <div class="actions">
+        <button class="btn" data-action="add-to-cart">Add to Cart</button>
+        <button class="btn btn-secondary" data-action="view-details">View Details</button>
+      </div>
+    </div>
+
+    <!-- Card 5: Watch -->
+    <div class="product-card" data-testid="product-card-watch" data-category="wearables" data-product-id="105">
+      <span class="badge badge-sale">Sale</span>
+      <h3>Smart Watch Series 8</h3>
+      <div class="price">$399.99</div>
+      <p class="description">Advanced smartwatch with health monitoring, GPS, water resistance, and 2-day battery life.</p>
+      <div class="actions">
+        <button class="btn" data-action="add-to-cart">Add to Cart</button>
+        <button class="btn btn-secondary" data-action="view-details">View Details</button>
+      </div>
+    </div>
+
+    <!-- Card 6: Keyboard -->
+    <div class="product-card" data-testid="product-card-keyboard" data-category="accessories" data-product-id="106">
+      <span class="badge badge-popular">Popular</span>
+      <h3>Mechanical Keyboard</h3>
+      <div class="price">$149.99</div>
+      <p class="description">RGB backlit mechanical keyboard with Cherry MX switches, programmable keys, and aluminum frame.</p>
+      <div class="actions">
+        <button class="btn" data-action="add-to-cart">Add to Cart</button>
+        <button class="btn btn-secondary" data-action="view-details">View Details</button>
+      </div>
+    </div>
+
+    <!-- Card 7: Mouse -->
+    <div class="product-card" data-testid="product-card-mouse" data-category="accessories" data-product-id="107">
+      <span class="badge badge-new">New</span>
+      <h3>Wireless Gaming Mouse</h3>
+      <div class="price">$79.99</div>
+      <p class="description">Ergonomic wireless gaming mouse with 12 programmable buttons, 25,600 DPI sensor, and 50-hour battery.</p>
+      <div class="actions">
+        <button class="btn" data-action="add-to-cart">Add to Cart</button>
+        <button class="btn btn-secondary" data-action="view-details">View Details</button>
+      </div>
+    </div>
+
+    <!-- Card 8: Monitor -->
+    <div class="product-card" data-testid="product-card-monitor" data-category="electronics" data-product-id="108">
+      <span class="badge badge-sale">Sale</span>
+      <h3>4K Monitor 27"</h3>
+      <div class="price">$449.99</div>
+      <p class="description">Ultra HD 4K monitor with HDR support, 144Hz refresh rate, and USB-C connectivity for professional work.</p>
+      <div class="actions">
+        <button class="btn" data-action="add-to-cart">Add to Cart</button>
+        <button class="btn btn-secondary" data-action="view-details">View Details</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 3rem;">
+    <h2>Test Scenarios</h2>
+    <p>This page is designed to test nested selector scenarios:</p>
+    <ul>
+      <li><strong>Same button labels:</strong> All cards have "Add to Cart" and "View Details" buttons - requires parent context</li>
+      <li><strong>Same structure:</strong> All cards have identical HTML structure - tests selector nesting</li>
+      <li><strong>Different content:</strong> Each card has unique product name, price, and description</li>
+      <li><strong>Data attributes:</strong> Cards have <code>data-testid</code>, <code>data-category</code>, and <code>data-product-id</code> for testing</li>
+      <li><strong>Badge variations:</strong> Different badges (New, Sale, Popular) can be used for parent selectors</li>
+    </ul>
+    <p><strong>Example nested selector scenarios:</strong></p>
+    <ul>
+      <li>Click "Add to Cart" button in the "Gaming Laptop Pro" card</li>
+      <li>Click "View Details" for the product with badge "Sale"</li>
+      <li>Click "Add to Cart" in the card with category "audio"</li>
+      <li>Click button in card with product-id "105"</li>
+    </ul>
+  </div>
+
+  <script>
+    // Add click handlers to demonstrate functionality
+    document.querySelectorAll('.product-card button').forEach(button => {
+      button.addEventListener('click', function(e) {
+        const card = this.closest('.product-card');
+        const productName = card.querySelector('h3').textContent;
+        const action = this.getAttribute('data-action');
+        const productId = card.getAttribute('data-product-id');
+        
+        alert(`${action === 'add-to-cart' ? 'Added' : 'Viewing details for'}: ${productName} (ID: ${productId})`);
+      });
+    });
+  </script>
+</body>
+</html>

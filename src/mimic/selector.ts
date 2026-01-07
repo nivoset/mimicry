@@ -1,4 +1,17 @@
 import { Locator, Page } from '@playwright/test';
+import type { 
+  SelectorDescriptor,
+  TestIdSelector,
+  RoleSelector,
+  LabelSelector,
+  PlaceholderSelector,
+  AltTextSelector,
+  TitleSelector,
+  TextSelector,
+  CssSelector,
+  AriaRole,
+} from './selectorTypes.js';
+import { verifySelectorUniqueness } from './selectorUtils.js';
 
 /**
  * Browser context types (used in page.evaluate)
@@ -6,26 +19,6 @@ import { Locator, Page } from '@playwright/test';
  */
 type BrowserElement = any;
 type BrowserHTMLAnchorElement = any;
-
-/**
- * TargetInfo: Normalized metadata for a candidate element
- * 
- * This represents an element that could be targeted by a Gherkin step.
- * Collected via Playwright page.evaluate in the browser context.
- */
-export type TargetInfo = {
-  tag: string;                // 'button', 'a', 'input', 'div', ...
-  text: string;               // normalized visible text
-  id: string | null;
-  role: string | null;        // inferred WAI-ARIA role
-  label: string | null;       // associated label or aria-labelledby
-  ariaLabel: string | null;
-  typeAttr: string | null;    // input type, select etc.
-  nameAttr: string | null;
-  href: string | null;
-  dataset: Record<string, string>;
-  nthOfType: number;          // 1-based index among same tag siblings
-};
 
 /**
  * Browser Window interface (subset of actual Window API)
@@ -47,6 +40,26 @@ interface BrowserDocument {
   querySelector(selectors: string): BrowserElement | null;
   querySelectorAll(selectors: string): BrowserElement[] & { length: number; [Symbol.iterator](): IterableIterator<BrowserElement> };
 }
+
+/**
+ * TargetInfo: Normalized metadata for a candidate element
+ * 
+ * This represents an element that could be targeted by a Gherkin step.
+ * Collected via Playwright page.evaluate in the browser context.
+ */
+export type TargetInfo = {
+  tag: string;                // 'button', 'a', 'input', 'div', ...
+  text: string;               // normalized visible text
+  id: string | null;
+  role: string | null;        // inferred WAI-ARIA role
+  label: string | null;       // associated label or aria-labelledby
+  ariaLabel: string | null;
+  typeAttr: string | null;    // input type, select etc.
+  nameAttr: string | null;
+  href: string | null;
+  dataset: Record<string, string>;
+  nthOfType: number;          // 1-based index among same tag siblings
+};
 
 /**
  * Element category types for classification
@@ -347,12 +360,20 @@ export async function captureTargets(
 
     /**
      * Get all data-* attributes
+     * 
+     * @param element - Element to extract data attributes from
+     * @returns Record of camelCase data attribute keys to their values
      */
     function getDataset(element: Element): Record<string, string> {
       const dataset: Record<string, string> = {};
       for (const attr of element.attributes) {
         if (attr.name.startsWith('data-')) {
-          const key = attr.name.replace(/^data-/, '').replace(/-([a-z])/g, (_: string, letter: string) => letter.toUpperCase());
+          // Convert data-test-id to testId (camelCase)
+          // Note: No type annotations in arrow function to avoid serialization issues in page.evaluate
+          // @param {string} _match - Full match string (unused, but required by replace callback)
+          // @param {string} letter - Captured letter group to uppercase
+          // @ts-expect-error - Type annotations removed to prevent serialization issues in browser context
+          const key = attr.name.replace(/^data-/, '').replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase());
           dataset[key] = attr.value;
         }
       }
@@ -655,7 +676,12 @@ async function scoreElementMatch(
     const dataset: Record<string, string> = {};
     for (const attr of el.attributes) {
       if (attr.name.startsWith('data-')) {
-        const key = attr.name.replace(/^data-/, '').replace(/-([a-z])/g, (_: string, letter: string) => letter.toUpperCase());
+        // Convert data-test-id to testId (camelCase)
+        // Note: No type annotations in arrow function to avoid serialization issues in locator.evaluate
+        // @param {string} _match - Full match string (unused, but required by replace callback)
+        // @param {string} letter - Captured letter group to uppercase
+        // @ts-expect-error - Type annotations removed to prevent serialization issues in browser context
+        const key = attr.name.replace(/^data-/, '').replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase());
         dataset[key] = attr.value;
       }
     }
@@ -899,5 +925,574 @@ export async function buildSelectorForTarget(page: Page, target?: TargetInfo): P
   // This is the most fragile selector but ensures we can always find something
   // No need to check for multiple matches here since nth-of-type is already specific
   return page.locator(`${target.tag}:nth-of-type(${target.nthOfType})`);
+}
+
+/**
+ * Generate the best Playwright selector for a given element
+ * 
+ * Analyzes an element and its parent hierarchy to find the best selector
+ * following Playwright's recommended practices. Verifies uniqueness at each step.
+ * 
+ * Priority order:
+ * 1. data-testid → getByTestId()
+ * 2. role + name (aria-label/label) → getByRole()
+ * 3. label → getByLabel()
+ * 4. placeholder → getByPlaceholder()
+ * 5. alt → getByAltText()
+ * 6. title → getByTitle()
+ * 7. text → getByText()
+ * 8. CSS fallback (ID, name, tag + nth-of-type)
+ * 
+ * @param locator - Playwright Locator pointing to the target element
+ * @returns Promise resolving to SelectorDescriptor that uniquely identifies the element
+ */
+export async function generateBestSelectorForElement(
+  locator: Locator
+): Promise<SelectorDescriptor> {
+  const page = locator.page();
+  const targetElementHandle = await locator.elementHandle();
+  
+  if (!targetElementHandle) {
+    throw new Error('Cannot get element handle from locator');
+  }
+  
+  // Get element information in browser context
+  let elementInfo;
+  try {
+    elementInfo = await page.evaluate((element) => {
+      // @ts-ignore - window is available in browser context
+      const win = window;
+      // @ts-ignore - document is available in browser context
+      const doc = document;
+      
+      // Inline all logic to avoid nested functions that get transformed by toolchain
+      // Get visible text - inline logic
+      const style = win.getComputedStyle(element);
+      const isVisible = style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
+      const text = isVisible ? (element.textContent || '').trim().replace(/\s+/g, ' ') : '';
+      
+      // Get label - inline logic
+      let label = null;
+      const ariaLabelAttr = element.getAttribute('aria-label');
+      if (ariaLabelAttr) {
+        label = ariaLabelAttr.trim();
+      } else {
+        const labelledBy = element.getAttribute('aria-labelledby');
+        if (labelledBy) {
+          const labelEl = doc.getElementById(labelledBy);
+          if (labelEl) label = (labelEl.textContent || '').trim();
+        }
+        if (!label && element.id) {
+          const labelFor = doc.querySelector('label[for="' + element.id + '"]');
+          if (labelFor) label = (labelFor.textContent || '').trim();
+        }
+        if (!label) {
+          const parentLabel = element.closest('label');
+          if (parentLabel) label = (parentLabel.textContent || '').trim();
+        }
+      }
+      
+      // Infer role - inline logic
+      let role = element.getAttribute('role');
+      if (!role) {
+        const tag = element.tagName.toLowerCase();
+        if (tag === 'button') {
+          role = 'button';
+        } else if (tag === 'a') {
+          role = 'link';
+        } else if (tag === 'input') {
+          const inputType = (element as any).type;
+          if (inputType === 'button' || inputType === 'submit' || inputType === 'reset') {
+            role = 'button';
+          } else if (inputType === 'checkbox') {
+            role = 'checkbox';
+          } else if (inputType === 'radio') {
+            role = 'radio';
+          } else {
+            role = 'textbox';
+          }
+        } else if (tag === 'select') {
+          role = 'combobox';
+        } else if (tag === 'textarea') {
+          role = 'textbox';
+        } else if (tag === 'img') {
+          role = 'img';
+        }
+      }
+      
+      // Get dataset - inline logic with simple replace (no arrow function)
+      const dataset = {};
+      for (let i = 0; i < element.attributes.length; i++) {
+        const attr = element.attributes[i];
+        if (attr && attr.name && attr.name.startsWith('data-')) {
+          // Convert data-test-id to testId (camelCase) - using simple string manipulation
+          let key = attr.name.replace(/^data-/, '');
+          // Replace -x with X (camelCase conversion)
+          let result = '';
+          let capitalizeNext = false;
+          for (let j = 0; j < key.length; j++) {
+            const char = key[j];
+            if (char) {
+              if (char === '-') {
+                capitalizeNext = true;
+              } else {
+                result += capitalizeNext ? char.toUpperCase() : char;
+                capitalizeNext = false;
+              }
+            }
+          }
+          (dataset as any)[result] = attr.value;
+        }
+      }
+      
+      // Get nth-of-type - inline logic
+      const tagName = element.tagName;
+      let nthOfType = 1;
+      let sibling = element.previousElementSibling;
+      while (sibling) {
+        if (sibling.tagName === tagName) {
+          nthOfType++;
+        }
+        sibling = sibling.previousElementSibling;
+      }
+      
+      return {
+        tag: element.tagName.toLowerCase(),
+        text: text,
+        id: element.id || null,
+        role: role,
+        label: label,
+        ariaLabel: element.getAttribute('aria-label') || null,
+        placeholder: element.getAttribute('placeholder') || null,
+        alt: element.getAttribute('alt') || null,
+        title: element.getAttribute('title') || null,
+        typeAttr: (element as any).type || null,
+        nameAttr: element.getAttribute('name') || null,
+        dataset: dataset,
+        nthOfType: nthOfType,
+      };
+    }, targetElementHandle);
+  } catch (error: any) {
+    // Enhanced error reporting to help identify the exact location of the issue
+    const errorMessage = error?.message || String(error);
+    const errorStack = error?.stack || '';
+    
+    // Check if this is the __name error
+    if (errorMessage.includes('__name') || errorStack.includes('__name')) {
+      console.error('Error in generateBestSelectorForElement - page.evaluate failed');
+      console.error('Error message:', errorMessage);
+      console.error('Error stack:', errorStack);
+      console.error('This error typically occurs when TypeScript type annotations are used in arrow functions within page.evaluate');
+      console.error('Please check for any remaining type annotations in the evaluate function');
+    }
+    
+    throw new Error(
+      `Failed to evaluate element in browser context: ${errorMessage}. ` +
+      `This may be caused by TypeScript type annotations in the evaluate function. ` +
+      `Original error: ${errorStack}`
+    );
+  }
+  
+  // Find the best parent/ancestor selector by checking multiple levels and selector types
+  // This handles cases where the locator was created from a parent chain
+  // Returns the best parent selector found, or null if none found
+  const findBestParentSelector = async (): Promise<SelectorDescriptor | null> => {
+    const parentCandidates = await page.evaluate((element) => {
+      const candidates = [];
+      let current = element.parentElement;
+      let depth = 0;
+      const maxDepth = 10; // Limit depth to avoid going too far up
+      
+      while (current && current.tagName !== 'BODY' && current.tagName !== 'HTML' && depth < maxDepth) {
+        // Get all relevant information about this ancestor
+        const testId = current.getAttribute('data-testid');
+        const role = current.getAttribute('role');
+        const id = current.id;
+        const ariaLabel = current.getAttribute('aria-label');
+        const label = current.getAttribute('aria-labelledby');
+        
+        // Get visible text for role/text matching
+        const style = window.getComputedStyle(current);
+        const isVisible = style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
+        const text = isVisible ? (current.textContent || '').trim().replace(/\s+/g, ' ').substring(0, 100) : '';
+        
+        // Infer role if not explicitly set
+        let inferredRole = role;
+        if (!inferredRole) {
+          const tag = current.tagName.toLowerCase();
+          if (tag === 'section' || tag === 'article' || tag === 'aside' || tag === 'nav' || tag === 'main' || tag === 'header' || tag === 'footer') {
+            inferredRole = tag;
+          } else if (tag === 'form') {
+            inferredRole = 'form';
+          }
+        }
+        
+        // Get dataset
+        const dataset = {};
+        for (let i = 0; i < current.attributes.length; i++) {
+          const attr = current.attributes[i];
+          if (attr && attr.name && attr.name.startsWith('data-')) {
+            let key = attr.name.replace(/^data-/, '');
+            let result = '';
+            let capitalizeNext = false;
+            for (let j = 0; j < key.length; j++) {
+              const char = key[j];
+              if (char) {
+                if (char === '-') {
+                  capitalizeNext = true;
+                } else {
+                  result += capitalizeNext ? char.toUpperCase() : char;
+                  capitalizeNext = false;
+                }
+              }
+            }
+            (dataset as any)[result] = attr.value;
+          }
+        }
+        
+        candidates.push({
+          depth,
+          testId,
+          role: inferredRole,
+          id,
+          ariaLabel,
+          label,
+          text,
+          dataset,
+          tag: current.tagName.toLowerCase(),
+        });
+        
+        current = current.parentElement;
+        depth++;
+      }
+      
+      return candidates;
+    }, targetElementHandle);
+    
+    // Try to find the best parent selector, prioritizing:
+    // 1. testid
+    // 2. role with name/text
+    // 3. role alone (if unique enough)
+    // 4. label
+    // 5. id (as CSS, but better than nth-of-type)
+    
+    for (const candidate of parentCandidates) {
+      // Priority 1: testid
+      const dataset = candidate.dataset as Record<string, string>;
+      if (dataset && dataset.testid) {
+        const parentDescriptor: TestIdSelector = {
+          type: 'testid',
+          value: dataset.testid,
+        };
+        // Check if this parent selector is unique enough
+        const parentLocator = page.getByTestId(dataset.testid);
+        const count = await parentLocator.count();
+        if (count === 1) {
+          return parentDescriptor;
+        }
+        // Even if not unique, it might work with a child selector
+        return parentDescriptor;
+      }
+      
+      // Priority 2: role with name/text
+      if (candidate.role) {
+        const name = candidate.ariaLabel || candidate.text;
+        if (name && name.trim() && name.length < 100) {
+          const parentDescriptor: RoleSelector = {
+            type: 'role',
+            role: candidate.role as AriaRole,
+            name: name.trim(),
+            exact: false,
+          };
+          const parentLocator = page.getByRole(candidate.role as AriaRole, { name: name.trim() });
+          const count = await parentLocator.count();
+          if (count === 1) {
+            return parentDescriptor;
+          }
+          // Try with exact match
+          const parentDescriptorExact: RoleSelector = {
+            type: 'role',
+            role: candidate.role as AriaRole,
+            name: name.trim(),
+            exact: true,
+          };
+          const parentLocatorExact = page.getByRole(candidate.role as AriaRole, { name: name.trim(), exact: true });
+          const countExact = await parentLocatorExact.count();
+          if (countExact === 1) {
+            return parentDescriptorExact;
+          }
+          // Even if not unique, it might work with a child selector
+          return parentDescriptor;
+        }
+        
+        // Role without name - check if unique
+        const parentDescriptor: RoleSelector = {
+          type: 'role',
+          role: candidate.role as AriaRole,
+        };
+        const parentLocator = page.getByRole(candidate.role as AriaRole);
+        const count = await parentLocator.count();
+        // If unique, return it
+        if (count === 1) {
+          return parentDescriptor;
+        }
+        // Even if not unique, it might work with a child selector
+        return parentDescriptor;
+      }
+      
+      // Priority 3: label (for form elements)
+      if (candidate.label) {
+        const parentDescriptor: LabelSelector = {
+          type: 'label',
+          value: candidate.label,
+          exact: false,
+        };
+        const parentLocator = page.getByLabel(candidate.label);
+        const count = await parentLocator.count();
+        if (count === 1) {
+          return parentDescriptor;
+        }
+        return parentDescriptor;
+      }
+      
+      // Priority 4: id (better than CSS nth-of-type, but still CSS)
+      if (candidate.id) {
+        const parentDescriptor: CssSelector = {
+          type: 'css',
+          selector: `#${candidate.id}`,
+        };
+        const parentLocator = page.locator(`#${candidate.id}`);
+        const count = await parentLocator.count();
+        if (count === 1) {
+          return parentDescriptor;
+        }
+      }
+    }
+    
+    return null;
+  };
+  
+  const bestParentSelector = await findBestParentSelector();
+
+  // Try to find selector on element itself first
+  const tryElementSelector = async (): Promise<SelectorDescriptor | null> => {
+    // Priority 1: data-testid
+    const dataset = elementInfo.dataset as Record<string, string>;
+    if (dataset && dataset.testid) {
+      const descriptor: TestIdSelector = {
+        type: 'testid',
+        value: dataset.testid,
+      };
+      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+        return descriptor;
+      }
+    }
+    
+    // Priority 2: role + name
+    if (elementInfo.role) {
+      const name = elementInfo.ariaLabel || elementInfo.label || elementInfo.text;
+      if (name && name.trim()) {
+        // Try exact match first
+        const descriptorExact: RoleSelector = {
+          type: 'role',
+          role: elementInfo.role as AriaRole,
+          name: name.trim(),
+          exact: true,
+        };
+        if (await verifySelectorUniqueness(page, descriptorExact, targetElementHandle)) {
+          return descriptorExact;
+        }
+        
+        // Try non-exact match
+        const descriptor: RoleSelector = {
+          type: 'role',
+          role: elementInfo.role as AriaRole,
+          name: name.trim(),
+          exact: false,
+        };
+        if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+          return descriptor;
+        }
+      }
+      
+      // Role without name
+      const descriptor: RoleSelector = {
+        type: 'role',
+        role: elementInfo.role as AriaRole,
+      };
+      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+        return descriptor;
+      }
+    }
+    
+    // Priority 3: label
+    if (elementInfo.label) {
+      const descriptorExact: LabelSelector = {
+        type: 'label',
+        value: elementInfo.label.trim(),
+        exact: true,
+      };
+      if (await verifySelectorUniqueness(page, descriptorExact, targetElementHandle)) {
+        return descriptorExact;
+      }
+      
+      const descriptor: LabelSelector = {
+        type: 'label',
+        value: elementInfo.label.trim(),
+        exact: false,
+      };
+      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+        return descriptor;
+      }
+    }
+    
+    // Priority 4: placeholder
+    if (elementInfo.placeholder) {
+      const descriptor: PlaceholderSelector = {
+        type: 'placeholder',
+        value: elementInfo.placeholder.trim(),
+        exact: false,
+      };
+      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+        return descriptor;
+      }
+    }
+    
+    // Priority 5: alt
+    if (elementInfo.alt) {
+      const descriptor: AltTextSelector = {
+        type: 'alt',
+        value: elementInfo.alt.trim(),
+        exact: false,
+      };
+      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+        return descriptor;
+      }
+    }
+    
+    // Priority 6: title
+    if (elementInfo.title) {
+      const descriptor: TitleSelector = {
+        type: 'title',
+        value: elementInfo.title.trim(),
+        exact: false,
+      };
+      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+        return descriptor;
+      }
+    }
+    
+    // Priority 7: text
+    if (elementInfo.text && elementInfo.text.trim()) {
+      const trimmedText = elementInfo.text.trim();
+      // For short text, try exact match
+      if (trimmedText.length < 50) {
+        const descriptorExact: TextSelector = {
+          type: 'text',
+          value: trimmedText,
+          exact: true,
+        };
+        if (await verifySelectorUniqueness(page, descriptorExact, targetElementHandle)) {
+          return descriptorExact;
+        }
+      }
+      
+      const descriptor: TextSelector = {
+        type: 'text',
+        value: trimmedText,
+        exact: false,
+      };
+      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+        return descriptor;
+      }
+    }
+    
+    // Don't use CSS here - only as absolute last resort after trying parent selectors
+    // CSS selectors are less stable and harder to maintain
+    return null;
+  };
+  
+  // If we found a good parent selector, prioritize creating a nested selector
+  // This handles cases where the locator was created from a parent chain like:
+  // page.getByTestId('parent').getByRole('button', { name: 'Add to Cart' })
+  // or page.getByRole('section').getByRole('button', { name: 'Add to Cart' })
+  if (bestParentSelector) {
+    const childSelector = await tryElementSelector();
+    
+    // Create nested selector with parent and child
+    const createNestedSelector = (parent: SelectorDescriptor, child: SelectorDescriptor): SelectorDescriptor => {
+      // Clone parent and add child
+      const nested = { ...parent };
+      (nested as any).child = child;
+      return nested as SelectorDescriptor;
+    };
+    
+    // Always create nested selector if we have a parent and child selector
+    // The combination should be unique even if child alone isn't
+    if (childSelector) {
+      const nestedDescriptor = createNestedSelector(bestParentSelector, childSelector);
+      // Verify the nested selector is unique
+      if (await verifySelectorUniqueness(page, nestedDescriptor, targetElementHandle)) {
+        return nestedDescriptor;
+      }
+    }
+    
+    // Even if child selector generation failed, try with a basic role/text selector
+    // This handles cases where the element has a role but tryElementSelector didn't find it unique
+    if (elementInfo.role) {
+      const name = elementInfo.ariaLabel || elementInfo.label || elementInfo.text;
+      if (name && name.trim()) {
+        const childSelector: RoleSelector = {
+          type: 'role',
+          role: elementInfo.role as AriaRole,
+          name: name.trim(),
+          exact: false,
+        };
+        const nestedDescriptor = createNestedSelector(bestParentSelector, childSelector);
+        if (await verifySelectorUniqueness(page, nestedDescriptor, targetElementHandle)) {
+          return nestedDescriptor;
+        }
+      }
+      // Try role without name
+      const childSelector: RoleSelector = {
+        type: 'role',
+        role: elementInfo.role as AriaRole,
+      };
+      const nestedDescriptor = createNestedSelector(bestParentSelector, childSelector);
+      if (await verifySelectorUniqueness(page, nestedDescriptor, targetElementHandle)) {
+        return nestedDescriptor;
+      }
+    }
+    
+    // Try with text selector if available
+    if (elementInfo.text && elementInfo.text.trim() && elementInfo.text.length < 50) {
+      const childSelector: TextSelector = {
+        type: 'text',
+        value: elementInfo.text.trim(),
+        exact: false,
+      };
+      const nestedDescriptor = createNestedSelector(bestParentSelector, childSelector);
+      if (await verifySelectorUniqueness(page, nestedDescriptor, targetElementHandle)) {
+        return nestedDescriptor;
+      }
+    }
+  }
+  
+  // Try element itself first (if no good parent found)
+  if (!bestParentSelector) {
+    const elementSelector = await tryElementSelector();
+    if (elementSelector) {
+      return elementSelector;
+    }
+  }
+  
+  // Final fallback: CSS selector (only if nothing else works)
+  // This is the absolute last resort - prefer nested selectors over CSS
+  const fallback: CssSelector = {
+    type: 'css',
+    selector: `${elementInfo.tag}:nth-of-type(${elementInfo.nthOfType})`,
+  };
+  
+  return fallback;
 }
 
