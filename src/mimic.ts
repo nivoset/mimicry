@@ -13,7 +13,7 @@ import { buildSelectorForTarget, captureTargets, type TargetInfo } from './mimic
 import { executeClickAction, getClickAction } from './mimic/click.js';
 import { getFormAction, executeFormAction, type FormActionResult } from './mimic/forms.js';
 import { startTestCase, countTokens } from './utils/token-counter.js';
-import { hashTestText, getSnapshot, saveSnapshot, recordFailure, shouldUseSnapshot } from './mimic/storage.js';
+import { hashTestText, hashStepText, getSnapshot, saveSnapshot, recordFailure, shouldUseSnapshot } from './mimic/storage.js';
 import { replayFromSnapshot } from './mimic/replay.js';
 import { isTroubleshootMode } from './mimic/cli.js';
 import { addAnnotation } from './mimic/annotations.js';
@@ -463,7 +463,8 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
   }
 
   // Save snapshot on successful completion
-  // Only save if we executed at least as many steps as input lines
+  // Only save if we executed at least as many steps as input lines and all steps succeeded
+  // (We only reach here if no errors were thrown, meaning all steps succeeded)
   if (testFilePath && executedSteps.length > 0) {
     // Count unique steps executed (by stepIndex)
     const uniqueStepIndices = new Set(executedSteps.map(step => step.stepIndex));
@@ -474,17 +475,34 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
       // Check if this was a regeneration (snapshot existed but we regenerated)
       const existingSnapshot = await getSnapshot(testFilePath, testHash);
       const wasRegeneration = existingSnapshot !== null;
+      const now = new Date().toISOString();
+      
+      // Hash each step text and create snapshot steps with hashes
+      const snapshotSteps = executedSteps.map(step => ({
+        stepHash: hashStepText(step.stepText),
+        stepIndex: step.stepIndex,
+        stepText: step.stepText,
+        actionKind: step.actionKind,
+        actionDetails: step.actionDetails,
+        targetElement: step.targetElement,
+        executedAt: now,
+      }));
       
       await saveSnapshot(testFilePath, {
         testHash,
         testText: input,
-        createdAt: existingSnapshot?.createdAt || new Date().toISOString(),
-        lastPassedAt: new Date().toISOString(),
-        lastFailedAt: null,
-        steps: executedSteps.map(step => ({
-          ...step,
-          executedAt: new Date().toISOString(),
-        })),
+        steps: snapshotSteps,
+        flags: {
+          needsRetry: false,
+          hasErrors: false,
+          troubleshootingEnabled: isTroubleshoot,
+          skipSnapshot: false,
+          forceRegenerate: false,
+          debugMode: false,
+          createdAt: existingSnapshot?.flags?.createdAt || now,
+          lastPassedAt: now,
+          lastFailedAt: null,
+        },
       });
       
       // Add annotation if this was a regeneration
@@ -521,9 +539,8 @@ export const createMimic = (config: {
   testInfo?: TestInfo,
 }) => {
   // Extract test file path from TestInfo if available
-  const testFilePath = config.testInfo?.file 
-    ? dirname(config.testInfo.file) 
-    : undefined;
+  // Pass full file path (not directory) to storage functions
+  const testFilePath = config.testInfo?.file || undefined;
   
   // Check troubleshoot mode
   const troubleshootMode = isTroubleshootMode();

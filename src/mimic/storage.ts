@@ -7,7 +7,7 @@
 
 import { createHash } from 'crypto';
 import fs from 'node:fs/promises';
-import { join } from 'node:path';
+import { join, dirname, basename } from 'node:path';
 import type { Snapshot } from './types.js';
 
 /**
@@ -23,37 +23,63 @@ export function hashTestText(testText: string): string {
 }
 
 /**
- * Get the snapshot directory path for a test file
+ * Generate a hash from step text to create a unique identifier
  * 
- * @param testFilePath - Directory path of the test file
- * @returns Path to the .mimic-snapshots directory
+ * @param stepText - The step text (Gherkin step)
+ * @returns SHA-256 hash of the step text (first 16 characters for readability)
  */
-export function getSnapshotDir(testFilePath: string): string {
-  return join(testFilePath, '.mimic-snapshots');
+export function hashStepText(stepText: string): string {
+  const hash = createHash('sha256');
+  hash.update(stepText.trim());
+  return hash.digest('hex').substring(0, 16);
 }
 
 /**
- * Get the snapshot file path for a specific test
+ * Extract test file name from full file path
  * 
- * @param testFilePath - Directory path of the test file
- * @param testHash - Hash identifier for the test
- * @returns Full path to the snapshot JSON file
+ * @param testFilePath - Full path to the test file
+ * @returns Test file name without extension (e.g., "agentic" from "agentic.spec.ts")
  */
-export function getSnapshotPath(testFilePath: string, testHash: string): string {
-  const snapshotDir = getSnapshotDir(testFilePath);
-  return join(snapshotDir, `${testHash}.json`);
+export function getTestFileName(testFilePath: string): string {
+  const fileName = basename(testFilePath);
+  // Remove extension (e.g., "agentic.spec.ts" -> "agentic.spec" -> "agentic")
+  const nameWithoutExt = fileName.replace(/\.(spec|test)\.(ts|js|tsx|jsx)$/, '');
+  return nameWithoutExt;
 }
 
 /**
- * Ensure the snapshot directory exists
+ * Get the mimic directory path for a test file
  * 
- * @param testFilePath - Directory path of the test file
+ * @param testFilePath - Full path to the test file
+ * @returns Path to the __mimic__ directory
+ */
+export function getMimicDir(testFilePath: string): string {
+  const testFileDir = dirname(testFilePath);
+  return join(testFileDir, '__mimic__');
+}
+
+/**
+ * Get the mimic file path for a test file
+ * 
+ * @param testFilePath - Full path to the test file
+ * @returns Full path to the mimic JSON file (e.g., "__mimic__/agentic.mimic.json")
+ */
+export function getMimicFilePath(testFilePath: string): string {
+  const mimicDir = getMimicDir(testFilePath);
+  const testFileName = getTestFileName(testFilePath);
+  return join(mimicDir, `${testFileName}.mimic.json`);
+}
+
+/**
+ * Ensure the __mimic__ directory exists
+ * 
+ * @param testFilePath - Full path to the test file
  * @returns Promise that resolves when directory is created or already exists
  */
-async function ensureSnapshotDir(testFilePath: string): Promise<void> {
-  const snapshotDir = getSnapshotDir(testFilePath);
+async function ensureMimicDir(testFilePath: string): Promise<void> {
+  const mimicDir = getMimicDir(testFilePath);
   try {
-    await fs.mkdir(snapshotDir, { recursive: true });
+    await fs.mkdir(mimicDir, { recursive: true });
   } catch (error) {
     // Directory might already exist, which is fine
     if (error instanceof Error && !error.message.includes('EEXIST')) {
@@ -63,9 +89,41 @@ async function ensureSnapshotDir(testFilePath: string): Promise<void> {
 }
 
 /**
- * Read a snapshot from disk
+ * Interface for the mimic file structure containing multiple tests
+ */
+interface MimicFile {
+  tests: Snapshot[];
+}
+
+/**
+ * Get the snapshot directory path for a test file (legacy support)
  * 
  * @param testFilePath - Directory path of the test file
+ * @returns Path to the .mimic-snapshots directory
+ * @deprecated Use getMimicDir instead
+ */
+export function getSnapshotDir(testFilePath: string): string {
+  return join(testFilePath, '.mimic-snapshots');
+}
+
+/**
+ * Get the snapshot file path for a specific test (legacy support)
+ * 
+ * @param testFilePath - Directory path of the test file
+ * @param testHash - Hash identifier for the test
+ * @returns Full path to the snapshot JSON file
+ * @deprecated Use getMimicFilePath instead
+ */
+export function getSnapshotPath(testFilePath: string, testHash: string): string {
+  const snapshotDir = getSnapshotDir(testFilePath);
+  return join(snapshotDir, `${testHash}.json`);
+}
+
+
+/**
+ * Read a snapshot from disk
+ * 
+ * @param testFilePath - Full path to the test file
  * @param testHash - Hash identifier for the test
  * @returns Snapshot object if found, null otherwise
  */
@@ -77,7 +135,40 @@ export async function getSnapshot(
     return null;
   }
 
-  const snapshotPath = getSnapshotPath(testFilePath, testHash);
+  const mimicFilePath = getMimicFilePath(testFilePath);
+  
+  try {
+    const content = await fs.readFile(mimicFilePath, 'utf-8');
+    const mimicFile = JSON.parse(content) as MimicFile;
+    
+    // Find the test by testHash
+    const snapshot = mimicFile.tests?.find(test => test.testHash === testHash);
+    return snapshot || null;
+  } catch (error) {
+    // File doesn't exist or is invalid - return null
+    if (error instanceof Error && 'code' in error && (error as any).code === 'ENOENT') {
+      // Try legacy location for backward compatibility
+      return getSnapshotLegacy(testFilePath, testHash);
+    }
+    // For other errors (parse errors, etc.), log and return null
+    console.warn(`Failed to read snapshot at ${mimicFilePath}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Read a snapshot from legacy location (backward compatibility)
+ * 
+ * @param testFilePath - Full path to the test file
+ * @param testHash - Hash identifier for the test
+ * @returns Snapshot object if found, null otherwise
+ */
+async function getSnapshotLegacy(
+  testFilePath: string,
+  testHash: string
+): Promise<Snapshot | null> {
+  const testFileDir = dirname(testFilePath);
+  const snapshotPath = getSnapshotPath(testFileDir, testHash);
   
   try {
     const content = await fs.readFile(snapshotPath, 'utf-8');
@@ -88,8 +179,6 @@ export async function getSnapshot(
     if (error instanceof Error && 'code' in error && (error as any).code === 'ENOENT') {
       return null;
     }
-    // For other errors (parse errors, etc.), log and return null
-    console.warn(`Failed to read snapshot at ${snapshotPath}:`, error);
     return null;
   }
 }
@@ -97,7 +186,10 @@ export async function getSnapshot(
 /**
  * Save a snapshot to disk
  * 
- * @param testFilePath - Directory path of the test file
+ * Saves all tests from a test file into a single JSON file in __mimic__ directory.
+ * Updates existing test entry if testHash already exists, otherwise adds new test.
+ * 
+ * @param testFilePath - Full path to the test file
  * @param snapshot - Snapshot object to save
  * @returns Promise that resolves when snapshot is saved
  */
@@ -109,19 +201,64 @@ export async function saveSnapshot(
     return;
   }
 
-  await ensureSnapshotDir(testFilePath);
-  const snapshotPath = getSnapshotPath(testFilePath, snapshot.testHash);
+  await ensureMimicDir(testFilePath);
+  const mimicFilePath = getMimicFilePath(testFilePath);
   
-  // Update timestamps
+  // Read existing file if it exists
+  let mimicFile: MimicFile = { tests: [] };
+  try {
+    const content = await fs.readFile(mimicFilePath, 'utf-8');
+    mimicFile = JSON.parse(content) as MimicFile;
+    // Ensure tests array exists
+    if (!mimicFile.tests) {
+      mimicFile.tests = [];
+    }
+  } catch (error) {
+    // File doesn't exist - start with empty structure
+    if (error instanceof Error && 'code' in error && (error as any).code === 'ENOENT') {
+      mimicFile = { tests: [] };
+    } else {
+      // For other errors, log and start fresh
+      console.warn(`Failed to read existing mimic file at ${mimicFilePath}, starting fresh:`, error);
+      mimicFile = { tests: [] };
+    }
+  }
+  
+  // Update timestamps in flags
   const now = new Date().toISOString();
-  snapshot.lastPassedAt = now;
-  if (!snapshot.createdAt) {
-    snapshot.createdAt = now;
+  if (!snapshot.flags) {
+    snapshot.flags = {
+      needsRetry: false,
+      hasErrors: false,
+      troubleshootingEnabled: false,
+      skipSnapshot: false,
+      forceRegenerate: false,
+      debugMode: false,
+      createdAt: now,
+      lastPassedAt: now,
+      lastFailedAt: null,
+    };
+  } else {
+    snapshot.flags.lastPassedAt = now;
+    if (!snapshot.flags.createdAt) {
+      snapshot.flags.createdAt = now;
+    }
+  }
+  
+  // Find existing test by testHash and update, or add new
+  const existingIndex = mimicFile.tests.findIndex(test => test.testHash === snapshot.testHash);
+  if (existingIndex >= 0) {
+    // Update existing test
+    mimicFile.tests[existingIndex] = snapshot;
+  } else {
+    // Add new test
+    mimicFile.tests.push(snapshot);
   }
 
+  // Write back to file
   await fs.writeFile(
-    snapshotPath,
-    JSON.stringify(snapshot, null, 2),
+    mimicFilePath,
+    JSON.stringify(mimicFile, null, 2),
     'utf-8'
   );
 }
@@ -129,9 +266,9 @@ export async function saveSnapshot(
 /**
  * Record a test failure timestamp
  * 
- * Updates the snapshot's lastFailedAt timestamp if the snapshot exists.
+ * Updates the snapshot's lastFailedAt timestamp and flags if the snapshot exists.
  * 
- * @param testFilePath - Directory path of the test file
+ * @param testFilePath - Full path to the test file
  * @param testHash - Hash identifier for the test
  * @param failedStepIndex - Index of the step that failed (optional)
  * @param failedStepText - Text of the step that failed (optional)
@@ -152,24 +289,50 @@ export async function recordFailure(
   const snapshot = await getSnapshot(testFilePath, testHash);
   if (!snapshot) {
     // Create a minimal snapshot just for failure tracking
+    const now = new Date().toISOString();
     const failureSnapshot: Snapshot = {
       testHash,
       testText: '',
-      createdAt: new Date().toISOString(),
-      lastPassedAt: null,
-      lastFailedAt: new Date().toISOString(),
       steps: [],
+      flags: {
+        needsRetry: true,
+        hasErrors: true,
+        troubleshootingEnabled: false,
+        skipSnapshot: false,
+        forceRegenerate: false,
+        debugMode: false,
+        createdAt: now,
+        lastPassedAt: null,
+        lastFailedAt: now,
+      },
     };
     await saveSnapshot(testFilePath, failureSnapshot);
     return;
   }
 
   // Update existing snapshot with failure info
-  snapshot.lastFailedAt = new Date().toISOString();
+  if (!snapshot.flags) {
+    const now = new Date().toISOString();
+    snapshot.flags = {
+      needsRetry: true,
+      hasErrors: true,
+      troubleshootingEnabled: false,
+      skipSnapshot: false,
+      forceRegenerate: false,
+      debugMode: false,
+      createdAt: snapshot.flags?.createdAt || now,
+      lastPassedAt: snapshot.flags?.lastPassedAt || null,
+      lastFailedAt: now,
+    };
+  } else {
+    snapshot.flags.lastFailedAt = new Date().toISOString();
+    snapshot.flags.needsRetry = true;
+    snapshot.flags.hasErrors = true;
+  }
   
-  // Store failure details if provided
+  // Store failure details if provided (store in flags for easier access)
   if (failedStepIndex !== undefined || failedStepText || error) {
-    (snapshot as any).failureDetails = {
+    (snapshot.flags as any).failureDetails = {
       failedStepIndex,
       failedStepText,
       error,
@@ -185,13 +348,15 @@ export async function recordFailure(
  * A snapshot should be used if:
  * - It exists
  * - lastPassedAt is more recent than lastFailedAt (or lastFailedAt is null)
+ * - Flags don't indicate it should be skipped
  * 
  * Note: Even in troubleshoot mode, we use snapshots if they've passed.
- * Regeneration only happens if replay fails.
+ * Regeneration will happen only if replay fails.
  * 
- * @param testFilePath - Directory path of the test file
+ * @param testFilePath - Full path to the test file
  * @param testHash - Hash identifier for the test
  * @param troubleshootMode - Whether troubleshoot mode is enabled (unused, kept for compatibility)
+ * @param expectedStepCount - Expected number of steps (optional)
  * @returns true if snapshot should be used, false otherwise
  */
 export async function shouldUseSnapshot(
@@ -212,6 +377,16 @@ export async function shouldUseSnapshot(
     return false;
   }
 
+  // Check if snapshot should be skipped
+  if (snapshot.flags?.skipSnapshot) {
+    return false;
+  }
+
+  // Check if force regenerate is enabled
+  if (snapshot.flags?.forceRegenerate) {
+    return false;
+  }
+
   // Validate that snapshot has at least as many steps as expected input lines
   if (expectedStepCount !== undefined) {
     // Count unique steps in snapshot (by stepIndex)
@@ -225,18 +400,18 @@ export async function shouldUseSnapshot(
   }
 
   // If never passed, don't use snapshot
-  if (!snapshot.lastPassedAt) {
+  if (!snapshot.flags?.lastPassedAt) {
     return false;
   }
 
   // If never failed, use snapshot
-  if (!snapshot.lastFailedAt) {
+  if (!snapshot.flags?.lastFailedAt) {
     return true;
   }
 
   // Compare timestamps: use snapshot if pass is more recent than failure
-  const passTime = new Date(snapshot.lastPassedAt).getTime();
-  const failTime = new Date(snapshot.lastFailedAt).getTime();
+  const passTime = new Date(snapshot.flags.lastPassedAt).getTime();
+  const failTime = new Date(snapshot.flags.lastFailedAt).getTime();
   
   return passTime > failTime;
 }

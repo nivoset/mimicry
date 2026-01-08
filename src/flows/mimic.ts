@@ -1119,6 +1119,229 @@ await page.goto('http://localhost:3000/pages/card-system.html');
 // await browser.close()
 
 // console.log('done')
+await page.evaluate(`
+  (() => {
+    const INTERACTIVE_SELECTOR = \`
+      a[href],
+      button,
+      input,
+      select,
+      textarea,
+      summary,
+      details,
+      [role="button"],
+      [role="link"],
+      [role="checkbox"],
+      [role="menuitem"],
+      [role="option"],
+      [tabindex]:not([tabindex="-1"])
+    \`;
+  
+    const ALLOWED_INLINE_TAGS = new Set([
+      "B","I","STRONG","EM","U","S","SPAN","SMALL",
+      "MARK","CODE","KBD","SAMP","SUP","SUB","BR","WBR",
+    ]);
+  
+    function isDisplayOnlyElement(el) {
+      if (el.matches(INTERACTIVE_SELECTOR)) return false;
+      if (el.querySelector(INTERACTIVE_SELECTOR)) return false;
+  
+      for (let i = 0; i < el.childNodes.length; i++) {
+        const node = el.childNodes[i];
+  
+        if (node.nodeType === Node.TEXT_NODE) continue;
+  
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const childEl = node;
+  
+          if (!ALLOWED_INLINE_TAGS.has(childEl.tagName)) return false;
+          if (!isDisplayOnlyElement(childEl)) return false;
+          continue;
+        }
+  
+        return false;
+      }
+  
+      return true;
+    }
+  
+    // Inject style
+    const style = document.createElement("style");
+    style.textContent = \`
+      [data-badge] { position: relative; }
+      [data-badge]::after {
+        content: attr(data-badge);
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        border-radius: 999px;
+        background: #e11d48;
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 18px;
+        text-align: center;
+        box-shadow: 0 0 0 2px white;
+        pointer-events: none;
+      }
+    \`;
+    document.head.appendChild(style);
+  
+    // Badge interactive elements
+    const interactive = document.querySelectorAll(
+      "button, a, input, select, textarea, details, summary"
+    );
+  
+    interactive.forEach((el, i) => {
+      el.setAttribute("data-badge", String(i + 1));
+    });
+  
+    // Badge display-only elements
+    let displayOnlyCount = 0;
+    const all = document.querySelectorAll("*");
+  
+    for (let i = 0; i < all.length; i++) {
+      const el = all[i];
+      if (!el.hasAttribute("data-badge") && isDisplayOnlyElement(el)) {
+        el.setAttribute("data-badge", String(1000 + displayOnlyCount));
+        displayOnlyCount++;
+      }
+    }
+  })();
+  `);
+
+// await page.evaluate(() => {
+//   // Define constants inside the evaluate function
+//   const INTERACTIVE_SELECTOR = `
+//   a[href],
+//   button,
+//   input,
+//   select,
+//   textarea,
+//   summary,
+//   details,
+//   [role="button"],
+//   [role="link"],
+//   [role="checkbox"],
+//   [role="menuitem"],
+//   [role="option"],
+//   [tabindex]:not([tabindex="-1"])
+// `;
+
+//   const ALLOWED_INLINE_TAGS = new Set([
+//     "B",
+//     "I",
+//     "STRONG",
+//     "EM",
+//     "U",
+//     "S",
+//     "SPAN",
+//     "SMALL",
+//     "MARK",
+//     "CODE",
+//     "KBD",
+//     "SAMP",
+//     "SUP",
+//     "SUB",
+//     "BR",
+//     "WBR",
+//   ]);
+
+//   // Pure JavaScript function - no TypeScript types
+//   function isDisplayOnlyElement(el) {
+//     // 1. Must not be interactive itself
+//     if (el.matches(INTERACTIVE_SELECTOR)) return false;
+
+//     // 2. Must not contain interactive descendants
+//     if (el.querySelector(INTERACTIVE_SELECTOR)) return false;
+
+//     // 3. All child nodes must be either:
+//     //    - Text nodes
+//     //    - Or allowed inline elements (recursively display-only)
+//     for (let i = 0; i < el.childNodes.length; i++) {
+//       const node = el.childNodes[i];
+      
+//       if (node.nodeType === Node.TEXT_NODE) {
+//         if (node.textContent && node.textContent.trim()) continue;
+//         else continue; // whitespace is fine
+//       }
+
+//       if (node.nodeType === Node.ELEMENT_NODE) {
+//         const childEl = node;
+
+//         if (!ALLOWED_INLINE_TAGS.has(childEl.tagName)) {
+//           return false;
+//         }
+
+//         if (!isDisplayOnlyElement(childEl)) {
+//           return false;
+//         }
+
+//         continue;
+//       }
+
+//       // Any other node types disqualify
+//       return false;
+//     }
+
+//     return true;
+//   }
+
+//   // Create and inject style
+//   const style = document.createElement('style');
+//   style.textContent = `
+// /* Apply this class (or selector) to the elements you want numbered */
+// [data-badge] {
+//   position: relative;
+// }
+
+// /* The badge itself */
+// [data-badge]::after {
+//   content: attr(data-badge);
+
+//   position: absolute;
+//   top: -6px;
+//   right: -6px;
+
+//   min-width: 18px;
+//   height: 18px;
+//   padding: 0 5px;
+
+//   border-radius: 999px;
+//   background: #e11d48; /* nice red */
+//   color: white;
+
+//   font-size: 11px;
+//   font-weight: 700;
+//   line-height: 18px;
+//   text-align: center;
+
+//   box-shadow: 0 0 0 2px white;
+//   pointer-events: none;
+// }
+//   `;
+//   document.head.appendChild(style);
+
+//   // Add badges to interactive elements
+//   const interactiveElements = document.querySelectorAll('button, a, input, select, textarea, details, summary, main, section, article, aside, footer, header, nav');
+//   interactiveElements.forEach((card, i) => {
+//     card.setAttribute('data-badge', String(i + 1));
+//   });
+
+//   // Add badges to display-only elements (that don't already have badges)
+//   let displayOnlyCount = 0;
+//   const allElements = document.querySelectorAll('*');
+//   for (let i = 0; i < allElements.length; i++) {
+//     const el = allElements[i];
+//     if (!el.getAttribute('data-badge') && isDisplayOnlyElement(el)) {
+//       el.setAttribute('data-badge', String(1000 + displayOnlyCount));
+//       displayOnlyCount++;
+//     }
+//   }
+// });
 
 import { getFromSelector, getSelectorDescriptor } from '../mimic/selectorDescriptor.js';
 // console.log(await getSelectorDescriptor(await page.getByRole('textbox', { name: 'name' })))
@@ -1131,6 +1354,7 @@ console.log(await getFromSelector(page, {
   child: { type: 'role', role: 'button', name: 'Add to Cart', exact: false }
 }).ariaSnapshot())
 
+await page.screenshot({ path: 'screenshot.png' })
 
 await page.close()
 await browser.close()

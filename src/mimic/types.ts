@@ -13,6 +13,8 @@ import type { TargetInfo } from './selector.js';
  * A single step in a test execution snapshot
  */
 export interface SnapshotStep {
+  /** Hash of the step text for identification */
+  stepHash: string;
   /** Index of the step in the test (0-based) */
   stepIndex: number;
   /** Original step text (Gherkin step) */
@@ -28,6 +30,24 @@ export interface SnapshotStep {
 }
 
 /**
+ * Flags for test execution metadata and configuration
+ */
+export interface SnapshotFlags {
+  /** Metadata flags */
+  needsRetry: boolean;
+  hasErrors: boolean;
+  troubleshootingEnabled: boolean;
+  /** Configuration flags */
+  skipSnapshot: boolean;
+  forceRegenerate: boolean;
+  debugMode: boolean;
+  /** Timestamps */
+  createdAt: string;
+  lastPassedAt: string | null;
+  lastFailedAt: string | null;
+}
+
+/**
  * Complete snapshot of a test execution
  */
 export interface Snapshot {
@@ -35,14 +55,10 @@ export interface Snapshot {
   testHash: string;
   /** Original test text (mimic template string) */
   testText: string;
-  /** When this snapshot was first created */
-  createdAt: string;
-  /** When the test last passed (ISO timestamp) */
-  lastPassedAt: string | null;
-  /** When the test last failed (ISO timestamp, null if never failed) */
-  lastFailedAt: string | null;
   /** Array of executed steps */
   steps: SnapshotStep[];
+  /** Flags for troubleshooting and configuration */
+  flags: SnapshotFlags;
 }
 
 /**
