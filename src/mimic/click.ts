@@ -11,6 +11,7 @@ import type { TestContext } from '../mimic.js';
 import { generateBestSelectorForElement } from './selector.js';
 import { selectorToPlaywrightCode, generateClickCode } from './playwrightCodeGenerator.js';
 import { captureScreenshot } from './markers.js';
+import type { SelectorDescriptor } from './selectorTypes.js';
 
 /**
  * Get click action by matching Gherkin step against captured target elements
@@ -168,7 +169,7 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot to ide
       },
       {
         role: 'user', content: [
-          // { type: 'text', text: prompt }, //TODO put the description of all the content
+          // { type: 'text', text: prompt }, //TODO put the description of all the content?
           {
             type: 'image',
             image: `data:image/png;base64,${screenshotBase64}`
@@ -211,7 +212,7 @@ export const executeClickAction = async (
   selectedCandidate: ClickActionResult['candidates'][0],
   testInfo: TestInfo | undefined,
   gherkinStep: string,
-): Promise<{ actionResult: ClickActionResult; selector: string | null }> => {
+): Promise<{ actionResult: ClickActionResult; selector: SelectorDescriptor | null }> => {
   // Use the LLM-generated description from the candidate
   // This description was created by the AI when matching the element
   const elementDescription = selectedCandidate.description || 'element';
@@ -246,32 +247,29 @@ export const executeClickAction = async (
   // Generate Playwright code equivalent BEFORE performing the action
   // This ensures the element is still available (before navigation/closure)
   let playwrightCode: string | undefined;
-  let selector: string | null = null;
+  let selector: SelectorDescriptor | null = null;
   
   try {
-    // First, try to generate the best selector from the element
-    // This gives us a more descriptive selector than just the mimicId
+    // Generate the best selector descriptor from the element
+    // This gives us a descriptive, stable selector for snapshot storage
     // Use 5-minute timeout (300000ms) for slow tests - selector generation can be slow
     const selectorDescriptor = await generateBestSelectorForElement(element, { timeout: 300000 });
     const selectorCode = selectorToPlaywrightCode(selectorDescriptor);
     playwrightCode = generateClickCode(selectorCode, clickActionResult.clickType);
     
-    // Also get selector string for snapshot storage
-    try {
-      const locatorString = element.toString();
-      if (locatorString && locatorString !== '[object Object]') {
-        selector = locatorString;
-      }
-    } catch (error) {
-      // If we can't get selector string, that's okay
-    }
+    // Store the selector descriptor for snapshot storage
+    selector = selectorDescriptor;
   } catch (error) {
     // If generating from element fails, fall back to mimicId if available
     // This can happen if the element is not available or page is closing
     if (selectedCandidate.mimicId) {
       const selectorCode = `page.locator('[data-mimic-id="${selectedCandidate.mimicId}"]')`;
       playwrightCode = generateClickCode(selectorCode, clickActionResult.clickType);
-      selector = `[data-mimic-id="${selectedCandidate.mimicId}"]`;
+      // Create a CSS selector descriptor as fallback
+      selector = {
+        type: 'css',
+        selector: `[data-mimic-id="${selectedCandidate.mimicId}"]`
+      };
     } else {
       // If we can't generate the code, that's okay - just skip it
       console.debug('Could not generate Playwright code for click action:', error);

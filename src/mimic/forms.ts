@@ -7,6 +7,7 @@ import { addAnnotation } from './annotations.js';
 import type { TestContext } from '../mimic.js';
 import { selectorToPlaywrightCode, generateFormCode } from './playwrightCodeGenerator.js';
 import { captureScreenshot } from './markers.js';
+import type { SelectorDescriptor } from './selectorTypes.js';
 
 const zFormActionResult = z.object({
   /**
@@ -226,7 +227,7 @@ export const executeFormAction = async (
   targetElement: Locator | null,
   testInfo?: TestInfo,
   gherkinStep?: string
-): Promise<{ actionResult: FormActionResult; selector: string | null }> => {
+): Promise<{ actionResult: FormActionResult; selector: SelectorDescriptor | null }> => {
   if (targetElement === null) {
     throw new Error('No target element found');
   }
@@ -238,11 +239,11 @@ export const executeFormAction = async (
   // Generate Playwright code equivalent BEFORE performing the action
   // This ensures the element is still available (before navigation/closure)
   let playwrightCode: string | undefined;
-  let selector: string | null = null;
+  let selector: SelectorDescriptor | null = null;
   
   try {
-    // First, try to generate the best selector from the element
-    // This gives us a more descriptive selector than just the mimicId
+    // Generate the best selector descriptor from the element
+    // This gives us a descriptive, stable selector for snapshot storage
     // Use 5-minute timeout (300000ms) for slow tests - selector generation can be slow
     const selectorDescriptor = await generateBestSelectorForElement(targetElement, { timeout: 300000 });
     const selectorCode = selectorToPlaywrightCode(selectorDescriptor);
@@ -252,15 +253,8 @@ export const executeFormAction = async (
       formActionResult.params.value
     );
     
-    // Also get selector string for snapshot storage
-    try {
-      const locatorString = targetElement.toString();
-      if (locatorString && locatorString !== '[object Object]') {
-        selector = locatorString;
-      }
-    } catch (error) {
-      // If we can't get selector string, that's okay
-    }
+    // Store the selector descriptor for snapshot storage
+    selector = selectorDescriptor;
   } catch (error) {
     // If generating from element fails, fall back to mimicId if available
     // This can happen if the element is not available or page is closing
@@ -271,7 +265,11 @@ export const executeFormAction = async (
         formActionResult.type,
         formActionResult.params.value
       );
-      selector = `[data-mimic-id="${formActionResult.mimicId}"]`;
+      // Create a CSS selector descriptor as fallback
+      selector = {
+        type: 'css',
+        selector: `[data-mimic-id="${formActionResult.mimicId}"]`
+      };
     } else {
       // If we can't generate the code, that's okay - just skip it
       console.debug('Could not generate Playwright code for form action:', error);

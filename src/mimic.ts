@@ -197,7 +197,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
   const useSnapshot = testFilePath && await shouldUseSnapshot(testFilePath, testHash, isTroubleshoot, expectedStepCount);
   
   if (useSnapshot) {
-    const snapshot = null //await getSnapshot(testFilePath!, testHash);
+    const snapshot = await getSnapshot(testFilePath!, testHash);
     if (snapshot) {
       // Add annotation indicating we're loading from snapshot
       addAnnotation(
@@ -237,7 +237,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
   } else if (testFilePath) {
     // No snapshot exists or snapshot shouldn't be used - check if we're updating
     const existingSnapshot = await getSnapshot(testFilePath, testHash);
-    if (existingSnapshot && existingSnapshot.lastFailedAt) {
+    if (existingSnapshot && existingSnapshot.flags?.lastFailedAt) {
       // We have a failed snapshot - add annotation that we're regenerating
       addAnnotation(
         testInfo,
@@ -250,6 +250,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
   // executedSteps will be populated during step execution below
   const executedSteps: StepExecutionResult[] = [];
 
+  test.slow(true);
   // now lets process each step
   for (let stepIndex = 0; stepIndex < steps.length; stepIndex++) {
     const step = steps[stepIndex];
@@ -303,7 +304,6 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
             console.log(`→ Continuing to add actions for step (attempt ${actionCount})...`);
             break;
           }
-          test.slow(true);
           // Get the next action to execute for this step
           const baseAction = await getBaseAction(page, brains, step, testContext);
           
@@ -341,10 +341,14 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
               const clickable = getMimic(page, selectedCandidate.mimicId);
               const clickResult = await executeClickAction(clickable, clickActionResult, selectedCandidate, testInfo, step);
               
-              // Store marker ID instead of TargetInfo
-              const targetElement: MarkerTargetElement = clickResult.selector
-                ? { mimicId: selectedCandidate.mimicId, selector: clickResult.selector }
-                : { mimicId: selectedCandidate.mimicId };
+              // Store best selector descriptor with mimicId as fallback
+              if (!clickResult.selector) {
+                throw new Error(`Could not generate selector for click action: ${step}`);
+              }
+              const targetElement: MarkerTargetElement = {
+                selector: clickResult.selector,
+                mimicId: selectedCandidate.mimicId
+              };
               
               stepResult = {
                 stepIndex,
@@ -367,13 +371,17 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
               const formResult = await executeFormAction(page, formActionResult, targetFormElement, testInfo, step);
               
               // Handle the return type - executeFormAction returns { actionResult, selector }
-              const selector = formResult.selector || undefined;
+              const selector = formResult.selector;
               const actionDetails = formResult.actionResult;
               
-              // Store marker ID instead of TargetInfo
-              const formTargetElement: MarkerTargetElement = selector
-                ? { mimicId: formActionResult.mimicId, selector }
-                : { mimicId: formActionResult.mimicId };
+              // Store best selector descriptor with mimicId as fallback
+              if (!selector) {
+                throw new Error(`Could not generate selector for form action: ${step}`);
+              }
+              const formTargetElement: MarkerTargetElement = {
+                selector,
+                mimicId: formActionResult.mimicId
+              };
               
               stepResult = {
                 stepIndex,

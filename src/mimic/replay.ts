@@ -14,6 +14,7 @@ import type { NavigationAction } from './schema/action.js';
 import type { ClickActionResult } from './schema/action.js';
 import type { FormActionResult } from './forms.js';
 import { getMimic } from './markers.js';
+import { getFromSelector } from './selectorUtils.js';
 
 /**
  * Replay a complete test from a snapshot
@@ -85,27 +86,26 @@ async function replayClickStep(
 ): Promise<void> {
   const actionDetails = step.actionDetails as ClickActionResult;
   
-  // Reconstruct the target element from snapshot using marker ID
-  if (!step.targetElement || step.targetElement.mimicId === undefined) {
-    throw new Error(`Snapshot step ${step.stepIndex} (click) is missing targetElement with mimicId`);
+  // Reconstruct the target element from snapshot using best selector
+  if (!step.targetElement || !step.targetElement.selector) {
+    throw new Error(`Snapshot step ${step.stepIndex} (click) is missing targetElement with selector`);
   }
 
-  // Use marker ID to get the locator
-  // If we have a stored selector, try to use it first as a fallback
+  // Use the stored selector descriptor (primary) to reconstruct the locator
+  // Fall back to mimicId if selector fails
   let element;
-  if (step.targetElement.selector) {
-    try {
-      element = page.locator(step.targetElement.selector);
-      // Verify the element exists
-      await element.waitFor({ timeout: 5000 });
-    } catch (error) {
-      // Selector might be stale, fall back to marker ID
+  try {
+    element = getFromSelector(page, step.targetElement.selector);
+    // Verify the element exists
+    await element.waitFor({ timeout: 5000 });
+  } catch (error) {
+    // Selector might be stale, fall back to marker ID
+    if (step.targetElement.mimicId !== undefined) {
       console.warn(`Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
       element = getMimic(page, step.targetElement.mimicId);
+    } else {
+      throw new Error(`Snapshot step ${step.stepIndex} (click) selector failed and no mimicId fallback available`);
     }
-  } else {
-    // Use marker ID directly
-    element = getMimic(page, step.targetElement.mimicId);
   }
 
   // Find the selected candidate from the click action result
@@ -141,27 +141,26 @@ async function replayFormStep(
 ): Promise<void> {
   const actionDetails = step.actionDetails as FormActionResult;
   
-  // Reconstruct the target element from snapshot using marker ID
-  if (!step.targetElement || step.targetElement.mimicId === undefined) {
-    throw new Error(`Snapshot step ${step.stepIndex} (form) is missing targetElement with mimicId`);
+  // Reconstruct the target element from snapshot using best selector
+  if (!step.targetElement || !step.targetElement.selector) {
+    throw new Error(`Snapshot step ${step.stepIndex} (form) is missing targetElement with selector`);
   }
 
-  // Use marker ID to get the locator
-  // If we have a stored selector, try to use it first as a fallback
+  // Use the stored selector descriptor (primary) to reconstruct the locator
+  // Fall back to mimicId if selector fails
   let element;
-  if (step.targetElement.selector) {
-    try {
-      element = page.locator(step.targetElement.selector);
-      // Verify the element exists
-      await element.waitFor({ timeout: 5000 });
-    } catch (error) {
-      // Selector might be stale, fall back to marker ID
+  try {
+    element = getFromSelector(page, step.targetElement.selector);
+    // Verify the element exists
+    await element.waitFor({ timeout: 5000 });
+  } catch (error) {
+    // Selector might be stale, fall back to marker ID
+    if (step.targetElement.mimicId !== undefined) {
       console.warn(`Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
       element = getMimic(page, step.targetElement.mimicId);
+    } else {
+      throw new Error(`Snapshot step ${step.stepIndex} (form) selector failed and no mimicId fallback available`);
     }
-  } else {
-    // Use marker ID directly
-    element = getMimic(page, step.targetElement.mimicId);
   }
 
   await executeFormAction(

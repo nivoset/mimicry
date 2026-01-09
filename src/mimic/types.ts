@@ -7,15 +7,16 @@
 import type { NavigationAction } from './schema/action.js';
 import type { ClickActionResult } from './schema/action.js';
 import type { FormActionResult } from './forms.js';
+import type { SelectorDescriptor } from './selectorTypes.js';
 
 /**
- * Target element information using marker IDs
+ * Target element information using best selector with mimicId fallback
  */
 export interface MarkerTargetElement {
-  /** The mimic ID assigned to the element by the markers system */
+  /** The best selector descriptor for the element (primary) */
+  selector: SelectorDescriptor;
+  /** The mimic ID assigned to the element by the markers system (fallback) */
   mimicId: number;
-  /** Optional selector string for snapshot storage */
-  selector?: string;
 }
 
 /**
