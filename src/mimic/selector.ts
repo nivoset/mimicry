@@ -965,13 +965,32 @@ export async function generateBestSelectorForElement(
   // This could happen if markers haven't been installed yet
   // We'll still try to generate a selector, but verification will be less strict
   
+  // Check if page is closed before attempting to get element handle
+  if (page.isClosed()) {
+    throw new Error('Cannot generate selector: page, context or browser has been closed. This may happen if a previous action closed the page unexpectedly.');
+  }
+  
   // Get element handle from locator for page.evaluate() calls
   // We still need this for browser context evaluation
   // Use extended timeout for slow tests
-  const targetElementHandle = await locator.elementHandle({ timeout });
+  let targetElementHandle;
+  try {
+    targetElementHandle = await locator.elementHandle({ timeout });
+  } catch (error: any) {
+    // Check if page closed during element handle retrieval
+    if (page.isClosed() || (error?.message && error.message.includes('closed'))) {
+      throw new Error('Cannot get element handle: page, context or browser has been closed. This may happen if a previous action closed the page unexpectedly.');
+    }
+    throw error;
+  }
   
   if (!targetElementHandle) {
     throw new Error('Cannot get element handle from locator');
+  }
+  
+  // Double-check page is still open before evaluate
+  if (page.isClosed()) {
+    throw new Error('Page closed before evaluation: page, context or browser has been closed. This may happen if a previous action closed the page unexpectedly.');
   }
   
   // Get element information in browser context
@@ -1095,6 +1114,15 @@ export async function generateBestSelectorForElement(
     const errorMessage = error?.message || String(error);
     const errorStack = error?.stack || '';
     
+    // Check if page is closed - this is a common issue
+    if (page.isClosed() || errorMessage.includes('closed') || errorMessage.includes('Target page')) {
+      throw new Error(
+        `Cannot generate selector: page, context or browser has been closed. ` +
+        `This may happen if a previous action (like form submission or navigation) closed the page unexpectedly. ` +
+        `Original error: ${errorMessage}`
+      );
+    }
+    
     // Check if this is the __name error
     if (errorMessage.includes('__name') || errorStack.includes('__name')) {
       console.error('Error in generateBestSelectorForElement - page.evaluate failed');
@@ -1115,7 +1143,14 @@ export async function generateBestSelectorForElement(
   // This handles cases where the locator was created from a parent chain
   // Returns the best parent selector found, or null if none found
   const findBestParentSelector = async (): Promise<SelectorDescriptor | null> => {
-    const parentCandidates = await page.evaluate((element) => {
+    // Check if page is still open before parent evaluation
+    if (page.isClosed()) {
+      throw new Error('Page closed during parent selector search: page, context or browser has been closed.');
+    }
+    
+    let parentCandidates;
+    try {
+      parentCandidates = await page.evaluate((element) => {
       const candidates = [];
       let current = element.parentElement;
       let depth = 0;
@@ -1186,6 +1221,17 @@ export async function generateBestSelectorForElement(
       
       return candidates;
     }, targetElementHandle);
+    } catch (error: any) {
+      // If page closed during parent evaluation, just return null (parent selector is optional)
+      const errorMessage = error?.message || String(error);
+      if (page.isClosed() || errorMessage.includes('closed') || errorMessage.includes('Target page')) {
+        console.warn('Page closed during parent selector evaluation, skipping parent selector');
+        return null;
+      }
+      // For other errors, log but don't fail - parent selector is optional
+      console.warn('Error evaluating parent candidates:', errorMessage);
+      return null;
+    }
     
     // Try to find the best parent selector, prioritizing:
     // 1. testid
@@ -1307,9 +1353,16 @@ export async function generateBestSelectorForElement(
       }
     }
     
-    // Priority 2: role + name
+    // Priority 2: role + name (for form elements, label should make this unique)
+    // For form inputs with labels, role + label name should be unique
     if (elementInfo.role) {
-      const name = elementInfo.ariaLabel || elementInfo.label || elementInfo.text;
+      // Prioritize label for form elements (textbox, combobox, checkbox, radio)
+      // Label text is more reliable than aria-label or text content for form inputs
+      const isFormElement = ['textbox', 'combobox', 'checkbox', 'radio'].includes(elementInfo.role);
+      const name = isFormElement && elementInfo.label
+        ? elementInfo.label.trim()  // For form elements, use label first
+        : (elementInfo.ariaLabel || elementInfo.label || elementInfo.text);
+      
       if (name && name.trim()) {
         // Try exact match first
         const descriptorExact: RoleSelector = {
@@ -1321,6 +1374,11 @@ export async function generateBestSelectorForElement(
         const verificationExact = await verifySelectorUniqueness(page, descriptorExact, targetMimicId ?? null);
         if (verificationExact.unique) {
           return descriptorExact;
+        }
+        // If not unique but we have an index, use nth() for focused selector
+        // This is especially useful for radio groups, checkbox groups, etc.
+        if (verificationExact.index !== undefined && verificationExact.count && verificationExact.count > 1) {
+          return { ...descriptorExact, nth: verificationExact.index };
         }
         
         // Try non-exact match
@@ -1334,20 +1392,28 @@ export async function generateBestSelectorForElement(
         if (verification.unique) {
           return descriptor;
         }
+        // If not unique but we have an index, use nth() for focused selector
+        if (verification.index !== undefined && verification.count && verification.count > 1) {
+          return { ...descriptor, nth: verification.index };
+        }
       }
       
-      // Role without name
-      const descriptor: RoleSelector = {
-        type: 'role',
-        role: elementInfo.role as AriaRole,
-      };
-      const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
-      if (verification.unique) {
-        return descriptor;
+      // Role without name (only if we don't have a label for form elements)
+      // For form elements, if we have a label, we should have tried it above
+      if (!isFormElement || !elementInfo.label) {
+        const descriptor: RoleSelector = {
+          type: 'role',
+          role: elementInfo.role as AriaRole,
+        };
+        const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+        if (verification.unique) {
+          return descriptor;
+        }
       }
     }
     
-    // Priority 3: label
+    // Priority 3: label (getByLabel - especially good for form elements)
+    // This should be unique for form inputs with proper label associations
     if (elementInfo.label) {
       const descriptorExact: LabelSelector = {
         type: 'label',
@@ -1358,6 +1424,10 @@ export async function generateBestSelectorForElement(
       if (verificationExact.unique) {
         return descriptorExact;
       }
+      // If not unique but we have an index, use nth() for focused selector
+      if (verificationExact.index !== undefined && verificationExact.count && verificationExact.count > 1) {
+        return { ...descriptorExact, nth: verificationExact.index };
+      }
       
       const descriptor: LabelSelector = {
         type: 'label',
@@ -1367,6 +1437,10 @@ export async function generateBestSelectorForElement(
       const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
       if (verification.unique) {
         return descriptor;
+      }
+      // If not unique but we have an index, use nth() for focused selector
+      if (verification.index !== undefined && verification.count && verification.count > 1) {
+        return { ...descriptor, nth: verification.index };
       }
     }
     
@@ -1436,8 +1510,37 @@ export async function generateBestSelectorForElement(
       }
     }
     
-    // Don't use CSS here - only as absolute last resort after trying parent selectors
-    // CSS selectors are less stable and harder to maintain
+    // Priority 8: name attribute (for form elements - better than CSS)
+    // Name attributes are more stable than CSS nth-of-type selectors
+    if (elementInfo.nameAttr && elementInfo.nameAttr.trim()) {
+      const nameValue = elementInfo.nameAttr.trim();
+      // Try exact name match
+      const descriptor: CssSelector = {
+        type: 'css',
+        selector: `[name="${nameValue}"]`,
+      };
+      const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+      if (verification.unique) {
+        return descriptor;
+      }
+    }
+    
+    // Priority 9: id attribute (better than nth-of-type CSS)
+    // ID selectors are more stable than nth-of-type, even though they're still CSS
+    if (elementInfo.id && elementInfo.id.trim()) {
+      const idValue = elementInfo.id.trim();
+      const descriptor: CssSelector = {
+        type: 'css',
+        selector: `#${idValue}`,
+      };
+      const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+      if (verification.unique) {
+        return descriptor;
+      }
+    }
+    
+    // Don't use nth-of-type CSS here - only as absolute last resort after trying parent selectors
+    // CSS selectors with nth-of-type are less stable and harder to maintain
     return null;
   };
   
@@ -1519,8 +1622,36 @@ export async function generateBestSelectorForElement(
     }
   }
   
-  // Final fallback: CSS selector (only if nothing else works)
-  // This is the absolute last resort - prefer nested selectors over CSS
+  // Final fallback: CSS selector with nth-of-type (only if nothing else works)
+  // This is the absolute last resort - all better selector methods have been exhausted
+  // Try name attribute first (if available) before nth-of-type
+  if (elementInfo.nameAttr && elementInfo.nameAttr.trim()) {
+    const nameValue = elementInfo.nameAttr.trim();
+    const nameSelector: CssSelector = {
+      type: 'css',
+      selector: `[name="${nameValue}"]`,
+    };
+    const verification = await verifySelectorUniqueness(page, nameSelector, targetMimicId ?? null, timeout);
+    if (verification.unique) {
+      return nameSelector;
+    }
+  }
+  
+  // Try ID selector before nth-of-type
+  if (elementInfo.id && elementInfo.id.trim()) {
+    const idValue = elementInfo.id.trim();
+    const idSelector: CssSelector = {
+      type: 'css',
+      selector: `#${idValue}`,
+    };
+    const verification = await verifySelectorUniqueness(page, idSelector, targetMimicId ?? null, timeout);
+    if (verification.unique) {
+      return idSelector;
+    }
+  }
+  
+  // Absolute last resort: nth-of-type CSS selector
+  // This is the least stable selector type, only used when all else fails
   const fallback: CssSelector = {
     type: 'css',
     selector: `${elementInfo.tag}:nth-of-type(${elementInfo.nthOfType})`,

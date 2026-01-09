@@ -32,8 +32,18 @@ export async function replayFromSnapshot(
   snapshot: Snapshot,
   testInfo?: TestInfo
 ): Promise<void> {
+  // Get steps array for replay (support both new and old format)
+  // New format: use steps array (which is built from stepsByHash for backward compatibility)
+  // Old format: use steps array directly
+  const stepsToReplay = snapshot.steps || [];
+  
+  if (stepsToReplay.length === 0) {
+    console.warn('⚠️  Snapshot has no steps to replay');
+    return;
+  }
+  
   // Replay each step in order
-  for (const step of snapshot.steps) {
+  for (const step of stepsToReplay) {
     await test.step(step.stepText, async () => {
       switch (step.actionKind) {
         case 'navigation':

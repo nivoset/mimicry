@@ -61,6 +61,10 @@ export function selectorToPlaywrightCode(
       } else {
         code += `.getByRole(${JSON.stringify(descriptor.role)})`;
       }
+      // Add .nth() if specified (for radio groups, checkbox groups, etc.)
+      if (descriptor.nth !== undefined) {
+        code += `.nth(${descriptor.nth})`;
+      }
       break;
       
     case 'label':
@@ -79,6 +83,10 @@ export function selectorToPlaywrightCode(
           }
           const optionsStr = options.length > 0 ? `, { ${options.join(', ')} }` : '';
           code += `.getByLabel(${JSON.stringify(labelValue)}${optionsStr})`;
+        }
+        // Add .nth() if specified
+        if (descriptor.nth !== undefined) {
+          code += `.nth(${descriptor.nth})`;
         }
       }
       break;
@@ -219,7 +227,7 @@ export function generateClickCode(
  */
 export function generateFormCode(
   selectorCode: string,
-  actionType: 'keypress' | 'type' | 'fill' | 'select' | 'uncheck' | 'check' | 'setInputFiles' | 'clear',
+  actionType: 'keypress' | 'type' | 'fill' | 'select' | 'uncheck' | 'check' | 'click' | 'setInputFiles' | 'clear',
   value?: string
 ): string {
   switch (actionType) {
@@ -234,6 +242,8 @@ export function generateFormCode(
       return `await ${selectorCode}.check();`;
     case 'uncheck':
       return `await ${selectorCode}.uncheck();`;
+    case 'click':
+      return `await ${selectorCode}.click();`;
     case 'clear':
       return `await ${selectorCode}.clear();`;
     case 'setInputFiles':

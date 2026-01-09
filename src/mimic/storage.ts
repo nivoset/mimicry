@@ -248,11 +248,56 @@ export async function saveSnapshot(
   // Find existing test by testHash and update, or add new
   const existingIndex = mimicFile.tests.findIndex(test => test.testHash === snapshot.testHash);
   if (existingIndex >= 0) {
-    // Update existing test
-    mimicFile.tests[existingIndex] = snapshot;
+    // Merge with existing test: preserve existing steps that weren't regenerated
+    const existingTest = mimicFile.tests[existingIndex];
+    
+    // Merge stepsByHash: new steps overwrite old ones, but keep steps that weren't regenerated
+    const mergedStepsByHash: Record<string, SnapshotStep> = {};
+    
+    // Start with existing steps (support both formats)
+    if (existingTest.stepsByHash) {
+      Object.assign(mergedStepsByHash, existingTest.stepsByHash);
+    } else if (existingTest.steps) {
+      // Convert old format to new format
+      for (const step of existingTest.steps) {
+        mergedStepsByHash[step.stepHash] = step;
+      }
+    }
+    
+    // Add/overwrite with new steps from snapshot
+    if (snapshot.stepsByHash) {
+      Object.assign(mergedStepsByHash, snapshot.stepsByHash);
+    } else if (snapshot.steps) {
+      // Convert new snapshot's steps array to stepsByHash if needed
+      for (const step of snapshot.steps) {
+        mergedStepsByHash[step.stepHash] = step;
+      }
+    }
+    
+    // Build merged steps array from mergedStepsByHash, sorted by stepIndex
+    const allMergedSteps = Object.values(mergedStepsByHash);
+    allMergedSteps.sort((a, b) => a.stepIndex - b.stepIndex);
+    
+    // Update the test with merged data
+    mimicFile.tests[existingIndex] = {
+      ...snapshot,
+      stepsByHash: mergedStepsByHash,
+      steps: allMergedSteps, // Maintain backward compatibility with steps array
+    };
   } else {
-    // Add new test
-    mimicFile.tests.push(snapshot);
+    // Add new test - ensure steps array exists even if only stepsByHash is provided
+    const finalSnapshot: Snapshot = {
+      ...snapshot,
+      steps: snapshot.steps || (snapshot.stepsByHash ? Object.values(snapshot.stepsByHash).sort((a, b) => a.stepIndex - b.stepIndex) : []),
+      stepsByHash: snapshot.stepsByHash || (snapshot.steps ? (() => {
+        const hash: Record<string, SnapshotStep> = {};
+        for (const step of snapshot.steps) {
+          hash[step.stepHash] = step;
+        }
+        return hash;
+      })() : {}),
+    };
+    mimicFile.tests.push(finalSnapshot);
   }
 
   // Write back to file
@@ -389,9 +434,17 @@ export async function shouldUseSnapshot(
 
   // Validate that snapshot has at least as many steps as expected input lines
   if (expectedStepCount !== undefined) {
-    // Count unique steps in snapshot (by stepIndex)
-    const uniqueStepIndices = new Set(snapshot.steps.map((step: { stepIndex: number }) => step.stepIndex));
-    const snapshotStepCount = uniqueStepIndices.size;
+    // Count unique steps in snapshot
+    // Support both new format (stepsByHash) and old format (steps array)
+    let snapshotStepCount: number;
+    if (snapshot.stepsByHash) {
+      snapshotStepCount = Object.keys(snapshot.stepsByHash).length;
+    } else if (snapshot.steps) {
+      const uniqueStepIndices = new Set(snapshot.steps.map((step: { stepIndex: number }) => step.stepIndex));
+      snapshotStepCount = uniqueStepIndices.size;
+    } else {
+      snapshotStepCount = 0;
+    }
     
     if (snapshotStepCount < expectedStepCount) {
       // Snapshot is incomplete - don't use it

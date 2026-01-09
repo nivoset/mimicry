@@ -10,7 +10,7 @@ import { addAnnotation } from './annotations.js';
 import type { TestContext } from '../mimic.js';
 import { generateBestSelectorForElement } from './selector.js';
 import { selectorToPlaywrightCode, generateClickCode } from './playwrightCodeGenerator.js';
-import { captureScreenshot } from './markers.js';
+import { captureScreenshot, generateAriaSnapshot } from './markers.js';
 import type { SelectorDescriptor } from './selectorTypes.js';
 
 /**
@@ -38,7 +38,7 @@ export const getClickAction = async (
   // Capture screenshot with markers and positioning data
   console.log('📸 [getClickAction] Starting screenshot capture with markers...');
   const screenshotStart = Date.now();
-  const { image: screenshot, markers: markerData, items: markerItems } = await captureScreenshot(page);
+  const { image: screenshot, markers: markerData } = await captureScreenshot(page);
   const screenshotTime = Date.now() - screenshotStart;
   console.log(`📸 [getClickAction] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);
   
@@ -47,25 +47,29 @@ export const getClickAction = async (
   const base64Time = Date.now() - base64Start;
   console.log(`📸 [getClickAction] Screenshot converted to base64 in ${base64Time}ms (${(base64Time / 1000).toFixed(2)}s), size: ${(screenshotBase64.length / 1024).toFixed(2)}KB`);
   
+  // Generate accessibility snapshot to explain the screenshot structure
+  console.log('🔍 [getClickAction] Generating accessibility snapshot...');
+  const ariaSnapshotStart = Date.now();
+  const ariaSnapshot = await generateAriaSnapshot(page);
+  const ariaSnapshotTime = Date.now() - ariaSnapshotStart;
+  console.log(`🔍 [getClickAction] Accessibility snapshot generated in ${ariaSnapshotTime}ms (${(ariaSnapshotTime / 1000).toFixed(2)}s), length: ${ariaSnapshot.length} chars`);
+  
   // Convert marker data to format expected by prompt
   const markerStart = Date.now();
-  const markerItemsMap = new Map(markerItems.map(item => [item.mimicId, item]));
   const markerInfo: Array<{ 
     id: number; 
     tag: string; 
     text: string; 
     role: string | null; 
     ariaLabel: string | null;
-    label: string | null;
-  }> = markerData.map(m => {
-    const item = markerItemsMap.get(m.mimicId);
+  }> = markerData?.map(m => {
+    
     return {
       id: m.mimicId,
       tag: m.tag,
       text: m.text,
       role: m.role,
       ariaLabel: m.ariaLabel,
-      label: item?.label || null,
     };
   });
   
@@ -76,19 +80,21 @@ export const getClickAction = async (
   const summaryStart = Date.now();
   const markerSummary = markerInfo
     .slice(0, 50) // Limit to first 50 markers to avoid prompt size issues
-    .map(m => `  Marker ${m.id}: ${m.tag}${m.role ? ` (role: ${m.role})` : ''}${m.text ? ` - "${m.text.substring(0, 50)}"` : ''}${m.label ? ` [label: "${m.label}"]` : ''}${m.ariaLabel ? ` [aria-label: "${m.ariaLabel}"]` : ''}`)
+    .map(m => `  Marker ${m.id}: ${m.tag}${m.role ? ` (role: ${m.role})` : ''}${m.text ? ` - "${m.text.substring(0, 50)}"` : ''}${m.ariaLabel ? ` [aria-label: "${m.ariaLabel}"]` : ''}`)
     .join('\n');
   const summaryTime = Date.now() - summaryStart;
   console.log(`📝 [getClickAction] Built marker summary in ${summaryTime}ms`);
   
   // Build context description for the prompt
   const promptStart = Date.now();
+  // Build context description with defensive checks for optional testContext
+  // Ensure previousSteps exists and is an array before calling .map()
   const contextDescription = testContext ? `
 **Test Context:**
 - Current URL: ${testContext.currentState.url}
 - Current Page Title: ${testContext.currentState.pageTitle}
 - Step ${testContext.currentStepIndex + 1} of ${testContext.totalSteps}
-${testContext.previousSteps.length > 0 ? `
+${testContext.previousSteps && Array.isArray(testContext.previousSteps) && testContext.previousSteps.length > 0 ? `
 **Previous Steps Executed:**
 ${testContext.previousSteps.map((prevStep, idx) => 
   `${idx + 1}. Step ${prevStep.stepIndex + 1}: "${prevStep.stepText}" (${prevStep.actionKind}${prevStep.url ? ` → ${prevStep.url}` : ''})`
@@ -100,7 +106,8 @@ ${testContext.previousSteps.map((prevStep, idx) =>
 
 Your task is to analyze:
 1. A screenshot of the page with numbered marker badges on elements
-2. A single Gherkin step that implies a click action
+2. An accessibility snapshot (provided below) that describes the page structure with roles, names, data-testid, and data-mimic-* attributes
+3. A single Gherkin step that implies a click action
 
 **IMPORTANT**: Look at the screenshot to identify elements by their marker numbers. Each element has a numbered badge:
 - **RED badges** = Interactive elements (buttons, links, inputs, etc.)
@@ -138,56 +145,116 @@ ${gherkinStep}
 ${markerSummary}
 ${markerInfo.length > 50 ? `\n... and ${markerInfo.length - 50} more markers` : ''}
 
-## Analyze the screenshot and return up to the top 5 most likely elements that the Gherkin step is referring to.
-Use the marker ID numbers (mimicId) shown on the badges in the screenshot to identify elements.
+**Accessibility Snapshot (explains the screenshot structure):**
+The following accessibility snapshot describes the page structure with roles, accessible names, data-testid attributes, and data-mimic-* attributes. Use this to understand the page structure alongside the screenshot:
+\`\`\`
+${ariaSnapshot}
+\`\`\`
+
+## Analyze the screenshot and accessibility snapshot, then return up to the top 5 most likely elements that the Gherkin step is referring to.
+Use the marker ID numbers (mimicId) shown on the badges in the screenshot and referenced in the accessibility snapshot to identify elements.
 `;
   const promptTime = Date.now() - promptStart;
   console.log(`📝 [getClickAction] Built prompt in ${promptTime}ms, prompt length: ${prompt.length} chars`);
 
-  // Build message content with screenshot
+  // Build message content - try without image first, then retry with image if needed
   const messageStart = Date.now();
-  const messageContent: Array<{ type: 'text'; text: string } | { type: 'image'; image: string }> = [
+  // First attempt: text-only (no image) - faster and cheaper
+  const messageContentTextOnly: Array<{ type: 'text'; text: string }> = [
     { type: 'text', text: prompt }
   ];
   
-  // Add screenshot as base64 image
-  messageContent.push({
-    type: 'image',
-    image: screenshotBase64
-  });
+  // Second attempt: with image (if first attempt fails)
+  const messageContentWithImage: Array<{ type: 'text'; text: string } | { type: 'image'; image: string }> = [
+    { type: 'text', text: prompt },
+    { type: 'image', image: screenshotBase64 }
+  ];
   const messageTime = Date.now() - messageStart;
   console.log(`📨 [getClickAction] Built message content in ${messageTime}ms`);
 
-  console.log('🤖 [getClickAction] Calling AI model...');
+  // Set explicit timeout for AI calls to prevent indefinite hangs
+  // 2 minutes should be sufficient for most AI responses, even with retries
+  const aiTimeout = 120_000; // 2 minutes
+  let res;
+  let aiTime: number;
+  let usedImage = false;
+
+  // First attempt: try without image (text-only with accessibility snapshot)
+  console.log('🤖 [getClickAction] Calling AI model (text-only, no image)...');
   const aiStart = Date.now();
-  const res = await generateText({
-    model: brain,
-    messages: [
-      { 
-        role: 'user', 
-        content: messageContent
-      },
-      {
-        role: 'user', content: [
-          // { type: 'text', text: prompt }, //TODO put the description of all the content?
-          {
-            type: 'image',
-            image: `data:image/png;base64,${screenshotBase64}`
+  try {
+    res = await Promise.race([
+      generateText({
+        model: brain,
+        messages: [
+          { 
+            role: 'user', 
+            content: messageContentTextOnly
           }
-        ]
-      }
-    ],
-    maxRetries: 3,
-    output: Output.object({ schema: zClickActionResult, name: 'clickActionResult' }),
-  });
-  const aiTime = Date.now() - aiStart;
-  console.log(`🤖 [getClickAction] AI model responded in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
+        ],
+        maxRetries: 2, // Fewer retries for first attempt
+        output: Output.object({ schema: zClickActionResult, name: 'clickActionResult' }),
+      }),
+      new Promise<never>((_, reject) => 
+        setTimeout(() => reject(new Error(`AI model call timed out after ${aiTimeout}ms`)), aiTimeout)
+      )
+    ]);
+    
+    // Validate the response
+    if (!res.output || !res.output.candidates || !Array.isArray(res.output.candidates) || res.output.candidates.length === 0) {
+      throw new Error('First attempt returned invalid result, retrying with image...');
+    }
+    
+    aiTime = Date.now() - aiStart;
+    console.log(`✅ [getClickAction] AI model responded successfully (text-only) in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
+  } catch (error) {
+    // First attempt failed - retry with image
+    console.log(`⚠️  [getClickAction] First attempt failed, retrying with image: ${error instanceof Error ? error.message : String(error)}`);
+    const retryStart = Date.now();
+    usedImage = true;
+    
+    try {
+      res = await Promise.race([
+        generateText({
+          model: brain,
+          messages: [
+            { 
+              role: 'user', 
+              content: messageContentWithImage
+            }
+          ],
+          maxRetries: 3,
+          output: Output.object({ schema: zClickActionResult, name: 'clickActionResult' }),
+        }),
+        new Promise<never>((_, reject) => 
+          setTimeout(() => reject(new Error(`AI model call timed out after ${aiTimeout}ms`)), aiTimeout)
+        )
+      ]);
+      
+      aiTime = Date.now() - retryStart;
+      console.log(`✅ [getClickAction] AI model responded successfully (with image) in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
+    } catch (retryError) {
+      const elapsed = Date.now() - aiStart;
+      throw new Error(`AI model call failed after ${elapsed}ms (tried both text-only and with image): ${retryError instanceof Error ? retryError.message : String(retryError)}`);
+    }
+  }
   
   await countTokens(res);
 
   const totalTime = Date.now() - startTime;
-  console.log(`⏱️  [getClickAction] Total time: ${totalTime}ms (${(totalTime / 1000).toFixed(2)}s)`);
+  console.log(`⏱️  [getClickAction] Total time: ${totalTime}ms (${(totalTime / 1000).toFixed(2)}s)${usedImage ? ' (used image on retry)' : ' (text-only, no image needed)'}`);
   console.log(`   Breakdown: screenshot=${screenshotTime}ms, base64=${base64Time}ms, markers=${markerTime}ms, summary=${summaryTime}ms, prompt=${promptTime}ms, message=${messageTime}ms, AI=${aiTime}ms`);
+
+  // Validate that the AI model returned a valid structured output
+  // The output should always be defined when using structured outputs, but add defensive check
+  if (!res.output) {
+    throw new Error('AI model failed to generate valid click action result. The output is undefined.');
+  }
+
+  // Validate that candidates array exists and is not empty
+  if (!res.output.candidates || !Array.isArray(res.output.candidates) || res.output.candidates.length === 0) {
+    throw new Error(`AI model returned invalid click action result: candidates array is missing, not an array, or empty. Received: ${JSON.stringify(res.output)}`);
+  }
 
   return res.output;
 };
@@ -259,9 +326,16 @@ export const executeClickAction = async (
     
     // Store the selector descriptor for snapshot storage
     selector = selectorDescriptor;
-  } catch (error) {
+  } catch (error: any) {
     // If generating from element fails, fall back to mimicId if available
     // This can happen if the element is not available or page is closing
+    const errorMessage = error?.message || String(error);
+    
+    // Check if page closed - this can happen with navigation after clicks
+    if (errorMessage.includes('closed') || errorMessage.includes('Target page')) {
+      console.warn('Page closed during selector generation, using mimicId fallback');
+    }
+    
     if (selectedCandidate.mimicId) {
       const selectorCode = `page.locator('[data-mimic-id="${selectedCandidate.mimicId}"]')`;
       playwrightCode = generateClickCode(selectorCode, clickActionResult.clickType);
@@ -272,7 +346,7 @@ export const executeClickAction = async (
       };
     } else {
       // If we can't generate the code, that's okay - just skip it
-      console.debug('Could not generate Playwright code for click action:', error);
+      console.warn('Could not generate Playwright code for click action:', errorMessage);
     }
   }
 

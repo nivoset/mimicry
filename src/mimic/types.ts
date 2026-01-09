@@ -65,7 +65,9 @@ export interface Snapshot {
   testHash: string;
   /** Original test text (mimic template string) */
   testText: string;
-  /** Array of executed steps */
+  /** Steps indexed by stepHash (command line text hash) for efficient lookup and selective regeneration */
+  stepsByHash: Record<string, SnapshotStep>;
+  /** Array of executed steps (for backward compatibility and ordered replay) */
   steps: SnapshotStep[];
   /** Flags for troubleshooting and configuration */
   flags: SnapshotFlags;

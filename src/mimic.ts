@@ -9,9 +9,12 @@ import { z } from 'zod';
 import { getBaseAction } from './mimic/actionType.js';
 import { getNavigationAction,  executeNavigationAction } from './mimic/navigation.js';
 import { captureMarkers, captureScreenshot, getMimic } from './mimic/markers.js';
-import type { MarkerTargetElement, SnapshotStep } from './mimic/types.js';
+import type { MarkerTargetElement, SnapshotStep, Snapshot } from './mimic/types.js';
 import { executeClickAction, getClickAction } from './mimic/click.js';
 import { getFormAction, executeFormAction, type FormActionResult } from './mimic/forms.js';
+import type { NavigationAction } from './mimic/schema/action.js';
+import type { ClickActionResult } from './mimic/schema/action.js';
+import { getFromSelector } from './mimic/selectorUtils.js';
 import { startTestCase, countTokens } from './utils/token-counter.js';
 import { hashTestText, hashStepText, getSnapshot, saveSnapshot, recordFailure, shouldUseSnapshot } from './mimic/storage.js';
 import { replayFromSnapshot } from './mimic/replay.js';
@@ -250,6 +253,53 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
   // executedSteps will be populated during step execution below
   const executedSteps: StepExecutionResult[] = [];
 
+  // Load existing snapshot to check for cached steps
+  // This allows selective regeneration - only regenerate steps that don't exist or have changed
+  let existingSnapshot: Snapshot | null = null;
+  if (testFilePath) {
+    existingSnapshot = await getSnapshot(testFilePath, testHash);
+  }
+  
+  // Build a map of existing steps by their hash for quick lookup
+  // This enables selective regeneration: only regenerate steps that don't exist in the snapshot
+  const existingStepsByHash: Record<string, SnapshotStep> = {};
+  if (existingSnapshot) {
+    // Support both new format (stepsByHash) and old format (steps array) for backward compatibility
+    if (existingSnapshot.stepsByHash) {
+      Object.assign(existingStepsByHash, existingSnapshot.stepsByHash);
+    } else if (existingSnapshot.steps) {
+      // Convert old format to new format for backward compatibility
+      for (const step of existingSnapshot.steps) {
+        existingStepsByHash[step.stepHash] = step;
+      }
+    }
+  }
+  
+  // Note: Full snapshot replay is handled above in the useSnapshot block
+  // Below we handle selective regeneration: only regenerate steps that don't exist in the snapshot
+
+  // Capture screenshot with markers at the start of test execution
+  // This provides a visual reference of the initial page state with all markers
+  // Attach it to the test report so it's visible in Playwright HTML reports
+  try {
+    console.log('📸 [mimic] Capturing initial screenshot with markers for test attachment...');
+    const { image: screenshot } = await captureScreenshot(page);
+    console.log(`📸 [mimic] Screenshot captured (${(screenshot.length / 1024).toFixed(2)}KB)`);
+    
+    // Attach screenshot to test report if testInfo is available
+    // This makes it visible in Playwright HTML reports like a regular screenshot
+    if (testInfo) {
+      await testInfo.attach('initial-page-with-markers.png', {
+        body: screenshot,
+        contentType: 'image/png',
+      });
+      console.log('📎 [mimic] Screenshot attached to test report');
+    }
+  } catch (error) {
+    // If screenshot capture fails, log but don't fail the test
+    console.warn('⚠️  [mimic] Failed to capture initial screenshot:', error instanceof Error ? error.message : String(error));
+  }
+
   test.slow(true);
   // now lets process each step
   for (let stepIndex = 0; stepIndex < steps.length; stepIndex++) {
@@ -260,6 +310,87 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
       continue;
     }
     
+    // Check if this step already exists in the snapshot
+    // This enables selective regeneration: only regenerate steps that don't exist or have changed
+    const stepHash = hashStepText(step);
+    const existingStep = existingStepsByHash[stepHash];
+    
+    // If step exists in snapshot and we're not forcing full regeneration, use it for replay
+    // Otherwise, regenerate the step
+    // Note: Full snapshot replay (all steps) is handled above, this is for selective regeneration
+    // We skip selective regeneration if we already did full replay (useSnapshot path)
+    if (existingStep && existingSnapshot && !existingSnapshot.flags?.forceRegenerate && !useSnapshot) {
+      // Step exists in snapshot - replay it instead of regenerating
+      console.log(`📦 [mimic] Using cached step: "${step}" (hash: ${stepHash})`);
+      try {
+        await test.step(step, async () => {
+          // Replay the step from snapshot
+          switch (existingStep.actionKind) {
+            case 'navigation':
+              const navAction = existingStep.actionDetails as NavigationAction;
+              await executeNavigationAction(page, navAction, testInfo, step);
+              break;
+            case 'click':
+              const clickAction = existingStep.actionDetails as ClickActionResult;
+              if (!existingStep.targetElement) {
+                throw new Error(`Cached step missing targetElement`);
+              }
+              let clickElement;
+              try {
+                clickElement = getFromSelector(page, existingStep.targetElement.selector);
+                await clickElement.waitFor({ timeout: 5000 });
+              } catch (error) {
+                if (existingStep.targetElement.mimicId !== undefined) {
+                  clickElement = getMimic(page, existingStep.targetElement.mimicId);
+                } else {
+                  throw error;
+                }
+              }
+              const selectedCandidate = clickAction.candidates[0];
+              if (!selectedCandidate) {
+                throw new Error(`Cached step has no candidates`);
+              }
+              await executeClickAction(clickElement, clickAction, selectedCandidate, testInfo, step);
+              break;
+            case 'form update':
+              const formAction = existingStep.actionDetails as FormActionResult;
+              if (!existingStep.targetElement) {
+                throw new Error(`Cached step missing targetElement`);
+              }
+              let formElement;
+              try {
+                formElement = getFromSelector(page, existingStep.targetElement.selector);
+                await formElement.waitFor({ timeout: 5000 });
+              } catch (error) {
+                if (existingStep.targetElement.mimicId !== undefined) {
+                  formElement = getMimic(page, existingStep.targetElement.mimicId);
+                } else {
+                  throw error;
+                }
+              }
+              await executeFormAction(page, formAction, formElement, testInfo, step);
+              break;
+          }
+          
+          // Add to executed steps for snapshot
+          const cachedStepResult: StepExecutionResult = {
+            stepIndex,
+            stepText: step,
+            actionKind: existingStep.actionKind,
+            actionDetails: existingStep.actionDetails,
+            ...(existingStep.targetElement && { targetElement: existingStep.targetElement }),
+          };
+          executedSteps.push(cachedStepResult);
+        });
+        continue; // Skip to next step
+      } catch (error) {
+        // Replay failed - fall through to regenerate
+        console.warn(`⚠️  [mimic] Cached step replay failed, regenerating: ${error instanceof Error ? error.message : String(error)}`);
+      }
+    }
+    
+    // Step doesn't exist in snapshot or replay failed - regenerate it
+    console.log(`🔄 [mimic] Regenerating step: "${step}" (hash: ${stepHash})`);
     try {
       await test.step(step, async () => {
         // Build test context from previous steps and current state
@@ -329,6 +460,12 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
             case 'click':
               // Click actions will log their own plain English annotations
               const clickActionResult = await getClickAction(page, brains, step, testContext);
+              
+              // Defensive check: ensure candidates array exists and is valid
+              if (!clickActionResult || !clickActionResult.candidates || !Array.isArray(clickActionResult.candidates)) {
+                throw new Error(`Invalid click action result: candidates array is missing or invalid for step: ${step}`);
+              }
+              
               // TODO: better way to work out if the top priority candidate is a clickable element
               const selectedCandidate = clickActionResult.candidates.find(Boolean);
               if (!selectedCandidate) {
@@ -448,26 +585,55 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
       const now = new Date().toISOString();
       
       // Hash each step text and create snapshot steps with hashes
-      const snapshotSteps: SnapshotStep[] = executedSteps.map(step => {
+      // Build stepsByHash map for efficient lookup and selective regeneration
+      // Start with existing steps to preserve steps that weren't regenerated
+      const stepsByHash: Record<string, SnapshotStep> = {};
+      if (existingSnapshot) {
+        // Support both new format (stepsByHash) and old format (steps array) for backward compatibility
+        if (existingSnapshot.stepsByHash) {
+          Object.assign(stepsByHash, existingSnapshot.stepsByHash);
+        } else if (existingSnapshot.steps) {
+          // Convert old format to new format
+          for (const step of existingSnapshot.steps) {
+            stepsByHash[step.stepHash] = step;
+          }
+        }
+      }
+      
+      // Process executed steps and update/merge with existing snapshot
+      // This will overwrite existing steps that were regenerated, but preserve others
+      for (const step of executedSteps) {
+        const stepHash = hashStepText(step.stepText);
         const baseStep: Omit<SnapshotStep, 'targetElement'> = {
-          stepHash: hashStepText(step.stepText),
+          stepHash,
           stepIndex: step.stepIndex,
           stepText: step.stepText,
           actionKind: step.actionKind,
           actionDetails: step.actionDetails,
           executedAt: now,
         };
+        
         // Conditionally include targetElement only if it exists
-        if (step.targetElement) {
-          return { ...baseStep, targetElement: step.targetElement } as SnapshotStep;
-        }
-        return baseStep as SnapshotStep;
-      });
+        const snapshotStep: SnapshotStep = step.targetElement
+          ? { ...baseStep, targetElement: step.targetElement }
+          : baseStep as SnapshotStep;
+        
+        // Store in stepsByHash (will overwrite if step was regenerated, or add if new)
+        stepsByHash[stepHash] = snapshotStep;
+      }
       
-      await saveSnapshot(testFilePath, {
+      // Build ordered steps array from stepsByHash for backward compatibility
+      // Sort by stepIndex to maintain order
+      const allSteps = Object.values(stepsByHash);
+      allSteps.sort((a, b) => a.stepIndex - b.stepIndex);
+      const snapshotSteps: SnapshotStep[] = allSteps;
+      
+      // Build snapshot object (screenshot is attached to test report, not stored in JSON)
+      const snapshot: Snapshot = {
         testHash,
         testText: input,
-        steps: snapshotSteps,
+        stepsByHash, // New format: indexed by stepHash for efficient lookup
+        steps: snapshotSteps, // Backward compatibility: ordered array
         flags: {
           needsRetry: false,
           hasErrors: false,
@@ -479,7 +645,9 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
           lastPassedAt: now,
           lastFailedAt: null,
         },
-      });
+      };
+      
+      await saveSnapshot(testFilePath, snapshot);
       
       // Add annotation if this was a regeneration
       if (wasRegeneration) {

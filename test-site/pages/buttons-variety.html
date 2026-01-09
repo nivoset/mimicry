@@ -105,7 +105,7 @@
     document.addEventListener('click', function(event) {
       if (event.target.tagName === 'BUTTON' || event.target.classList.contains('btn')) {
         const button = event.target;
-        const buttonText = button.textContent.trim() || button.getAttribute('aria-label') || 'Button';
+        const buttonText = button.getAttribute('aria-label') || button.textContent.trim() || 'Button';
         const buttonId = button.id || button.getAttribute('data-testid') || 'unknown';
         
         const result = document.createElement('div');

@@ -1,0 +1,366 @@
+{
+  "tests": [
+    {
+      "testHash": "184e086fac7a7ae9",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T22:27:26.445Z",
+        "lastPassedAt": "2026-01-09T22:27:29.014Z",
+        "lastFailedAt": "2026-01-09T22:27:29.012Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "type \"Jane Smith\" into the name field",
+          "error": "page.evaluate: Target page, context or browser has been closed"
+        }
+      }
+    },
+    {
+      "testHash": "a138101aa5c9f1d2",
+      "testText": "type \"John Doe\" into the name field",
+      "stepsByHash": {
+        "a138101aa5c9f1d2": {
+          "stepHash": "a138101aa5c9f1d2",
+          "stepIndex": 0,
+          "stepText": "type \"John Doe\" into the name field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 5,
+            "type": "fill",
+            "params": {
+              "value": "John Doe",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "\"Your Name\" input field at the top of the Contact Form"
+          },
+          "executedAt": "2026-01-09T22:31:41.123Z",
+          "targetElement": {
+            "selector": {
+              "type": "css",
+              "selector": "input:nth-of-type(1)"
+            },
+            "mimicId": 5
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "a138101aa5c9f1d2",
+          "stepIndex": 0,
+          "stepText": "type \"John Doe\" into the name field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 5,
+            "type": "fill",
+            "params": {
+              "value": "John Doe",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "\"Your Name\" input field at the top of the Contact Form"
+          },
+          "executedAt": "2026-01-09T22:31:41.123Z",
+          "targetElement": {
+            "selector": {
+              "type": "css",
+              "selector": "input:nth-of-type(1)"
+            },
+            "mimicId": 5
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T22:29:14.510Z",
+        "lastPassedAt": "2026-01-09T22:31:41.126Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "7d9ea3b2120351d4",
+      "testText": "type \"john@example.com\" into the email field",
+      "stepsByHash": {
+        "7d9ea3b2120351d4": {
+          "stepHash": "7d9ea3b2120351d4",
+          "stepIndex": 0,
+          "stepText": "type \"john@example.com\" into the email field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 6,
+            "type": "fill",
+            "params": {
+              "value": "john@example.com",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "E-mail input field labeled \"E-mail\" in the Contact Form"
+          },
+          "executedAt": "2026-01-09T22:36:22.963Z",
+          "targetElement": {
+            "selector": {
+              "type": "css",
+              "selector": "[name=\"email\"]"
+            },
+            "mimicId": 6
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "7d9ea3b2120351d4",
+          "stepIndex": 0,
+          "stepText": "type \"john@example.com\" into the email field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 6,
+            "type": "fill",
+            "params": {
+              "value": "john@example.com",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "E-mail input field labeled \"E-mail\" in the Contact Form"
+          },
+          "executedAt": "2026-01-09T22:36:22.963Z",
+          "targetElement": {
+            "selector": {
+              "type": "css",
+              "selector": "[name=\"email\"]"
+            },
+            "mimicId": 6
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T22:36:22.963Z",
+        "lastPassedAt": "2026-01-09T22:36:22.965Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "ca1cf2275fa5e590",
+      "testText": "type \"5551234567\" into the phone field",
+      "stepsByHash": {
+        "ca1cf2275fa5e590": {
+          "stepHash": "ca1cf2275fa5e590",
+          "stepIndex": 0,
+          "stepText": "type \"5551234567\" into the phone field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 7,
+            "type": "fill",
+            "params": {
+              "value": "5551234567",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "Phone Number input field labeled 'Phone Number'"
+          },
+          "executedAt": "2026-01-09T22:37:34.784Z",
+          "targetElement": {
+            "selector": {
+              "type": "css",
+              "selector": "[name=\"phone\"]"
+            },
+            "mimicId": 7
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "ca1cf2275fa5e590",
+          "stepIndex": 0,
+          "stepText": "type \"5551234567\" into the phone field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 7,
+            "type": "fill",
+            "params": {
+              "value": "5551234567",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "Phone Number input field labeled 'Phone Number'"
+          },
+          "executedAt": "2026-01-09T22:37:34.784Z",
+          "targetElement": {
+            "selector": {
+              "type": "css",
+              "selector": "[name=\"phone\"]"
+            },
+            "mimicId": 7
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T22:37:34.784Z",
+        "lastPassedAt": "2026-01-09T22:37:34.789Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "20bc43f0fcac04be",
+      "testText": "select \"United States\" from the country dropdown",
+      "stepsByHash": {
+        "20bc43f0fcac04be": {
+          "stepHash": "20bc43f0fcac04be",
+          "stepIndex": 0,
+          "stepText": "select \"United States\" from the country dropdown",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 8,
+            "type": "select",
+            "params": {
+              "value": "United States",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "Country of Residence dropdown (country select)"
+          },
+          "executedAt": "2026-01-09T22:38:49.460Z",
+          "targetElement": {
+            "selector": {
+              "type": "css",
+              "selector": "[name=\"country\"]"
+            },
+            "mimicId": 8
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "20bc43f0fcac04be",
+          "stepIndex": 0,
+          "stepText": "select \"United States\" from the country dropdown",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 8,
+            "type": "select",
+            "params": {
+              "value": "United States",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "Country of Residence dropdown (country select)"
+          },
+          "executedAt": "2026-01-09T22:38:49.460Z",
+          "targetElement": {
+            "selector": {
+              "type": "css",
+              "selector": "[name=\"country\"]"
+            },
+            "mimicId": 8
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T22:38:49.460Z",
+        "lastPassedAt": "2026-01-09T22:38:49.462Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "e48c68f3b48ebf92",
+      "testText": "select \"Canada\" from the country dropdown",
+      "stepsByHash": {
+        "e48c68f3b48ebf92": {
+          "stepHash": "e48c68f3b48ebf92",
+          "stepIndex": 0,
+          "stepText": "select \"Canada\" from the country dropdown",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 8,
+            "type": "select",
+            "params": {
+              "value": "Canada",
+              "modifiers": []
+            },
+            "elementDescription": "Country dropdown labeled 'Country of Residence'"
+          },
+          "executedAt": "2026-01-09T22:40:07.765Z",
+          "targetElement": {
+            "selector": {
+              "type": "css",
+              "selector": "[name=\"country\"]"
+            },
+            "mimicId": 8
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "e48c68f3b48ebf92",
+          "stepIndex": 0,
+          "stepText": "select \"Canada\" from the country dropdown",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 8,
+            "type": "select",
+            "params": {
+              "value": "Canada",
+              "modifiers": []
+            },
+            "elementDescription": "Country dropdown labeled 'Country of Residence'"
+          },
+          "executedAt": "2026-01-09T22:40:07.765Z",
+          "targetElement": {
+            "selector": {
+              "type": "css",
+              "selector": "[name=\"country\"]"
+            },
+            "mimicId": 8
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T22:40:07.765Z",
+        "lastPassedAt": "2026-01-09T22:40:07.766Z",
+        "lastFailedAt": null
+      }
+    }
+  ]
+}

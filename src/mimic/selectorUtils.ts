@@ -42,6 +42,10 @@ export function getFromSelector(
       } else {
         baseLocator = page.getByRole(descriptor.role);
       }
+      // Apply nth() if specified (for radio groups, checkbox groups, etc.)
+      if (descriptor.nth !== undefined) {
+        baseLocator = baseLocator.nth(descriptor.nth);
+      }
       break;
       
     case 'label':
@@ -54,6 +58,10 @@ export function getFromSelector(
           : { exact: descriptor.exact ?? false };
         
         baseLocator = page.getByLabel(labelValue, labelOptions);
+        // Apply nth() if specified
+        if (descriptor.nth !== undefined) {
+          baseLocator = baseLocator.nth(descriptor.nth);
+        }
       }
       break;
       
@@ -176,7 +184,7 @@ export async function verifySelectorUniqueness(
   descriptor: SelectorDescriptor,
   targetMimicId?: null | number,
   timeout?: number
-): Promise<{ unique: boolean; locator: Locator }> {
+): Promise<{ unique: boolean; locator: Locator; count?: number; index?: number | undefined }> {
   // Default to 5 minutes for slow tests
   const operationTimeout = timeout ?? 300000;
   
@@ -189,7 +197,29 @@ export async function verifySelectorUniqueness(
     
     // Must match exactly one element
     if (count !== 1) {
-      return { unique: false, locator };
+      // If multiple matches and we have a target mimic ID, find the index
+      let index: number | undefined;
+      if (count > 1 && targetMimicId !== null && targetMimicId !== undefined) {
+        // Find which index matches the target element
+        for (let i = 0; i < count; i++) {
+          const nthLocator = locator.nth(i);
+          const mimicId = await getMimicIdFromLocator(nthLocator);
+          if (mimicId === targetMimicId) {
+            index = i;
+            break;
+          }
+        }
+      }
+      // Only include index if it's defined
+      const result: { unique: boolean; locator: Locator; count: number; index?: number } = {
+        unique: false,
+        locator,
+        count,
+      };
+      if (index !== undefined) {
+        result.index = index;
+      }
+      return result;
     }
     
     // If target mimic ID provided, verify it's the same element
@@ -239,17 +269,17 @@ export async function verifySelectorUniqueness(
       }
     }
     
-    return { unique: true, locator };
+    return { unique: true, locator, count: 1 };
   } catch (error) {
     // If selector is invalid or throws, it's not unique
     // Still return the locator for potential use
     try {
       const locator = getFromSelector(page, descriptor);
-      return { unique: false, locator };
+      return { unique: false, locator, count: 0 };
     } catch {
       // If we can't even create the locator, return a dummy one
       // This shouldn't happen in practice, but TypeScript requires a return
-      return { unique: false, locator: page.locator('body') };
+      return { unique: false, locator: page.locator('body'), count: 0 };
     }
   }
 }

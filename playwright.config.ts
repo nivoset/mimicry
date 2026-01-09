@@ -13,6 +13,10 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './src',
+  /* Test timeout: 10 minutes for AI-powered tests
+   * AI calls, screenshot capture, and selector generation can take significant time
+   */
+  timeout: 600_000, // 10 minutes
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -20,7 +24,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 1,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html', { open: 'never' }],
@@ -35,6 +39,13 @@ export default defineConfig({
     trace: 'on',
     screenshot: 'on',
     video: 'retain-on-failure',
+    /* Action timeout: 5 minutes for slow operations like selector generation */
+    actionTimeout: 300_000, // 5 minutes
+    /* Navigation timeout: 2 minutes for page loads */
+    navigationTimeout: 120_000, // 2 minutes
+  },
+  expect: {
+    timeout: 120_000,
   },
 
   /* Configure projects for major browsers */

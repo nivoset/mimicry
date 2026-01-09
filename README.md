@@ -12,6 +12,8 @@
 - 🔄 **Self-Repair Capability**: Automatically repairs broken tests when application code changes
 - 🎭 **Playwright Integration**: Built on top of Playwright for reliable browser automation
 - 📊 **Token Tracking**: Built-in token usage tracking for AI model calls
+- 💾 **Snapshot Storage**: Automatically saves and replays successful test executions
+- 🎯 **Best Selector System**: Stores optimal selectors (role, label, testid) with fallback to stable marker IDs
 
 ## How It Works
 
@@ -33,30 +35,41 @@ await mimic`
 `;
 ```
 
-During **Learn**, Mimic uses an AI model to:
+During **Learn**, Mimic:
 
-- Interpret your intent
-- Reason about the structure and semantics of the page
-- Identify the most likely elements to interact with
-- Generate executable Playwright steps
+- **Dynamically injects marker code** into the page to assign `data-mimic-id` attributes to elements, making identification much easier
+- Uses an AI model to:
+  - Interpret your intent
+  - Reason about the structure and semantics of the page
+  - Identify the most likely elements to interact with
+  - Generate executable Playwright steps
 
-This is the most flexible phase — it's where Mimic figures out what you meant, not just what to click.
+This is the most flexible phase — it's where Mimic figures out what you meant, not just what to click. The marker injection happens automatically and transparently — no changes to your application code are needed.
 
 ### 2. Remember — Capture a Verified Recording
 
 Once the test runs successfully, Mimic remembers what worked.
 
-It stores a verified recording of the execution, including:
+It stores a verified recording (snapshot) of the execution, including:
 
-- The resolved interaction steps
-- Element identification data used during the run
+- The resolved interaction steps with full action details
+- **Best selector descriptors** for each element (role, label, testid, etc.) — not just marker IDs
+- Element identification data and positioning information
 - Context needed to reliably repeat the behavior
+- Timestamps and execution metadata
+
+The storage system automatically saves snapshots to `<testfile-name>.mimic.json` files alongside your test files. These snapshots contain:
+- **SelectorDescriptor objects**: The best available selector for each element (e.g., `getByRole('button', { name: 'Submit' })`)
+- **Mimic IDs**: Fallback identifiers using dynamically injected `data-mimic-id` attributes (these are automatically added to page elements at runtime)
+- **Action results**: Complete details of what action was performed and how
 
 You can review the execution (for example, via Playwright's video output) to confirm it behaves exactly as expected. Once verified, this recording becomes the trusted reference for future runs.
 
+> **Note**: The storage system is actively being refined to improve selector stability and snapshot reliability.
+
 ### 3. Repeat — Fast, Deterministic Execution
 
-On subsequent runs, Mimic simply repeats the recorded behavior.
+On subsequent runs, Mimic simply repeats the recorded behavior using stored snapshots.
 
 In this phase:
 
@@ -64,6 +77,14 @@ In this phase:
 - Token usage drops to near zero
 - Tests run faster and more deterministically
 - Behavior is repeatable because it's based on a known-good run
+- **Selector reconstruction**: Uses stored `SelectorDescriptor` objects to rebuild locators, falling back to mimic IDs if needed
+
+The replay system:
+1. Loads the snapshot from the `.mimic.json` file
+2. Dynamically injects marker code to assign `data-mimic-id` attributes to page elements
+3. Reconstructs locators from stored selector descriptors (e.g., `getByRole('button', { name: 'Submit' })`)
+4. Executes actions directly without AI analysis
+5. Falls back to dynamically injected `data-mimic-id` markers if selectors become stale
 
 As long as the application hasn't changed in a way that breaks the test, Mimic stays in Repeat mode.
 
@@ -90,6 +111,24 @@ Everything else runs on verified knowledge.
 ## Architecture
 
 Built on top of Playwright with AI model integration for natural language processing and test repair. Converts plain language or Gherkin syntax into executable Playwright test code, then monitors test execution to detect failures and automatically repair broken tests when application code changes.
+
+### Element Identification System
+
+Mimic uses a sophisticated element identification system:
+
+- **Dynamic Marker Injection**: Automatically injects `data-mimic-id` attributes into page elements at runtime. These stable identifiers are added dynamically to help identify elements more reliably, without requiring any manual changes to your application code.
+- **Best Selector Generation**: Generates optimal selectors using Playwright's semantic locators:
+  - `getByRole()` for ARIA roles
+  - `getByLabel()` for form labels
+  - `getByTestId()` for test IDs
+  - `getByText()` for visible text
+  - CSS selectors as fallback
+- **Snapshot Storage**: Stores `SelectorDescriptor` objects (JSON-serializable) in snapshots for fast replay
+- **Dual Fallback**: Uses best selector first, falls back to marker ID if selector becomes stale
+
+The marker system works entirely behind the scenes — Mimic dynamically loads marker code into the page to assign stable `data-mimic-id` attributes to interactive, display, and structural elements. This makes element identification much easier overall, without requiring any modifications to your application.
+
+This ensures tests remain stable even when DOM structure changes, while preferring semantic selectors over brittle CSS paths.
 
 ### Technology Stack
 
@@ -351,6 +390,50 @@ import {
 } from 'playwright-mimic';
 ```
 
+## Snapshot Files
+
+Mimic automatically creates snapshot files (`.mimic.json`) in `__mimic__/` directories alongside your test files. These files contain:
+
+- **Test hash**: Unique identifier for the test
+- **Steps**: Array of executed steps with:
+  - Step text and hash
+  - Action details (navigation, click, form)
+  - **Target element**: Contains `SelectorDescriptor` (primary) and `mimicId` (fallback)
+  - Execution timestamp
+- **Flags**: Metadata about the snapshot (needsRetry, hasErrors, etc.)
+
+### Example Snapshot Structure
+
+```json
+{
+  "testHash": "abc123...",
+  "testText": "click on \"Submit\"\nfill the email field with \"test@example.com\"",
+  "steps": [
+    {
+      "stepHash": "def456...",
+      "stepIndex": 0,
+      "stepText": "click on \"Submit\"",
+      "actionKind": "click",
+      "actionDetails": { ... },
+      "targetElement": {
+        "selector": {
+          "type": "role",
+          "role": "button",
+          "name": "Submit"
+        },
+        "mimicId": 42
+      },
+      "executedAt": "2024-01-01T12:00:00.000Z"
+    }
+  ],
+  "flags": { ... }
+}
+```
+
+The snapshot system is actively being refined to improve selector stability and reliability.
+
+**Note**: The `mimicId` values in snapshots reference `data-mimic-id` attributes that are dynamically injected into the page by Mimic at runtime. These markers are automatically assigned to elements to help with identification — you don't need to add them to your application code.
+
 ## Configuration
 
 ### AI Model Selection
@@ -462,6 +545,7 @@ If mimic can't find an element, try:
 1. Be more specific: `click on "Submit" button` instead of `click on "Submit"`
 2. Use unique identifiers: `click on the login button with id "submit-btn"`
 3. Check if the element is visible: Add a wait before the action
+4. **Check snapshots**: If a test was previously working, check the `.mimic.json` snapshot file to see what selector was used
 
 ### Slow Execution
 
@@ -469,6 +553,23 @@ AI model calls take time. To speed up:
 1. Use faster models (e.g., `gpt-4o-mini` instead of `gpt-4`)
 2. Batch related actions when possible
 3. Use Playwright's native selectors for simple, stable elements
+4. **Leverage snapshots**: Once a test passes, subsequent runs use snapshots and skip AI calls entirely
+
+### Snapshot Issues
+
+If snapshots aren't working as expected:
+1. Check that `.mimic.json` files are being created in `__mimic__/` directories
+2. Verify selector descriptors in snapshots are valid
+3. If selectors become stale, Mimic will automatically fall back to marker IDs
+4. Delete the snapshot file to force regeneration if needed
+
+### Storage System
+
+The snapshot storage system is actively being refined. Current capabilities:
+- ✅ Automatic snapshot creation on successful test runs
+- ✅ Selector descriptor storage with fallback to marker IDs
+- ✅ Fast replay without AI calls
+- 🔄 Ongoing refinement for improved stability and reliability
 
 ### API Key Issues
 

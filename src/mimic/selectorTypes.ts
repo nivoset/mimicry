@@ -48,6 +48,8 @@ export interface RoleSelector {
   name?: StringOrRegexJson;
   /** Whether name match should be exact (ignored if name is a RegExp) */
   exact?: boolean;
+  /** Index for nth() when multiple elements match (0-based) - used for radio groups, checkbox groups, etc. */
+  nth?: number;
   child?: SelectorDescriptor;
 }
 
@@ -60,6 +62,8 @@ export interface LabelSelector {
   value: StringOrRegexJson;
   /** Whether label match should be exact (ignored if value is a RegExp) */
   exact?: boolean;
+  /** Index for nth() when multiple elements match (0-based) */
+  nth?: number;
   child?: SelectorDescriptor;
 }
 
