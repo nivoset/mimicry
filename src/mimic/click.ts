@@ -5,10 +5,12 @@ import {
   zClickActionResult,
   type ClickActionResult
 } from './schema/action.js'
-import type { TargetInfo } from './selector.js'
 import { countTokens } from '../utils/token-counter.js';
 import { addAnnotation } from './annotations.js';
 import type { TestContext } from '../mimic.js';
+import { generateBestSelectorForElement } from './selector.js';
+import { selectorToPlaywrightCode, generateClickCode } from './playwrightCodeGenerator.js';
+import { captureScreenshot } from './markers.js';
 
 /**
  * Get click action by matching Gherkin step against captured target elements
@@ -20,100 +22,66 @@ import type { TestContext } from '../mimic.js';
  * @param page - Playwright Page object (currently unused but kept for consistency)
  * @param brain - LanguageModel instance for AI analysis
  * @param gherkinStep - The Gherkin step to match (e.g., "I click on the Submit button")
- * @param targetElements - Array of captured target elements from the page
+ * @param targetElements - Array of captured elements with marker IDs from the page
  * @param testContext - Optional test context with previous steps and current state
  * @returns Promise resolving to ClickActionResult with top candidates and click type
  */
 export const getClickAction = async (
-  _page: Page,
+  page: Page,
   brain: LanguageModel,
   gherkinStep: string,
-  targetElements: TargetInfo[],
   testContext?: TestContext
 ): Promise<ClickActionResult> => {
-  // Format target elements with their indices for the prompt
-  // Include all relevant identifying information
-  const elementsWithIndices = targetElements.map((element, index) => ({
-    index,
-    tag: element.tag,
-    text: element.text,
-    id: element.id,
-    role: element.role,
-    label: element.label,
-    ariaLabel: element.ariaLabel,
-    typeAttr: element.typeAttr,
-    nameAttr: element.nameAttr,
-    href: element.href,
-    dataset: element.dataset,
-    nthOfType: element.nthOfType,
-  }));
-
-  // Group elements by tag type
-  const elementsByTag = new Map<string, typeof elementsWithIndices>();
-  for (const el of elementsWithIndices) {
-    const tagKey = el.tag === 'a' ? 'links' : el.tag === 'button' ? 'buttons' : el.tag === 'input' ? 'inputs' : el.tag;
-    if (!elementsByTag.has(tagKey)) {
-      elementsByTag.set(tagKey, []);
-    }
-    elementsByTag.get(tagKey)!.push(el);
-  }
-
-  // Format element fields in selector priority order, skipping null/empty values
-  const formatElement = (roleSection: string )  => (el: typeof elementsWithIndices[0]): string => {
-    const parts: string[] = [];
-    
-    // Priority order: testId → text → role → ariaLabel → label → name → type → href → dataAttributes → tag → id → nthOfType
-    if (el.dataset.testid) {
-      parts.push(`  testId: "${el.dataset.testid}"`);
-    }
-    if (el.text && el.text.trim()) {
-      parts.push(`  text: "${el.text.trim()}"`);
-    }
-    if (el.role && roleSection !== el.role) {
-      parts.push(`  role: ${el.role}`);
-    }
-    if (el.ariaLabel) {
-      parts.push(`  ariaLabel: "${el.ariaLabel}"`);
-    }
-    if (el.label) {
-      parts.push(`  label: "${el.label}"`);
-    }
-    if (el.nameAttr) {
-      parts.push(`  name: "${el.nameAttr}"`);
-    }
-    if (el.typeAttr) {
-      parts.push(`  type: ${el.typeAttr}`);
-    }
-    if (el.href) {
-      parts.push(`  href: "${el.href}"`);
-    }
-    if (Object.keys(el.dataset).length > 0) {
-      const dataKeys = Object.keys(el.dataset).filter(k => k !== 'testid');
-      if (dataKeys.length > 0) {
-        parts.push(`  dataAttributes: ${JSON.stringify(dataKeys)}`);
-      }
-    }
-    parts.push(`  tag: ${el.tag}`);
-    // if (el.id) {
-    //   parts.push(`  id: "${el.id}"`);
-    // }
-    parts.push(`  index: ${el.index}`);
-    if (el.nthOfType > 1) {
-      parts.push(`  nthOfType: ${el.nthOfType}`);
-    }
-    
-    return `  - ${parts.join('\n    ')}`;
-  };
-
-  // Create formatted description grouped by tag
-  const elementsDescription = Array.from(elementsByTag.entries())
-    .map(([tagKey, elements]) => {
-      const formattedElements = elements.map(formatElement(tagKey)).join('\n');
-      return `${tagKey}:\n${formattedElements}`;
-    })
-    .join('\n\n');
-
+  const startTime = Date.now();
+  
+  // Capture screenshot with markers and positioning data
+  console.log('📸 [getClickAction] Starting screenshot capture with markers...');
+  const screenshotStart = Date.now();
+  const { image: screenshot, markers: markerData, items: markerItems } = await captureScreenshot(page);
+  const screenshotTime = Date.now() - screenshotStart;
+  console.log(`📸 [getClickAction] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);
+  
+  const base64Start = Date.now();
+  const screenshotBase64 = screenshot.toString('base64');
+  const base64Time = Date.now() - base64Start;
+  console.log(`📸 [getClickAction] Screenshot converted to base64 in ${base64Time}ms (${(base64Time / 1000).toFixed(2)}s), size: ${(screenshotBase64.length / 1024).toFixed(2)}KB`);
+  
+  // Convert marker data to format expected by prompt
+  const markerStart = Date.now();
+  const markerItemsMap = new Map(markerItems.map(item => [item.mimicId, item]));
+  const markerInfo: Array<{ 
+    id: number; 
+    tag: string; 
+    text: string; 
+    role: string | null; 
+    ariaLabel: string | null;
+    label: string | null;
+  }> = markerData.map(m => {
+    const item = markerItemsMap.get(m.mimicId);
+    return {
+      id: m.mimicId,
+      tag: m.tag,
+      text: m.text,
+      role: m.role,
+      ariaLabel: m.ariaLabel,
+      label: item?.label || null,
+    };
+  });
+  
+  const markerTime = Date.now() - markerStart;
+  console.log(`🔍 [getClickAction] Processed ${markerInfo.length} markers in ${markerTime}ms (${(markerTime / 1000).toFixed(2)}s)`);
+  
+  // Build marker summary for the prompt
+  const summaryStart = Date.now();
+  const markerSummary = markerInfo
+    .slice(0, 50) // Limit to first 50 markers to avoid prompt size issues
+    .map(m => `  Marker ${m.id}: ${m.tag}${m.role ? ` (role: ${m.role})` : ''}${m.text ? ` - "${m.text.substring(0, 50)}"` : ''}${m.label ? ` [label: "${m.label}"]` : ''}${m.ariaLabel ? ` [aria-label: "${m.ariaLabel}"]` : ''}`)
+    .join('\n');
+  const summaryTime = Date.now() - summaryStart;
+  console.log(`📝 [getClickAction] Built marker summary in ${summaryTime}ms`);
+  
   // Build context description for the prompt
+  const promptStart = Date.now();
   const contextDescription = testContext ? `
 **Test Context:**
 - Current URL: ${testContext.currentState.url}
@@ -127,50 +95,98 @@ ${testContext.previousSteps.map((prevStep, idx) =>
 ` : ''}
 ` : '';
 
-  const prompt = `You are an expert Playwright test engineer specializing in mapping Gherkin steps to concrete DOM interactions.
+  const prompt = `You are an expert Playwright test engineer specializing in mapping Gherkin steps to concrete DOM interactions using visual analysis.
 
 Your task is to analyze:
-1. A single Gherkin step that implies a click action.
-2. A list of candidate DOM elements extracted from the page.
+1. A screenshot of the page with numbered marker badges on elements
+2. A single Gherkin step that implies a click action
 
-You must return the **top 5 most likely elements** that the Gherkin step is referring to.
+**IMPORTANT**: Look at the screenshot to identify elements by their marker numbers. Each element has a numbered badge:
+- **RED badges** = Interactive elements (buttons, links, inputs, etc.)
+- **BLUE badges** = Display-only content elements
+- **GREEN badges** = Structure/test anchor elements
+
+You must return the **top 5 most likely elements** that the Gherkin step is referring to, identified by their **marker ID numbers** (the numbers shown on the badges in the screenshot).
 
 ---
 
 ### IMPORTANT RULES
 
-- Rank elements from **most likely (rank 1)** to **least likely (rank 5)**.
+- **ALWAYS use the marker ID (mimicId)** from the screenshot - this is the number shown on the element's badge
+- Rank elements from **most likely (rank 1)** to **least likely (rank 5)**
 - Prefer **semantic matches** first:
-  - Visible text
+  - Visible text (what you can read in the screenshot)
+  - Element position and visual appearance
   - Accessible name (label, aria-label, role)
   - Button / link intent
-- Use "index" **only as a secondary disambiguation signal**, never as the primary reason.
-- Do NOT invent elements or field values.
-- Do NOT include more than 5 results.
-- If fewer than 5 reasonable matches exist, return fewer.
-- Do NOT assume navigation or side effects — this task is only about **what element is clicked**.
-- For each candidate, provide a **clear, human-readable description** that identifies the element (e.g., "Submit button", "Login link with text 'Sign in'", "Email input field labeled 'Email address'"). This description will be used in test annotations.
-- Consider the test context - what steps came before may help identify the correct element.
+- Do NOT invent elements or marker IDs - only use marker IDs that are visible in the screenshot
+- Do NOT include more than 5 results
+- If fewer than 5 reasonable matches exist, return fewer
+- Do NOT assume navigation or side effects — this task is only about **what element is clicked**
+- For each candidate, provide:
+  - The **mimicId** (marker number from the screenshot badge)
+  - A **clear, human-readable description** that identifies the element (e.g., "Submit button", "Login link with text 'Sign in'")
+  - Element metadata (tag, text, role, etc.) based on what you can see in the screenshot and the marker information provided
+- Consider the test context - what steps came before may help identify the correct element
 
 ${contextDescription}
 **Gherkin Step:**
 ${gherkinStep}
 
-**Available Target Elements (${targetElements.length} total):**
-${elementsDescription}
+**Available Markers (${markerInfo.length} total):**
+${markerSummary}
+${markerInfo.length > 50 ? `\n... and ${markerInfo.length - 50} more markers` : ''}
 
-
-## Reason and return up to the top 5 most likely elements that the Gherkin step is referring to.
+## Analyze the screenshot and return up to the top 5 most likely elements that the Gherkin step is referring to.
+Use the marker ID numbers (mimicId) shown on the badges in the screenshot to identify elements.
 `;
+  const promptTime = Date.now() - promptStart;
+  console.log(`📝 [getClickAction] Built prompt in ${promptTime}ms, prompt length: ${prompt.length} chars`);
 
+  // Build message content with screenshot
+  const messageStart = Date.now();
+  const messageContent: Array<{ type: 'text'; text: string } | { type: 'image'; image: string }> = [
+    { type: 'text', text: prompt }
+  ];
+  
+  // Add screenshot as base64 image
+  messageContent.push({
+    type: 'image',
+    image: screenshotBase64
+  });
+  const messageTime = Date.now() - messageStart;
+  console.log(`📨 [getClickAction] Built message content in ${messageTime}ms`);
+
+  console.log('🤖 [getClickAction] Calling AI model...');
+  const aiStart = Date.now();
   const res = await generateText({
     model: brain,
-    prompt,
+    messages: [
+      { 
+        role: 'user', 
+        content: messageContent
+      },
+      {
+        role: 'user', content: [
+          // { type: 'text', text: prompt }, //TODO put the description of all the content
+          {
+            type: 'image',
+            image: `data:image/png;base64,${screenshotBase64}`
+          }
+        ]
+      }
+    ],
     maxRetries: 3,
     output: Output.object({ schema: zClickActionResult, name: 'clickActionResult' }),
   });
+  const aiTime = Date.now() - aiStart;
+  console.log(`🤖 [getClickAction] AI model responded in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
   
   await countTokens(res);
+
+  const totalTime = Date.now() - startTime;
+  console.log(`⏱️  [getClickAction] Total time: ${totalTime}ms (${(totalTime / 1000).toFixed(2)}s)`);
+  console.log(`   Breakdown: screenshot=${screenshotTime}ms, base64=${base64Time}ms, markers=${markerTime}ms, summary=${summaryTime}ms, prompt=${promptTime}ms, message=${messageTime}ms, AI=${aiTime}ms`);
 
   return res.output;
 };
@@ -227,22 +243,43 @@ export const executeClickAction = async (
       throw new Error(`Unknown click type: ${clickActionResult.clickType}`);
   }
 
-  // Add annotation using centralized utility
-  addAnnotation(testInfo, gherkinStep, annotationDescription);
-
-  // Get selector string for snapshot storage
-  // Try to get a CSS selector representation if possible
+  // Generate Playwright code equivalent BEFORE performing the action
+  // This ensures the element is still available (before navigation/closure)
+  let playwrightCode: string | undefined;
   let selector: string | null = null;
+  
   try {
-    // Attempt to get a selector string from the locator
-    // This is best-effort and may not always work
-    const locatorString = element.toString();
-    if (locatorString && locatorString !== '[object Object]') {
-      selector = locatorString;
+    // First, try to generate the best selector from the element
+    // This gives us a more descriptive selector than just the mimicId
+    // Use 5-minute timeout (300000ms) for slow tests - selector generation can be slow
+    const selectorDescriptor = await generateBestSelectorForElement(element, { timeout: 300000 });
+    const selectorCode = selectorToPlaywrightCode(selectorDescriptor);
+    playwrightCode = generateClickCode(selectorCode, clickActionResult.clickType);
+    
+    // Also get selector string for snapshot storage
+    try {
+      const locatorString = element.toString();
+      if (locatorString && locatorString !== '[object Object]') {
+        selector = locatorString;
+      }
+    } catch (error) {
+      // If we can't get selector string, that's okay
     }
   } catch (error) {
-    // If we can't get selector, that's okay - we'll rebuild from TargetInfo
+    // If generating from element fails, fall back to mimicId if available
+    // This can happen if the element is not available or page is closing
+    if (selectedCandidate.mimicId) {
+      const selectorCode = `page.locator('[data-mimic-id="${selectedCandidate.mimicId}"]')`;
+      playwrightCode = generateClickCode(selectorCode, clickActionResult.clickType);
+      selector = `[data-mimic-id="${selectedCandidate.mimicId}"]`;
+    } else {
+      // If we can't generate the code, that's okay - just skip it
+      console.debug('Could not generate Playwright code for click action:', error);
+    }
   }
+
+  // Add annotation using centralized utility (includes Playwright code if available)
+  addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
 
   // Perform the click action
   switch (clickActionResult.clickType) {

@@ -12,7 +12,7 @@ export { getBaseAction } from './mimic/actionType.js';
 export { getClickAction, executeClickAction } from './mimic/click.js';
 export { getNavigationAction, executeNavigationAction } from './mimic/navigation.js';
 export { getFormAction, executeFormAction, type FormActionResult } from './mimic/forms.js';
-export { captureTargets, buildSelectorForTarget, type TargetInfo, type CaptureTargetsOptions } from './mimic/selector.js';
+export { captureMarkers, getMimic, type MarkerElementInfo, type CaptureMarkersOptions } from './mimic/markers.js';
 
 // Schema types
 export type {
@@ -21,16 +21,3 @@ export type {
   Point,
 } from './mimic/schema/action.js';
 
-// Agentic system exports
-export { createAgenticMimic, type AgenticMimic } from './agentic-mimic.js';
-export { Agent } from './agentic/agent.js';
-export type {
-  AgentState,
-  AgentConfig,
-  ActionRecord,
-  ActionReflection,
-  PlanningResult,
-  PlanStep,
-  ReasoningResult,
-  DecidedAction,
-} from './agentic/index.js';

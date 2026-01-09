@@ -1,0 +1,458 @@
+{
+  "tests": [
+    {
+      "testHash": "a138101aa5c9f1d2",
+      "testText": "type \"John Doe\" into the name field",
+      "steps": [
+        {
+          "stepHash": "a138101aa5c9f1d2",
+          "stepIndex": 0,
+          "stepText": "type \"John Doe\" into the name field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "type": "fill",
+            "params": {
+              "value": "John Doe",
+              "modifiers": []
+            },
+            "elementDescription": "Name input field labeled 'Your Name'"
+          },
+          "targetElement": {
+            "tag": "input",
+            "text": "",
+            "id": "name",
+            "role": "textbox",
+            "label": "Your Name",
+            "ariaLabel": null,
+            "typeAttr": "text",
+            "nameAttr": "name",
+            "href": null,
+            "dataset": {},
+            "nthOfType": 1,
+            "selector": "getByRole('textbox', { name: 'Your Name' })"
+          },
+          "executedAt": "2026-01-09T00:17:18.284Z"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:17:18.284Z",
+        "lastPassedAt": "2026-01-09T00:17:18.285Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "7d9ea3b2120351d4",
+      "testText": "type \"john@example.com\" into the email field",
+      "steps": [
+        {
+          "stepHash": "7d9ea3b2120351d4",
+          "stepIndex": 0,
+          "stepText": "type \"john@example.com\" into the email field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "type": "fill",
+            "params": {
+              "value": "john@example.com",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "Email input field"
+          },
+          "targetElement": {
+            "tag": "input",
+            "text": "",
+            "id": "email",
+            "role": "textbox",
+            "label": "Email",
+            "ariaLabel": null,
+            "typeAttr": "email",
+            "nameAttr": "email",
+            "href": null,
+            "dataset": {},
+            "nthOfType": 1,
+            "selector": "getByRole('textbox', { name: 'Email' })"
+          },
+          "executedAt": "2026-01-09T00:17:21.965Z"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:17:21.965Z",
+        "lastPassedAt": "2026-01-09T00:17:21.967Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "ca1cf2275fa5e590",
+      "testText": "type \"5551234567\" into the phone field",
+      "steps": [
+        {
+          "stepHash": "ca1cf2275fa5e590",
+          "stepIndex": 0,
+          "stepText": "type \"5551234567\" into the phone field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "type": "fill",
+            "params": {
+              "value": "5551234567",
+              "modifiers": []
+            },
+            "elementDescription": "Phone Number input field"
+          },
+          "targetElement": {
+            "tag": "input",
+            "text": "",
+            "id": "phone",
+            "role": "textbox",
+            "label": "Phone Number",
+            "ariaLabel": null,
+            "typeAttr": "tel",
+            "nameAttr": "phone",
+            "href": null,
+            "dataset": {},
+            "nthOfType": 1,
+            "selector": "getByRole('textbox', { name: 'Phone Number' })"
+          },
+          "executedAt": "2026-01-09T00:17:23.966Z"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:17:23.966Z",
+        "lastPassedAt": "2026-01-09T00:17:23.969Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "20bc43f0fcac04be",
+      "testText": "select \"United States\" from the country dropdown",
+      "steps": [
+        {
+          "stepHash": "20bc43f0fcac04be",
+          "stepIndex": 0,
+          "stepText": "select \"United States\" from the country dropdown",
+          "actionKind": "form update",
+          "actionDetails": {
+            "type": "select",
+            "params": {
+              "value": "United States",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "Country dropdown labeled 'Country of Residence'"
+          },
+          "targetElement": {
+            "tag": "select",
+            "text": "Select a country United States Canada United Kingdom Australia Germany France Japan",
+            "id": "country",
+            "role": "combobox",
+            "label": "Country of Residence",
+            "ariaLabel": null,
+            "typeAttr": "select-one",
+            "nameAttr": "country",
+            "href": null,
+            "dataset": {},
+            "nthOfType": 1,
+            "selector": "getByRole('combobox', { name: 'Country of Residence' })"
+          },
+          "executedAt": "2026-01-09T00:17:27.388Z"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:17:27.388Z",
+        "lastPassedAt": "2026-01-09T00:17:27.389Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "e48c68f3b48ebf92",
+      "testText": "select \"Canada\" from the country dropdown",
+      "steps": [
+        {
+          "stepHash": "e48c68f3b48ebf92",
+          "stepIndex": 0,
+          "stepText": "select \"Canada\" from the country dropdown",
+          "actionKind": "form update",
+          "actionDetails": {
+            "type": "select",
+            "params": {
+              "value": "Canada",
+              "modifiers": []
+            },
+            "elementDescription": "Country dropdown labeled 'Select Country'"
+          },
+          "targetElement": {
+            "tag": "select",
+            "text": "Select a country United States Canada United Kingdom Australia Germany France Japan",
+            "id": "country",
+            "role": "combobox",
+            "label": "Select Country",
+            "ariaLabel": null,
+            "typeAttr": "select-one",
+            "nameAttr": "country",
+            "href": null,
+            "dataset": {},
+            "nthOfType": 1,
+            "selector": "getByRole('combobox', { name: 'Select Country' })"
+          },
+          "executedAt": "2026-01-09T00:17:28.607Z"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:17:28.607Z",
+        "lastPassedAt": "2026-01-09T00:17:28.609Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "9272cbe0ece9a577",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:17:32.353Z",
+        "lastPassedAt": "2026-01-09T00:17:41.254Z",
+        "lastFailedAt": "2026-01-09T00:17:41.252Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "check the \"Phone\" radio button",
+          "error": "locator.check: Error: Not a checkbox or radio button\nCall log:\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Phone Number' })\u001b[22m\n\u001b[2m    - locator resolved to <input type=\"tel\" id=\"phone\" name=\"phone\" placeholder=\"(555) 123-4567\"/>\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "7a07532fed8d558f",
+      "testText": "type \"This is a test message for the form.\" into the message field",
+      "steps": [
+        {
+          "stepHash": "7a07532fed8d558f",
+          "stepIndex": 0,
+          "stepText": "type \"This is a test message for the form.\" into the message field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "type": "fill",
+            "params": {
+              "value": "This is a test message for the form.",
+              "modifiers": []
+            },
+            "elementDescription": "Message textarea labeled 'Message'"
+          },
+          "targetElement": {
+            "tag": "textarea",
+            "text": "",
+            "id": "message",
+            "role": "textbox",
+            "label": "Message",
+            "ariaLabel": null,
+            "typeAttr": "textarea",
+            "nameAttr": "message",
+            "href": null,
+            "dataset": {},
+            "nthOfType": 1,
+            "selector": "getByRole('textbox', { name: 'Message' })"
+          },
+          "executedAt": "2026-01-09T00:17:33.865Z"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:17:33.865Z",
+        "lastPassedAt": "2026-01-09T00:17:33.866Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "7dab85b71cd07c44",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:17:37.887Z",
+        "lastPassedAt": "2026-01-09T00:17:47.924Z",
+        "lastFailedAt": "2026-01-09T00:17:47.919Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "check the \"SMS\" radio button",
+          "error": "locator.check: Error: Not a checkbox or radio button\nCall log:\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Complete Name' })\u001b[22m\n\u001b[2m    - locator resolved to <input id=\"name\" type=\"text\" name=\"name\" required=\"\" placeholder=\"John Doe\"/>\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "d2f0dc75d480f0ec",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:18:17.487Z",
+        "lastPassedAt": "2026-01-09T00:18:53.341Z",
+        "lastFailedAt": "2026-01-09T00:18:53.340Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "check \"Daily Newsletter\"",
+          "error": "page.evaluate: Target page, context or browser has been closed"
+        }
+      }
+    },
+    {
+      "testHash": "f86c328d1f9399e4",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:18:22.162Z",
+        "lastPassedAt": "2026-01-09T00:18:59.511Z",
+        "lastFailedAt": "2026-01-09T00:18:59.509Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "check \"Daily Newsletter\"",
+          "error": "page.evaluate: Target page, context or browser has been closed"
+        }
+      }
+    },
+    {
+      "testHash": "5ab954bd8d013bef",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:18:28.447Z",
+        "lastPassedAt": "2026-01-09T00:18:37.075Z",
+        "lastFailedAt": "2026-01-09T00:18:37.073Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "check the terms and conditions checkbox",
+          "error": "locator.check: Error: Not a checkbox or radio button\nCall log:\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Name' })\u001b[22m\n\u001b[2m    - locator resolved to <input id=\"name\" type=\"text\" name=\"name\" required=\"\" placeholder=\"Your name\"/>\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "184e086fac7a7ae9",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:19:04.765Z",
+        "lastPassedAt": "2026-01-09T00:19:04.768Z",
+        "lastFailedAt": "2026-01-09T00:19:04.765Z"
+      }
+    },
+    {
+      "testHash": "1907e969dbe6d6a5",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:19:30.002Z",
+        "lastPassedAt": "2026-01-09T00:19:30.003Z",
+        "lastFailedAt": "2026-01-09T00:19:30.002Z"
+      }
+    },
+    {
+      "testHash": "f6651d4b9c96f1ef",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:20:10.085Z",
+        "lastPassedAt": "2026-01-09T00:20:10.090Z",
+        "lastFailedAt": "2026-01-09T00:20:10.085Z"
+      }
+    },
+    {
+      "testHash": "30d9a6669ca38269",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:20:15.001Z",
+        "lastPassedAt": "2026-01-09T00:20:45.468Z",
+        "lastFailedAt": "2026-01-09T00:20:45.467Z",
+        "failureDetails": {
+          "failedStepIndex": 5,
+          "failedStepText": "check the \"SMS\" radio button",
+          "error": "locator.check: Error: Not a checkbox or radio button\nCall log:\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Your Name' })\u001b[22m\n\u001b[2m    - locator resolved to <input id=\"name\" type=\"text\" name=\"name\" required=\"\" placeholder=\"John Doe\"/>\u001b[22m\n"
+        }
+      }
+    }
+  ]
+}

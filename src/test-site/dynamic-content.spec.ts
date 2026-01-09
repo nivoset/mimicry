@@ -15,7 +15,7 @@ test.describe('Dynamic Content Page', () => {
     await expect(page.locator('#load-content-btn')).toBeVisible();
   });
 
-  test('should load content dynamically after clicking button', async ({ page, mimic }) => {
+  test('should load content dynamically after clicking button', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Load Content"`;
 
     // Wait for content to appear
@@ -24,7 +24,7 @@ test.describe('Dynamic Content Page', () => {
     await expect(page.locator('#dynamic-content-area button')).toBeVisible();
   });
 
-  test('should show loading state before content appears', async ({ page, mimic }) => {
+  test('should show loading state before content appears', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Load Content"`;
 
     // Should show loading text initially
@@ -44,7 +44,7 @@ test.describe('Dynamic Content Page', () => {
     expect(display).toBe('none');
   });
 
-  test('should toggle visibility back to visible', async ({ page, mimic }) => {
+  test('should toggle visibility back to visible', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Toggle Visibility"
       click on "Toggle Visibility"
@@ -54,7 +54,7 @@ test.describe('Dynamic Content Page', () => {
     await expect(page.locator('#toggleable-content')).toBeVisible();
   });
 
-  test('should change content on button click', async ({ page, mimic }) => {
+  test('should change content on button click', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     const initialContent = await page.locator('#changeable-content').textContent();
     
     await mimic`click on "Change Content"`;
@@ -85,7 +85,7 @@ test.describe('Dynamic Content Page', () => {
     await expect(page.locator('#delayed-elements .card').first()).toContainText('Element 1');
   });
 
-  test('should load more items in scroll container', async ({ page, mimic }) => {
+  test('should load more items in scroll container', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     const initialCount = await page.locator('.scroll-item').count();
     
     await mimic`click on "Load More Items"`;
@@ -106,7 +106,7 @@ test.describe('Dynamic Content Page', () => {
     await expect(page.locator('.scroll-item')).toHaveCount(initialCount + 6);
   });
 
-  test('should show status message', async ({ page, mimic }) => {
+  test('should show status message', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Show Status Message"`;
 
     await expect(page.locator('#status-messages .alert')).toBeVisible();
@@ -125,7 +125,7 @@ test.describe('Dynamic Content Page', () => {
     expect(count).toBeGreaterThan(0);
   });
 
-  test('should interact with dynamically loaded button', async ({ page, mimic }) => {
+  test('should interact with dynamically loaded button', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Load Content"
       click on "Action Button" in the loaded content
@@ -135,7 +135,7 @@ test.describe('Dynamic Content Page', () => {
     await expect(page.locator('#dynamic-content-area button')).toBeVisible();
   });
 
-  test('should interact with button in toggleable content', async ({ page, mimic }) => {
+  test('should interact with button in toggleable content', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Toggle Visibility"
       click on "Toggle Visibility"
@@ -146,7 +146,7 @@ test.describe('Dynamic Content Page', () => {
     await expect(page.locator('#toggleable-content button')).toBeVisible();
   });
 
-  test('should handle rapid content changes', async ({ page, mimic }) => {
+  test('should handle rapid content changes', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Change Content"
       click on "Change Content"

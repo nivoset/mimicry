@@ -1,6 +1,7 @@
-import { ElementHandle, Locator, Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import type { SelectorDescriptor } from './selectorTypes.js';
 import { jsonToStringOrRegex } from './selectorSerialization.js';
+import { getMimic } from './markers.js';
 
 /**
  * Reconstruct a Playwright Locator from a stored SelectorDescriptor
@@ -128,66 +129,127 @@ export function getFromSelector(
 }
 
 /**
+ * Get the mimic ID from a locator
+ * 
+ * Retrieves the data-mimic-id attribute value from the element
+ * that the locator points to. This ID is assigned by the markers system.
+ * 
+ * @param locator - Playwright Locator to get the mimic ID from
+ * @returns Promise resolving to the mimic ID number, or null if not found
+ */
+export async function getMimicIdFromLocator(
+  locator: Locator
+): Promise<number | null> {
+  try {
+    // Evaluate directly on the locator to get the mimic ID attribute
+    const mimicId = await locator.evaluate((el: Element) => {
+      const idAttr = el.getAttribute('data-mimic-id');
+      return idAttr ? Number(idAttr) : null;
+    });
+    return mimicId;
+  } catch (error) {
+    // If element not found or error occurs, return null
+    return null;
+  }
+}
+
+/**
  * Verify that a selector uniquely identifies the target element
  * 
  * This function checks if a locator built from a SelectorDescriptor matches
- * exactly one element, and optionally verifies it matches the original target element.
+ * exactly one element, and optionally verifies it matches the target element
+ * using the markers system (mimic ID).
+ * 
+ * The function saves the nested Locator type returned by getFromSelector,
+ * which can be used for further operations on the matched element.
  * 
  * @param page - Playwright Page object
  * @param descriptor - SelectorDescriptor to verify
- * @param targetElementHandle - Optional element handle to verify the match is correct
- * @returns Promise resolving to true if selector is unique (and matches target if provided)
+ * @param targetMimicId - Optional mimic ID to verify the match is correct
+ * @param timeout - Optional timeout in milliseconds for locator operations (default: 300000 = 5 minutes)
+ * @returns Promise resolving to an object with:
+ *   - unique: true if selector is unique (and matches target if provided)
+ *   - locator: The Locator returned by getFromSelector (nested type preserved)
  */
 export async function verifySelectorUniqueness(
   page: Page,
   descriptor: SelectorDescriptor,
-  targetElementHandle?: null | ElementHandle<SVGElement | HTMLElement>
-): Promise<boolean> {
+  targetMimicId?: null | number,
+  timeout?: number
+): Promise<{ unique: boolean; locator: Locator }> {
+  // Default to 5 minutes for slow tests
+  const operationTimeout = timeout ?? 300000;
+  
   try {
+    // Get the locator from the selector descriptor (preserves nested type)
     const locator = getFromSelector(page, descriptor);
+    // count() doesn't support timeout, but it's typically fast
+    // The main timeout-sensitive operations are elementHandle() calls below
     const count = await locator.count();
     
     // Must match exactly one element
     if (count !== 1) {
-      return false;
+      return { unique: false, locator };
     }
     
-    // If target element provided, verify it's the same element
-    if (targetElementHandle) {
-      const matchedElement = await locator.elementHandle();
-      if (!matchedElement) {
-        return false;
+    // If target mimic ID provided, verify it's the same element
+    if (targetMimicId !== null && targetMimicId !== undefined) {
+      // Get the mimic ID from the matched locator
+      const matchedMimicId = await getMimicIdFromLocator(locator);
+      
+      // If no mimic ID found on matched element, verification fails
+      if (matchedMimicId === null) {
+        return { unique: false, locator };
       }
       
-      // Compare elements by checking if they have the same properties
-      // We'll compare by getting a unique identifier from both elements
-      const targetId = await page.evaluate((el: SVGElement | HTMLElement) => {
-        // Create a unique identifier: tag + id + text + position
-        const rect = el.getBoundingClientRect();
-        return JSON.stringify({
-          tag: el.tagName,
-          id: el.id,
-          text: (el.textContent || '').substring(0, 50),
-          position: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
-        });
-      }, targetElementHandle);
+      // Verify the mimic IDs match
+      if (matchedMimicId !== targetMimicId) {
+        return { unique: false, locator };
+      }
       
-      const matchedId = await page.evaluate((el: SVGElement | HTMLElement) => {
-        const rect = el.getBoundingClientRect();
-        return JSON.stringify({
-          tag: el.tagName,
-          id: el.id,
-          text: (el.textContent || '').substring(0, 50),
-          position: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
-        });
-      }, matchedElement);
+      // Additional verification: ensure the locator from getMimic matches
+      // This double-checks that the selector correctly identifies the element
+      const markerLocator = getMimic(page, targetMimicId);
+      // count() doesn't support timeout, but it's typically fast
+      const markerCount = await markerLocator.count();
       
-      return targetId === matchedId;
+      if (markerCount !== 1) {
+        return { unique: false, locator };
+      }
+      
+      // Verify both locators point to the same element by comparing their positions
+      const locatorElement = await locator.elementHandle({ timeout: operationTimeout });
+      const markerElement = await markerLocator.elementHandle({ timeout: operationTimeout });
+      
+      if (!locatorElement || !markerElement) {
+        return { unique: false, locator };
+      }
+      
+      // Compare elements by their mimic IDs (most reliable)
+      const locatorMimicId = await page.evaluate((el: Element) => {
+        return el.getAttribute('data-mimic-id');
+      }, locatorElement);
+      
+      const markerMimicId = await page.evaluate((el: Element) => {
+        return el.getAttribute('data-mimic-id');
+      }, markerElement);
+      
+      if (locatorMimicId !== markerMimicId || locatorMimicId !== String(targetMimicId)) {
+        return { unique: false, locator };
+      }
     }
     
-    return true;
+    return { unique: true, locator };
   } catch (error) {
     // If selector is invalid or throws, it's not unique
-    return false;
+    // Still return the locator for potential use
+    try {
+      const locator = getFromSelector(page, descriptor);
+      return { unique: false, locator };
+    } catch {
+      // If we can't even create the locator, return a dummy one
+      // This shouldn't happen in practice, but TypeScript requires a return
+      return { unique: false, locator: page.locator('body') };
+    }
   }
 }

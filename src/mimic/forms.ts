@@ -2,11 +2,18 @@ import { Locator, Page, TestInfo } from '@playwright/test';
 import { type LanguageModel, generateText, Output } from 'ai'
 import z from 'zod';
 import { countTokens } from '../utils/token-counter';
-import { TargetInfo } from './selector';
+import { generateBestSelectorForElement } from './selector';
 import { addAnnotation } from './annotations.js';
 import type { TestContext } from '../mimic.js';
+import { selectorToPlaywrightCode, generateFormCode } from './playwrightCodeGenerator.js';
+import { captureScreenshot } from './markers.js';
 
 const zFormActionResult = z.object({
+  /**
+   * The mimic ID (marker number) of the target form element
+   * This is the number shown on the element's badge in the screenshot
+   */
+  mimicId: z.number().int().min(1).describe("The mimic ID (marker number) shown on the form element's badge in the screenshot"),
   type: z.enum(['keypress', 'type', 'fill', 'select', 'uncheck', 'check', 'setInputFiles', 'clear']),
   params: z.object({
     value: z.string().describe("Value to set for the form update."),
@@ -23,96 +30,63 @@ const zFormActionResult = z.object({
 export type FormActionResult = z.infer<typeof zFormActionResult>;
 
 export const getFormAction = async (
-  _page: Page,
+  page: Page,
   brain: LanguageModel,
   gherkinStep: string,
-  targetElements: TargetInfo[],
   testContext?: TestContext
 ): Promise<FormActionResult> => {
-
-  // Format target elements with their indices for the prompt
-  // Include all relevant identifying information
-  const elementsWithIndices = targetElements.map((element, index) => ({
-    index,
-    tag: element.tag,
-    text: element.text,
-    id: element.id,
-    role: element.role,
-    label: element.label,
-    ariaLabel: element.ariaLabel,
-    typeAttr: element.typeAttr,
-    nameAttr: element.nameAttr,
-    href: element.href,
-    dataset: element.dataset,
-    nthOfType: element.nthOfType,
-  }));
-
-  // Group elements by tag type
-  const elementsByTag = new Map<string, typeof elementsWithIndices>();
-  for (const el of elementsWithIndices) {
-    const tagKey = el.tag === 'a' ? 'links' : el.tag === 'button' ? 'buttons' : el.tag === 'input' ? 'inputs' : el.tag;
-    if (!elementsByTag.has(tagKey)) {
-      elementsByTag.set(tagKey, []);
-    }
-    elementsByTag.get(tagKey)!.push(el);
-  }
-
-  // Format element fields in selector priority order, skipping null/empty values
-  const formatElement = (roleSection: string )  => (el: typeof elementsWithIndices[0]): string => {
-    const parts: string[] = [];
-    
-    // Priority order: testId → text → role → ariaLabel → label → name → type → href → dataAttributes → tag → id → nthOfType
-    if (el.dataset.testid) {
-      parts.push(`  testId: "${el.dataset.testid}"`);
-    }
-    if (el.text && el.text.trim()) {
-      parts.push(`  text: "${el.text.trim()}"`);
-    }
-    if (el.role && roleSection !== el.role) {
-      parts.push(`  role: ${el.role}`);
-    }
-    if (el.ariaLabel) {
-      parts.push(`  ariaLabel: "${el.ariaLabel}"`);
-    }
-    if (el.label) {
-      parts.push(`  label: "${el.label}"`);
-    }
-    if (el.nameAttr) {
-      parts.push(`  name: "${el.nameAttr}"`);
-    }
-    if (el.typeAttr) {
-      parts.push(`  type: ${el.typeAttr}`);
-    }
-    if (el.href) {
-      parts.push(`  href: "${el.href}"`);
-    }
-    if (Object.keys(el.dataset).length > 0) {
-      const dataKeys = Object.keys(el.dataset).filter(k => k !== 'testid');
-      if (dataKeys.length > 0) {
-        parts.push(`  dataAttributes: ${JSON.stringify(dataKeys)}`);
-      }
-    }
-    parts.push(`  tag: ${el.tag}`);
-    // if (el.id) {
-    //   parts.push(`  id: "${el.id}"`);
-    // }
-    parts.push(`  index: ${el.index}`);
-    if (el.nthOfType > 1) {
-      parts.push(`  nthOfType: ${el.nthOfType}`);
-    }
-    
-    return `  - ${parts.join('\n    ')}`;
-  };
-
-  // Create formatted description grouped by tag
-  const elementsDescription = Array.from(elementsByTag.entries())
-    .map(([tagKey, elements]) => {
-      const formattedElements = elements.map(formatElement(tagKey)).join('\n');
-      return `${tagKey}:\n${formattedElements}`;
-    })
-    .join('\n\n');
-
+  const startTime = Date.now();
+  
+  // Capture screenshot with markers and positioning data
+  console.log('📸 [getFormAction] Starting screenshot capture with markers...');
+  const screenshotStart = Date.now();
+  const { image: screenshot, markers: markerData, items: markerItems } = await captureScreenshot(page);
+  const screenshotTime = Date.now() - screenshotStart;
+  console.log(`📸 [getFormAction] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);
+  
+  const base64Start = Date.now();
+  const screenshotBase64 = screenshot.toString('base64');
+  const base64Time = Date.now() - base64Start;
+  console.log(`📸 [getFormAction] Screenshot converted to base64 in ${base64Time}ms (${(base64Time / 1000).toFixed(2)}s), size: ${(screenshotBase64.length / 1024).toFixed(2)}KB`);
+  
+  // Convert marker data to format expected by prompt
+  const markerStart = Date.now();
+  const markerItemsMap = new Map(markerItems.map(item => [item.mimicId, item]));
+  const markerInfo = markerData.map(m => {
+    const item = markerItemsMap.get(m.mimicId);
+    return {
+      id: m.mimicId,
+      tag: m.tag,
+      text: m.text,
+      role: m.role,
+      ariaLabel: m.ariaLabel,
+      label: item?.label || null,
+      typeAttr: item?.typeAttr || null,
+      nameAttr: item?.nameAttr || null,
+    };
+  });
+  const markerTime = Date.now() - markerStart;
+  console.log(`🔍 [getFormAction] Processed ${markerInfo.length} markers in ${markerTime}ms (${(markerTime / 1000).toFixed(2)}s)`);
+  
+  // Filter to form elements only (inputs, textareas, selects, buttons)
+  const filterStart = Date.now();
+  const formMarkers = markerInfo.filter(m => 
+    m.tag === 'input' || m.tag === 'textarea' || m.tag === 'select' || m.tag === 'button'
+  );
+  const filterTime = Date.now() - filterStart;
+  console.log(`🔍 [getFormAction] Filtered to ${formMarkers.length} form elements in ${filterTime}ms`);
+  
+  // Build marker summary for the prompt
+  const summaryStart = Date.now();
+  const markerSummary = formMarkers
+    .slice(0, 50) // Limit to first 50 markers to avoid prompt size issues
+    .map(m => `  Marker ${m.id}: ${m.tag}${m.typeAttr ? ` (type: ${m.typeAttr})` : ''}${m.role ? ` (role: ${m.role})` : ''}${m.text ? ` - "${m.text.substring(0, 50)}"` : ''}${m.label ? ` [label: "${m.label}"]` : ''}${m.nameAttr ? ` [name: "${m.nameAttr}"]` : ''}${m.ariaLabel ? ` [aria-label: "${m.ariaLabel}"]` : ''}`)
+    .join('\n');
+  const summaryTime = Date.now() - summaryStart;
+  console.log(`📝 [getFormAction] Built marker summary in ${summaryTime}ms`);
+  
   // Build context description for the prompt
+  const promptStart = Date.now();
   const contextDescription = testContext ? `
 **Test Context:**
 - Current URL: ${testContext.currentState.url}
@@ -126,24 +100,43 @@ ${testContext.previousSteps.map((prevStep, idx) =>
 ` : ''}
 ` : '';
 
-  const res = await generateText({
-    model: brain,
-    prompt: `You are an expert Playwright test engineer specializing in mapping Gherkin steps to form interactions.
+  const prompt = `You are an expert Playwright test engineer specializing in mapping Gherkin steps to form interactions using visual analysis.
 
 Your task is to analyze:
-1. A single Gherkin step that implies a form update action (typing, filling, selecting, checking, etc.).
-2. A list of candidate form elements extracted from the page.
+1. A screenshot of the page with numbered marker badges on elements
+2. A single Gherkin step that implies a form update action (typing, filling, selecting, checking, etc.)
+
+**IMPORTANT**: Look at the screenshot to identify form elements by their marker numbers. Each element has a numbered badge:
+- **RED badges** = Interactive elements (buttons, links, inputs, etc.)
+- **BLUE badges** = Display-only content elements
+- **GREEN badges** = Structure/test anchor elements
 
 You must determine:
+- The **mimicId** (marker number) of the target form element from the screenshot
 - The type of form action (fill, type, select, check, uncheck, clear, etc.)
 - The value to use (text to type, option to select, etc.)
+
+---
+
+### IMPORTANT RULES
+
+- **ALWAYS use the marker ID (mimicId)** from the screenshot - this is the number shown on the form element's badge
+- Do NOT invent elements or marker IDs - only use marker IDs that are visible in the screenshot
+- For typing text (email addresses, names, messages, etc.), ALWAYS use "fill" or "type", NEVER "keypress"
+- For checkboxes, ALWAYS use "check" or "uncheck", NEVER "keypress"
+- "keypress" is ONLY for single keyboard keys like "Enter", "Tab", "Escape", "ArrowUp", "ArrowDown", etc.
+- If the step says "type X into Y" or "fill Y with X", use "fill" (preferred) or "type", NOT "keypress"
+- If the step says "check" or "select" a checkbox, use "check", NOT "keypress"
+- Provide a clear, human-readable description of the target element (e.g., "Email input field", "Name field labeled 'Full Name'", "Submit button", "Country dropdown")
+- Consider the test context - what steps came before may help identify the correct element
 
 ${contextDescription}
 **Gherkin Step:**
 ${gherkinStep}
 
-**Available Form Elements (${targetElements.length} total):**
-${elementsDescription}
+**Available Form Elements (${formMarkers.length} total):**
+${markerSummary}
+${formMarkers.length > 50 ? `\n... and ${formMarkers.length - 50} more form elements` : ''}
 
 **Action Types:**
 - fill: Replace all content in a field with text (USE THIS for typing text like email addresses, names, etc.)
@@ -155,25 +148,60 @@ ${elementsDescription}
 - keypress: Press a SINGLE KEY ONLY (e.g., "Enter", "Tab", "Escape", "ArrowDown") - DO NOT use for typing text strings or checkboxes
 - setInputFiles: Upload a file
 
-**IMPORTANT:**
-- For typing text (email addresses, names, messages, etc.), ALWAYS use "fill" or "type", NEVER "keypress"
-- For checkboxes, ALWAYS use "check" or "uncheck", NEVER "keypress"
-- "keypress" is ONLY for single keyboard keys like "Enter", "Tab", "Escape", "ArrowUp", "ArrowDown", etc.
-- If the step says "type X into Y" or "fill Y with X", use "fill" (preferred) or "type", NOT "keypress"
-- If the step says "check" or "select" a checkbox, use "check", NOT "keypress"
+## Analyze the screenshot and determine:
+1. Which form element (by mimicId/marker number) is being targeted
+2. What action type to perform
+3. What value to use
+4. A clear description of the target element
 
-**Instructions:**
-1. Identify what form action is being requested
-2. Extract the value from the step (text to type, option to select, etc.)
-3. Identify which form element is being targeted (name field, email field, submit button, etc.)
-4. Return the appropriate action type, value, and a clear description of the target element
-   - The elementDescription should clearly identify the form field (e.g., "Email input field", "Name field labeled 'Full Name'", "Submit button", "Country dropdown")
+Use the marker ID numbers (mimicId) shown on the badges in the screenshot to identify the form element.`;
+  const promptTime = Date.now() - promptStart;
+  console.log(`📝 [getFormAction] Built prompt in ${promptTime}ms, prompt length: ${prompt.length} chars`);
 
-Think step-by-step about what the user wants to do with the form.`,
+  // Build message content with screenshot
+  const messageStart = Date.now();
+  const messageContent: Array<{ type: 'text'; text: string } | { type: 'image'; image: string }> = [
+    { type: 'text', text: prompt }
+  ];
+  
+  // Add screenshot as base64 image
+  messageContent.push({
+    type: 'image',
+    image: screenshotBase64
+  });
+  const messageTime = Date.now() - messageStart;
+  console.log(`📨 [getFormAction] Built message content in ${messageTime}ms`);
+
+  console.log('🤖 [getFormAction] Calling AI model...');
+  const aiStart = Date.now();
+  const res = await generateText({
+    model: brain,
+    messages: [
+      { 
+        role: 'user', 
+        content: messageContent
+      },
+      {
+        role: 'user', content: [
+          {
+            type: 'image',
+            image: `data:image/png;base64,${screenshotBase64}`
+          }
+        ]
+      }
+    ],
     output: Output.object({ schema: zFormActionResult, name: 'formActionResult' }),
     maxRetries: 3,
   });
+  const aiTime = Date.now() - aiStart;
+  console.log(`🤖 [getFormAction] AI model responded in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
+  
   await countTokens(res);
+  
+  const totalTime = Date.now() - startTime;
+  console.log(`⏱️  [getFormAction] Total time: ${totalTime}ms (${(totalTime / 1000).toFixed(2)}s)`);
+  console.log(`   Breakdown: screenshot=${screenshotTime}ms, base64=${base64Time}ms, markers=${markerTime}ms, filter=${filterTime}ms, summary=${summaryTime}ms, prompt=${promptTime}ms, message=${messageTime}ms, AI=${aiTime}ms`);
+
   return res.output;
 }
 
@@ -198,7 +226,7 @@ export const executeFormAction = async (
   targetElement: Locator | null,
   testInfo?: TestInfo,
   gherkinStep?: string
-): Promise<void | string[]> => {
+): Promise<{ actionResult: FormActionResult; selector: string | null }> => {
   if (targetElement === null) {
     throw new Error('No target element found');
   }
@@ -207,18 +235,47 @@ export const executeFormAction = async (
   const elementDescription = formActionResult.elementDescription || 'form field';
   let annotationDescription = '';
 
-  // Get selector string for snapshot storage
-  // Try to get a CSS selector representation if possible
+  // Generate Playwright code equivalent BEFORE performing the action
+  // This ensures the element is still available (before navigation/closure)
+  let playwrightCode: string | undefined;
   let selector: string | null = null;
+  
   try {
-    // Attempt to get a selector string from the locator
-    // This is best-effort and may not always work
-    const locatorString = targetElement.toString();
-    if (locatorString && locatorString !== '[object Object]') {
-      selector = locatorString;
+    // First, try to generate the best selector from the element
+    // This gives us a more descriptive selector than just the mimicId
+    // Use 5-minute timeout (300000ms) for slow tests - selector generation can be slow
+    const selectorDescriptor = await generateBestSelectorForElement(targetElement, { timeout: 300000 });
+    const selectorCode = selectorToPlaywrightCode(selectorDescriptor);
+    playwrightCode = generateFormCode(
+      selectorCode,
+      formActionResult.type,
+      formActionResult.params.value
+    );
+    
+    // Also get selector string for snapshot storage
+    try {
+      const locatorString = targetElement.toString();
+      if (locatorString && locatorString !== '[object Object]') {
+        selector = locatorString;
+      }
+    } catch (error) {
+      // If we can't get selector string, that's okay
     }
   } catch (error) {
-    // If we can't get selector, that's okay - we'll rebuild from TargetInfo
+    // If generating from element fails, fall back to mimicId if available
+    // This can happen if the element is not available or page is closing
+    if (formActionResult.mimicId) {
+      const selectorCode = `page.locator('[data-mimic-id="${formActionResult.mimicId}"]')`;
+      playwrightCode = generateFormCode(
+        selectorCode,
+        formActionResult.type,
+        formActionResult.params.value
+      );
+      selector = `[data-mimic-id="${formActionResult.mimicId}"]`;
+    } else {
+      // If we can't generate the code, that's okay - just skip it
+      console.debug('Could not generate Playwright code for form action:', error);
+    }
   }
 
   // Perform the form action with appropriate plain English annotation
@@ -235,7 +292,21 @@ export const executeFormAction = async (
         if (stepLower.includes('check') || stepLower.includes('select')) {
           console.warn(`⚠️  keypress action received empty value for checkbox operation - converting to check action`);
           annotationDescription = `→ Checking ${elementDescription} to select the option`;
-          addAnnotation(testInfo, gherkinStep, annotationDescription);
+          // Update Playwright code for check action
+          try {
+            const selectorDescriptor = await generateBestSelectorForElement(targetElement, { timeout: 300000 });
+            const selectorCode = selectorToPlaywrightCode(selectorDescriptor);
+            playwrightCode = generateFormCode(selectorCode, 'check');
+          } catch (error) {
+            // Fallback to mimicId if available
+            if (formActionResult.mimicId) {
+              const selectorCode = `page.locator('[data-mimic-id="${formActionResult.mimicId}"]')`;
+              playwrightCode = generateFormCode(selectorCode, 'check');
+            } else {
+              console.debug('Could not generate Playwright code for check action:', error);
+            }
+          }
+          addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
           await targetElement.check();
         } else {
           throw new Error(`keypress action requires a valid key value, but received empty string. Use 'check' for checkboxes, 'fill' for text input, etc.`);
@@ -244,47 +315,64 @@ export const executeFormAction = async (
         // If it's not a valid single key and looks like text, use fill instead
         console.warn(`⚠️  keypress action received text "${keyValue}" - converting to fill action`);
         annotationDescription = `→ Filling ${elementDescription} with value "${keyValue}"`;
-        addAnnotation(testInfo, gherkinStep, annotationDescription);
+        // Update Playwright code for fill action
+        try {
+          const selectorDescriptor = await generateBestSelectorForElement(targetElement, { timeout: 300000 });
+          const selectorCode = selectorToPlaywrightCode(selectorDescriptor);
+          playwrightCode = generateFormCode(selectorCode, 'fill', keyValue);
+        } catch (error) {
+          // Fallback to mimicId if available
+          if (formActionResult.mimicId) {
+            const selectorCode = `page.locator('[data-mimic-id="${formActionResult.mimicId}"]')`;
+            playwrightCode = generateFormCode(selectorCode, 'fill', keyValue);
+          } else {
+            console.debug('Could not generate Playwright code for fill action:', error);
+          }
+        }
+        addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
         await targetElement.fill(keyValue);
       } else {
         annotationDescription = `→ Pressing key "${keyValue}" on the keyboard`;
-        addAnnotation(testInfo, gherkinStep, annotationDescription);
+        // For keypress, the code is already generated correctly (uses page.keyboard)
+        addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
         await page.keyboard.press(keyValue);
       }
       break;
     case 'type':
       annotationDescription = `→ Typing "${formActionResult.params.value}" using keyboard input`;
-      addAnnotation(testInfo, gherkinStep, annotationDescription);
+      // For type, the code uses page.keyboard (not element-specific)
+      playwrightCode = `await page.keyboard.type(${JSON.stringify(formActionResult.params.value)});`;
+      addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
       await page.keyboard.type(formActionResult.params.value);
       break;
     case 'fill':
       annotationDescription = `→ Filling ${elementDescription} with value "${formActionResult.params.value}"`;
-      addAnnotation(testInfo, gherkinStep, annotationDescription);
+      addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
       await targetElement.fill(formActionResult.params.value);
       break;
     case 'select':
       annotationDescription = `→ Selecting option "${formActionResult.params.value}" from ${elementDescription}`;
-      addAnnotation(testInfo, gherkinStep, annotationDescription);
+      addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
       await targetElement.selectOption(formActionResult.params.value);
       break;
     case 'uncheck':
       annotationDescription = `→ Unchecking ${elementDescription} to deselect the option`;
-      addAnnotation(testInfo, gherkinStep, annotationDescription);
+      addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
       await targetElement.uncheck();
       break;
     case 'check':
       annotationDescription = `→ Checking ${elementDescription} to select the option`;
-      addAnnotation(testInfo, gherkinStep, annotationDescription);
+      addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
       await targetElement.check();
       break;
     case 'setInputFiles':
       annotationDescription = `→ Uploading file "${formActionResult.params.value}" to ${elementDescription}`;
-      addAnnotation(testInfo, gherkinStep, annotationDescription);
+      addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
       await targetElement.setInputFiles(formActionResult.params.value);
       break;
     case 'clear':
       annotationDescription = `→ Clearing the contents of ${elementDescription}`;
-      addAnnotation(testInfo, gherkinStep, annotationDescription);
+      addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
       await targetElement.clear();
       break;
     default:

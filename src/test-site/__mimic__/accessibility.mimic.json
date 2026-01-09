@@ -1,0 +1,290 @@
+{
+  "tests": [
+    {
+      "testHash": "a49bd9a277e54ca8",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-08T23:58:55.004Z",
+        "lastPassedAt": "2026-01-09T09:17:52.425Z",
+        "lastFailedAt": "2026-01-09T09:17:52.420Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on the button with aria-label \"Search for items\"",
+          "error": "locator.click: Target page, context or browser has been closed"
+        }
+      }
+    },
+    {
+      "testHash": "99e1a0acef3ac23f",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-08T23:59:19.103Z",
+        "lastPassedAt": "2026-01-09T01:26:09.893Z",
+        "lastFailedAt": "2026-01-09T01:26:09.886Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on the button with aria-label \"Add a new item to the list\"",
+          "error": "page.evaluate: Target page, context or browser has been closed"
+        }
+      }
+    },
+    {
+      "testHash": "2fbec3881ffa33e9",
+      "testText": "type \"testuser\" into the username field",
+      "steps": [
+        {
+          "stepHash": "2fbec3881ffa33e9",
+          "stepIndex": 0,
+          "stepText": "type \"testuser\" into the username field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "type": "fill",
+            "params": {
+              "value": "testuser",
+              "modifiers": []
+            },
+            "elementDescription": "Username input field labeled 'Username'"
+          },
+          "targetElement": {
+            "tag": "input",
+            "text": "",
+            "id": "username-field",
+            "role": "textbox",
+            "label": "Username",
+            "ariaLabel": null,
+            "typeAttr": "text",
+            "nameAttr": "username",
+            "href": null,
+            "dataset": {},
+            "nthOfType": 1,
+            "selector": "getByRole('textbox', { name: 'Username' })"
+          },
+          "executedAt": "2026-01-08T23:59:41.869Z"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-08T23:59:41.869Z",
+        "lastPassedAt": "2026-01-08T23:59:41.872Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "2c40a7c2236b36a2",
+      "testText": "type \"password123\" into the password field",
+      "steps": [
+        {
+          "stepHash": "2c40a7c2236b36a2",
+          "stepIndex": 0,
+          "stepText": "type \"password123\" into the password field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "type": "fill",
+            "params": {
+              "value": "password123",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "Password field"
+          },
+          "executedAt": "2026-01-09T02:05:43.206Z"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-08T23:59:46.881Z",
+        "lastPassedAt": "2026-01-09T02:05:43.209Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "2eb9490b6dbd68fb",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:00:18.521Z",
+        "lastPassedAt": "2026-01-09T01:27:03.457Z",
+        "lastFailedAt": "2026-01-09T01:27:03.441Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "check the remember me checkbox",
+          "error": "locator.check: Test ended.\nCall log:\n\u001b[2m  - waiting for getByRole('checkbox', { name: 'Remember me on this device' })\u001b[22m\n\u001b[2m    - locator resolved to <input type=\"checkbox\" name=\"remember\" data-mimic-id=\"13\" aria-label=\"Remember me on this device\"/>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "f561ab62c9034317",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:00:30.187Z",
+        "lastPassedAt": "2026-01-09T00:01:05.625Z",
+        "lastFailedAt": "2026-01-09T00:01:05.623Z",
+        "failureDetails": {
+          "failedStepIndex": 2,
+          "failedStepText": "check the remember me checkbox",
+          "error": "locator.check: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('checkbox', { name: 'Remember me on this device' })\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "a28f4d4401929aaf",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:01:44.420Z",
+        "lastPassedAt": "2026-01-09T00:02:21.678Z",
+        "lastFailedAt": "2026-01-09T00:02:21.674Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "type \"test query\" into the search input",
+          "error": "locator.fill: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Search input' })\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "08c4d680128977ca",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:02:03.994Z",
+        "lastPassedAt": "2026-01-09T00:02:03.996Z",
+        "lastFailedAt": "2026-01-09T00:02:03.994Z"
+      }
+    },
+    {
+      "testHash": "24c9f3236b1e5182",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:02:11.715Z",
+        "lastPassedAt": "2026-01-09T00:02:11.719Z",
+        "lastFailedAt": "2026-01-09T00:02:11.715Z"
+      }
+    },
+    {
+      "testHash": "a367877639e71ebf",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:03:59.095Z",
+        "lastPassedAt": "2026-01-09T00:03:59.100Z",
+        "lastFailedAt": "2026-01-09T00:03:59.095Z"
+      }
+    },
+    {
+      "testHash": "7faa7cb64cbb404b",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T01:25:24.202Z",
+        "lastPassedAt": "2026-01-09T01:25:24.209Z",
+        "lastFailedAt": "2026-01-09T01:25:24.202Z"
+      }
+    },
+    {
+      "testHash": "9b6fcff17d6efe0b",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T01:26:24.088Z",
+        "lastPassedAt": "2026-01-09T02:08:54.076Z",
+        "lastFailedAt": "2026-01-09T02:08:54.071Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Read More\" in the article",
+          "error": "locator.click: Target page, context or browser has been closed"
+        }
+      }
+    },
+    {
+      "testHash": "862435557023af45",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T01:26:59.497Z",
+        "lastPassedAt": "2026-01-09T01:26:59.498Z",
+        "lastFailedAt": "2026-01-09T01:26:59.497Z"
+      }
+    }
+  ]
+}

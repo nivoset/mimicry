@@ -15,7 +15,7 @@ test.describe('Simple Navigation Page', () => {
     await expect(page.locator('nav')).toBeVisible();
   });
 
-  test('should navigate to forms page via internal link', async ({ page, mimic }) => {
+  test('should navigate to forms page via internal link', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Go to Forms Page"`;
 
     expect(page.url()).toContain('forms-basic.html');
@@ -29,7 +29,7 @@ test.describe('Simple Navigation Page', () => {
     await expect(page.locator('h1')).toContainText('Button Variety');
   });
 
-  test('should navigate to dynamic content page', async ({ page, mimic }) => {
+  test('should navigate to dynamic content page', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Go to Dynamic Content Page"`;
 
     expect(page.url()).toContain('dynamic-content.html');
@@ -41,7 +41,7 @@ test.describe('Simple Navigation Page', () => {
     expect(page.url()).toContain('accessibility.html');
   });
 
-  test('should navigate with URL parameters', async ({ page, mimic }) => {
+  test('should navigate with URL parameters', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Page 1, Section Test"`;
 
     expect(page.url()).toContain('page=1');
@@ -56,7 +56,7 @@ test.describe('Simple Navigation Page', () => {
     expect(page.url()).toContain('filter=active');
   });
 
-  test('should navigate with tab and view parameters', async ({ page, mimic }) => {
+  test('should navigate with tab and view parameters', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Settings Tab, List View"`;
 
     expect(page.url()).toContain('tab=settings');
@@ -72,7 +72,7 @@ test.describe('Simple Navigation Page', () => {
     expect(page.url()).toContain('simple-navigation.html');
   });
 
-  test('should go forward in browser history', async ({ page, mimic }) => {
+  test('should go forward in browser history', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Go to Buttons Page"
       go back
@@ -99,20 +99,20 @@ test.describe('Simple Navigation Page', () => {
     expect(urlText).toContain('simple-navigation.html');
   });
 
-  test('should display URL parameters when present', async ({ page, mimic }) => {
+  test('should display URL parameters when present', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Page 1, Section Test"`;
 
     await expect(page.locator('#url-params')).toContainText('page=1');
     await expect(page.locator('#url-params')).toContainText('section=test');
   });
 
-  test('should navigate via navigation menu', async ({ page, mimic }) => {
+  test('should navigate via navigation menu', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Forms" in the navigation menu`;
 
     expect(page.url()).toContain('forms-basic.html');
   });
 
-  test('should navigate to home page from navigation', async ({ page, mimic }) => {
+  test('should navigate to home page from navigation', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Home" in the navigation menu`;
 
     expect(page.url()).toContain('index.html');

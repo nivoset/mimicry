@@ -16,7 +16,7 @@ test.describe('Complex Forms Page', () => {
     await expect(page.locator('#current-step')).toContainText('1');
   });
 
-  test('should fill step 1 and navigate to step 2', async ({ page, mimic }) => {
+  test('should fill step 1 and navigate to step 2', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       type "Alice" into the first name field
       type "Johnson" into the last name field
@@ -44,7 +44,7 @@ test.describe('Complex Forms Page', () => {
     await expect(page.locator('#tax-id')).toBeVisible();
   });
 
-  test('should hide business fields when switching to personal', async ({ page, mimic }) => {
+  test('should hide business fields when switching to personal', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       select "Business" from the account type dropdown
       select "Personal" from the account type dropdown
@@ -65,7 +65,7 @@ test.describe('Complex Forms Page', () => {
     await expect(page.locator('#step-2')).toBeVisible();
   });
 
-  test('should fill step 2 and navigate to step 3', async ({ page, mimic }) => {
+  test('should fill step 2 and navigate to step 3', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       type "Bob" into the first name field
       type "Smith" into the last name field
@@ -79,7 +79,7 @@ test.describe('Complex Forms Page', () => {
     await expect(page.locator('#current-step')).toContainText('3');
   });
 
-  test('should show SMS fields when SMS contact method is selected', async ({ page, mimic }) => {
+  test('should show SMS fields when SMS contact method is selected', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Next Step"
       select "SMS" from the preferred contact method dropdown
@@ -101,7 +101,7 @@ test.describe('Complex Forms Page', () => {
     await expect(page.locator('#zip')).toBeVisible();
   });
 
-  test('should navigate back to previous step', async ({ page, mimic }) => {
+  test('should navigate back to previous step', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       type "Test" into the first name field
       click on "Next Step"
@@ -134,7 +134,7 @@ test.describe('Complex Forms Page', () => {
     expect(progress3).toBe('100%');
   });
 
-  test('should fill step 3 with all fields', async ({ page, mimic }) => {
+  test('should fill step 3 with all fields', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       type "Charlie" into the first name field
       type "Brown" into the last name field
@@ -176,7 +176,7 @@ test.describe('Complex Forms Page', () => {
     expect(formData).toContain('complete@test.com');
   });
 
-  test('should handle file upload field', async ({ page, mimic }) => {
+  test('should handle file upload field', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       type "File" into the first name field
       type "Test" into the last name field

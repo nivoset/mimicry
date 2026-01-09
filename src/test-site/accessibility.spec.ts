@@ -16,7 +16,7 @@ test.describe('Accessibility Page', () => {
     await expect(page.locator('nav[role="navigation"][aria-label="Main navigation"]')).toBeVisible();
   });
 
-  test('should click button with aria-label "Close this dialog"', async ({ page, mimic }) => {
+  test('should click button with aria-label "Close this dialog"', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`click on the button with aria-label "Close this dialog"`;
 
     // Button should be clickable
@@ -24,28 +24,28 @@ test.describe('Accessibility Page', () => {
     await expect(button).toBeVisible();
   });
 
-  test('should click button with aria-label "Save the current document"', async ({ page, mimic }) => {
+  test('should click button with aria-label "Save the current document"', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`click on the button with aria-label "Save the current document"`;
 
     const button = page.locator('button[aria-label="Save the current document"]');
     await expect(button).toBeVisible();
   });
 
-  test('should click button with aria-label "Print the current page"', async ({ page, mimic }) => {
+  test('should click button with aria-label "Print the current page"', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`click on the button with aria-label "Print the current page"`;
 
     const button = page.locator('button[aria-label="Print the current page"]');
     await expect(button).toBeVisible();
   });
 
-  test('should click button with aria-label "Search for items"', async ({ page, mimic }) => {
+  test('should click button with aria-label "Search for items"', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`click on the button with aria-label "Search for items"`;
 
     const button = page.locator('button[aria-label="Search for items"]');
     await expect(button).toBeVisible();
   });
 
-  test('should click button with aria-label "Add a new item to the list"', async ({ page, mimic }) => {
+  test('should click button with aria-label "Add a new item to the list"', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`click on the button with aria-label "Add a new item to the list"`;
 
     const button = page.locator('button[aria-label="Add a new item to the list"]');
@@ -62,32 +62,32 @@ test.describe('Accessibility Page', () => {
     await expect(page.locator('aside h3')).toContainText('Related Information');
   });
 
-  test('should click button inside article', async ({ page, mimic }) => {
+  test('should click button inside article', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`click on "Read More" in the article`;
 
     const button = page.locator('article button');
     await expect(button).toBeVisible();
   });
 
-  test('should fill username field using label association', async ({ page, mimic }) => {
+  test('should fill username field using label association', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`type "testuser" into the username field`;
 
     await expect(page.locator('#username-field')).toHaveValue('testuser');
   });
 
-  test('should fill password field using label association', async ({ page, mimic }) => {
+  test('should fill password field using label association', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`type "password123" into the password field`;
 
     await expect(page.locator('#password-field')).toHaveValue('password123');
   });
 
-  test('should check remember me checkbox', async ({ page, mimic }) => {
+  test('should check remember me checkbox', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`check the remember me checkbox`;
 
     await expect(page.locator('input[name="remember"]')).toBeChecked();
   });
 
-  test('should submit login form', async ({ page, mimic }) => {
+  test('should submit login form', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`
       type "user@example.com" into the username field
       type "securepass" into the password field
@@ -99,14 +99,14 @@ test.describe('Accessibility Page', () => {
     await expect(loginButton).toBeVisible();
   });
 
-  test('should interact with custom button with role', async ({ page, mimic }) => {
+  test('should interact with custom button with role', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`click on "Custom Button"`;
 
     const customButton = page.locator('[role="button"]').first();
     await expect(customButton).toBeVisible();
   });
 
-  test('should interact with custom link with role', async ({ page, mimic }) => {
+  test('should interact with custom link with role', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`click on "Custom Link"`;
 
     const customLink = page.locator('[role="link"]').first();
@@ -128,7 +128,7 @@ test.describe('Accessibility Page', () => {
     await expect(page.locator('nav[aria-label="Secondary navigation"] a')).toHaveCount(3);
   });
 
-  test('should interact with search form', async ({ page, mimic }) => {
+  test('should interact with search form', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`
       type "test query" into the search input
       click on "Search"
@@ -138,7 +138,7 @@ test.describe('Accessibility Page', () => {
     await expect(searchForm).toBeVisible();
   });
 
-  test('should update live region', async ({ page, mimic }) => {
+  test('should update live region', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     const initialStatus = await page.locator('#live-status').textContent();
     
     await mimic`click on "Update Live Region"`;
@@ -147,7 +147,7 @@ test.describe('Accessibility Page', () => {
     await expect(page.locator('#live-status')).not.toContainText(initialStatus || '');
   });
 
-  test('should update live region multiple times', async ({ page, mimic }) => {
+  test('should update live region multiple times', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`
       click on "Update Live Region"
       click on "Update Live Region"
@@ -157,7 +157,7 @@ test.describe('Accessibility Page', () => {
     await expect(page.locator('#live-status')).toBeVisible();
   });
 
-  test('should interact with button with aria-describedby', async ({ page, mimic }) => {
+  test('should interact with button with aria-describedby', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`click on "Delete"`;
 
     const deleteButton = page.locator('button[aria-describedby="delete-description"]');
@@ -165,7 +165,7 @@ test.describe('Accessibility Page', () => {
     await expect(page.locator('#delete-description')).toContainText('cannot be undone');
   });
 
-  test('should interact with button with save description', async ({ page, mimic }) => {
+  test('should interact with button with save description', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`click on "Save"`;
 
     const saveButton = page.locator('button[aria-describedby="save-description"]');
@@ -181,7 +181,7 @@ test.describe('Accessibility Page', () => {
     await expect(page.locator('main[role="main"]')).toBeVisible();
   });
 
-  test('should fill complete form using accessibility features', async ({ page, mimic }) => {
+  test('should fill complete form using accessibility features', { tag: ["@mimic"] }, async ({ page, mimic }) => {
     await mimic`
       type "accessibility@test.com" into the username field
       type "testpass123" into the password field

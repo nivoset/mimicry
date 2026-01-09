@@ -8,6 +8,7 @@ import {
 import { countTokens } from '../utils/token-counter.js';
 import { addAnnotation } from './annotations.js';
 import type { TestContext } from '../mimic.js';
+import { generateNavigationCode } from './playwrightCodeGenerator.js';
 
 export const getNavigationAction = async (
   _page: Page, 
@@ -83,22 +84,28 @@ export const executeNavigationAction = async (
   // Use LLM-generated description or build a default one
   const actionDescription = navigationAction.description || 'navigation action';
 
+  // Generate Playwright code equivalent
+  const playwrightCode = generateNavigationCode(
+    navigationAction.type,
+    navigationAction.params.url
+  );
+
   switch (navigationAction.type) {
     case 'openPage':
     case 'navigate':
-      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} and waiting for page to load completely`);
+      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} and waiting for page to load completely`, playwrightCode);
       await page.goto(navigationAction.params.url!, { waitUntil: 'networkidle' });
       break;
     case 'closePage':
       // Only close page if explicitly requested - be very careful with this action
       // Check if page is still open before closing
       if (page.isClosed()) {
-        addAnnotation(testInfo, gherkinStep, `→ Page is already closed, cannot close again`);
+        addAnnotation(testInfo, gherkinStep, `→ Page is already closed, cannot close again`, playwrightCode);
         return navigationAction;
       }
       // Capture current URL for better traceability
       const currentUrlBeforeClose = page.url();
-      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (closing page at ${currentUrlBeforeClose})`);
+      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (closing page at ${currentUrlBeforeClose})`, playwrightCode);
       await page.close();
       break;
     case 'goBack':
@@ -107,9 +114,9 @@ export const executeNavigationAction = async (
       await page.goBack();
       try {
         const urlAfterBack = page.url();
-        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeBack} to ${urlAfterBack})`);
+        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeBack} to ${urlAfterBack})`, playwrightCode);
       } catch {
-        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeBack})`);
+        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeBack})`, playwrightCode);
       }
       break;
     case 'goForward':
@@ -118,15 +125,15 @@ export const executeNavigationAction = async (
       await page.goForward();
       try {
         const urlAfterForward = page.url();
-        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeForward} to ${urlAfterForward})`);
+        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeForward} to ${urlAfterForward})`, playwrightCode);
       } catch {
-        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeForward})`);
+        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeForward})`, playwrightCode);
       }
       break;
     case 'refresh':
       // Capture current URL for better traceability
       const currentUrlBeforeRefresh = page.url();
-      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} to reload all content (refreshing ${currentUrlBeforeRefresh})`);
+      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} to reload all content (refreshing ${currentUrlBeforeRefresh})`, playwrightCode);
       await page.reload();
       break;
     default:

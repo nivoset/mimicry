@@ -11,7 +11,7 @@ import type {
   CssSelector,
   AriaRole,
 } from './selectorTypes.js';
-import { verifySelectorUniqueness } from './selectorUtils.js';
+import { verifySelectorUniqueness, getMimicIdFromLocator } from './selectorUtils.js';
 
 /**
  * Browser context types (used in page.evaluate)
@@ -944,13 +944,31 @@ export async function buildSelectorForTarget(page: Page, target?: TargetInfo): P
  * 8. CSS fallback (ID, name, tag + nth-of-type)
  * 
  * @param locator - Playwright Locator pointing to the target element
+ * @param options - Optional configuration
+ * @param options.timeout - Timeout in milliseconds for element operations (default: 300000 = 5 minutes)
  * @returns Promise resolving to SelectorDescriptor that uniquely identifies the element
  */
 export async function generateBestSelectorForElement(
-  locator: Locator
+  locator: Locator,
+  options?: { timeout?: number }
 ): Promise<SelectorDescriptor> {
   const page = locator.page();
-  const targetElementHandle = await locator.elementHandle();
+  // Default to 5 minutes (300000ms) for slow tests, especially when generating selectors
+  // This helps avoid timeouts during element analysis which can be slow
+  const timeout = options?.timeout ?? 300000;
+  
+  // Get mimic ID from the locator using the markers system
+  // This replaces the old targetElementHandle approach for verification
+  const targetMimicId = await getMimicIdFromLocator(locator);
+  
+  // If no mimic ID found, we can't verify uniqueness with markers
+  // This could happen if markers haven't been installed yet
+  // We'll still try to generate a selector, but verification will be less strict
+  
+  // Get element handle from locator for page.evaluate() calls
+  // We still need this for browser context evaluation
+  // Use extended timeout for slow tests
+  const targetElementHandle = await locator.elementHandle({ timeout });
   
   if (!targetElementHandle) {
     throw new Error('Cannot get element handle from locator');
@@ -1283,7 +1301,8 @@ export async function generateBestSelectorForElement(
         type: 'testid',
         value: dataset.testid,
       };
-      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+      const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+      if (verification.unique) {
         return descriptor;
       }
     }
@@ -1299,7 +1318,8 @@ export async function generateBestSelectorForElement(
           name: name.trim(),
           exact: true,
         };
-        if (await verifySelectorUniqueness(page, descriptorExact, targetElementHandle)) {
+        const verificationExact = await verifySelectorUniqueness(page, descriptorExact, targetMimicId ?? null);
+        if (verificationExact.unique) {
           return descriptorExact;
         }
         
@@ -1310,7 +1330,8 @@ export async function generateBestSelectorForElement(
           name: name.trim(),
           exact: false,
         };
-        if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+        const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+        if (verification.unique) {
           return descriptor;
         }
       }
@@ -1320,7 +1341,8 @@ export async function generateBestSelectorForElement(
         type: 'role',
         role: elementInfo.role as AriaRole,
       };
-      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+      const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+      if (verification.unique) {
         return descriptor;
       }
     }
@@ -1332,7 +1354,8 @@ export async function generateBestSelectorForElement(
         value: elementInfo.label.trim(),
         exact: true,
       };
-      if (await verifySelectorUniqueness(page, descriptorExact, targetElementHandle)) {
+      const verificationExact = await verifySelectorUniqueness(page, descriptorExact, targetMimicId ?? null);
+      if (verificationExact.unique) {
         return descriptorExact;
       }
       
@@ -1341,7 +1364,8 @@ export async function generateBestSelectorForElement(
         value: elementInfo.label.trim(),
         exact: false,
       };
-      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+      const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+      if (verification.unique) {
         return descriptor;
       }
     }
@@ -1353,7 +1377,8 @@ export async function generateBestSelectorForElement(
         value: elementInfo.placeholder.trim(),
         exact: false,
       };
-      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+      const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+      if (verification.unique) {
         return descriptor;
       }
     }
@@ -1365,7 +1390,8 @@ export async function generateBestSelectorForElement(
         value: elementInfo.alt.trim(),
         exact: false,
       };
-      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+      const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+      if (verification.unique) {
         return descriptor;
       }
     }
@@ -1377,7 +1403,8 @@ export async function generateBestSelectorForElement(
         value: elementInfo.title.trim(),
         exact: false,
       };
-      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+      const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+      if (verification.unique) {
         return descriptor;
       }
     }
@@ -1392,7 +1419,8 @@ export async function generateBestSelectorForElement(
           value: trimmedText,
           exact: true,
         };
-        if (await verifySelectorUniqueness(page, descriptorExact, targetElementHandle)) {
+        const verificationExact = await verifySelectorUniqueness(page, descriptorExact, targetMimicId ?? null);
+        if (verificationExact.unique) {
           return descriptorExact;
         }
       }
@@ -1402,7 +1430,8 @@ export async function generateBestSelectorForElement(
         value: trimmedText,
         exact: false,
       };
-      if (await verifySelectorUniqueness(page, descriptor, targetElementHandle)) {
+      const verification = await verifySelectorUniqueness(page, descriptor, targetMimicId ?? null, timeout);
+      if (verification.unique) {
         return descriptor;
       }
     }
@@ -1432,7 +1461,8 @@ export async function generateBestSelectorForElement(
     if (childSelector) {
       const nestedDescriptor = createNestedSelector(bestParentSelector, childSelector);
       // Verify the nested selector is unique
-      if (await verifySelectorUniqueness(page, nestedDescriptor, targetElementHandle)) {
+      const verification = await verifySelectorUniqueness(page, nestedDescriptor, targetMimicId ?? null);
+      if (verification.unique) {
         return nestedDescriptor;
       }
     }
@@ -1449,7 +1479,8 @@ export async function generateBestSelectorForElement(
           exact: false,
         };
         const nestedDescriptor = createNestedSelector(bestParentSelector, childSelector);
-        if (await verifySelectorUniqueness(page, nestedDescriptor, targetElementHandle)) {
+        const verification = await verifySelectorUniqueness(page, nestedDescriptor, targetMimicId ?? null);
+        if (verification.unique) {
           return nestedDescriptor;
         }
       }
@@ -1459,7 +1490,8 @@ export async function generateBestSelectorForElement(
         role: elementInfo.role as AriaRole,
       };
       const nestedDescriptor = createNestedSelector(bestParentSelector, childSelector);
-      if (await verifySelectorUniqueness(page, nestedDescriptor, targetElementHandle)) {
+      const verification = await verifySelectorUniqueness(page, nestedDescriptor, targetMimicId ?? null);
+      if (verification.unique) {
         return nestedDescriptor;
       }
     }
@@ -1472,7 +1504,8 @@ export async function generateBestSelectorForElement(
         exact: false,
       };
       const nestedDescriptor = createNestedSelector(bestParentSelector, childSelector);
-      if (await verifySelectorUniqueness(page, nestedDescriptor, targetElementHandle)) {
+      const verification = await verifySelectorUniqueness(page, nestedDescriptor, targetMimicId ?? null);
+      if (verification.unique) {
         return nestedDescriptor;
       }
     }

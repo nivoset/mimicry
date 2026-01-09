@@ -4,12 +4,12 @@
 
 import { Page, TestInfo, test } from '@playwright/test';
 import type { LanguageModel } from 'ai';
-import { dirname } from 'path';
 import { generateText, Output } from 'ai';
 import { z } from 'zod';
 import { getBaseAction } from './mimic/actionType.js';
 import { getNavigationAction,  executeNavigationAction } from './mimic/navigation.js';
-import { buildSelectorForTarget, captureTargets, type TargetInfo } from './mimic/selector.js';
+import { captureMarkers, captureScreenshot, getMimic } from './mimic/markers.js';
+import type { MarkerTargetElement, SnapshotStep } from './mimic/types.js';
 import { executeClickAction, getClickAction } from './mimic/click.js';
 import { getFormAction, executeFormAction, type FormActionResult } from './mimic/forms.js';
 import { startTestCase, countTokens } from './utils/token-counter.js';
@@ -17,6 +17,7 @@ import { hashTestText, hashStepText, getSnapshot, saveSnapshot, recordFailure, s
 import { replayFromSnapshot } from './mimic/replay.js';
 import { isTroubleshootMode } from './mimic/cli.js';
 import { addAnnotation } from './mimic/annotations.js';
+import { addMarkerCode } from './mimic/markers.js';
 import type { StepExecutionResult } from './mimic/types.js';
 
 
@@ -196,7 +197,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
   const useSnapshot = testFilePath && await shouldUseSnapshot(testFilePath, testHash, isTroubleshoot, expectedStepCount);
   
   if (useSnapshot) {
-    const snapshot = await getSnapshot(testFilePath!, testHash);
+    const snapshot = null //await getSnapshot(testFilePath!, testHash);
     if (snapshot) {
       // Add annotation indicating we're loading from snapshot
       addAnnotation(
@@ -300,12 +301,16 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
               break;
             }
             console.log(`→ Continuing to add actions for step (attempt ${actionCount})...`);
+            break;
           }
-          
+          test.slow(true);
           // Get the next action to execute for this step
           const baseAction = await getBaseAction(page, brains, step, testContext);
           
           let stepResult: StepExecutionResult;
+
+          // Wait a bit for markers to be applied to all elements
+          // await page.waitForTimeout(500);
           
           switch (baseAction.kind) {
             case 'navigation':
@@ -323,103 +328,60 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
               
             case 'click':
               // Click actions will log their own plain English annotations
-              const targetElements = await captureTargets(page, { interactableOnly: true });
-              const clickActionResult = await getClickAction(page, brains, step, targetElements, testContext);
+              const clickActionResult = await getClickAction(page, brains, step, testContext);
               // TODO: better way to work out if the top priority candidate is a clickable element
               const selectedCandidate = clickActionResult.candidates.find(Boolean);
               if (!selectedCandidate) {
                 throw new Error(`No candidate element found for click action: ${step}`);
               }
-              const targetElement = targetElements[selectedCandidate.index];
-              if (!targetElement) {
-                throw new Error(`Target element not found at index ${selectedCandidate.index}`);
+              // Use marker ID from the candidate to get the locator
+              if (!selectedCandidate.mimicId) {
+                throw new Error(`Selected candidate is missing mimicId for click action: ${step}`);
               }
-              const clickable = await buildSelectorForTarget(page, targetElement);
+              const clickable = getMimic(page, selectedCandidate.mimicId);
               const clickResult = await executeClickAction(clickable, clickActionResult, selectedCandidate, testInfo, step);
               
-              // Build targetElement with optional selector
-              // Use Object.assign to preserve all required TargetInfo properties
-              const targetElementWithSelector: TargetInfo & { selector?: string } = clickResult.selector
-                ? Object.assign({}, targetElement, { selector: clickResult.selector })
-                : (targetElement as TargetInfo);
+              // Store marker ID instead of TargetInfo
+              const targetElement: MarkerTargetElement = clickResult.selector
+                ? { mimicId: selectedCandidate.mimicId, selector: clickResult.selector }
+                : { mimicId: selectedCandidate.mimicId };
               
               stepResult = {
                 stepIndex,
                 stepText: step,
                 actionKind: 'click',
                 actionDetails: clickResult.actionResult,
-                targetElement: targetElementWithSelector,
+                targetElement,
               };
               break;
               
             case 'form update':
               // Form actions will log their own plain English annotations
-              const formElements = await captureTargets(page, { interactableOnly: true });
-              const formActionResult = await getFormAction(page, brains, step, formElements, testContext);
+              const formActionResult = await getFormAction(page, brains, step, testContext);
               
-              // Find the target form element by matching step description
-              // Try to find element that matches keywords from the step (name, email, etc.)
-              const stepLower = step.toLowerCase();
-              let formElement = formElements.find(el => {
-                // Match by label, name, id, or placeholder
-                const labelMatch = el.label && stepLower.includes(el.label.toLowerCase());
-                const nameMatch = el.nameAttr && stepLower.includes(el.nameAttr.toLowerCase());
-                const idMatch = el.id && stepLower.includes(el.id.toLowerCase());
-                const ariaLabelMatch = el.ariaLabel && stepLower.includes(el.ariaLabel.toLowerCase());
-                
-                // Also check if step mentions the element type (e.g., "name field", "email field")
-                const fieldTypeMatch = 
-                  (stepLower.includes('name') && (el.nameAttr?.includes('name') || el.id?.includes('name') || el.label?.toLowerCase().includes('name'))) ||
-                  (stepLower.includes('email') && (el.nameAttr?.includes('email') || el.id?.includes('email') || el.label?.toLowerCase().includes('email'))) ||
-                  (stepLower.includes('phone') && (el.nameAttr?.includes('phone') || el.id?.includes('phone') || el.label?.toLowerCase().includes('phone'))) ||
-                  (stepLower.includes('message') && (el.nameAttr?.includes('message') || el.id?.includes('message') || el.label?.toLowerCase().includes('message')));
-                
-                return (labelMatch || nameMatch || idMatch || ariaLabelMatch || fieldTypeMatch) &&
-                       (el.tag === 'input' || el.tag === 'textarea' || el.tag === 'select');
-              });
-              
-              // Fallback to first form element if no match found
-              if (!formElement) {
-                formElement = formElements.find(el => 
-                  el.tag === 'input' || el.tag === 'textarea' || el.tag === 'select'
-                ) || formElements[0];
+              // Use marker ID from the form result to get the locator
+              if (!formActionResult.mimicId) {
+                throw new Error(`Form action result is missing mimicId for form action: ${step}`);
               }
+              const targetFormElement = getMimic(page, formActionResult.mimicId);
+              const formResult = await executeFormAction(page, formActionResult, targetFormElement, testInfo, step);
               
-              if (formElement) {
-                const targetFormElement = await buildSelectorForTarget(page, formElement);
-                const formResult = await executeFormAction(page, formActionResult, targetFormElement, testInfo, step);
-                
-                // Handle the return type - executeFormAction may return void | string[] or { actionResult, selector }
-                let selector: string | undefined = undefined;
-                let actionDetails: FormActionResult = formActionResult;
-                
-                if (formResult && typeof formResult === 'object' && 'actionResult' in formResult) {
-                  actionDetails = (formResult as any).actionResult;
-                  const resultSelector = (formResult as any).selector;
-                  if (resultSelector) {
-                    selector = resultSelector;
-                  }
-                }
-                
-                stepResult = {
-                  stepIndex,
-                  stepText: step,
-                  actionKind: 'form update',
-                  actionDetails,
-                  targetElement: selector
-                    ? { ...formElement, selector }
-                    : formElement,
-                };
-              } else {
-                console.warn(`→ No form element found for step: ${step}`);
-                // Create a step result without target element
-                stepResult = {
-                  stepIndex,
-                  stepText: step,
-                  actionKind: 'form update',
-                  actionDetails: formActionResult,
-                };
-              }
+              // Handle the return type - executeFormAction returns { actionResult, selector }
+              const selector = formResult.selector || undefined;
+              const actionDetails = formResult.actionResult;
+              
+              // Store marker ID instead of TargetInfo
+              const formTargetElement: MarkerTargetElement = selector
+                ? { mimicId: formActionResult.mimicId, selector }
+                : { mimicId: formActionResult.mimicId };
+              
+              stepResult = {
+                stepIndex,
+                stepText: step,
+                actionKind: 'form update',
+                actionDetails,
+                targetElement: formTargetElement,
+              };
               break;
               
             default:
@@ -478,15 +440,21 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
       const now = new Date().toISOString();
       
       // Hash each step text and create snapshot steps with hashes
-      const snapshotSteps = executedSteps.map(step => ({
-        stepHash: hashStepText(step.stepText),
-        stepIndex: step.stepIndex,
-        stepText: step.stepText,
-        actionKind: step.actionKind,
-        actionDetails: step.actionDetails,
-        targetElement: step.targetElement,
-        executedAt: now,
-      }));
+      const snapshotSteps: SnapshotStep[] = executedSteps.map(step => {
+        const baseStep: Omit<SnapshotStep, 'targetElement'> = {
+          stepHash: hashStepText(step.stepText),
+          stepIndex: step.stepIndex,
+          stepText: step.stepText,
+          actionKind: step.actionKind,
+          actionDetails: step.actionDetails,
+          executedAt: now,
+        };
+        // Conditionally include targetElement only if it exists
+        if (step.targetElement) {
+          return { ...baseStep, targetElement: step.targetElement } as SnapshotStep;
+        }
+        return baseStep as SnapshotStep;
+      });
       
       await saveSnapshot(testFilePath, {
         testHash,
@@ -536,12 +504,14 @@ function trimTemplate(strings: TemplateStringsArray, ...values: any[]): string {
 export const createMimic = (config: {
   page: Page,
   brains: LanguageModel,
+  eyes?: LanguageModel,
   testInfo?: TestInfo,
 }) => {
   // Extract test file path from TestInfo if available
   // Pass full file path (not directory) to storage functions
   const testFilePath = config.testInfo?.file || undefined;
-  
+
+  config.eyes = config.eyes ?? config.brains;
   // Check troubleshoot mode
   const troubleshootMode = isTroubleshootMode();
   

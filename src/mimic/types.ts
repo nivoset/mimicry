@@ -7,7 +7,16 @@
 import type { NavigationAction } from './schema/action.js';
 import type { ClickActionResult } from './schema/action.js';
 import type { FormActionResult } from './forms.js';
-import type { TargetInfo } from './selector.js';
+
+/**
+ * Target element information using marker IDs
+ */
+export interface MarkerTargetElement {
+  /** The mimic ID assigned to the element by the markers system */
+  mimicId: number;
+  /** Optional selector string for snapshot storage */
+  selector?: string;
+}
 
 /**
  * A single step in a test execution snapshot
@@ -23,8 +32,8 @@ export interface SnapshotStep {
   actionKind: 'navigation' | 'click' | 'form update';
   /** Full action details (varies by actionKind) */
   actionDetails: NavigationAction | ClickActionResult | FormActionResult;
-  /** Target element information (for click and form actions) */
-  targetElement?: TargetInfo & { selector?: string };
+  /** Target element information using marker ID (for click and form actions) */
+  targetElement?: MarkerTargetElement;
   /** Timestamp when this step was executed */
   executedAt: string;
 }
@@ -73,6 +82,6 @@ export interface StepExecutionResult {
   actionKind: 'navigation' | 'click' | 'form update';
   /** Full action details (varies by actionKind) */
   actionDetails: NavigationAction | ClickActionResult | FormActionResult;
-  /** Target element information (for click and form actions) */
-  targetElement?: TargetInfo & { selector?: string };
+  /** Target element information using marker ID (for click and form actions) */
+  targetElement?: MarkerTargetElement;
 }

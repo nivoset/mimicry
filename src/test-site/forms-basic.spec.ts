@@ -17,7 +17,7 @@ test.describe('Basic Forms Page', () => {
     await expect(page.locator('#email')).toBeVisible();
   });
 
-  test('should fill out name field', async ({ page, mimic }) => {
+  test('should fill out name field', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`type "John Doe" into the name field`;
 
     await expect(page.locator('#name')).toHaveValue('John Doe');
@@ -29,32 +29,32 @@ test.describe('Basic Forms Page', () => {
     await expect(page.locator('#email')).toHaveValue('john@example.com');
   });
 
-  test('should fill out phone field', async ({ page, mimic }) => {
+  test('should fill out phone field', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`type "5551234567" into the phone field`;
 
     await expect(page.locator('#phone')).toHaveValue('5551234567');
   });
 
-  test('should select country from dropdown', async ({ page, mimic }) => {
+  test('should select country from dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`select "United States" from the country dropdown`;
 
     await expect(page.locator('#country')).toHaveValue('us');
   });
 
-  test('should select different country', async ({ page, mimic }) => {
+  test('should select different country', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`select "Canada" from the country dropdown`;
 
     await expect(page.locator('#country')).toHaveValue('ca');
   });
 
-  test('should fill out message textarea', async ({ page, mimic }) => {
+  test('should fill out message textarea', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     const message = 'This is a test message for the form.';
     await mimic`type "${message}" into the message field`;
 
     await expect(page.locator('#message')).toHaveValue(message);
   });
 
-  test('should select radio button option', async ({ page, mimic }) => {
+  test('should select radio button option', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`check the "Phone" radio button`;
 
     await expect(page.locator('input[value="phone"]')).toBeChecked();
@@ -69,7 +69,7 @@ test.describe('Basic Forms Page', () => {
     await expect(page.locator('input[value="email"]')).not.toBeChecked();
   });
 
-  test('should check newsletter checkbox', async ({ page, mimic }) => {
+  test('should check newsletter checkbox', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`check "Daily Newsletter"`;
 
     await expect(page.locator('input[value="daily"]')).toBeChecked();
@@ -87,13 +87,13 @@ test.describe('Basic Forms Page', () => {
     await expect(page.locator('input[value="promotions"]')).toBeChecked();
   });
 
-  test('should check terms and conditions checkbox', async ({ page, mimic }) => {
+  test('should check terms and conditions checkbox', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`check the terms and conditions checkbox`;
 
     await expect(page.locator('input[name="terms"]')).toBeChecked();
   });
 
-  test('should submit complete form', async ({ page, mimic }) => {
+  test('should submit complete form', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       type "Jane Smith" into the name field
       type "jane@example.com" into the email field
@@ -113,7 +113,7 @@ test.describe('Basic Forms Page', () => {
     await expect(page.locator('#form-data')).toContainText('uk');
   });
 
-  test('should reset form', async ({ page, mimic }) => {
+  test('should reset form', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       type "Test Name" into the name field
       type "test@example.com" into the email field
@@ -137,7 +137,7 @@ test.describe('Basic Forms Page', () => {
     expect(isRequired).toBe(true);
   });
 
-  test('should fill form with all field types', async ({ page, mimic }) => {
+  test('should fill form with all field types', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       type "Complete Test User" into the name field
       type "complete@test.com" into the email field

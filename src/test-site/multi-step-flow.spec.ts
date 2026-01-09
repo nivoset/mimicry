@@ -16,7 +16,7 @@ test.describe('Multi-Step Flow Page', () => {
     await expect(page.locator('#wizard-step-1')).toHaveClass(/active/);
   });
 
-  test('should start wizard and navigate to step 2', async ({ page, mimic }) => {
+  test('should start wizard and navigate to step 2', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Start Wizard"`;
 
     await expect(page.locator('#wizard-step-2')).toBeVisible();
@@ -35,7 +35,7 @@ test.describe('Multi-Step Flow Page', () => {
     await expect(page.locator('#wizard-email')).toHaveValue('test@example.com');
   });
 
-  test('should navigate to step 3 from step 2', async ({ page, mimic }) => {
+  test('should navigate to step 3 from step 2', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Start Wizard"
       type "Alice" into the name field
@@ -48,7 +48,7 @@ test.describe('Multi-Step Flow Page', () => {
     await expect(page.locator('.step-indicator[data-step="3"]')).toHaveClass(/active/);
   });
 
-  test('should go back to previous step', async ({ page, mimic }) => {
+  test('should go back to previous step', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Start Wizard"
       type "Bob" into the name field
@@ -61,7 +61,7 @@ test.describe('Multi-Step Flow Page', () => {
     await expect(page.locator('#wizard-name')).toHaveValue('Bob');
   });
 
-  test('should set preferences in step 3', async ({ page, mimic }) => {
+  test('should set preferences in step 3', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Start Wizard"
       type "Charlie" into the name field
@@ -77,7 +77,7 @@ test.describe('Multi-Step Flow Page', () => {
     await expect(page.locator('#wizard-theme')).toHaveValue('dark');
   });
 
-  test('should navigate to review step', async ({ page, mimic }) => {
+  test('should navigate to review step', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Start Wizard"
       type "Review User" into the name field
@@ -109,7 +109,7 @@ test.describe('Multi-Step Flow Page', () => {
     expect(reviewText).toContain('review@example.com');
   });
 
-  test('should complete wizard', async ({ page, mimic }) => {
+  test('should complete wizard', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Start Wizard"
       type "Complete User" into the name field
@@ -125,7 +125,7 @@ test.describe('Multi-Step Flow Page', () => {
     await expect(page.locator('#wizard-step-4')).not.toBeVisible();
   });
 
-  test('should update progress bar as steps progress', async ({ page, mimic }) => {
+  test('should update progress bar as steps progress', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     let progress = await page.locator('#wizard-progress').evaluate(el => (el as HTMLElement).style.width);
     expect(progress).toBe('0%');
 
@@ -163,7 +163,7 @@ test.describe('Multi-Step Flow Page', () => {
     await expect(page.locator('.step-indicator[data-step="2"]')).toHaveClass(/active/);
   });
 
-  test('should reset wizard and start over', async ({ page, mimic }) => {
+  test('should reset wizard and start over', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Start Wizard"
       type "Reset User" into the name field
@@ -179,7 +179,7 @@ test.describe('Multi-Step Flow Page', () => {
     await expect(page.locator('#wizard-progress')).toHaveAttribute('style', /width: 0%/);
   });
 
-  test('should navigate through all steps and back', async ({ page, mimic }) => {
+  test('should navigate through all steps and back', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Start Wizard"
       type "Full Flow" into the name field
@@ -200,7 +200,7 @@ test.describe('Multi-Step Flow Page', () => {
     await expect(page.locator('#wizard-email')).toHaveValue('full@test.com');
   });
 
-  test('should handle empty form submission', async ({ page, mimic }) => {
+  test('should handle empty form submission', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Start Wizard"
       click on "Next"

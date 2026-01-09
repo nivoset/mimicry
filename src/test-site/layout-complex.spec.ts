@@ -15,7 +15,7 @@ test.describe('Complex Layout Page', () => {
   });
 
   // Modal Tests
-  test('should open simple modal', async ({ page, mimic }) => {
+  test('should open simple modal', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Open Simple Modal"`;
 
     await expect(page.locator('#modal1')).toBeVisible();
@@ -32,14 +32,14 @@ test.describe('Complex Layout Page', () => {
     await expect(page.locator('#modal1')).not.toBeVisible();
   });
 
-  test('should open confirmation dialog', async ({ page, mimic }) => {
+  test('should open confirmation dialog', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Open Confirmation Dialog"`;
 
     await expect(page.locator('#modal2')).toBeVisible();
     await expect(page.locator('#modal2 h2')).toContainText('Confirm Action');
   });
 
-  test('should confirm action in dialog', async ({ page, mimic }) => {
+  test('should confirm action in dialog', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Open Confirmation Dialog"
       click on "Confirm"
@@ -58,7 +58,7 @@ test.describe('Complex Layout Page', () => {
     await expect(page.locator('#modal2')).not.toBeVisible();
   });
 
-  test('should open alert dialog', async ({ page, mimic }) => {
+  test('should open alert dialog', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Open Alert Dialog"`;
 
     await expect(page.locator('#modal3')).toBeVisible();
@@ -75,14 +75,14 @@ test.describe('Complex Layout Page', () => {
   });
 
   // Dropdown Tests
-  test('should open actions dropdown menu', async ({ page, mimic }) => {
+  test('should open actions dropdown menu', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Actions Menu"`;
 
     await expect(page.locator('#dropdown1')).toBeVisible();
     await expect(page.locator('#dropdown1')).not.toHaveClass(/hidden/);
   });
 
-  test('should close dropdown when clicking outside', async ({ page, mimic }) => {
+  test('should close dropdown when clicking outside', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Actions Menu"
       click on the page body
@@ -93,7 +93,7 @@ test.describe('Complex Layout Page', () => {
     await expect(page.locator('#dropdown1')).toBeVisible();
   });
 
-  test('should click edit option in dropdown', async ({ page, mimic }) => {
+  test('should click edit option in dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Actions Menu"
       click on "Edit"
@@ -111,7 +111,7 @@ test.describe('Complex Layout Page', () => {
     await expect(page.locator('#action-results .alert')).toContainText('Delete');
   });
 
-  test('should click share option in dropdown', async ({ page, mimic }) => {
+  test('should click share option in dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Actions Menu"
       click on "Share"
@@ -127,7 +127,7 @@ test.describe('Complex Layout Page', () => {
   });
 
   // Tab Tests
-  test('should switch to tab 2', async ({ page, mimic }) => {
+  test('should switch to tab 2', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Tab 2"`;
 
     await expect(page.locator('#tab-content-2')).toBeVisible();
@@ -135,7 +135,7 @@ test.describe('Complex Layout Page', () => {
     await expect(page.locator('#tab-content-1')).not.toBeVisible();
   });
 
-  test('should switch to tab 3', async ({ page, mimic }) => {
+  test('should switch to tab 3', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Tab 3"`;
 
     await expect(page.locator('#tab-content-3')).toBeVisible();
@@ -143,7 +143,7 @@ test.describe('Complex Layout Page', () => {
     await expect(page.locator('#tab-content-1')).not.toBeVisible();
   });
 
-  test('should switch back to tab 1', async ({ page, mimic }) => {
+  test('should switch back to tab 1', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Tab 2"
       click on "Tab 1"
@@ -162,7 +162,7 @@ test.describe('Complex Layout Page', () => {
     await expect(page.locator('#tab-content-2 button')).toBeVisible();
   });
 
-  test('should click button in tab 3', async ({ page, mimic }) => {
+  test('should click button in tab 3', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Tab 3"
       click on "Action in Tab 3"
@@ -172,7 +172,7 @@ test.describe('Complex Layout Page', () => {
   });
 
   // Accordion Tests
-  test('should expand accordion section 1', async ({ page, mimic }) => {
+  test('should expand accordion section 1', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Section 1"`;
 
     await expect(page.locator('.accordion-item').first()).toHaveClass(/active/);
@@ -186,7 +186,7 @@ test.describe('Complex Layout Page', () => {
     await expect(secondItem).toHaveClass(/active/);
   });
 
-  test('should collapse accordion section when clicked again', async ({ page, mimic }) => {
+  test('should collapse accordion section when clicked again', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Section 1"
       click on "Section 1"
@@ -198,7 +198,7 @@ test.describe('Complex Layout Page', () => {
     expect(isActive).toBe(false);
   });
 
-  test('should click button inside accordion', async ({ page, mimic }) => {
+  test('should click button inside accordion', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Section 1"
       click on "Button in Accordion 1"
@@ -208,21 +208,21 @@ test.describe('Complex Layout Page', () => {
   });
 
   // Overlay Tests
-  test('should show loading overlay', async ({ page, mimic }) => {
+  test('should show loading overlay', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Show Loading Overlay"`;
 
     await expect(page.locator('#overlay1')).toBeVisible();
     await expect(page.locator('#overlay1 .spinner')).toBeVisible();
   });
 
-  test('should show info overlay', async ({ page, mimic }) => {
+  test('should show info overlay', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Show Info Overlay"`;
 
     await expect(page.locator('#overlay2')).toBeVisible();
     await expect(page.locator('#overlay2 h3')).toContainText('Information Overlay');
   });
 
-  test('should close info overlay', async ({ page, mimic }) => {
+  test('should close info overlay', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Show Info Overlay"
       click on "Close"
@@ -232,7 +232,7 @@ test.describe('Complex Layout Page', () => {
   });
 
   // Combined Interaction Tests
-  test('should interact with modal then tab', async ({ page, mimic }) => {
+  test('should interact with modal then tab', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Open Simple Modal"
       click on "Close"
@@ -242,7 +242,7 @@ test.describe('Complex Layout Page', () => {
     await expect(page.locator('#tab-content-2')).toBeVisible();
   });
 
-  test('should interact with dropdown then accordion', async ({ page, mimic }) => {
+  test('should interact with dropdown then accordion', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Actions Menu"
       click on "Edit"
@@ -252,7 +252,7 @@ test.describe('Complex Layout Page', () => {
     await expect(page.locator('.accordion-item').first()).toHaveClass(/active/);
   });
 
-  test('should interact with multiple modals', async ({ page, mimic }) => {
+  test('should interact with multiple modals', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Open Simple Modal"
       click on "Close"
@@ -268,7 +268,7 @@ test.describe('Complex Layout Page', () => {
     await expect(page.locator('#modal3')).not.toBeVisible();
   });
 
-  test('should verify action results are logged', async ({ page, mimic }) => {
+  test('should verify action results are logged', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Open Confirmation Dialog"
       click on "Confirm"

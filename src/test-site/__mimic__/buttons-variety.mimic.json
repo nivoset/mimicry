@@ -1,0 +1,1477 @@
+{
+  "tests": [
+    {
+      "testHash": "b98c4d8e65b12d96",
+      "testText": "click on \"Click Me\"",
+      "steps": [
+        {
+          "stepHash": "b98c4d8e65b12d96",
+          "stepIndex": 0,
+          "stepText": "click on \"Click Me\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 27,
+                "confidence": 0.9,
+                "description": "Submit Action button"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "Send button (first instance)"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.7,
+                "description": "Send button (second instance)"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.6,
+                "description": "Go button (first instance)"
+              },
+              {
+                "mimicId": 8,
+                "confidence": 0.5,
+                "description": "Go button (second instance)"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step 'click on \"Click Me\"' implies an interaction with a button. Based on the context, I have identified buttons that have visually distinct texts as potential matches. The most likely candidates are those that have text related to 'action' or 'click', with high confidence in their match due to the text labels such as 'Submit Action' and 'Send'."
+          },
+          "executedAt": "2026-01-09T17:13:37.065Z",
+          "targetElement": {
+            "mimicId": 27,
+            "selector": "locator('[data-mimic-id=\"27\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:04:12.344Z",
+        "lastPassedAt": "2026-01-09T17:13:37.066Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "443dc5c8b2ac0c7c",
+      "testText": "click on the button with aria-label \"Edit item\"",
+      "steps": [
+        {
+          "stepHash": "443dc5c8b2ac0c7c",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Edit item\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 10,
+                "confidence": 1,
+                "description": "Button with text 'Edit item' and aria-label 'Edit item' (✎)"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.5,
+                "description": "Button with a close icon (✕) and aria-label 'Close dialog'."
+              },
+              {
+                "mimicId": 11,
+                "confidence": 0.5,
+                "description": "Button with a trash can icon (🗑) and aria-label 'Delete item'."
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.4,
+                "description": "Button with a plus icon (+) and aria-label 'Add new item'."
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.3,
+                "description": "Button with text 'Remove'."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step indicates a click on a button with the aria-label 'Edit item'. The most direct match is Marker 10, which explicitly has this aria-label. Other buttons were considered based on their interactivity and relevance."
+          },
+          "executedAt": "2026-01-09T17:15:08.012Z",
+          "targetElement": {
+            "mimicId": 10,
+            "selector": "locator('[data-mimic-id=\"10\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:06:12.627Z",
+        "lastPassedAt": "2026-01-09T17:15:08.220Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "5d8faedd090ee60c",
+      "testText": "click on the button with aria-label \"Delete item\"",
+      "steps": [
+        {
+          "stepHash": "5d8faedd090ee60c",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Delete item\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "index": 9,
+                "tag": "button",
+                "text": "🗑",
+                "id": null,
+                "role": "button",
+                "label": "Delete item",
+                "ariaLabel": "Delete item",
+                "confidence": 1,
+                "description": "Delete button with an icon representing 'Delete item'"
+              },
+              {
+                "index": 8,
+                "tag": "button",
+                "text": "✎",
+                "id": null,
+                "role": "button",
+                "label": "Edit item",
+                "ariaLabel": "Edit item",
+                "confidence": 0.2,
+                "description": "Edit button, used for editing items"
+              },
+              {
+                "index": 21,
+                "tag": "button",
+                "text": "Danger Button",
+                "id": null,
+                "role": "button",
+                "label": "Danger Button",
+                "ariaLabel": null,
+                "confidence": 0.1,
+                "description": "Danger button, potentially used for destructive actions but without a clear aria-label for delete"
+              },
+              {
+                "index": 24,
+                "tag": "button",
+                "text": "Delete Action",
+                "id": "delete-action",
+                "role": "button",
+                "label": "Delete Action",
+                "ariaLabel": null,
+                "confidence": 0.1,
+                "description": "Button labeled 'Delete Action', could imply deletion but lacks specific aria-label match"
+              },
+              {
+                "index": 22,
+                "tag": "button",
+                "text": "Submit Action",
+                "id": "submit-action",
+                "role": "button",
+                "label": "Submit Action",
+                "ariaLabel": null,
+                "confidence": 0.1,
+                "description": "Submit button for general actions; unrelated to delete"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies clicking a button with a specific aria-label of 'Delete item'. The top match is the button with the icon for deleting which correctly has that aria-label. Other candidates are ranked lower due to semantic relevance or lack of the required aria-label."
+          },
+          "targetElement": {
+            "tag": "button",
+            "text": "🗑",
+            "id": null,
+            "role": "button",
+            "label": "Delete item",
+            "ariaLabel": "Delete item",
+            "typeAttr": "submit",
+            "nameAttr": null,
+            "href": null,
+            "dataset": {},
+            "nthOfType": 3,
+            "selector": "getByRole('button', { name: 'Delete item' })"
+          },
+          "executedAt": "2026-01-09T00:06:36.528Z"
+        }
+      ],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:06:36.528Z",
+        "lastPassedAt": "2026-01-09T17:14:48.730Z",
+        "lastFailedAt": "2026-01-09T17:14:48.724Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on the button with aria-label \"Delete item\"",
+          "error": "Failed after 3 attempts. Last error: Rate limit reached for gpt-4o-mini in organization org-yPZVonWXWRl0SKJonypv6qam on tokens per min (TPM): Limit 200000, Used 200000, Requested 377. Please try again in 113ms. Visit https://platform.openai.com/account/rate-limits to learn more."
+        }
+      }
+    },
+    {
+      "testHash": "f2146bcbbecbbb81",
+      "testText": "click on \"Link as Button\"",
+      "steps": [
+        {
+          "stepHash": "f2146bcbbecbbb81",
+          "stepIndex": 0,
+          "stepText": "click on \"Link as Button\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 1,
+                "description": "Link as Button"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.8,
+                "description": "Secondary Link"
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.7,
+                "description": "Danger Link"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.6,
+                "description": "Navigate to Forms Link"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.1,
+                "description": "Clear Button (may be interacted with but doesn't match the text)"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies clicking on 'Link as Button', which directly corresponds to Marker 19. Other candidates support semantic intent but are less likely."
+          },
+          "executedAt": "2026-01-09T17:16:09.598Z",
+          "targetElement": {
+            "mimicId": 19,
+            "selector": "locator('[data-mimic-id=\"19\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:07:11.578Z",
+        "lastPassedAt": "2026-01-09T17:16:09.602Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "8f2e4e75e393f743",
+      "testText": "click on \"Secondary Link\"",
+      "steps": [
+        {
+          "stepHash": "8f2e4e75e393f743",
+          "stepIndex": 0,
+          "stepText": "click on \"Secondary Link\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 20,
+                "confidence": 1,
+                "description": "Secondary Link"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.8,
+                "description": "Link as Button"
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.7,
+                "description": "Danger Link"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.5,
+                "description": "Navigate to Forms"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.3,
+                "description": "Secondary Button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies clicking on 'Secondary Link', which directly corresponds to Marker ID 20. Other candidates are links or buttons that might be relevant based on their text similarities."
+          },
+          "executedAt": "2026-01-09T17:16:37.951Z",
+          "targetElement": {
+            "mimicId": 20,
+            "selector": "locator('[data-mimic-id=\"20\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:07:23.802Z",
+        "lastPassedAt": "2026-01-09T17:16:38.137Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "257df94e5f28349d",
+      "testText": "click on \"Danger Link\"",
+      "steps": [
+        {
+          "stepHash": "257df94e5f28349d",
+          "stepIndex": 0,
+          "stepText": "click on \"Danger Link\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 21,
+                "confidence": 1,
+                "description": "Danger Link"
+              },
+              {
+                "mimicId": 26,
+                "confidence": 0.8,
+                "description": "Danger Button"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.5,
+                "description": "Link as Button"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.4,
+                "description": "Secondary Button"
+              },
+              {
+                "mimicId": 23,
+                "confidence": 0.3,
+                "description": "Primary Button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies to click on 'Danger Link', which directly corresponds to Marker ID 21. This link is semantically relevant and visually distinct, making it the strongest candidate. Marker ID 26 is related to 'Danger', but it is a button, while Marker ID 19 is a link styled as a button, so it's also relevant. The other candidates are buttons that don't match the exact text but have related contexts."
+          },
+          "executedAt": "2026-01-09T17:16:58.539Z",
+          "targetElement": {
+            "mimicId": 21,
+            "selector": "locator('[data-mimic-id=\"21\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:07:34.337Z",
+        "lastPassedAt": "2026-01-09T17:16:58.540Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "67a671870784eeb0",
+      "testText": "click on \"Navigate to Forms\"",
+      "steps": [
+        {
+          "stepHash": "67a671870784eeb0",
+          "stepIndex": 0,
+          "stepText": "click on \"Navigate to Forms\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 22,
+                "confidence": 1,
+                "description": "Link styled as a button with text 'Navigate to Forms'"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies a click on the text 'Navigate to Forms', which directly corresponds to the element identified by marker ID 22."
+          },
+          "executedAt": "2026-01-09T17:17:20.103Z",
+          "targetElement": {
+            "mimicId": 22,
+            "selector": "locator('[data-mimic-id=\"22\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:07:40.571Z",
+        "lastPassedAt": "2026-01-09T17:17:20.107Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "91268276d5d3deac",
+      "testText": "click on \"Primary Button\"",
+      "steps": [
+        {
+          "stepHash": "91268276d5d3deac",
+          "stepIndex": 0,
+          "stepText": "click on \"Primary Button\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 23,
+                "confidence": 1,
+                "description": "Primary Button"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.7,
+                "description": "Secondary Button"
+              },
+              {
+                "mimicId": 25,
+                "confidence": 0.5,
+                "description": "Success Button"
+              },
+              {
+                "mimicId": 26,
+                "confidence": 0.4,
+                "description": "Danger Button"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.3,
+                "description": "Submit Action"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies a click on the 'Primary Button'. The analysis reveals the 'Primary Button' as one of the interactive elements with the exact text match, making it the most likely candidate."
+          },
+          "executedAt": "2026-01-09T17:18:02.744Z",
+          "targetElement": {
+            "mimicId": 23,
+            "selector": "locator('[data-mimic-id=\"23\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:08:52.796Z",
+        "lastPassedAt": "2026-01-09T17:18:02.974Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "1bf6f9fbbeca34f0",
+      "testText": "click on the button with data-testid \"cancel-action\"",
+      "steps": [
+        {
+          "stepHash": "1bf6f9fbbeca34f0",
+          "stepIndex": 0,
+          "stepText": "click on the button with data-testid \"cancel-action\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 28,
+                "confidence": 1,
+                "description": "Cancel Action button"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.5,
+                "description": "Submit Action button"
+              },
+              {
+                "mimicId": 29,
+                "confidence": 0.4,
+                "description": "Delete Action button"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.3,
+                "description": "Abort button"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.2,
+                "description": "Close button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies clicking a button with data-testid 'cancel-action'. The element with marker ID 28 is the 'Cancel Action' button, which directly matches the intention of the step. Other buttons were included based on their semantic proximity to a 'cancel' action."
+          },
+          "executedAt": "2026-01-09T17:19:12.404Z",
+          "targetElement": {
+            "mimicId": 28,
+            "selector": "locator('[data-mimic-id=\"28\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:09:33.570Z",
+        "lastPassedAt": "2026-01-09T17:19:12.405Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "669c520c88ccbbcf",
+      "testText": "click on \"Save and Continue\"",
+      "steps": [
+        {
+          "stepHash": "669c520c88ccbbcf",
+          "stepIndex": 0,
+          "stepText": "click on \"Save and Continue\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 5,
+                "confidence": 0.9,
+                "description": "Button labeled 'Save Changes' - likely the intended action for saving data and continuing."
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "Button labeled 'Save' - a potential match for saving but more generic."
+              },
+              {
+                "mimicId": 23,
+                "confidence": 0.6,
+                "description": "Button labeled 'Primary Button' - could serve as a primary action but lacks specific labeling."
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.5,
+                "description": "Button labeled 'Save' - another general save function."
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.4,
+                "description": "Button labeled 'Save' - similar to others but with lower contextual relevance."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies a click action on 'Save and Continue'. The best matches are the buttons that indicate saving actions, with 'Save Changes' being the most direct match."
+          },
+          "executedAt": "2026-01-09T17:21:03.729Z",
+          "targetElement": {
+            "mimicId": 5,
+            "selector": "locator('[data-mimic-id=\"5\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T00:11:44.005Z",
+        "lastPassedAt": "2026-01-09T17:21:03.734Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "97a40b234531efa0",
+      "testText": "click on \"Save Changes\"",
+      "steps": [
+        {
+          "stepHash": "97a40b234531efa0",
+          "stepIndex": 0,
+          "stepText": "click on \"Save Changes\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.9,
+                "description": "Save & Exit button"
+              },
+              {
+                "mimicId": 15,
+                "confidence": 0.85,
+                "description": "Save and Exit button"
+              },
+              {
+                "mimicId": 16,
+                "confidence": 0.8,
+                "description": "Save then Exit button"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.7,
+                "description": "Submit Action button"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.6,
+                "description": "Secondary Button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step implies a click on 'Save Changes', which directly aligns with buttons containing 'Save' in their labels. The first three candidates are the most relevant semantic matches based on visible text in the screenshot."
+          },
+          "executedAt": "2026-01-09T17:13:42.561Z",
+          "targetElement": {
+            "mimicId": 14,
+            "selector": "locator('[data-mimic-id=\"14\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T15:10:32.526Z",
+        "lastPassedAt": "2026-01-09T17:13:42.565Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "e9f90ece87ced302",
+      "testText": "click on \"Submit\"",
+      "steps": [
+        {
+          "stepHash": "e9f90ece87ced302",
+          "stepIndex": 0,
+          "stepText": "click on \"Submit\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 27,
+                "confidence": 1,
+                "description": "Button labeled 'Submit Action'."
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.8,
+                "description": "Secondary Button, but not explicitly labeled as 'Submit'."
+              },
+              {
+                "mimicId": 25,
+                "confidence": 0.7,
+                "description": "Button labeled 'Success Button', related but not a direct match."
+              },
+              {
+                "mimicId": 28,
+                "confidence": 0.6,
+                "description": "Button labeled 'Cancel Action', related to submit action."
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.5,
+                "description": "Button labeled 'Save Changes', could be contextually relevant."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifically mentions clicking on 'Submit', leading to the highest confidence in the button directly labeled 'Submit Action'. Other buttons have related functions or names but do not match 'Submit' specifically."
+          },
+          "executedAt": "2026-01-09T17:13:32.727Z",
+          "targetElement": {
+            "mimicId": 27,
+            "selector": "locator('[data-mimic-id=\"27\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:13:32.727Z",
+        "lastPassedAt": "2026-01-09T17:13:32.782Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "ddd3b56cb6a326d1",
+      "testText": "click on \"Delete\"",
+      "steps": [
+        {
+          "stepHash": "ddd3b56cb6a326d1",
+          "stepIndex": 0,
+          "stepText": "click on \"Delete\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 11,
+                "confidence": 1,
+                "description": "Delete button with label 'Delete item', aria-label: 'Delete item'."
+              },
+              {
+                "mimicId": 29,
+                "confidence": 0.9,
+                "description": "Delete Action button with label 'Delete Action'."
+              },
+              {
+                "mimicId": 26,
+                "confidence": 0.5,
+                "description": "Danger Button in Buttons with Different Styles section."
+              },
+              {
+                "mimicId": 28,
+                "confidence": 0.4,
+                "description": "Cancel Action button, which may imply a deletion operation in certain contexts."
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.3,
+                "description": "Secondary Button which may be used for alternate actions, potentially related to deletion."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies a 'click on \"Delete\"', which directly points to Marker 11. Marker 29 can also relate to deletion but is less specific. Other candidates are related to deletion or similar actions but are less clear."
+          },
+          "executedAt": "2026-01-09T17:13:57.898Z",
+          "targetElement": {
+            "mimicId": 11,
+            "selector": "locator('[data-mimic-id=\"11\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:13:57.898Z",
+        "lastPassedAt": "2026-01-09T17:13:57.899Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "1661f5c333dfb93b",
+      "testText": "click on \"Cancel\"",
+      "steps": [
+        {
+          "stepHash": "1661f5c333dfb93b",
+          "stepIndex": 0,
+          "stepText": "click on \"Cancel\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 28,
+                "confidence": null,
+                "description": "Cancel Action button"
+              },
+              {
+                "mimicId": 24,
+                "confidence": null,
+                "description": "Secondary Button"
+              },
+              {
+                "mimicId": 26,
+                "confidence": null,
+                "description": "Danger Button"
+              },
+              {
+                "mimicId": 27,
+                "confidence": null,
+                "description": "Submit Action button"
+              },
+              {
+                "mimicId": 25,
+                "confidence": null,
+                "description": "Success Button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step indicates a click action on a 'Cancel' element. The most relevant element is the 'Cancel Action' button (marker 28), which directly corresponds to this action. Other buttons may be indirectly relevant based on context but don't match the 'Cancel' semantic as closely."
+          },
+          "executedAt": "2026-01-09T17:14:23.784Z",
+          "targetElement": {
+            "mimicId": 28,
+            "selector": "locator('[data-mimic-id=\"28\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:14:23.784Z",
+        "lastPassedAt": "2026-01-09T17:14:23.786Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "2df9acf355940d29",
+      "testText": "click on the button with aria-label \"Close dialog\"",
+      "steps": [
+        {
+          "stepHash": "2df9acf355940d29",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Close dialog\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 9,
+                "confidence": 1,
+                "description": "Close dialog button with icon '✕' (aria-label: 'Close dialog')"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.3,
+                "description": "Delete button with text 'Delete' (not the intended button but may come up in searches)"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.2,
+                "description": "Remove button with text 'Remove' (not the intended button but may come up in searches)"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.1,
+                "description": "Another Delete button with text 'Delete' (not the intended button but may come up in searches)"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.1,
+                "description": "Another Delete button with text 'Delete' (not the intended button but may come up in searches)"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step explicitly mentions clicking a button with the aria-label 'Close dialog', which directly matches marker 9. Other buttons have been included for completeness but are less relevant."
+          },
+          "executedAt": "2026-01-09T17:15:08.093Z",
+          "targetElement": {
+            "mimicId": 9,
+            "selector": "locator('[data-mimic-id=\"9\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:15:08.093Z",
+        "lastPassedAt": "2026-01-09T17:15:08.570Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "28edc597bf5c0468",
+      "testText": "click on the button with aria-label \"Add new item\"",
+      "steps": [
+        {
+          "stepHash": "28edc597bf5c0468",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Add new item\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 12,
+                "confidence": 1,
+                "description": "Button with label 'Add new item' and aria-label 'Add new item'."
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.2,
+                "description": "Button with label 'Remove'."
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.2,
+                "description": "Button with label 'Erase'."
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.2,
+                "description": "Button with label 'Clear'."
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.1,
+                "description": "Button with label 'Submit Action'."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies clicking a button with aria-label 'Add new item'. Marker 12 is the only button directly matching that description."
+          },
+          "executedAt": "2026-01-09T17:15:33.575Z",
+          "targetElement": {
+            "mimicId": 12,
+            "selector": "locator('[data-mimic-id=\"12\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:15:33.575Z",
+        "lastPassedAt": "2026-01-09T17:15:33.576Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "9eb6263e19b31cc8",
+      "testText": "click on the button with aria-label \"Search\"",
+      "steps": [
+        {
+          "stepHash": "9eb6263e19b31cc8",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Search\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 13,
+                "confidence": 1,
+                "description": "Search button with icon '🔍' and aria-label 'Search'."
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.8,
+                "description": "Close dialog button marked with '✕' and aria-label 'Close dialog', likely not the intended button but related."
+              },
+              {
+                "mimicId": 10,
+                "confidence": 0.5,
+                "description": "Edit item button marked with '✎' and aria-label 'Edit item', possibly relevant in context."
+              },
+              {
+                "mimicId": 11,
+                "confidence": 0.4,
+                "description": "Delete item button marked with '🗑' and aria-label 'Delete item', less likely but present."
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.3,
+                "description": "Add new item button marked with '+' and aria-label 'Add new item', relevant context."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies a button with an aria-label 'Search', which directly matches the button identified by marker 13. Other candidates were ranked based on their relevance to the context but do not match the required aria-label."
+          },
+          "executedAt": "2026-01-09T17:16:12.234Z",
+          "targetElement": {
+            "mimicId": 13,
+            "selector": "locator('[data-mimic-id=\"13\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:16:12.234Z",
+        "lastPassedAt": "2026-01-09T17:16:12.569Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "c1933848dc9a9a11",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:17:50.987Z",
+        "lastPassedAt": "2026-01-09T17:17:50.990Z",
+        "lastFailedAt": "2026-01-09T17:17:50.987Z"
+      }
+    },
+    {
+      "testHash": "1d002965d6daf1f1",
+      "testText": "click on \"Secondary Button\"",
+      "steps": [
+        {
+          "stepHash": "1d002965d6daf1f1",
+          "stepIndex": 0,
+          "stepText": "click on \"Secondary Button\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 24,
+                "confidence": 1,
+                "description": "Secondary Button"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.8,
+                "description": "Secondary Link, styled as a button"
+              },
+              {
+                "mimicId": 23,
+                "confidence": 0.5,
+                "description": "Primary Button"
+              },
+              {
+                "mimicId": 25,
+                "confidence": 0.4,
+                "description": "Success Button"
+              },
+              {
+                "mimicId": 26,
+                "confidence": 0.3,
+                "description": "Danger Button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step indicates a click on a 'Secondary Button.' The most relevant match is Marker 24, identified as 'Secondary Button'. Marker 20 also describes a 'Secondary Link,' visually styled as a button, which is relevant but less likely."
+          },
+          "executedAt": "2026-01-09T17:18:06.183Z",
+          "targetElement": {
+            "mimicId": 24,
+            "selector": "locator('[data-mimic-id=\"24\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:18:06.183Z",
+        "lastPassedAt": "2026-01-09T17:18:06.185Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "0f6dcc954b214893",
+      "testText": "click on the button with data-testid \"submit-action\"",
+      "steps": [
+        {
+          "stepHash": "0f6dcc954b214893",
+          "stepIndex": 0,
+          "stepText": "click on the button with data-testid \"submit-action\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 27,
+                "confidence": 0.95,
+                "description": "Submit Action button"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.85,
+                "description": "Submit button"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.5,
+                "description": "Secondary Button"
+              },
+              {
+                "mimicId": 23,
+                "confidence": 0.45,
+                "description": "Primary Button"
+              },
+              {
+                "mimicId": 28,
+                "confidence": 0.4,
+                "description": "Cancel Action button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step refers to clicking a button with the data-testid 'submit-action'. The top match is the 'Submit Action' button (Marker 27), which aligns semantically with this test step. The 'Submit' button (Marker 6) is also a relevant candidate due to its similar function. The remaining candidates are related buttons that could potentially be interacted with, but less ideally."
+          },
+          "executedAt": "2026-01-09T17:18:41.455Z",
+          "targetElement": {
+            "mimicId": 27,
+            "selector": "locator('[data-mimic-id=\"27\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:18:41.455Z",
+        "lastPassedAt": "2026-01-09T17:18:41.458Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "1ee2c893d4b4cbce",
+      "testText": "click on \"Danger Button\"",
+      "steps": [
+        {
+          "stepHash": "1ee2c893d4b4cbce",
+          "stepIndex": 0,
+          "stepText": "click on \"Danger Button\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 26,
+                "confidence": 1,
+                "description": "Danger Button in red color."
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.9,
+                "description": "Danger Link styled as a button."
+              },
+              {
+                "mimicId": 25,
+                "confidence": 0.5,
+                "description": "Success Button; could be a similar option."
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.4,
+                "description": "Secondary Button; not a direct match but sometimes used in similar contexts."
+              },
+              {
+                "mimicId": 23,
+                "confidence": 0.3,
+                "description": "Primary Button; another potential option but less relevant."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies clicking on 'Danger Button', matching the prominent red Danger Button (Marker 26) directly. Marker 21, as a Danger Link, might also apply as it reflects a similar intent, although it’s styled as a link. The other items are included for context but are less likely to be the intended target."
+          },
+          "executedAt": "2026-01-09T17:19:13.944Z",
+          "targetElement": {
+            "mimicId": 26,
+            "selector": "locator('[data-mimic-id=\"26\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:19:13.944Z",
+        "lastPassedAt": "2026-01-09T17:19:13.951Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "48d75e203aa29e94",
+      "testText": "click on the button with data-testid \"delete-action\"",
+      "steps": [
+        {
+          "stepHash": "48d75e203aa29e94",
+          "stepIndex": 0,
+          "stepText": "click on the button with data-testid \"delete-action\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 29,
+                "confidence": 1,
+                "description": "Delete Action button"
+              },
+              {
+                "mimicId": 11,
+                "confidence": 0.9,
+                "description": "Delete item button (icon)"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.3,
+                "description": "Submit Action button"
+              },
+              {
+                "mimicId": 28,
+                "confidence": 0.2,
+                "description": "Cancel Action button"
+              },
+              {
+                "mimicId": 30,
+                "confidence": 0.1,
+                "description": "Disabled Button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies a click on a button identified by the data-testid attribute 'delete-action'. The most likely match based on available markers is the Delete Action button with marker ID 29. Additionally, marker ID 11 is related due to its icon representing a delete action. Other buttons have lower relevance."
+          },
+          "executedAt": "2026-01-09T17:19:59.359Z",
+          "targetElement": {
+            "mimicId": 29,
+            "selector": "locator('[data-mimic-id=\"29\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:19:59.359Z",
+        "lastPassedAt": "2026-01-09T17:19:59.367Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "fb0a29993b2564e7",
+      "testText": "click on \"Save Draft\"",
+      "steps": [
+        {
+          "stepHash": "fb0a29993b2564e7",
+          "stepIndex": 0,
+          "stepText": "click on \"Save Draft\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.9,
+                "description": "Button labeled 'Save Draft' in the Text Buttons section."
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.8,
+                "description": "Another button labeled 'Save Draft' in the Text Buttons section."
+              },
+              {
+                "mimicId": 15,
+                "confidence": 0.7,
+                "description": "Button labeled 'Save as Draft' in the Text Buttons section."
+              },
+              {
+                "mimicId": 16,
+                "confidence": 0.6,
+                "description": "Another button labeled 'Save as Draft' in the Text Buttons section."
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.5,
+                "description": "Another button labeled 'Save as Draft' in the Text Buttons section."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies clicking on a button labeled 'Save Draft'. There are several buttons with this exact label, making them the most relevant candidates."
+          },
+          "executedAt": "2026-01-09T17:19:59.626Z",
+          "targetElement": {
+            "mimicId": 14,
+            "selector": "locator('[data-mimic-id=\"14\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:19:59.626Z",
+        "lastPassedAt": "2026-01-09T17:19:59.630Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "a367877639e71ebf",
+      "testText": "click on \"Save\"",
+      "steps": [
+        {
+          "stepHash": "a367877639e71ebf",
+          "stepIndex": 0,
+          "stepText": "click on \"Save\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 5,
+                "confidence": 1,
+                "description": "Button labeled 'Save' (first occurrence) - standard text button, likely to perform a save action."
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.95,
+                "description": "Button labeled 'Save' (second occurrence) - standard text button, likely to perform a save action."
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.9,
+                "description": "Button labeled 'Save' (third occurrence) - standard text button, likely to perform a save action."
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.85,
+                "description": "Button labeled 'Save' - standard text button, likely to perform a save action."
+              },
+              {
+                "mimicId": 8,
+                "confidence": 0.75,
+                "description": "Button labeled 'Keep Changes' - a button that suggests saving changes."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "All candidates are interactive elements (buttons) labeled with 'Save' or similar, directly matching the click action in the Gherkin step."
+          },
+          "executedAt": "2026-01-09T17:20:20.332Z",
+          "targetElement": {
+            "mimicId": 5,
+            "selector": "locator('[data-mimic-id=\"5\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:20:20.332Z",
+        "lastPassedAt": "2026-01-09T17:20:20.394Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "a67115978c42508e",
+      "testText": "",
+      "steps": [],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:20:56.805Z",
+        "lastPassedAt": "2026-01-09T17:20:56.984Z",
+        "lastFailedAt": "2026-01-09T17:20:56.805Z"
+      }
+    },
+    {
+      "testHash": "f9fbe5bda8df7920",
+      "testText": "click on \"Save and Exit\"",
+      "steps": [
+        {
+          "stepHash": "f9fbe5bda8df7920",
+          "stepIndex": 0,
+          "stepText": "click on \"Save and Exit\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.9,
+                "description": "Save and Continue button"
+              },
+              {
+                "mimicId": 15,
+                "confidence": 0.85,
+                "description": "Save then Continue button"
+              },
+              {
+                "mimicId": 16,
+                "confidence": 0.8,
+                "description": "Save and Continue button"
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.75,
+                "description": "Save & Continue button"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.7,
+                "description": "Save & Continue button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step 'click on \"Save and Exit\"' implies a button click with similar naming conventions related to saving. The candidates are ranked based on similar text appearing on buttons that indicate saving functionality."
+          },
+          "executedAt": "2026-01-09T17:21:04.650Z",
+          "targetElement": {
+            "mimicId": 14,
+            "selector": "locator('[data-mimic-id=\"14\"]')"
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-09T17:21:04.650Z",
+        "lastPassedAt": "2026-01-09T17:21:04.657Z",
+        "lastFailedAt": null
+      }
+    }
+  ]
+}

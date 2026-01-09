@@ -31,6 +31,7 @@ export const zActionKind = z
 
 export const zGeneralActionPlan = z.object({
   kind: zActionKind.describe("Coarse action category chosen first."),
+  requiresMarkers: z.boolean().describe("Whether the action requires markers to be added to the page."),
   description: z
     .string()
     .describe("the reasoning behind the classification based on the literal intent of the Gherkin step."),
@@ -95,45 +96,21 @@ export type NavigationAction = z.infer<typeof zNavigationAction>;
 export const zClickActionResult = z.object({
   /**
    * Array of up to 5 candidate elements, ranked by likelihood
-   * Each candidate includes its index in the original TargetInfo array
+   * Each candidate includes its index in the original MarkerElementInfo array
    */
   candidates: z
     .array(
       z.object({
         /**
-         * Index in the original TargetInfo array (0-based)
-         * Used to reference back to the captured element
+         * The mimic ID (marker number) assigned to the element by the markers system
+         * This is the number shown on the badge in the screenshot
          */
-        index: z.number().int().min(0).describe("Index in the original TargetInfo array (0-based)"),
-        /**
-         * Element tag name (e.g., 'button', 'a', 'input')
-         */
-        tag: z.string().describe("Element tag name"),
-        /**
-         * Visible text content of the element
-         */
-        text: z.string().describe("Visible text content"),
-        /**
-         * Element ID attribute if present
-         */
-        id: z.string().nullable().describe("Element ID attribute if present"),
-        /**
-         * Inferred or explicit ARIA role
-         */
-        role: z.string().nullable().describe("Inferred or explicit ARIA role"),
-        /**
-         * Associated label text (from label element or aria-labelledby)
-         */
-        label: z.string().nullable().describe("Associated label text"),
-        /**
-         * aria-label attribute value
-         */
-        ariaLabel: z.string().nullable().describe("aria-label attribute value"),
+        mimicId: z.number().int().min(1).describe("The mimic ID (marker number) shown on the element's badge in the screenshot"),
         /**
          * Optional confidence score (0-1) indicating match likelihood
          * Using nullable instead of optional for compatibility with OpenAI structured outputs
          */
-        confidence: z.number().min(0).nullable().describe("Confidence score (0-1) indicating match likelihood"),
+        confidence: z.number().min(0).max(1).nullable().describe("Confidence score (0-1) indicating match likelihood"),
         /**
          * Human-readable description of this element for test annotations
          * Should be a clear, concise description that identifies the element (e.g., "Submit button", "Login link", "Email input field")

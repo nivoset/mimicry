@@ -10,11 +10,10 @@ import type { Snapshot, SnapshotStep } from './types.js';
 import { executeNavigationAction } from './navigation.js';
 import { executeClickAction } from './click.js';
 import { executeFormAction } from './forms.js';
-import { buildSelectorForTarget } from './selector.js';
 import type { NavigationAction } from './schema/action.js';
 import type { ClickActionResult } from './schema/action.js';
 import type { FormActionResult } from './forms.js';
-import type { TargetInfo } from './selector.js';
+import { getMimic } from './markers.js';
 
 /**
  * Replay a complete test from a snapshot
@@ -86,12 +85,13 @@ async function replayClickStep(
 ): Promise<void> {
   const actionDetails = step.actionDetails as ClickActionResult;
   
-  // Reconstruct the target element from snapshot
-  if (!step.targetElement) {
-    throw new Error(`Snapshot step ${step.stepIndex} (click) is missing targetElement`);
+  // Reconstruct the target element from snapshot using marker ID
+  if (!step.targetElement || step.targetElement.mimicId === undefined) {
+    throw new Error(`Snapshot step ${step.stepIndex} (click) is missing targetElement with mimicId`);
   }
 
-  // If we have a stored selector, try to use it directly
+  // Use marker ID to get the locator
+  // If we have a stored selector, try to use it first as a fallback
   let element;
   if (step.targetElement.selector) {
     try {
@@ -99,13 +99,13 @@ async function replayClickStep(
       // Verify the element exists
       await element.waitFor({ timeout: 5000 });
     } catch (error) {
-      // Selector might be stale, fall back to rebuilding from TargetInfo
-      console.warn(`Stored selector failed for step ${step.stepIndex}, rebuilding from TargetInfo`);
-      element = await buildSelectorForTarget(page, step.targetElement as TargetInfo);
+      // Selector might be stale, fall back to marker ID
+      console.warn(`Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
+      element = getMimic(page, step.targetElement.mimicId);
     }
   } else {
-    // Rebuild selector from TargetInfo
-    element = await buildSelectorForTarget(page, step.targetElement as TargetInfo);
+    // Use marker ID directly
+    element = getMimic(page, step.targetElement.mimicId);
   }
 
   // Find the selected candidate from the click action result
@@ -141,12 +141,13 @@ async function replayFormStep(
 ): Promise<void> {
   const actionDetails = step.actionDetails as FormActionResult;
   
-  // Reconstruct the target element from snapshot
-  if (!step.targetElement) {
-    throw new Error(`Snapshot step ${step.stepIndex} (form) is missing targetElement`);
+  // Reconstruct the target element from snapshot using marker ID
+  if (!step.targetElement || step.targetElement.mimicId === undefined) {
+    throw new Error(`Snapshot step ${step.stepIndex} (form) is missing targetElement with mimicId`);
   }
 
-  // If we have a stored selector, try to use it directly
+  // Use marker ID to get the locator
+  // If we have a stored selector, try to use it first as a fallback
   let element;
   if (step.targetElement.selector) {
     try {
@@ -154,13 +155,13 @@ async function replayFormStep(
       // Verify the element exists
       await element.waitFor({ timeout: 5000 });
     } catch (error) {
-      // Selector might be stale, fall back to rebuilding from TargetInfo
-      console.warn(`Stored selector failed for step ${step.stepIndex}, rebuilding from TargetInfo`);
-      element = await buildSelectorForTarget(page, step.targetElement as TargetInfo);
+      // Selector might be stale, fall back to marker ID
+      console.warn(`Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
+      element = getMimic(page, step.targetElement.mimicId);
     }
   } else {
-    // Rebuild selector from TargetInfo
-    element = await buildSelectorForTarget(page, step.targetElement as TargetInfo);
+    // Use marker ID directly
+    element = getMimic(page, step.targetElement.mimicId);
   }
 
   await executeFormAction(

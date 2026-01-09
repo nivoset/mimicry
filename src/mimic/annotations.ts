@@ -16,20 +16,28 @@ import { TestInfo } from '@playwright/test';
  * @param testInfo - Playwright TestInfo object (optional, for test context)
  * @param gherkinStep - The original Gherkin step that triggered this action (used as annotation type)
  * @param description - The description of what action is being performed (used as annotation description)
+ * @param playwrightCode - Optional Playwright code equivalent to add to the annotation
  * @returns void
  */
 export function addAnnotation(
   testInfo: TestInfo | undefined,
   gherkinStep: string | undefined,
-  description: string
+  description: string,
+  playwrightCode?: string
 ): void {
+  // Combine description with Playwright code if provided
+  let fullDescription = description;
+  if (playwrightCode) {
+    fullDescription += `\n  📝 Playwright: ${playwrightCode}`;
+  }
+  
   if (testInfo && gherkinStep) {
     testInfo.annotations.push({ 
       type: gherkinStep, 
-      description 
+      description: fullDescription
     });
   } else {
-    // Fallback to console.log when testInfo is not available (e.g., agentic context)
-    console.log(description);
+    // Fallback to console.log when testInfo is not available
+    console.log(fullDescription);
   }
 }

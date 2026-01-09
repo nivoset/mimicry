@@ -2,7 +2,7 @@ import { test, expect } from './test-utils';
 
 
 test.describe('Minimal Flow Example', () => {
-  test('should execute flow and validate with Zod', async ({ page, mimic }) => {
+  test('should execute flow and validate with Zod', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to https://playwright.dev/
       click on "get started"

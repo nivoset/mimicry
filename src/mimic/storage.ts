@@ -38,7 +38,7 @@ export function hashStepText(stepText: string): string {
  * Extract test file name from full file path
  * 
  * @param testFilePath - Full path to the test file
- * @returns Test file name without extension (e.g., "agentic" from "agentic.spec.ts")
+ * @returns Test file name without extension (e.g., "buttons-variety" from "buttons-variety.spec.ts")
  */
 export function getTestFileName(testFilePath: string): string {
   const fileName = basename(testFilePath);
