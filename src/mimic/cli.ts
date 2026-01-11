@@ -13,5 +13,5 @@
  * @returns true if --troubleshoot flag is present in process.argv
  */
 export function isTroubleshootMode(): boolean {
-  return true && process.argv.includes('--troubleshoot');
+  return process.argv.includes('--troubleshoot');
 }

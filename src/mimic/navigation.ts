@@ -47,8 +47,12 @@ ${contextDescription}
 
 **Instructions:**
 1. Determine the navigation type and extract the URL if applicable
-2. Provide a clear, human-readable description of what navigation is happening
+2. For navigate/openPage actions, determine if the step indicates opening in a new window/tab:
+   - If the step mentions "new window", "new tab", "open in new", "in a new page", or similar phrases, set newWindow: true
+   - Otherwise, set newWindow: false or omit it (defaults to false)
+3. Provide a clear, human-readable description of what navigation is happening
    - For navigate/openPage: "Navigate to [page name or URL]" (e.g., "Navigate to login page", "Navigate to https://example.com")
+   - For navigate/openPage with newWindow: "Navigate to [page name or URL] in new window/tab" (e.g., "Navigate to login page in new window")
    - Do not hallucinate the domain, if none are mentioned, just pass the uri (e.g., "/login")
    - For goBack: "Go back to previous page in browser history" (the system will add the specific URL information)
    - For goForward: "Go forward to next page in browser history" (the system will add the specific URL information)
@@ -87,14 +91,26 @@ export const executeNavigationAction = async (
   // Generate Playwright code equivalent
   const playwrightCode = generateNavigationCode(
     navigationAction.type,
-    navigationAction.params.url
+    navigationAction.params.url ?? undefined,
+    navigationAction.params.newWindow,
   );
 
   switch (navigationAction.type) {
     case 'openPage':
     case 'navigate':
-      addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} and waiting for page to load completely`, playwrightCode);
-      await page.goto(navigationAction.params.url!, { waitUntil: 'networkidle' });
+      // Check if we need to open in a new window/tab
+      if (navigationAction.params.newWindow) {
+        // Create a new page in the same browser context
+        const context = page.context();
+        const newPage = await context.newPage();
+        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} in new window/tab and waiting for page to load completely`, playwrightCode);
+        await newPage.goto(navigationAction.params.url!, { waitUntil: 'networkidle' });
+        // Note: The new page is created and navigated, but the original page reference remains unchanged
+        // The new page is available in the browser context and can be accessed via context.pages()
+      } else {
+        addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} and waiting for page to load completely`, playwrightCode);
+        await page.goto(navigationAction.params.url!, { waitUntil: 'networkidle' });
+      }
       break;
     case 'closePage':
       // Only close page if explicitly requested - be very careful with this action

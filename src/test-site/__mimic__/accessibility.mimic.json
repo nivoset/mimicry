@@ -891,17 +891,40 @@
           "stepHash": "bd0c0bf4acf7e8f2",
           "stepIndex": 0,
           "stepText": "type \"user@example.com\" into the username field",
-          "actionKind": "form update",
+          "actionKind": "click",
           "actionDetails": {
-            "mimicId": 11,
-            "type": "fill",
-            "params": {
-              "value": "user@example.com",
-              "modifiers": []
-            },
-            "elementDescription": "Email input field labeled 'Username'"
+            "candidates": [
+              {
+                "mimicId": 11,
+                "confidence": 0.95,
+                "description": "Username textbox"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.9,
+                "description": "Password textbox"
+              },
+              {
+                "mimicId": 35,
+                "confidence": 0.85,
+                "description": "Username label"
+              },
+              {
+                "mimicId": 36,
+                "confidence": 0.75,
+                "description": "Username instruction text"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.7,
+                "description": "Remember me checkbox"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies 'type' rather than 'click', so we default to a primary (left) click as it is the standard for text input. The username textbox has the highest confidence score because it's the most directly relevant to entering text, followed by other form elements that could be part of the login process."
           },
-          "executedAt": "2026-01-10T16:08:29.226Z",
+          "executedAt": "2026-01-11T12:50:49.004Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -916,39 +939,17 @@
           "stepHash": "a07fc7d457289444",
           "stepIndex": 1,
           "stepText": "type \"securepass\" into the password field",
-          "actionKind": "click",
+          "actionKind": "form update",
           "actionDetails": {
-            "candidates": [
-              {
-                "mimicId": 12,
-                "confidence": 0.95,
-                "description": "Password input field"
-              },
-              {
-                "mimicId": 38,
-                "confidence": 0.8,
-                "description": "Help text below the password field"
-              },
-              {
-                "mimicId": 11,
-                "confidence": 0.75,
-                "description": "Username input field"
-              },
-              {
-                "mimicId": 2,
-                "confidence": 0.6,
-                "description": "Accessibility page link in navigation"
-              },
-              {
-                "mimicId": 37,
-                "confidence": 0.5,
-                "description": "Password label above the password input field"
-              }
-            ],
-            "clickType": "left",
-            "reasoning": "The most likely element is the password input field (Marker 12) as it directly corresponds to the Gherkin step mentioning 'type "
+            "mimicId": 12,
+            "type": "fill",
+            "params": {
+              "value": "securepass",
+              "modifiers": []
+            },
+            "elementDescription": "Password input field labeled 'Password'"
           },
-          "executedAt": "2026-01-10T16:08:29.226Z",
+          "executedAt": "2026-01-11T12:50:49.004Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -963,39 +964,17 @@
           "stepHash": "2eb9490b6dbd68fb",
           "stepIndex": 2,
           "stepText": "check the remember me checkbox",
-          "actionKind": "click",
+          "actionKind": "form update",
           "actionDetails": {
-            "candidates": [
-              {
-                "mimicId": 13,
-                "confidence": 1,
-                "description": "Remember me checkbox with text 'Remember me on this device'"
-              },
-              {
-                "mimicId": 14,
-                "confidence": 0.8,
-                "description": "Login button with text 'Submit the login form'"
-              },
-              {
-                "mimicId": 20,
-                "confidence": 0.7,
-                "description": "Update Live Region button with text 'Update Live Region'"
-              },
-              {
-                "mimicId": 9,
-                "confidence": 0.6,
-                "description": "Custom Button with text 'Custom button with role'"
-              },
-              {
-                "mimicId": 10,
-                "confidence": 0.5,
-                "description": "Custom Link with text 'Custom link with role'"
-              }
-            ],
-            "clickType": "hover",
-            "reasoning": "Based on the previous steps and the Gherkin step implying a 'check' action, the most likely element is the checkbox labeled 'Remember me on this device'. This matches semantic HTML usage for remember me functionality. The next closest candidates are interactive buttons and links that do not directly relate to form submission or updating states."
+            "mimicId": 13,
+            "type": "check",
+            "params": {
+              "value": "",
+              "modifiers": []
+            },
+            "elementDescription": "Remember me checkbox labeled 'Remember me on this device'"
           },
-          "executedAt": "2026-01-10T16:08:29.226Z",
+          "executedAt": "2026-01-11T12:50:49.004Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1015,34 +994,35 @@
             "candidates": [
               {
                 "mimicId": 14,
-                "confidence": 1,
-                "description": "Login button with text 'Submit the login form' and aria-label 'Submit the login form'"
+                "confidence": 0.95,
+                "description": "Login button with text 'Go'"
               },
               {
-                "mimicId": 19,
-                "confidence": 0.8,
-                "description": "Sign In button with text 'Sign In' and aria-label 'Submit search'"
+                "mimicId": 28,
+                "confidence": 0.85,
+                "description": "Button with text 'Read More' inside an article"
               },
               {
-                "mimicId": 22,
-                "confidence": 0.7,
-                "description": "Save button with text 'Saves your changes to the server.' and aria-label 'Save document'"
+                "mimicId": 36,
+                "confidence": 0.75,
+                "description": "Textbox with label 'Enter your username or email address'"
               },
               {
-                "mimicId": 39,
-                "confidence": 0.6,
-                "description": "Section 1 link with text 'Section 1' and aria-label 'Secondary navigation'"
+                "mimicId": 41,
+                "confidence": 0.65,
+                "description": "Status message with text 'Initial status message.'"
               },
               {
-                "mimicId": 42,
-                "confidence": 0.5,
-                "description": "Delete item button with text 'This action cannot be undone.' and aria-label 'Delete item'"
+                "mimicId": 32,
+                "confidence": 0.55,
+                "description": "Alert message with text 'This is an alert message.'"
               }
             ],
-            "clickType": "hover",
-            "reasoning": "The Gherkin step mentions 'click on 'Login'', which aligns with the 'Submit the login form' button. This element is the most directly relevant to logging in, making it the top candidate."
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The step explicitly says 'click on 'Login'' which implies a primary (left) click. The most likely elements are the Login button and other interactive elements like the 'Read More' button inside an article."
           },
-          "executedAt": "2026-01-10T16:08:29.226Z",
+          "executedAt": "2026-01-11T12:50:49.004Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1059,17 +1039,40 @@
           "stepHash": "bd0c0bf4acf7e8f2",
           "stepIndex": 0,
           "stepText": "type \"user@example.com\" into the username field",
-          "actionKind": "form update",
+          "actionKind": "click",
           "actionDetails": {
-            "mimicId": 11,
-            "type": "fill",
-            "params": {
-              "value": "user@example.com",
-              "modifiers": []
-            },
-            "elementDescription": "Email input field labeled 'Username'"
+            "candidates": [
+              {
+                "mimicId": 11,
+                "confidence": 0.95,
+                "description": "Username textbox"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.9,
+                "description": "Password textbox"
+              },
+              {
+                "mimicId": 35,
+                "confidence": 0.85,
+                "description": "Username label"
+              },
+              {
+                "mimicId": 36,
+                "confidence": 0.75,
+                "description": "Username instruction text"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.7,
+                "description": "Remember me checkbox"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies 'type' rather than 'click', so we default to a primary (left) click as it is the standard for text input. The username textbox has the highest confidence score because it's the most directly relevant to entering text, followed by other form elements that could be part of the login process."
           },
-          "executedAt": "2026-01-10T16:08:29.226Z",
+          "executedAt": "2026-01-11T12:50:49.004Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1084,39 +1087,17 @@
           "stepHash": "a07fc7d457289444",
           "stepIndex": 1,
           "stepText": "type \"securepass\" into the password field",
-          "actionKind": "click",
+          "actionKind": "form update",
           "actionDetails": {
-            "candidates": [
-              {
-                "mimicId": 12,
-                "confidence": 0.95,
-                "description": "Password input field"
-              },
-              {
-                "mimicId": 38,
-                "confidence": 0.8,
-                "description": "Help text below the password field"
-              },
-              {
-                "mimicId": 11,
-                "confidence": 0.75,
-                "description": "Username input field"
-              },
-              {
-                "mimicId": 2,
-                "confidence": 0.6,
-                "description": "Accessibility page link in navigation"
-              },
-              {
-                "mimicId": 37,
-                "confidence": 0.5,
-                "description": "Password label above the password input field"
-              }
-            ],
-            "clickType": "left",
-            "reasoning": "The most likely element is the password input field (Marker 12) as it directly corresponds to the Gherkin step mentioning 'type "
+            "mimicId": 12,
+            "type": "fill",
+            "params": {
+              "value": "securepass",
+              "modifiers": []
+            },
+            "elementDescription": "Password input field labeled 'Password'"
           },
-          "executedAt": "2026-01-10T16:08:29.226Z",
+          "executedAt": "2026-01-11T12:50:49.004Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1131,39 +1112,17 @@
           "stepHash": "2eb9490b6dbd68fb",
           "stepIndex": 2,
           "stepText": "check the remember me checkbox",
-          "actionKind": "click",
+          "actionKind": "form update",
           "actionDetails": {
-            "candidates": [
-              {
-                "mimicId": 13,
-                "confidence": 1,
-                "description": "Remember me checkbox with text 'Remember me on this device'"
-              },
-              {
-                "mimicId": 14,
-                "confidence": 0.8,
-                "description": "Login button with text 'Submit the login form'"
-              },
-              {
-                "mimicId": 20,
-                "confidence": 0.7,
-                "description": "Update Live Region button with text 'Update Live Region'"
-              },
-              {
-                "mimicId": 9,
-                "confidence": 0.6,
-                "description": "Custom Button with text 'Custom button with role'"
-              },
-              {
-                "mimicId": 10,
-                "confidence": 0.5,
-                "description": "Custom Link with text 'Custom link with role'"
-              }
-            ],
-            "clickType": "hover",
-            "reasoning": "Based on the previous steps and the Gherkin step implying a 'check' action, the most likely element is the checkbox labeled 'Remember me on this device'. This matches semantic HTML usage for remember me functionality. The next closest candidates are interactive buttons and links that do not directly relate to form submission or updating states."
+            "mimicId": 13,
+            "type": "check",
+            "params": {
+              "value": "",
+              "modifiers": []
+            },
+            "elementDescription": "Remember me checkbox labeled 'Remember me on this device'"
           },
-          "executedAt": "2026-01-10T16:08:29.226Z",
+          "executedAt": "2026-01-11T12:50:49.004Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1183,34 +1142,35 @@
             "candidates": [
               {
                 "mimicId": 14,
-                "confidence": 1,
-                "description": "Login button with text 'Submit the login form' and aria-label 'Submit the login form'"
+                "confidence": 0.95,
+                "description": "Login button with text 'Go'"
               },
               {
-                "mimicId": 19,
-                "confidence": 0.8,
-                "description": "Sign In button with text 'Sign In' and aria-label 'Submit search'"
+                "mimicId": 28,
+                "confidence": 0.85,
+                "description": "Button with text 'Read More' inside an article"
               },
               {
-                "mimicId": 22,
-                "confidence": 0.7,
-                "description": "Save button with text 'Saves your changes to the server.' and aria-label 'Save document'"
+                "mimicId": 36,
+                "confidence": 0.75,
+                "description": "Textbox with label 'Enter your username or email address'"
               },
               {
-                "mimicId": 39,
-                "confidence": 0.6,
-                "description": "Section 1 link with text 'Section 1' and aria-label 'Secondary navigation'"
+                "mimicId": 41,
+                "confidence": 0.65,
+                "description": "Status message with text 'Initial status message.'"
               },
               {
-                "mimicId": 42,
-                "confidence": 0.5,
-                "description": "Delete item button with text 'This action cannot be undone.' and aria-label 'Delete item'"
+                "mimicId": 32,
+                "confidence": 0.55,
+                "description": "Alert message with text 'This is an alert message.'"
               }
             ],
-            "clickType": "hover",
-            "reasoning": "The Gherkin step mentions 'click on 'Login'', which aligns with the 'Submit the login form' button. This element is the most directly relevant to logging in, making it the top candidate."
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The step explicitly says 'click on 'Login'' which implies a primary (left) click. The most likely elements are the Login button and other interactive elements like the 'Read More' button inside an article."
           },
-          "executedAt": "2026-01-10T16:08:29.226Z",
+          "executedAt": "2026-01-11T12:50:49.004Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1223,20 +1183,15 @@
         }
       ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T15:54:32.630Z",
-        "lastPassedAt": "2026-01-11T01:24:09.325Z",
-        "lastFailedAt": "2026-01-11T01:24:09.324Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "type \"user@example.com\" into the username field",
-          "error": "Unknown base action type: assertion"
-        }
+        "lastPassedAt": "2026-01-11T12:50:49.007Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -1669,7 +1624,7 @@
             "modifiers": [],
             "reasoning": "The step is a simple click on the text 'Update Live Region'. Given that it's a button element and the most obvious clickable element with this exact text, Marker ID 20 (the 'Update Live Region' button) is the most likely candidate. The other options are less likely as they either have different labels or appear less prominent in relation to the text being clicked."
           },
-          "executedAt": "2026-01-11T01:22:00.116Z",
+          "executedAt": "2026-01-11T12:51:08.885Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1719,7 +1674,7 @@
             "modifiers": [],
             "reasoning": "The step is a simple click on the text 'Update Live Region'. Given that it's a button element and the most obvious clickable element with this exact text, Marker ID 20 (the 'Update Live Region' button) is the most likely candidate. The other options are less likely as they either have different labels or appear less prominent in relation to the text being clicked."
           },
-          "executedAt": "2026-01-11T01:22:00.116Z",
+          "executedAt": "2026-01-11T12:51:08.885Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1739,7 +1694,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T15:57:38.399Z",
-        "lastPassedAt": "2026-01-11T01:22:00.157Z",
+        "lastPassedAt": "2026-01-11T12:51:08.887Z",
         "lastFailedAt": null
       }
     },

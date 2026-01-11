@@ -42,6 +42,10 @@
     "url": "https://github.com/nivoset/mimicry.git"
   },
   "homepage": "https://nivoset.github.io/mimicry/",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/nivoset"
+  },
   "packageManager": "pnpm@10.10.0",
   "peerDependencies": {
     "@playwright/test": "^1.57.0"

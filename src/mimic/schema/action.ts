@@ -48,7 +48,7 @@ export const zFormUpdateTypes = z
   .enum(["press", "type", "fill", 'select', 'uncheck', 'check', 'setInputFiles', 'clear'])
   .describe("Specific form action to update the form.");
 export const zNavigationType = z
-  .enum(["openPage", "navigate", "closePage", 'goBack', 'goForward', 'refresh', 'openInNewTab'])
+  .enum(["openPage", "navigate", "closePage", 'goBack', 'goForward', 'refresh'])
   .describe("Specific navigation action.");
 export const zAssertionType = z
   .enum(["text visible", "value visible", "checked visible", "aria snapshot visible", "screenshot of element"])
@@ -79,6 +79,10 @@ export const zNavigationAction = z.object({
       .string()
       .nullable()
       .describe("URL to navigate to. Must be a valid URL (starting with http:// or https://) for 'openPage' and 'navigate' types. Empty string for other navigation types (goBack, goForward, refresh, closePage)."),
+    newWindow: z
+      .boolean()
+      .optional()
+      .describe("If true, opens the URL in a new browser window/tab. Only applicable for 'openPage' and 'navigate' types."),
   }),
   /**
    * Human-readable description of this navigation action for test annotations

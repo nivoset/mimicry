@@ -260,19 +260,30 @@ export function generateFormCode(
  * 
  * @param actionType - Type of navigation action
  * @param url - URL for navigate/openPage actions (optional)
+ * @param newWindow - If true, opens URL in a new browser window/tab (optional)
  * @returns Playwright code string for the navigation action
  */
 export function generateNavigationCode(
   actionType: 'openPage' | 'navigate' | 'closePage' | 'goBack' | 'goForward' | 'refresh',
-  url?: string
+  url?: string,
+  newWindow?: boolean
 ): string {
   switch (actionType) {
     case 'openPage':
     case 'navigate':
-      if (url) {
-        return `await page.goto(${JSON.stringify(url)}, { waitUntil: 'networkidle' });`;
+      if (newWindow) {
+        // Generate code for opening in a new window/tab
+        if (url) {
+          return `const newPage = await page.context().newPage();\nawait newPage.goto(${JSON.stringify(url)}, { waitUntil: 'networkidle' });`;
+        }
+        return `const newPage = await page.context().newPage();\nawait newPage.goto(url, { waitUntil: 'networkidle' });`;
+      } else {
+        // Generate code for normal navigation
+        if (url) {
+          return `await page.goto(${JSON.stringify(url)}, { waitUntil: 'networkidle' });`;
+        }
+        return `await page.goto(url, { waitUntil: 'networkidle' });`;
       }
-      return `await page.goto(url, { waitUntil: 'networkidle' });`;
     case 'closePage':
       return `await page.close();`;
     case 'goBack':
