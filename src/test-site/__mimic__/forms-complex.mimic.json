@@ -1615,11 +1615,11 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:05:23.971Z",
-        "lastPassedAt": "2026-01-11T16:05:48.131Z",
-        "lastFailedAt": "2026-01-11T16:05:48.129Z",
+        "lastPassedAt": "2026-01-11T16:11:59.447Z",
+        "lastFailedAt": "2026-01-11T16:11:59.438Z",
         "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "type \"Test\" into the first name field",
+          "failedStepIndex": 1,
+          "failedStepText": "click on \"Next Step\"",
           "error": "Unknown base action type: assertion"
         }
       }
