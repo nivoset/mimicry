@@ -65,7 +65,6 @@
 
   <script type="module">
     import { getQueryParam } from '../assets/js/utils.js';
-    import { initVariations, randomChoice, VariationStrategy } from '../assets/js/variation.js';
 
     // Display current URL information
     document.getElementById('current-url').textContent = window.location.href;
@@ -76,23 +75,6 @@
     } else {
       document.getElementById('url-params').textContent = 'None';
     }
-
-    // Apply variations to link text
-    initVariations({
-      elementText: {
-        'nav a': {
-          text: ['Home', 'Main Page', 'Index', 'Start'],
-          count: 1
-        }
-      },
-      buttons: {
-        'button': randomChoice([
-          ['Go Back', 'Back', 'Previous', 'Return'],
-          ['Go Forward', 'Forward', 'Next'],
-          ['Refresh Page', 'Reload', 'Refresh']
-        ])
-      }
-    });
   </script>
 </body>
 </html>

@@ -131,7 +131,7 @@ export const zClickActionResult = z.object({
   clickType: z
     .enum(["primary", "secondary", "tertiary", "double", "hover"])
     .describe("Click type determined from the Gherkin step"),
-  modifiers: zModifierKeys.nullish().describe("Optional modifier keys to use for the click action."),
+  modifiers: zModifierKeys.nullish().describe("list of modifier keys to use for the click action."),
   /**
    * Brief explanation of the matching logic and reasoning
    */

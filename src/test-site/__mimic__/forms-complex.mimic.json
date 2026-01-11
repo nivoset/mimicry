@@ -1440,14 +1440,14 @@
                 "none"
               ]
             },
-            "elementDescription": "First name input field"
+            "elementDescription": "Email input field"
           },
-          "executedAt": "2026-01-11T15:54:38.953Z",
+          "executedAt": "2026-01-11T16:16:30.355Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "Forename",
+              "name": "Given Name",
               "exact": true
             },
             "mimicId": 4
@@ -1463,39 +1463,39 @@
               {
                 "mimicId": 8,
                 "confidence": 1,
-                "description": "Next button"
+                "description": "Submit Form button with text 'Submit Form'"
               },
               {
                 "mimicId": 3,
                 "confidence": 0.9,
-                "description": "Complex Forms link"
+                "description": "Complex Forms link with text 'Complex Forms'"
               },
               {
                 "mimicId": 17,
                 "confidence": 0.8,
-                "description": "Step 1 of 3 text"
+                "description": "Step 1 of 3 display element with text 'Step 1 of 3'"
               },
               {
-                "mimicId": 16,
+                "mimicId": 15,
                 "confidence": 0.7,
-                "description": "Additional display element"
+                "description": "Account Type label with text 'Select account type'"
               },
               {
-                "mimicId": 2,
-                "confidence": 0.5,
-                "description": "Basic Forms link"
+                "mimicId": 4,
+                "confidence": 0.6,
+                "description": "First Name input field"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step specifies 'click on \"Next Step\"', which clearly indicates a click action. Based on the context of a multi-step form, the most likely element is the 'Next' button with the marker ID 8."
+            "reasoning": "The Gherkin step is asking to click on 'Next Step'. Given the context of a multi-step form, the most logical element to click next would be the 'Submit Form' button as it typically concludes the current step and proceeds to the next. The other options are less relevant or do not fit the typical flow of a form submission process."
           },
-          "executedAt": "2026-01-11T15:54:38.953Z",
+          "executedAt": "2026-01-11T16:16:30.355Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Next",
+              "name": "Submit Form",
               "exact": true
             },
             "mimicId": 8
@@ -1509,11 +1509,11 @@
           "actionDetails": {
             "type": "goBack",
             "params": {
-              "url": null
+              "url": "http://127.0.0.1:3000/pages/forms-complex.html"
             },
             "description": "Go back to previous page in browser history"
           },
-          "executedAt": "2026-01-11T15:54:38.953Z"
+          "executedAt": "2026-01-11T16:16:30.355Z"
         }
       },
       "steps": [
@@ -1531,14 +1531,14 @@
                 "none"
               ]
             },
-            "elementDescription": "First name input field"
+            "elementDescription": "Email input field"
           },
-          "executedAt": "2026-01-11T15:54:38.953Z",
+          "executedAt": "2026-01-11T16:16:30.355Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "Forename",
+              "name": "Given Name",
               "exact": true
             },
             "mimicId": 4
@@ -1554,39 +1554,39 @@
               {
                 "mimicId": 8,
                 "confidence": 1,
-                "description": "Next button"
+                "description": "Submit Form button with text 'Submit Form'"
               },
               {
                 "mimicId": 3,
                 "confidence": 0.9,
-                "description": "Complex Forms link"
+                "description": "Complex Forms link with text 'Complex Forms'"
               },
               {
                 "mimicId": 17,
                 "confidence": 0.8,
-                "description": "Step 1 of 3 text"
+                "description": "Step 1 of 3 display element with text 'Step 1 of 3'"
               },
               {
-                "mimicId": 16,
+                "mimicId": 15,
                 "confidence": 0.7,
-                "description": "Additional display element"
+                "description": "Account Type label with text 'Select account type'"
               },
               {
-                "mimicId": 2,
-                "confidence": 0.5,
-                "description": "Basic Forms link"
+                "mimicId": 4,
+                "confidence": 0.6,
+                "description": "First Name input field"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step specifies 'click on \"Next Step\"', which clearly indicates a click action. Based on the context of a multi-step form, the most likely element is the 'Next' button with the marker ID 8."
+            "reasoning": "The Gherkin step is asking to click on 'Next Step'. Given the context of a multi-step form, the most logical element to click next would be the 'Submit Form' button as it typically concludes the current step and proceeds to the next. The other options are less relevant or do not fit the typical flow of a form submission process."
           },
-          "executedAt": "2026-01-11T15:54:38.953Z",
+          "executedAt": "2026-01-11T16:16:30.355Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Next",
+              "name": "Submit Form",
               "exact": true
             },
             "mimicId": 8
@@ -1600,11 +1600,11 @@
           "actionDetails": {
             "type": "goBack",
             "params": {
-              "url": null
+              "url": "http://127.0.0.1:3000/pages/forms-complex.html"
             },
             "description": "Go back to previous page in browser history"
           },
-          "executedAt": "2026-01-11T15:54:38.953Z"
+          "executedAt": "2026-01-11T16:16:30.355Z"
         }
       ],
       "flags": {
@@ -1615,12 +1615,10 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:05:23.971Z",
-        "lastPassedAt": "2026-01-11T16:11:59.447Z",
-        "lastFailedAt": "2026-01-11T16:11:59.438Z",
+        "lastPassedAt": "2026-01-11T16:21:56.709Z",
+        "lastFailedAt": "2026-01-11T16:21:56.704Z",
         "failureDetails": {
-          "failedStepIndex": 1,
-          "failedStepText": "click on \"Next Step\"",
-          "error": "Unknown base action type: assertion"
+          "error": "locator.fill: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n"
         }
       }
     },

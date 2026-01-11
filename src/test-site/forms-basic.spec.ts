@@ -77,9 +77,9 @@ test.describe('Basic Forms Page', () => {
 
   test('should check multiple newsletter checkboxes', async ({ page, mimic }) => {
     await mimic`
-      check "Daily Newsletter"
-      check "Weekly Digest"
-      check "Promotional Emails"
+      select "Daily Newsletter"
+      and select "Weekly Digest"
+      and select "Promotional Emails"
     `;
 
     await expect(page.locator('input[value="daily"]')).toBeChecked();
@@ -100,9 +100,9 @@ test.describe('Basic Forms Page', () => {
       type "5559876543" into the phone field
       select "United Kingdom" from the country dropdown
       type "Hello, this is a test message" into the message field
-      check the "Phone" radio button
-      check "Weekly Digest"
-      check the terms and conditions checkbox
+      select the "Phone" radio button
+      select "Weekly Digest"
+      select the terms and conditions checkbox
       click on "Submit Form"
     `;
 

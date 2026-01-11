@@ -14,7 +14,8 @@ export const getNavigationAction = async (
   _page: Page, 
   brain: LanguageModel, 
   action: string,
-  testContext?: TestContext
+  testContext?: TestContext,
+  testCaseName?: string
 ): Promise<NavigationAction> => {
   // Build context description for the prompt
   const contextDescription = testContext ? `
@@ -62,7 +63,7 @@ ${contextDescription}
     `,
     output: Output.object({ schema: zNavigationAction, name: 'navigation' }),
   });
-  await countTokens(res);
+  await countTokens(res, testCaseName);
 
   return res.output;
 };

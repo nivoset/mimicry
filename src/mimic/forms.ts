@@ -34,7 +34,8 @@ export const getFormAction = async (
   page: Page,
   brain: LanguageModel,
   gherkinStep: string,
-  testContext?: TestContext
+  testContext?: TestContext,
+  testCaseName?: string
 ): Promise<FormActionResult> => {
   const startTime = Date.now();
   
@@ -263,7 +264,7 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
     }
   }
   
-  await countTokens(res);
+  await countTokens(res, testCaseName);
   
   const totalTime = Date.now() - startTime;
   console.log(`⏱️  [getFormAction] Total time: ${totalTime}ms (${(totalTime / 1000).toFixed(2)}s)${usedImage ? ' (used image on retry)' : ' (text-only, no image needed)'}`);

@@ -193,7 +193,6 @@
   </style>
 
   <script type="module">
-    import { initVariations, randomChoice } from '../assets/js/variation.js';
     import { showAlert } from '../assets/js/utils.js';
 
     let currentStep = 1;
@@ -253,26 +252,6 @@
       showAlert('Complex form submitted successfully!', 'success');
     };
 
-    // Apply variations
-    initVariations({
-      formFields: {
-        '#first-name': {
-          labels: ['First Name', 'Given Name', 'Forename', 'First'],
-          placeholders: ['Enter first name', 'Your first name', 'John']
-        },
-        '#email-complex': {
-          labels: ['Email Address', 'Email', 'E-mail', 'Email Address'],
-          placeholders: ['your.email@example.com', 'Enter email', 'email@domain.com']
-        }
-      },
-      buttons: {
-        '.btn': randomChoice([
-          ['Next Step', 'Continue', 'Proceed', 'Next'],
-          ['Previous', 'Back', 'Go Back', 'Return'],
-          ['Submit Form', 'Submit', 'Send', 'Complete']
-        ])
-      }
-    });
   </script>
 </body>
 </html>

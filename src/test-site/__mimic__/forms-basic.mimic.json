@@ -12,12 +12,12 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-09T22:27:26.445Z",
-        "lastPassedAt": "2026-01-11T14:21:48.189Z",
-        "lastFailedAt": "2026-01-11T14:21:48.187Z",
+        "lastPassedAt": "2026-01-11T18:36:58.689Z",
+        "lastFailedAt": "2026-01-11T18:36:58.682Z",
         "failureDetails": {
-          "failedStepIndex": 2,
-          "failedStepText": "type \"5559876543\" into the phone field",
-          "error": "Unknown base action type: assertion"
+          "failedStepIndex": 8,
+          "failedStepText": "click on \"Submit Form\"",
+          "error": "AI model call failed after 434ms (tried both text-only and with image): Invalid schema for response_format 'clickActionResult': In context=(), 'required' is required to be supplied and to be an array including every key in properties. Missing 'modifiers'."
         }
       },
       "stepsByHash": {}
@@ -38,9 +38,9 @@
               "value": "John Doe",
               "modifiers": []
             },
-            "elementDescription": "Name input field labeled 'Full Name'"
+            "elementDescription": "Full Name input field"
           },
-          "executedAt": "2026-01-11T13:45:10.432Z",
+          "executedAt": "2026-01-11T18:33:15.894Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -65,9 +65,9 @@
               "value": "John Doe",
               "modifiers": []
             },
-            "elementDescription": "Name input field labeled 'Full Name'"
+            "elementDescription": "Full Name input field"
           },
-          "executedAt": "2026-01-11T13:45:10.432Z",
+          "executedAt": "2026-01-11T18:33:15.894Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -87,7 +87,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-09T22:29:14.510Z",
-        "lastPassedAt": "2026-01-11T13:45:10.434Z",
+        "lastPassedAt": "2026-01-11T18:33:15.909Z",
         "lastFailedAt": null
       }
     },
@@ -968,12 +968,12 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:36:26.400Z",
-        "lastPassedAt": "2026-01-11T14:26:47.053Z",
-        "lastFailedAt": "2026-01-11T14:26:47.051Z",
+        "lastPassedAt": "2026-01-11T18:37:37.228Z",
+        "lastFailedAt": "2026-01-11T18:37:37.223Z",
         "failureDetails": {
-          "failedStepIndex": 1,
-          "failedStepText": "type \"test@example.com\" into the email field",
-          "error": "Unknown base action type: assertion"
+          "failedStepIndex": 4,
+          "failedStepText": "click on \"Reset Form\"",
+          "error": "AI model call failed after 533ms (tried both text-only and with image): Invalid schema for response_format 'clickActionResult': In context=(), 'required' is required to be supplied and to be an array including every key in properties. Missing 'modifiers'."
         }
       }
     },
@@ -1081,15 +1081,18 @@
         }
       ],
       "flags": {
-        "needsRetry": false,
-        "hasErrors": false,
+        "needsRetry": true,
+        "hasErrors": true,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:37:11.464Z",
-        "lastPassedAt": "2026-01-11T14:30:27.137Z",
-        "lastFailedAt": null
+        "lastPassedAt": "2026-01-11T17:14:00.020Z",
+        "lastFailedAt": "2026-01-11T17:14:00.011Z",
+        "failureDetails": {
+          "error": "locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"17\"]')\u001b[22m\n"
+        }
       }
     },
     {
@@ -1105,11 +1108,202 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:37:38.064Z",
-        "lastPassedAt": "2026-01-11T14:38:30.969Z",
-        "lastFailedAt": "2026-01-11T14:38:30.968Z",
+        "lastPassedAt": "2026-01-11T18:39:01.909Z",
+        "lastFailedAt": "2026-01-11T18:39:01.898Z",
+        "failureDetails": {
+          "failedStepIndex": 10,
+          "failedStepText": "click on \"Submit Form\"",
+          "error": "AI model call failed after 505ms (tried both text-only and with image): Invalid schema for response_format 'clickActionResult': In context=(), 'required' is required to be supplied and to be an array including every key in properties. Missing 'modifiers'."
+        }
+      }
+    },
+    {
+      "testHash": "87839c1d9a7ff5f6",
+      "testText": "select \"Daily Newsletter\"\nand select \"Weekly Digest\"\nand select \"Promotional Emails\"",
+      "stepsByHash": {
+        "c6eab94b9219261c": {
+          "stepHash": "c6eab94b9219261c",
+          "stepIndex": 0,
+          "stepText": "select \"Daily Newsletter\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 13,
+            "type": "check",
+            "params": {
+              "value": "true",
+              "modifiers": []
+            },
+            "elementDescription": "Daily Newsletter checkbox for subscription preferences."
+          },
+          "executedAt": "2026-01-11T18:53:52.275Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Daily Newsletter",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        },
+        "1abab82948989dd2": {
+          "stepHash": "1abab82948989dd2",
+          "stepIndex": 1,
+          "stepText": "and select \"Weekly Digest\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 14,
+            "type": "check",
+            "params": {
+              "value": "",
+              "modifiers": []
+            },
+            "elementDescription": "Weekly Digest checkbox"
+          },
+          "executedAt": "2026-01-11T18:53:52.275Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Weekly Digest",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        },
+        "c9fe798a0dd787a2": {
+          "stepHash": "c9fe798a0dd787a2",
+          "stepIndex": 2,
+          "stepText": "and select \"Promotional Emails\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 15,
+            "type": "check",
+            "params": {
+              "value": "true",
+              "modifiers": []
+            },
+            "elementDescription": "Checkbox for 'Promotional Emails'"
+          },
+          "executedAt": "2026-01-11T18:53:52.275Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Promotional Emails",
+              "exact": true
+            },
+            "mimicId": 15
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "c6eab94b9219261c",
+          "stepIndex": 0,
+          "stepText": "select \"Daily Newsletter\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 13,
+            "type": "check",
+            "params": {
+              "value": "true",
+              "modifiers": []
+            },
+            "elementDescription": "Daily Newsletter checkbox for subscription preferences."
+          },
+          "executedAt": "2026-01-11T18:53:52.275Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Daily Newsletter",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        },
+        {
+          "stepHash": "1abab82948989dd2",
+          "stepIndex": 1,
+          "stepText": "and select \"Weekly Digest\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 14,
+            "type": "check",
+            "params": {
+              "value": "",
+              "modifiers": []
+            },
+            "elementDescription": "Weekly Digest checkbox"
+          },
+          "executedAt": "2026-01-11T18:53:52.275Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Weekly Digest",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        },
+        {
+          "stepHash": "c9fe798a0dd787a2",
+          "stepIndex": 2,
+          "stepText": "and select \"Promotional Emails\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 15,
+            "type": "check",
+            "params": {
+              "value": "true",
+              "modifiers": []
+            },
+            "elementDescription": "Checkbox for 'Promotional Emails'"
+          },
+          "executedAt": "2026-01-11T18:53:52.275Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Promotional Emails",
+              "exact": true
+            },
+            "mimicId": 15
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-11T18:53:52.275Z",
+        "lastPassedAt": "2026-01-11T18:53:52.277Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "93cd1c35e475878b",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-11T18:58:31.777Z",
+        "lastPassedAt": "2026-01-11T19:15:39.472Z",
+        "lastFailedAt": "2026-01-11T19:15:39.467Z",
         "failureDetails": {
           "failedStepIndex": 2,
-          "failedStepText": "type \"1234567890\" into the phone field",
+          "failedStepText": "type \"5559876543\" into the phone field",
           "error": "Unknown base action type: assertion"
         }
       }

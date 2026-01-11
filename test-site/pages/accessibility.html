@@ -179,8 +179,6 @@
   </style>
 
   <script type="module">
-    import { initVariations, randomChoice } from '../assets/js/variation.js';
-
     // Update live region
     const liveMessages = [
       'Status updated: Operation completed.',
@@ -194,22 +192,6 @@
       const liveRegion = document.getElementById('live-status');
       liveCounter = (liveCounter + 1) % liveMessages.length;
       liveRegion.textContent = liveMessages[liveCounter];
-    });
-
-    // Apply variations
-    initVariations({
-      buttons: {
-        'button[aria-label*="Close"]': ['✕', '×', 'Close', 'X'],
-        'button[aria-label*="Save"]': ['💾', 'Save', 'Store', 'Keep'],
-        'button[type="submit"]': randomChoice([
-          ['Login', 'Sign In', 'Enter', 'Access'],
-          ['Submit', 'Send', 'Go', 'Continue']
-        ])
-      },
-      elementText: {
-        'label[for="username-field"]': ['Username', 'User Name', 'Login Name', 'Account Name'],
-        'label[for="password-field"]': ['Password', 'Passphrase', 'Secret Key', 'Access Code']
-      }
     });
   </script>
 </body>

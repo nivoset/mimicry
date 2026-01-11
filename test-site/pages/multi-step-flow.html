@@ -141,7 +141,6 @@
 
   <script type="module">
     import { storage } from '../assets/js/utils.js';
-    import { initVariations, randomChoice } from '../assets/js/variation.js';
 
     let currentWizardStep = 1;
     const totalWizardSteps = 4;
@@ -277,17 +276,6 @@
       goToWizardStep(1);
     }
 
-    // Apply variations
-    initVariations({
-      buttons: {
-        '.btn': randomChoice([
-          ['Start Wizard', 'Begin', 'Get Started', 'Start'],
-          ['Next', 'Continue', 'Proceed', 'Forward'],
-          ['Previous', 'Back', 'Go Back', 'Return'],
-          ['Complete Wizard', 'Finish', 'Done', 'Complete']
-        ])
-      }
-    });
   </script>
 </body>
 </html>

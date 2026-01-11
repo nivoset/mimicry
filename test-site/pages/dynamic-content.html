@@ -81,7 +81,6 @@
   </style>
 
   <script type="module">
-    import { initVariations, randomChoice } from '../assets/js/variation.js';
     import { showAlert, waitForElement } from '../assets/js/utils.js';
 
     let itemCounter = 3;
@@ -159,26 +158,13 @@
 
     document.getElementById('show-status-btn').addEventListener('click', function() {
       const messages = document.getElementById('status-messages');
-      const message = randomChoice(statusMessages);
+      const message = statusMessages[0]; // Use first message instead of random
       const alert = document.createElement('div');
       alert.className = `alert ${message.type}`;
       alert.textContent = message.text;
       messages.appendChild(alert);
       
       setTimeout(() => alert.remove(), 3000);
-    });
-
-    // Apply variations
-    initVariations({
-      buttons: {
-        '#load-content-btn': randomChoice([
-          ['Load Content', 'Fetch Content', 'Get Content', 'Load Data'],
-          ['Load', 'Fetch', 'Get', 'Retrieve']
-        ]),
-        '#toggle-visibility-btn': ['Toggle Visibility', 'Show/Hide', 'Toggle', 'Toggle View'],
-        '#change-content-btn': ['Change Content', 'Update Content', 'Modify', 'Change'],
-        '#load-more-btn': ['Load More Items', 'Load More', 'More', 'Additional Items']
-      }
     });
   </script>
 </body>

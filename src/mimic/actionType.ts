@@ -14,7 +14,8 @@ export const getBaseAction = async (
   _page: Page, 
   brain: LanguageModel, 
   action: string,
-  testContext?: TestContext
+  testContext?: TestContext,
+  testCaseName?: string
 ): Promise<z.infer<typeof zGeneralActionPlan>> => {
   // Build context description for the prompt
   const contextDescription = testContext ? `
@@ -55,7 +56,7 @@ ${contextDescription}
     `,
     output: Output.object({ schema: zGeneralActionPlan, name: 'generalActionPlan' }),
   });
-  await countTokens(res);
+  await countTokens(res, testCaseName);
 
   return res.output;
 };

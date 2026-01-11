@@ -233,7 +233,6 @@
   </style>
 
   <script type="module">
-    import { initVariations, randomChoice } from '../assets/js/variation.js';
     import { showAlert } from '../assets/js/utils.js';
 
     // Modal functions
@@ -336,17 +335,6 @@
       setTimeout(() => div.remove(), 5000);
     }
 
-    // Apply variations
-    initVariations({
-      buttons: {
-        '.btn': randomChoice([
-          ['Open Simple Modal', 'Show Modal', 'Display Dialog', 'Open Dialog'],
-          ['Open Confirmation Dialog', 'Confirm', 'Show Confirmation', 'Confirm Action'],
-          ['Actions Menu', 'Menu', 'Options', 'Actions'],
-          ['Close', 'Dismiss', 'Cancel', 'OK']
-        ])
-      }
-    });
   </script>
 </body>
 </html>

@@ -109,7 +109,6 @@
   </div>
 
   <script type="module">
-    import { initVariations, randomChoice } from '../assets/js/variation.js';
     import { showAlert } from '../assets/js/utils.js';
 
     // Handle form submission
@@ -128,29 +127,6 @@
       
       showAlert('Form submitted successfully!', 'success');
     };
-
-    // Apply variations
-    initVariations({
-      formFields: {
-        '#name': {
-          labels: ['Full Name', 'Name', 'Your Name', 'Complete Name'],
-          placeholders: ['Enter your full name', 'Your name', 'John Doe', 'First and last name']
-        },
-        '#email': {
-          labels: ['Email Address', 'Email', 'E-mail', 'Email Address'],
-          placeholders: ['your.email@example.com', 'Enter email', 'email@domain.com', 'your@email.com']
-        },
-        '#country': {
-          labels: ['Country', 'Select Country', 'Your Country', 'Country of Residence']
-        }
-      },
-      buttons: {
-        '.submit-btn': randomChoice([
-          ['Submit Form', 'Send', 'Submit', 'Send Form'],
-          ['Submit', 'Send Message', 'Submit Form', 'Go']
-        ])
-      }
-    });
   </script>
 </body>
 </html>

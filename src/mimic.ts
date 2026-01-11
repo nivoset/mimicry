@@ -15,7 +15,7 @@ import { getFormAction, executeFormAction, type FormActionResult } from './mimic
 import type { NavigationAction } from './mimic/schema/action.js';
 import type { ClickActionResult } from './mimic/schema/action.js';
 import { getFromSelector } from './mimic/selectorUtils.js';
-import { startTestCase, countTokens } from './utils/token-counter.js';
+import { startTestCase, countTokens, getTestCaseTokens } from './utils/token-counter.js';
 import { hashTestText, hashStepText, getSnapshot, saveSnapshot, recordFailure, shouldUseSnapshot } from './mimic/storage.js';
 import { replayFromSnapshot } from './mimic/replay.js';
 import { isTroubleshootMode } from './mimic/cli.js';
@@ -90,7 +90,8 @@ async function checkIntentAccomplished(
   page: Page,
   brain: LanguageModel,
   stepText: string,
-  actionsTaken: StepExecutionResult[]
+  actionsTaken: StepExecutionResult[],
+  testCaseName?: string
 ): Promise<boolean> {
   try {
     // Capture current page state
@@ -142,7 +143,7 @@ Be strict: only mark as accomplished if the intent is FULLY satisfied. If the st
       output: Output.object({ schema: zIntentAccomplished, name: 'intentAccomplished' }),
     });
     
-    await countTokens(result);
+    await countTokens(result, testCaseName);
     
     const output = result.output;
     
@@ -179,7 +180,8 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
   troubleshootMode?: boolean,
 }) {
 
-  if (testInfo?.title) await startTestCase(testInfo.title);
+  const testCaseName = testInfo?.title;
+  if (testCaseName) await startTestCase(testCaseName);
 
   // Generate test hash for snapshot identification
   const testHash = hashTestText(input);
@@ -193,6 +195,9 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
     .filter((step): step is string => step.length > 0);
 
   const expectedStepCount = steps.length;
+
+  // Track whether we used a snapshot (for token usage reporting)
+  let snapshotUsed = false;
 
   // Check if we should use an existing snapshot
   // Even in troubleshoot mode, try to use snapshot first - only regenerate on failure
@@ -211,7 +216,17 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
       try {
         // Replay from snapshot (skip LLM calls for faster execution)
         await replayFromSnapshot(page, snapshot, testInfo);
-        // If replay succeeds, we're done
+        // If replay succeeds, we're done - log 0 tokens used
+        snapshotUsed = true;
+        
+        // Add token usage annotation (0 tokens for snapshot replay)
+        if (testCaseName && testInfo) {
+          addAnnotation(
+            testInfo,
+            'token-usage',
+            `📊 Token Usage: 0 tokens (snapshot replay - no AI calls)`
+          );
+        }
         return;
       } catch (error) {
         // Replay failed - regenerate actions
@@ -426,7 +441,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
           
           // Check if intent is already accomplished (skip check on first action)
           if (actionCount > 1) {
-            intentAccomplished = await checkIntentAccomplished(page, brains, step, stepActions);
+            intentAccomplished = await checkIntentAccomplished(page, brains, step, stepActions, testCaseName);
             if (intentAccomplished) {
               console.log(`✓ Step intent accomplished after ${actionCount - 1} action(s)`);
               break;
@@ -435,7 +450,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
             break;
           }
           // Get the next action to execute for this step
-          const baseAction = await getBaseAction(page, brains, step, testContext);
+          const baseAction = await getBaseAction(page, brains, step, testContext, testCaseName);
           
           let stepResult: StepExecutionResult;
 
@@ -445,7 +460,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
           switch (baseAction.kind) {
             case 'navigation':
               // Navigation actions will log their own plain English annotations
-              const navigationAction = await getNavigationAction(page, brains, step, testContext); 
+              const navigationAction = await getNavigationAction(page, brains, step, testContext, testCaseName); 
               const executedNavAction = await executeNavigationAction(page, navigationAction, testInfo, step);
               
               stepResult = {
@@ -458,7 +473,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
               
             case 'click':
               // Click actions will log their own plain English annotations
-              const clickActionResult = await getClickAction(page, brains, step, testContext);
+              const clickActionResult = await getClickAction(page, brains, step, testContext, testCaseName);
               
               // Defensive check: ensure candidates array exists and is valid
               if (!clickActionResult || !clickActionResult.candidates || !Array.isArray(clickActionResult.candidates)) {
@@ -497,7 +512,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
               
             case 'form update':
               // Form actions will log their own plain English annotations
-              const formActionResult = await getFormAction(page, brains, step, testContext);
+              const formActionResult = await getFormAction(page, brains, step, testContext, testCaseName);
               
               // Use marker ID from the form result to get the locator
               if (!formActionResult.mimicId) {
@@ -538,7 +553,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
           // After executing an action, check if intent is accomplished
           // (but skip if we just checked before this action)
           if (actionCount === 1 || actionCount >= maxActionsPerStep) {
-            intentAccomplished = await checkIntentAccomplished(page, brains, step, stepActions);
+            intentAccomplished = await checkIntentAccomplished(page, brains, step, stepActions, testCaseName);
           }
         }
         
@@ -659,6 +674,42 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
     } else {
       // Not all steps were executed - don't save incomplete snapshot
       console.warn(`⚠️  Not saving snapshot: only ${executedStepCount} of ${expectedStepCount} steps executed`);
+    }
+  }
+
+  // Add token usage annotation at the end of test execution
+  // Only add if we didn't use a snapshot (snapshot case is handled above)
+  if (!snapshotUsed && testCaseName && testInfo) {
+    const tokenCounts = getTestCaseTokens(testCaseName);
+    if (tokenCounts) {
+      // Format token counts for display
+      const tokenEntries = Object.entries(tokenCounts)
+        .filter(([_, value]) => value > 0) // Only show non-zero counts
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(', ');
+      
+      const totalTokens = Object.values(tokenCounts).reduce((sum, val) => sum + val, 0);
+      
+      if (tokenEntries) {
+        addAnnotation(
+          testInfo,
+          'token-usage',
+          `📊 Token Usage: ${tokenEntries} (Total: ${totalTokens} tokens)`
+        );
+      } else {
+        addAnnotation(
+          testInfo,
+          'token-usage',
+          `📊 Token Usage: 0 tokens`
+        );
+      }
+    } else {
+      // No tokens tracked - likely an error case
+      addAnnotation(
+        testInfo,
+        'token-usage',
+        `📊 Token Usage: 0 tokens`
+      );
     }
   }
 }
