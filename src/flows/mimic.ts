@@ -1,8 +1,7 @@
-import { ToolLoopAgent, stepCountIs, tool } from 'ai'
+import { ToolLoopAgent, tool } from 'ai'
 import { chromium, type Locator } from '@playwright/test'
 import { openai } from '@ai-sdk/openai'
 import { z } from 'zod'
-import "dotenv/config"
 
 const browser = await chromium.launch({ headless: true })
 

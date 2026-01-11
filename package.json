@@ -1,7 +1,7 @@
 {
   "name": "playwright-mimic",
   "version": "0.1.2",
-  "description": "Playwright Mimic allows AI to connect LLM to help in maintaining test code based off of logical steps in the test file in English",
+  "description": "AI-powered browser testing framework that converts Gherkin or plain language tests into executable code, with self-repair capabilities when tests break due to code changes",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -23,17 +23,31 @@
     "test:selector": "playwright test --grep @selector-generation",
     "serve": "http-server test-site -p 3000 -c-1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "playwright",
+    "testing",
+    "ai",
+    "gherkin",
+    "bdd",
+    "browser-automation",
+    "test-automation",
+    "self-repair",
+    "natural-language",
+    "e2e-testing"
+  ],
+  "author": "nivoset",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nivoset/mimicry.git"
+  },
+  "homepage": "https://nivoset.github.io/mimicry/",
   "packageManager": "pnpm@10.10.0",
   "peerDependencies": {
     "@playwright/test": "^1.57.0"
   },
   "dependencies": {
     "ai": "^6.0.3",
-    "dotenv": "^17.2.3",
-    "http-server": "^14.1.1",
     "sharp": "^0.33.5",
     "typescript": "^5.9.3",
     "zod": "^4.2.1"
@@ -41,6 +55,8 @@
   "devDependencies": {
     "@ai-sdk/openai": "^3.0.1",
     "@playwright/test": "^1.57.0",
+    "dotenv": "^17.2.3",
+    "http-server": "^14.1.1",
     "@types/node": "^25.0.3",
     "ollama-ai-provider-v2": "^1.5.5"
   }

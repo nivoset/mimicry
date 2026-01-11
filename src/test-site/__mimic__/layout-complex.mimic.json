@@ -13,39 +13,40 @@
             "candidates": [
               {
                 "mimicId": 14,
-                "confidence": 0.95,
-                "description": "Button with text 'Open Confirmation Dialog' under the 'Information Overlay'. It is an interactive element that matches the intent of opening a modal or dialog."
+                "confidence": 0.85,
+                "description": "Options button with text 'Menu'"
               },
               {
-                "mimicId": 6,
-                "confidence": 0.85,
-                "description": "Button with text 'Show Confirmation' labeled as part of the 'Dropdown Menus' section. It is an interactive element used to trigger actions within dropdowns."
+                "mimicId": 13,
+                "confidence": 0.75,
+                "description": "Menu button"
               },
               {
                 "mimicId": 12,
-                "confidence": 0.75,
-                "description": "Button with text 'Confirm Action' under the 'Overlays' section. It is an interactive element that matches the intent of confirming actions in overlays."
-              },
-              {
-                "mimicId": 4,
                 "confidence": 0.65,
-                "description": "Button with text 'Confirm' labeled as part of the 'Modals and Dialogs' section. It is an interactive element used to confirm modal actions."
+                "description": "Options button with text 'Menu'"
               },
               {
-                "mimicId": 11,
+                "mimicId": 3,
                 "confidence": 0.55,
-                "description": "Button with text 'Open Confirmation Dialog' under a tab ('Tab 1'). It is an interactive element that matches the intent of opening a modal or dialog within a specific tab."
+                "description": "Menu button"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.45,
+                "description": "Actions button with text 'Menu'"
               }
             ],
-            "clickType": "middle",
-            "reasoning": "The most likely elements to be clicked based on the Gherkin step 'click on 'Open Simple Modal'' are those labeled as interactive and with text related to opening modals or dialogs. The elements identified have a high probability of being buttons used for these purposes."
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies 'click on \"Open Simple Modal\"', which implies a primary (left) click. Among the available markers, those labeled as 'Menu' or 'Options' are more likely to be interactive elements that could open a modal when clicked."
           },
-          "executedAt": "2026-01-10T17:36:54.232Z",
+          "executedAt": "2026-01-11T04:40:47.679Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Open Confirmation Dialog",
+              "name": "Options",
               "exact": true,
               "nth": 2
             },
@@ -63,39 +64,40 @@
             "candidates": [
               {
                 "mimicId": 14,
-                "confidence": 0.95,
-                "description": "Button with text 'Open Confirmation Dialog' under the 'Information Overlay'. It is an interactive element that matches the intent of opening a modal or dialog."
+                "confidence": 0.85,
+                "description": "Options button with text 'Menu'"
               },
               {
-                "mimicId": 6,
-                "confidence": 0.85,
-                "description": "Button with text 'Show Confirmation' labeled as part of the 'Dropdown Menus' section. It is an interactive element used to trigger actions within dropdowns."
+                "mimicId": 13,
+                "confidence": 0.75,
+                "description": "Menu button"
               },
               {
                 "mimicId": 12,
-                "confidence": 0.75,
-                "description": "Button with text 'Confirm Action' under the 'Overlays' section. It is an interactive element that matches the intent of confirming actions in overlays."
-              },
-              {
-                "mimicId": 4,
                 "confidence": 0.65,
-                "description": "Button with text 'Confirm' labeled as part of the 'Modals and Dialogs' section. It is an interactive element used to confirm modal actions."
+                "description": "Options button with text 'Menu'"
               },
               {
-                "mimicId": 11,
+                "mimicId": 3,
                 "confidence": 0.55,
-                "description": "Button with text 'Open Confirmation Dialog' under a tab ('Tab 1'). It is an interactive element that matches the intent of opening a modal or dialog within a specific tab."
+                "description": "Menu button"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.45,
+                "description": "Actions button with text 'Menu'"
               }
             ],
-            "clickType": "middle",
-            "reasoning": "The most likely elements to be clicked based on the Gherkin step 'click on 'Open Simple Modal'' are those labeled as interactive and with text related to opening modals or dialogs. The elements identified have a high probability of being buttons used for these purposes."
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies 'click on \"Open Simple Modal\"', which implies a primary (left) click. Among the available markers, those labeled as 'Menu' or 'Options' are more likely to be interactive elements that could open a modal when clicked."
           },
-          "executedAt": "2026-01-10T17:36:54.232Z",
+          "executedAt": "2026-01-11T04:40:47.679Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Open Confirmation Dialog",
+              "name": "Options",
               "exact": true,
               "nth": 2
             },
@@ -111,12 +113,12 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:32:36.845Z",
-        "lastPassedAt": "2026-01-10T22:25:46.668Z",
-        "lastFailedAt": "2026-01-10T22:25:46.452Z",
+        "lastPassedAt": "2026-01-11T05:04:37.373Z",
+        "lastFailedAt": "2026-01-11T05:04:37.370Z",
         "failureDetails": {
           "failedStepIndex": 0,
           "failedStepText": "click on \"Open Simple Modal\"",
-          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"6\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"6\" data-mimic-type=\"interactive\" onclick=\"toggleDropdown('dropdown1')\">Open Simple Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    402 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
+          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">OK</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    127 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n"
         }
       }
     },
@@ -133,12 +135,12 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T19:44:17.799Z",
-        "lastPassedAt": "2026-01-10T22:19:50.460Z",
-        "lastFailedAt": "2026-01-10T22:19:50.447Z",
+        "lastPassedAt": "2026-01-11T04:54:30.789Z",
+        "lastFailedAt": "2026-01-11T04:54:30.639Z",
         "failureDetails": {
           "failedStepIndex": 0,
           "failedStepText": "click on \"Open Simple Modal\"",
-          "error": "locator.hover: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"11\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"11\" data-mimic-type=\"interactive\">OK</button>\u001b[22m\n\u001b[2m  - attempting hover action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m      - element is visible and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying hover action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m      - element is visible and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying hover action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    437 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m        - element is visible and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying hover action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
+          "error": "page.goto: url: expected string, got object"
         }
       }
     },
@@ -155,20 +157,218 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:43:37.090Z",
-        "lastPassedAt": "2026-01-10T22:22:29.196Z",
-        "lastFailedAt": "2026-01-10T22:22:26.914Z",
+        "lastPassedAt": "2026-01-11T05:56:09.221Z",
+        "lastFailedAt": "2026-01-11T05:56:07.406Z",
         "failureDetails": {
           "failedStepIndex": 0,
           "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Show Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    360 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n"
+          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Options</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    64 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n"
         }
       }
     },
     {
       "testHash": "57d9457b43eef2e0",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Open Confirmation Dialog\"\nclick on \"Confirm\"",
+      "stepsByHash": {
+        "99b1f0fed9f07611": {
+          "stepHash": "99b1f0fed9f07611",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Confirmation Dialog\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "OK button in the Information Overlay with text 'OK'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.85,
+                "description": "OK button with text 'OK'"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.8,
+                "description": "OK button in the Dropdown Menus with text 'OK'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.75,
+                "description": "OK button in the Information Overlay with text 'OK'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.65,
+                "description": "OK button with text 'OK'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies 'click on Open Confirmation Dialog.' Among the elements that could be related to a confirmation dialog, the OK buttons in the Information Overlay are the most likely candidates given their text content. The default click type for this step is 'primary' (left click)."
+          },
+          "executedAt": "2026-01-11T03:21:05.773Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "OK",
+              "exact": true,
+              "nth": 2
+            },
+            "mimicId": 14
+          }
+        },
+        "abdfdd09326f45f4": {
+          "stepHash": "abdfdd09326f45f4",
+          "stepIndex": 1,
+          "stepText": "click on \"Confirm\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "OK button labeled 'Confirm'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.85,
+                "description": "OK button with no specific label"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.75,
+                "description": "OK button labeled 'OK'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.65,
+                "description": "OK button with different text color or styling that might be used for confirmation"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.6,
+                "description": "Dismiss button labeled 'Cancel'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step says 'click on 'Confirm'' which implies a primary click. Among the available elements, the most likely candidates are the buttons with the text 'OK' or 'Confirm'. The OK button marked with mimicId 14 has a high confidence level as it directly matches the 'Confirm' text. Other buttons labeled 'OK' have moderate confidence levels. The Dismiss button is less likely as it is typically used for canceling, not confirming."
+          },
+          "executedAt": "2026-01-11T03:21:05.773Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "OK",
+              "exact": true,
+              "nth": 2
+            },
+            "mimicId": 14
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "99b1f0fed9f07611",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Confirmation Dialog\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "OK button in the Information Overlay with text 'OK'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.85,
+                "description": "OK button with text 'OK'"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.8,
+                "description": "OK button in the Dropdown Menus with text 'OK'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.75,
+                "description": "OK button in the Information Overlay with text 'OK'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.65,
+                "description": "OK button with text 'OK'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies 'click on Open Confirmation Dialog.' Among the elements that could be related to a confirmation dialog, the OK buttons in the Information Overlay are the most likely candidates given their text content. The default click type for this step is 'primary' (left click)."
+          },
+          "executedAt": "2026-01-11T03:21:05.773Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "OK",
+              "exact": true,
+              "nth": 2
+            },
+            "mimicId": 14
+          }
+        },
+        {
+          "stepHash": "abdfdd09326f45f4",
+          "stepIndex": 1,
+          "stepText": "click on \"Confirm\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "OK button labeled 'Confirm'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.85,
+                "description": "OK button with no specific label"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.75,
+                "description": "OK button labeled 'OK'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.65,
+                "description": "OK button with different text color or styling that might be used for confirmation"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.6,
+                "description": "Dismiss button labeled 'Cancel'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step says 'click on 'Confirm'' which implies a primary click. Among the available elements, the most likely candidates are the buttons with the text 'OK' or 'Confirm'. The OK button marked with mimicId 14 has a high confidence level as it directly matches the 'Confirm' text. Other buttons labeled 'OK' have moderate confidence levels. The Dismiss button is less likely as it is typically used for canceling, not confirming."
+          },
+          "executedAt": "2026-01-11T03:21:05.773Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "OK",
+              "exact": true,
+              "nth": 2
+            },
+            "mimicId": 14
+          }
+        }
+      ],
       "flags": {
         "needsRetry": true,
         "hasErrors": true,
@@ -177,12 +377,12 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:50:16.105Z",
-        "lastPassedAt": "2026-01-10T22:22:03.574Z",
-        "lastFailedAt": "2026-01-10T22:22:03.479Z",
+        "lastPassedAt": "2026-01-11T05:53:22.758Z",
+        "lastFailedAt": "2026-01-11T05:53:20.190Z",
         "failureDetails": {
           "failedStepIndex": 0,
           "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "AI model call failed after 107059ms (tried both text-only and with image): No object generated: response did not match schema."
+          "error": "Unknown base action type: assertion"
         }
       }
     },
@@ -199,12 +399,12 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T18:17:52.847Z",
-        "lastPassedAt": "2026-01-10T22:23:50.382Z",
-        "lastFailedAt": "2026-01-10T22:23:50.350Z",
+        "lastPassedAt": "2026-01-11T07:33:36.868Z",
+        "lastFailedAt": "2026-01-11T07:33:36.790Z",
         "failureDetails": {
           "failedStepIndex": 0,
           "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "AI model call failed after 75896ms (tried both text-only and with image): No object generated: response did not match schema."
+          "error": "AI model call failed after 52925ms (tried both text-only and with image): No object generated: response did not match schema."
         }
       }
     },
@@ -221,30 +421,8 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T19:03:58.488Z",
-        "lastPassedAt": "2026-01-10T22:30:21.966Z",
-        "lastFailedAt": "2026-01-10T22:30:21.839Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Alert Dialog\"",
-          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Open Confirmation Dialog</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    439 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "2bdb8507f2eb2f41",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-10T19:22:33.312Z",
-        "lastPassedAt": "2026-01-10T22:26:06.568Z",
-        "lastFailedAt": "2026-01-10T22:26:06.566Z",
+        "lastPassedAt": "2026-01-11T09:33:50.604Z",
+        "lastFailedAt": "2026-01-11T09:33:49.569Z",
         "failureDetails": {
           "failedStepIndex": 0,
           "failedStepText": "click on \"Open Alert Dialog\"",
@@ -253,10 +431,323 @@
       }
     },
     {
+      "testHash": "2bdb8507f2eb2f41",
+      "testText": "click on \"Open Alert Dialog\"\nclick on \"OK\"",
+      "stepsByHash": {
+        "623e7737cc2d49e9": {
+          "stepHash": "623e7737cc2d49e9",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Alert Dialog\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "Options button with text 'Actions'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.85,
+                "description": "Actions Menu button"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.75,
+                "description": "Nested Actions Menu button"
+              },
+              {
+                "mimicId": 11,
+                "confidence": 0.7,
+                "description": "Tabbed Actions Menu button"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.65,
+                "description": "Overlays Actions button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"Open Alert Dialog\"' implies a primary click action. Based on the available markers and their semantic relevance to potential alert dialog triggers, the Options button (mimicId 14), followed by other actions buttons (3, 6, 11, and 12) are the most likely candidates as they are interactive elements that could potentially open an alert dialog."
+          },
+          "executedAt": "2026-01-11T09:16:36.878Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Actions",
+              "exact": true,
+              "nth": 4
+            },
+            "mimicId": 14
+          }
+        },
+        "9dd7a4d793298afc": {
+          "stepHash": "9dd7a4d793298afc",
+          "stepIndex": 1,
+          "stepText": "click on \"OK\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.8,
+                "description": "Options button within the Actions menu with text 'Actions'"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.75,
+                "description": "Options button with text 'Options'"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.7,
+                "description": "Actions button with text 'Actions'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.65,
+                "description": "Actions Menu button"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.6,
+                "description": "Nested Actions Menu button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"OK\"' implies a standard click action, so the primary click type is used."
+          },
+          "executedAt": "2026-01-11T09:16:36.878Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Actions",
+              "exact": true,
+              "nth": 4
+            },
+            "mimicId": 14
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "623e7737cc2d49e9",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Alert Dialog\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "Options button with text 'Actions'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.85,
+                "description": "Actions Menu button"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.75,
+                "description": "Nested Actions Menu button"
+              },
+              {
+                "mimicId": 11,
+                "confidence": 0.7,
+                "description": "Tabbed Actions Menu button"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.65,
+                "description": "Overlays Actions button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"Open Alert Dialog\"' implies a primary click action. Based on the available markers and their semantic relevance to potential alert dialog triggers, the Options button (mimicId 14), followed by other actions buttons (3, 6, 11, and 12) are the most likely candidates as they are interactive elements that could potentially open an alert dialog."
+          },
+          "executedAt": "2026-01-11T09:16:36.878Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Actions",
+              "exact": true,
+              "nth": 4
+            },
+            "mimicId": 14
+          }
+        },
+        {
+          "stepHash": "9dd7a4d793298afc",
+          "stepIndex": 1,
+          "stepText": "click on \"OK\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.8,
+                "description": "Options button within the Actions menu with text 'Actions'"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.75,
+                "description": "Options button with text 'Options'"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.7,
+                "description": "Actions button with text 'Actions'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.65,
+                "description": "Actions Menu button"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.6,
+                "description": "Nested Actions Menu button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"OK\"' implies a standard click action, so the primary click type is used."
+          },
+          "executedAt": "2026-01-11T09:16:36.878Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Actions",
+              "exact": true,
+              "nth": 4
+            },
+            "mimicId": 14
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T19:22:33.312Z",
+        "lastPassedAt": "2026-01-11T09:16:37.453Z",
+        "lastFailedAt": null
+      }
+    },
+    {
       "testHash": "f0407f3f37eb2045",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Actions Menu\"",
+      "stepsByHash": {
+        "f0407f3f37eb2045": {
+          "stepHash": "f0407f3f37eb2045",
+          "stepIndex": 0,
+          "stepText": "click on \"Actions Menu\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 1,
+                "description": "Dismiss button for information overlay"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.8,
+                "description": "OK button within the dropdown menu"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.6,
+                "description": "OK button in modal dialog"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.5,
+                "description": "OK button in overlay"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.4,
+                "description": "Close button in modal dialog"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The step 'click on 'Actions Menu'' refers to a menu-like interaction typically found in dropdowns or modals. Among the candidates, the dismiss button for the information overlay (mimicId 14) is most likely due to its prominent position and role as an interactive element within an informational overlay. The OK button within the dropdown menu (mimicId 7), while also a potential candidate, is less likely than the dismiss button given its more generic nature. Other options such as modal OK/Close buttons are less probable without additional context. "
+          },
+          "executedAt": "2026-01-11T06:19:48.370Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Dismiss",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "f0407f3f37eb2045",
+          "stepIndex": 0,
+          "stepText": "click on \"Actions Menu\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 1,
+                "description": "Dismiss button for information overlay"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.8,
+                "description": "OK button within the dropdown menu"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.6,
+                "description": "OK button in modal dialog"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.5,
+                "description": "OK button in overlay"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.4,
+                "description": "Close button in modal dialog"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The step 'click on 'Actions Menu'' refers to a menu-like interaction typically found in dropdowns or modals. Among the candidates, the dismiss button for the information overlay (mimicId 14) is most likely due to its prominent position and role as an interactive element within an informational overlay. The OK button within the dropdown menu (mimicId 7), while also a potential candidate, is less likely than the dismiss button given its more generic nature. Other options such as modal OK/Close buttons are less probable without additional context. "
+          },
+          "executedAt": "2026-01-11T06:19:48.370Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Dismiss",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        }
+      ],
       "flags": {
         "needsRetry": true,
         "hasErrors": true,
@@ -265,8 +756,13 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T22:26:00.334Z",
-        "lastPassedAt": "2026-01-10T22:26:00.355Z",
-        "lastFailedAt": "2026-01-10T22:26:00.334Z"
+        "lastPassedAt": "2026-01-11T09:03:44.492Z",
+        "lastFailedAt": "2026-01-11T09:03:44.491Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Actions Menu\"",
+          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"38\"]')\u001b[22m\n\u001b[2m    - locator resolved to <nav data-mimic-id=\"38\" data-mimic-type=\"structure\">…</nav>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    452 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
+        }
       }
     },
     {
@@ -282,8 +778,13 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T22:29:28.355Z",
-        "lastPassedAt": "2026-01-10T22:29:28.373Z",
-        "lastFailedAt": "2026-01-10T22:29:28.355Z"
+        "lastPassedAt": "2026-01-11T09:39:51.055Z",
+        "lastFailedAt": "2026-01-11T09:39:51.017Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Actions Menu\"",
+          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"4\" class=\"btn secondary\" onclick=\"openModal('modal2')\" data-mimic-type=\"interactive\">Actions Menu</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    271 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
+        }
       }
     },
     {
@@ -299,8 +800,35 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T22:31:59.520Z",
-        "lastPassedAt": "2026-01-10T22:31:59.539Z",
-        "lastFailedAt": "2026-01-10T22:31:59.520Z"
+        "lastPassedAt": "2026-01-11T09:28:52.567Z",
+        "lastFailedAt": "2026-01-11T09:28:52.565Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Actions Menu\"",
+          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"6\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"6\" data-mimic-type=\"interactive\" onclick=\"toggleDropdown('dropdown1')\">Cancel</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    426 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "d8f9a1a1d6389bb2",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-11T07:36:16.061Z",
+        "lastPassedAt": "2026-01-11T09:41:08.861Z",
+        "lastFailedAt": "2026-01-11T09:41:08.857Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Actions Menu\"",
+          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"5\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"5\" class=\"btn danger\" onclick=\"openModal('modal3')\" data-mimic-type=\"interactive\">Open Simple Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  87 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
+        }
       }
     }
   ]

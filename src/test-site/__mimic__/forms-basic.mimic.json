@@ -12,11 +12,11 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-09T22:27:26.445Z",
-        "lastPassedAt": "2026-01-10T22:06:19.532Z",
-        "lastFailedAt": "2026-01-10T22:06:19.531Z",
+        "lastPassedAt": "2026-01-11T01:39:27.531Z",
+        "lastFailedAt": "2026-01-11T01:39:27.528Z",
         "failureDetails": {
-          "failedStepIndex": 2,
-          "failedStepText": "type \"5559876543\" into the phone field",
+          "failedStepIndex": 5,
+          "failedStepText": "check the \"Phone\" radio button",
           "error": "Unknown base action type: assertion"
         }
       },
@@ -38,14 +38,14 @@
               "value": "John Doe",
               "modifiers": []
             },
-            "elementDescription": "Name input field"
+            "elementDescription": "Name input field labeled 'Your Name'"
           },
-          "executedAt": "2026-01-10T22:10:42.001Z",
+          "executedAt": "2026-01-11T01:26:15.483Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "Complete Name",
+              "name": "Your Name",
               "exact": true
             },
             "mimicId": 5
@@ -65,14 +65,14 @@
               "value": "John Doe",
               "modifiers": []
             },
-            "elementDescription": "Name input field"
+            "elementDescription": "Name input field labeled 'Your Name'"
           },
-          "executedAt": "2026-01-10T22:10:42.001Z",
+          "executedAt": "2026-01-11T01:26:15.483Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "Complete Name",
+              "name": "Your Name",
               "exact": true
             },
             "mimicId": 5
@@ -87,7 +87,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-09T22:29:14.510Z",
-        "lastPassedAt": "2026-01-10T22:10:42.005Z",
+        "lastPassedAt": "2026-01-11T01:26:15.484Z",
         "lastFailedAt": null
       }
     },
@@ -968,12 +968,12 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:36:26.400Z",
-        "lastPassedAt": "2026-01-10T22:06:56.178Z",
-        "lastFailedAt": "2026-01-10T22:06:56.175Z",
+        "lastPassedAt": "2026-01-11T01:42:50.763Z",
+        "lastFailedAt": "2026-01-11T01:42:50.758Z",
         "failureDetails": {
           "failedStepIndex": 2,
           "failedStepText": "select \"Australia\" from the country dropdown",
-          "error": "AI model call failed after 34471ms (tried both text-only and with image): No object generated: response did not match schema."
+          "error": "Unknown base action type: assertion"
         }
       }
     },
@@ -990,39 +990,40 @@
             "candidates": [
               {
                 "mimicId": 17,
-                "confidence": 0.95,
-                "description": "Submit Form button with text 'Send Form'"
+                "confidence": 0.8,
+                "description": "Submit button with text 'Send'"
               },
               {
                 "mimicId": 18,
-                "confidence": 0.9,
-                "description": "Reset Form button with text 'Reset Form'"
+                "confidence": 0.7,
+                "description": "Reset Form button"
               },
               {
                 "mimicId": 5,
-                "confidence": 0.75,
-                "description": "Your Name input field"
+                "confidence": 0.6,
+                "description": "Text input field for Complete Name"
               },
               {
                 "mimicId": 6,
-                "confidence": 0.75,
-                "description": "Email Address input field"
+                "confidence": 0.6,
+                "description": "Text input field for E-mail"
               },
               {
-                "mimicId": 9,
-                "confidence": 0.7,
-                "description": "Message textarea"
+                "mimicId": 7,
+                "confidence": 0.6,
+                "description": "Text input field for Phone Number"
               }
             ],
-            "clickType": "hover",
-            "reasoning": "The Gherkin step implies clicking on 'Submit Form' without filling required fields. The Submit Form button is the most likely candidate given its text and purpose as described in the accessibility snapshot."
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifically mentions 'Submit Form', which strongly indicates the intended click is on a submit button."
           },
-          "executedAt": "2026-01-10T22:12:25.739Z",
+          "executedAt": "2026-01-11T01:32:43.908Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Send Form",
+              "name": "Send",
               "exact": true
             },
             "mimicId": 17
@@ -1039,39 +1040,40 @@
             "candidates": [
               {
                 "mimicId": 17,
-                "confidence": 0.95,
-                "description": "Submit Form button with text 'Send Form'"
+                "confidence": 0.8,
+                "description": "Submit button with text 'Send'"
               },
               {
                 "mimicId": 18,
-                "confidence": 0.9,
-                "description": "Reset Form button with text 'Reset Form'"
+                "confidence": 0.7,
+                "description": "Reset Form button"
               },
               {
                 "mimicId": 5,
-                "confidence": 0.75,
-                "description": "Your Name input field"
+                "confidence": 0.6,
+                "description": "Text input field for Complete Name"
               },
               {
                 "mimicId": 6,
-                "confidence": 0.75,
-                "description": "Email Address input field"
+                "confidence": 0.6,
+                "description": "Text input field for E-mail"
               },
               {
-                "mimicId": 9,
-                "confidence": 0.7,
-                "description": "Message textarea"
+                "mimicId": 7,
+                "confidence": 0.6,
+                "description": "Text input field for Phone Number"
               }
             ],
-            "clickType": "hover",
-            "reasoning": "The Gherkin step implies clicking on 'Submit Form' without filling required fields. The Submit Form button is the most likely candidate given its text and purpose as described in the accessibility snapshot."
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifically mentions 'Submit Form', which strongly indicates the intended click is on a submit button."
           },
-          "executedAt": "2026-01-10T22:12:25.739Z",
+          "executedAt": "2026-01-11T01:32:43.908Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Send Form",
+              "name": "Send",
               "exact": true
             },
             "mimicId": 17
@@ -1086,7 +1088,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:37:11.464Z",
-        "lastPassedAt": "2026-01-10T22:12:25.743Z",
+        "lastPassedAt": "2026-01-11T01:32:43.909Z",
         "lastFailedAt": null
       }
     },
@@ -1103,8 +1105,8 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:37:38.064Z",
-        "lastPassedAt": "2026-01-10T22:07:17.820Z",
-        "lastFailedAt": "2026-01-10T22:07:17.806Z",
+        "lastPassedAt": "2026-01-11T01:51:18.583Z",
+        "lastFailedAt": "2026-01-11T01:51:18.578Z",
         "failureDetails": {
           "failedStepIndex": 1,
           "failedStepText": "type \"complete@test.com\" into the email field",

@@ -935,28 +935,29 @@
               {
                 "mimicId": 27,
                 "confidence": 0.85,
-                "description": "Submit Action button"
+                "description": "Submit button"
               },
               {
-                "mimicId": 4,
-                "confidence": 0.75,
-                "description": "Click Me button"
-              },
-              {
-                "mimicId": 19,
-                "confidence": 0.65,
-                "description": "Link styled as a Button"
+                "mimicId": 24,
+                "confidence": 0.8,
+                "description": "Secondary Button"
               },
               {
                 "mimicId": 23,
-                "confidence": 0.55,
+                "confidence": 0.75,
                 "description": "Primary Button"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.7,
+                "description": "Link styled as button with text 'Link as Button'"
               }
             ],
-            "clickType": "left",
-            "reasoning": "The Gherkin step specifies clicking on the button with an aria-label of 'Search'. The accessibility snapshot clearly identifies a button with this exact aria-label at marker ID 13. While other buttons have similar or identical text, no other element matches the specific aria-label given in the step."
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly mentions 'click on the button with aria-label \"Search\"'. The element identified in the screenshot (mimicId 13) is a button with the specified aria-label, making it the most likely target. Secondary and primary buttons are also plausible candidates due to their prominence but have slightly lower confidence."
           },
-          "executedAt": "2026-01-10T16:15:19.136Z",
+          "executedAt": "2026-01-11T00:41:39.284Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -984,28 +985,29 @@
               {
                 "mimicId": 27,
                 "confidence": 0.85,
-                "description": "Submit Action button"
+                "description": "Submit button"
               },
               {
-                "mimicId": 4,
-                "confidence": 0.75,
-                "description": "Click Me button"
-              },
-              {
-                "mimicId": 19,
-                "confidence": 0.65,
-                "description": "Link styled as a Button"
+                "mimicId": 24,
+                "confidence": 0.8,
+                "description": "Secondary Button"
               },
               {
                 "mimicId": 23,
-                "confidence": 0.55,
+                "confidence": 0.75,
                 "description": "Primary Button"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.7,
+                "description": "Link styled as button with text 'Link as Button'"
               }
             ],
-            "clickType": "left",
-            "reasoning": "The Gherkin step specifies clicking on the button with an aria-label of 'Search'. The accessibility snapshot clearly identifies a button with this exact aria-label at marker ID 13. While other buttons have similar or identical text, no other element matches the specific aria-label given in the step."
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly mentions 'click on the button with aria-label \"Search\"'. The element identified in the screenshot (mimicId 13) is a button with the specified aria-label, making it the most likely target. Secondary and primary buttons are also plausible candidates due to their prominence but have slightly lower confidence."
           },
-          "executedAt": "2026-01-10T16:15:19.136Z",
+          "executedAt": "2026-01-11T00:41:39.284Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1018,20 +1020,15 @@
         }
       ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:13:09.486Z",
-        "lastPassedAt": "2026-01-11T00:24:13.308Z",
-        "lastFailedAt": "2026-01-11T00:24:13.306Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on the button with aria-label \"Search\"",
-          "error": "AI model call failed after 37371ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
+        "lastPassedAt": "2026-01-11T00:41:39.333Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -1713,33 +1710,34 @@
               {
                 "mimicId": 25,
                 "confidence": 1,
-                "description": "Success Button"
+                "description": "Success Button with text 'Success'"
               },
               {
-                "mimicId": 4,
+                "mimicId": 26,
                 "confidence": 0.8,
-                "description": "Click Me button"
-              },
-              {
-                "mimicId": 3,
-                "confidence": 0.7,
-                "description": "Forms link"
-              },
-              {
-                "mimicId": 19,
-                "confidence": 0.6,
-                "description": "Link as Button"
+                "description": "Danger Button with text 'Danger'"
               },
               {
                 "mimicId": 23,
+                "confidence": 0.7,
+                "description": "Primary Button with text 'Primary'"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.6,
+                "description": "Secondary Button with text 'Secondary'"
+              },
+              {
+                "mimicId": 19,
                 "confidence": 0.5,
-                "description": "Primary Button"
+                "description": "Link styled as button with text 'Link as Button'"
               }
             ],
-            "clickType": "left",
-            "reasoning": "The Gherkin step specifically mentions 'Success Button', which corresponds to marker ID 25. The other elements listed are in close semantic and positional proximity to the target button and could be reasonably inferred as potential matches given their similar roles, text labels, or positions."
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly mentions 'Success Button', which matches directly to marker ID 25 in the screenshot and accessibility snapshot. This is a semantic match that ranks highest. The other options are less likely because they do not specifically mention 'Success' or are buttons with different styles/texts."
           },
-          "executedAt": "2026-01-10T16:21:52.742Z",
+          "executedAt": "2026-01-11T01:21:10.475Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1762,33 +1760,34 @@
               {
                 "mimicId": 25,
                 "confidence": 1,
-                "description": "Success Button"
+                "description": "Success Button with text 'Success'"
               },
               {
-                "mimicId": 4,
+                "mimicId": 26,
                 "confidence": 0.8,
-                "description": "Click Me button"
-              },
-              {
-                "mimicId": 3,
-                "confidence": 0.7,
-                "description": "Forms link"
-              },
-              {
-                "mimicId": 19,
-                "confidence": 0.6,
-                "description": "Link as Button"
+                "description": "Danger Button with text 'Danger'"
               },
               {
                 "mimicId": 23,
+                "confidence": 0.7,
+                "description": "Primary Button with text 'Primary'"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.6,
+                "description": "Secondary Button with text 'Secondary'"
+              },
+              {
+                "mimicId": 19,
                 "confidence": 0.5,
-                "description": "Primary Button"
+                "description": "Link styled as button with text 'Link as Button'"
               }
             ],
-            "clickType": "left",
-            "reasoning": "The Gherkin step specifically mentions 'Success Button', which corresponds to marker ID 25. The other elements listed are in close semantic and positional proximity to the target button and could be reasonably inferred as potential matches given their similar roles, text labels, or positions."
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly mentions 'Success Button', which matches directly to marker ID 25 in the screenshot and accessibility snapshot. This is a semantic match that ranks highest. The other options are less likely because they do not specifically mention 'Success' or are buttons with different styles/texts."
           },
-          "executedAt": "2026-01-10T16:21:52.742Z",
+          "executedAt": "2026-01-11T01:21:10.475Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1801,20 +1800,15 @@
         }
       ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:21:52.742Z",
-        "lastPassedAt": "2026-01-10T23:31:51.046Z",
-        "lastFailedAt": "2026-01-10T23:31:50.858Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Success Button\"",
-          "error": "Unknown base action type: assertion"
-        }
+        "lastPassedAt": "2026-01-11T01:21:10.477Z",
+        "lastFailedAt": null
       }
     },
     {
