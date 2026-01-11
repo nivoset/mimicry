@@ -5,7 +5,7 @@ import { test, expect } from '../test-utils';
  * Tests complex UI patterns including modals, dropdowns, tabs, accordions, and overlays
  */
 
-test.describe('Complex Layout Page', () => {
+test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/pages/layout-complex.html');
   });

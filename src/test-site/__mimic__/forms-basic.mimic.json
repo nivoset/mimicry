@@ -968,12 +968,12 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:36:26.400Z",
-        "lastPassedAt": "2026-01-11T18:37:37.228Z",
-        "lastFailedAt": "2026-01-11T18:37:37.223Z",
+        "lastPassedAt": "2026-01-11T19:57:07.846Z",
+        "lastFailedAt": "2026-01-11T19:57:07.842Z",
         "failureDetails": {
-          "failedStepIndex": 4,
-          "failedStepText": "click on \"Reset Form\"",
-          "error": "AI model call failed after 533ms (tried both text-only and with image): Invalid schema for response_format 'clickActionResult': In context=(), 'required' is required to be supplied and to be an array including every key in properties. Missing 'modifiers'."
+          "failedStepIndex": 3,
+          "failedStepText": "check \"Daily Newsletter\"",
+          "error": "Unknown base action type: assertion"
         }
       }
     },
@@ -1108,12 +1108,12 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:37:38.064Z",
-        "lastPassedAt": "2026-01-11T18:39:01.909Z",
-        "lastFailedAt": "2026-01-11T18:39:01.898Z",
+        "lastPassedAt": "2026-01-11T19:59:38.026Z",
+        "lastFailedAt": "2026-01-11T19:59:38.025Z",
         "failureDetails": {
-          "failedStepIndex": 10,
-          "failedStepText": "click on \"Submit Form\"",
-          "error": "AI model call failed after 505ms (tried both text-only and with image): Invalid schema for response_format 'clickActionResult': In context=(), 'required' is required to be supplied and to be an array including every key in properties. Missing 'modifiers'."
+          "failedStepIndex": 0,
+          "failedStepText": "type \"Complete Test User\" into the name field",
+          "error": "Unknown base action type: assertion"
         }
       }
     },
@@ -1299,11 +1299,11 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-11T18:58:31.777Z",
-        "lastPassedAt": "2026-01-11T19:15:39.472Z",
-        "lastFailedAt": "2026-01-11T19:15:39.467Z",
+        "lastPassedAt": "2026-01-11T19:55:11.942Z",
+        "lastFailedAt": "2026-01-11T19:55:11.940Z",
         "failureDetails": {
-          "failedStepIndex": 2,
-          "failedStepText": "type \"5559876543\" into the phone field",
+          "failedStepIndex": 3,
+          "failedStepText": "select \"United Kingdom\" from the country dropdown",
           "error": "Unknown base action type: assertion"
         }
       }

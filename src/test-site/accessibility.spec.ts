@@ -5,7 +5,7 @@ import { test, expect } from '../test-utils';
  * Tests accessibility-first selection strategies using aria-labels, roles, semantic HTML, and proper label associations
  */
 
-test.describe('Accessibility Page', () => {
+test.describe('Accessibility Page', { tag: ['@accessibility'] }, () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/pages/accessibility.html');
   });

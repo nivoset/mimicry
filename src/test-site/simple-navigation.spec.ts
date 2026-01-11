@@ -5,7 +5,7 @@ import { test, expect } from '../test-utils';
  * Tests basic navigation scenarios including links, URL parameters, and browser history
  */
 
-test.describe('Simple Navigation Page', () => {
+test.describe('Simple Navigation Page', { tag: ['@navigation'] }, () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/pages/simple-navigation.html');
   });

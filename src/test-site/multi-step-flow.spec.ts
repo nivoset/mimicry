@@ -5,7 +5,7 @@ import { test, expect } from '../test-utils';
  * Tests wizard-style multi-page flows with progress indicators and state persistence
  */
 
-test.describe('Multi-Step Flow Page', () => {
+test.describe('Multi-Step Flow Page', { tag: ['@form-multi-page', '@wizard'] }, () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/pages/multi-step-flow.html');
   });

@@ -6,7 +6,7 @@ import { test, expect } from '../test-utils';
  */
 
 // We will work on dynamic later
-test.skip('Dynamic Content Page', () => {
+test.describe.skip('Dynamic Content Page', { tag: ['@dynamic-content'] }, () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/pages/dynamic-content.html');
   });

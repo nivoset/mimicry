@@ -5,7 +5,7 @@ import { test, expect } from '../test-utils';
  * Tests button selection with various text labels, aria-labels, icons, and semantic HTML
  */
 
-test.describe('Button Variety Page', () => {
+test.describe('Button Variety Page', { tag: ['@buttons'] }, () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/pages/buttons-variety.html');
   });

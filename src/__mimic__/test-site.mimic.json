@@ -1,0 +1,26 @@
+{
+  "tests": [
+    {
+      "testHash": "cee7d90b65216e30",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-11T19:31:38.099Z",
+        "lastPassedAt": "2026-01-11T20:03:18.743Z",
+        "lastFailedAt": "2026-01-11T20:03:18.741Z",
+        "failureDetails": {
+          "failedStepIndex": 1,
+          "failedStepText": "type \"John Doe\" into the name field",
+          "error": "AI model call failed after 35387ms (tried both text-only and with image): No object generated: response did not match schema."
+        }
+      }
+    }
+  ]
+}

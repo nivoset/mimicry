@@ -5,7 +5,7 @@ import { test, expect } from '../test-utils';
  * Tests multi-step forms, conditional fields, validation, and file uploads
  */
 
-test.describe('Complex Forms Page', () => {
+test.describe('Complex Forms Page', { tag: ['@form-multi-page'] }, () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/pages/forms-complex.html');
   });

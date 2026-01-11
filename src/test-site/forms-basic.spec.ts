@@ -5,7 +5,7 @@ import { test, expect } from '../test-utils';
  * Tests basic form interactions including text inputs, selects, checkboxes, and radio buttons
  */
 
-test.describe('Basic Forms Page', () => {
+test.describe('Basic Forms Page', { tag: ['@form-simple'] }, () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/pages/forms-basic.html');
   });

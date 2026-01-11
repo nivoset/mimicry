@@ -5,7 +5,7 @@ import { test, expect } from './test-utils';
  * These tests demonstrate using Mimic with the local test-site served by http-server
  */
 
-test.describe('Test Site - Simple Navigation', () => {
+test.describe('Test Site - Simple Navigation', { tag: ['@navigation'] }, () => {
   test('should navigate to simple navigation page and click links', async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/simple-navigation.html
@@ -26,7 +26,7 @@ test.describe('Test Site - Simple Navigation', () => {
   });
 });
 
-test.describe('Test Site - Basic Forms', () => {
+test.describe('Test Site - Basic Forms', { tag: ['@form-simple'] }, () => {
   test('should fill out and submit basic form', async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/forms-basic.html
@@ -45,7 +45,7 @@ test.describe('Test Site - Basic Forms', () => {
   });
 });
 
-test.describe('Test Site - Button Variety', () => {
+test.describe('Test Site - Button Variety', { tag: ['@buttons'] }, () => {
   test('should click button with text label', async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/buttons-variety.html
@@ -67,7 +67,7 @@ test.describe('Test Site - Button Variety', () => {
   });
 });
 
-test.describe('Test Site - Dynamic Content', () => {
+test.describe('Test Site - Dynamic Content', { tag: ['@dynamic-content'] }, () => {
   test('should wait for dynamically loaded content', async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/dynamic-content.html
@@ -92,7 +92,7 @@ test.describe('Test Site - Dynamic Content', () => {
   });
 });
 
-test.describe('Test Site - Complex Layout', () => {
+test.describe('Test Site - Complex Layout', { tag: ['@layout'] }, () => {
   test('should open and close modal', async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/layout-complex.html
@@ -122,7 +122,7 @@ test.describe('Test Site - Complex Layout', () => {
   });
 });
 
-test.describe('Test Site - Multi-Step Flow', () => {
+test.describe('Test Site - Multi-Step Flow', { tag: ['@form-multi-page', '@wizard'] }, () => {
   test('should complete multi-step wizard', async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/multi-step-flow.html

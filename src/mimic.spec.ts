@@ -1,7 +1,7 @@
 import { test, expect } from './test-utils';
 
 
-test.describe('Minimal Flow Example', () => {
+test.describe('Minimal Flow Example', { tag: ['@example', '@navigation'] }, () => {
   test('should execute flow and validate with Zod', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to https://playwright.dev/
