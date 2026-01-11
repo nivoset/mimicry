@@ -9,7 +9,7 @@ import { createMimic, type Mimic } from '../src/mimic';
 import { openai } from '@ai-sdk/openai';
 import { LanguageModel } from 'ai';
 
-const _ollamaBrain = ollama('gpt-oss') as LanguageModel
+const _ollamaBrain = ollama('qwen2.5-coder') as LanguageModel
 
 export const brains = openai('gpt-4o-mini');
 
@@ -21,7 +21,7 @@ export const test = base.extend<{
   mimic: async ({ page }, use, testInfo) => {
     const mimic = createMimic({
       page,
-      brains,
+      brains: _ollamaBrain,
       testInfo,
     })
     await use(mimic)

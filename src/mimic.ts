@@ -8,7 +8,7 @@ import { generateText, Output } from 'ai';
 import { z } from 'zod';
 import { getBaseAction } from './mimic/actionType.js';
 import { getNavigationAction,  executeNavigationAction } from './mimic/navigation.js';
-import { captureMarkers, captureScreenshot, getMimic } from './mimic/markers.js';
+import { captureScreenshot, getMimic } from './mimic/markers.js';
 import type { MarkerTargetElement, SnapshotStep, Snapshot } from './mimic/types.js';
 import { executeClickAction, getClickAction } from './mimic/click.js';
 import { getFormAction, executeFormAction, type FormActionResult } from './mimic/forms.js';
@@ -20,7 +20,6 @@ import { hashTestText, hashStepText, getSnapshot, saveSnapshot, recordFailure, s
 import { replayFromSnapshot } from './mimic/replay.js';
 import { isTroubleshootMode } from './mimic/cli.js';
 import { addAnnotation } from './mimic/annotations.js';
-import { addMarkerCode } from './mimic/markers.js';
 import type { StepExecutionResult } from './mimic/types.js';
 
 
@@ -467,7 +466,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
               }
               
               // TODO: better way to work out if the top priority candidate is a clickable element
-              const selectedCandidate = clickActionResult.candidates.find(Boolean);
+              const selectedCandidate = clickActionResult.candidates.sort((a, b) => b.confidence! - a.confidence!).find(Boolean);
               if (!selectedCandidate) {
                 throw new Error(`No candidate element found for click action: ${step}`);
               }

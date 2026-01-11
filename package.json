@@ -1,6 +1,6 @@
 {
   "name": "playwright-mimic",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Playwright Mimic allows AI to connect LLM to help in maintaining test code based off of logical steps in the test file in English",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,6 +20,7 @@
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
+    "test:selector": "playwright test --grep @selector-generation",
     "serve": "http-server test-site -p 3000 -c-1"
   },
   "keywords": [],

@@ -12,14 +12,15 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-09T22:27:26.445Z",
-        "lastPassedAt": "2026-01-09T22:27:29.014Z",
-        "lastFailedAt": "2026-01-09T22:27:29.012Z",
+        "lastPassedAt": "2026-01-10T22:06:19.532Z",
+        "lastFailedAt": "2026-01-10T22:06:19.531Z",
         "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "type \"Jane Smith\" into the name field",
-          "error": "page.evaluate: Target page, context or browser has been closed"
+          "failedStepIndex": 2,
+          "failedStepText": "type \"5559876543\" into the phone field",
+          "error": "Unknown base action type: assertion"
         }
-      }
+      },
+      "stepsByHash": {}
     },
     {
       "testHash": "a138101aa5c9f1d2",
@@ -35,17 +36,17 @@
             "type": "fill",
             "params": {
               "value": "John Doe",
-              "modifiers": [
-                "none"
-              ]
+              "modifiers": []
             },
-            "elementDescription": "\"Your Name\" input field at the top of the Contact Form"
+            "elementDescription": "Name input field"
           },
-          "executedAt": "2026-01-09T22:31:41.123Z",
+          "executedAt": "2026-01-10T22:10:42.001Z",
           "targetElement": {
             "selector": {
-              "type": "css",
-              "selector": "input:nth-of-type(1)"
+              "type": "role",
+              "role": "textbox",
+              "name": "Complete Name",
+              "exact": true
             },
             "mimicId": 5
           }
@@ -62,17 +63,17 @@
             "type": "fill",
             "params": {
               "value": "John Doe",
-              "modifiers": [
-                "none"
-              ]
+              "modifiers": []
             },
-            "elementDescription": "\"Your Name\" input field at the top of the Contact Form"
+            "elementDescription": "Name input field"
           },
-          "executedAt": "2026-01-09T22:31:41.123Z",
+          "executedAt": "2026-01-10T22:10:42.001Z",
           "targetElement": {
             "selector": {
-              "type": "css",
-              "selector": "input:nth-of-type(1)"
+              "type": "role",
+              "role": "textbox",
+              "name": "Complete Name",
+              "exact": true
             },
             "mimicId": 5
           }
@@ -86,7 +87,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-09T22:29:14.510Z",
-        "lastPassedAt": "2026-01-09T22:31:41.126Z",
+        "lastPassedAt": "2026-01-10T22:10:42.005Z",
         "lastFailedAt": null
       }
     },
@@ -360,6 +361,755 @@
         "createdAt": "2026-01-09T22:40:07.765Z",
         "lastPassedAt": "2026-01-09T22:40:07.766Z",
         "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "7a07532fed8d558f",
+      "testText": "type \"This is a test message for the form.\" into the message field",
+      "stepsByHash": {
+        "7a07532fed8d558f": {
+          "stepHash": "7a07532fed8d558f",
+          "stepIndex": 0,
+          "stepText": "type \"This is a test message for the form.\" into the message field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 9,
+            "type": "fill",
+            "params": {
+              "value": "This is a test message for the form.",
+              "modifiers": []
+            },
+            "elementDescription": "Message field"
+          },
+          "executedAt": "2026-01-10T16:31:25.672Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Message",
+              "exact": true
+            },
+            "mimicId": 9
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "7a07532fed8d558f",
+          "stepIndex": 0,
+          "stepText": "type \"This is a test message for the form.\" into the message field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 9,
+            "type": "fill",
+            "params": {
+              "value": "This is a test message for the form.",
+              "modifiers": []
+            },
+            "elementDescription": "Message field"
+          },
+          "executedAt": "2026-01-10T16:31:25.672Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Message",
+              "exact": true
+            },
+            "mimicId": 9
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T16:31:25.672Z",
+        "lastPassedAt": "2026-01-10T16:31:25.679Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "9272cbe0ece9a577",
+      "testText": "check the \"Phone\" radio button",
+      "stepsByHash": {
+        "9272cbe0ece9a577": {
+          "stepHash": "9272cbe0ece9a577",
+          "stepIndex": 0,
+          "stepText": "check the \"Phone\" radio button",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 11,
+            "type": "click",
+            "params": {
+              "value": "Phone",
+              "modifiers": []
+            },
+            "elementDescription": "Phone radio button"
+          },
+          "executedAt": "2026-01-10T16:34:00.837Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "radio",
+              "name": "Phone",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "9272cbe0ece9a577",
+          "stepIndex": 0,
+          "stepText": "check the \"Phone\" radio button",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 11,
+            "type": "click",
+            "params": {
+              "value": "Phone",
+              "modifiers": []
+            },
+            "elementDescription": "Phone radio button"
+          },
+          "executedAt": "2026-01-10T16:34:00.837Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "radio",
+              "name": "Phone",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T16:32:15.835Z",
+        "lastPassedAt": "2026-01-10T16:34:00.871Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "7dab85b71cd07c44",
+      "testText": "check the \"SMS\" radio button",
+      "stepsByHash": {
+        "7dab85b71cd07c44": {
+          "stepHash": "7dab85b71cd07c44",
+          "stepIndex": 0,
+          "stepText": "check the \"SMS\" radio button",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 12,
+            "type": "check",
+            "params": {
+              "value": "SMS",
+              "modifiers": []
+            },
+            "elementDescription": "SMS radio button"
+          },
+          "executedAt": "2026-01-10T16:36:23.459Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "radio",
+              "name": "SMS",
+              "exact": true
+            },
+            "mimicId": 12
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "7dab85b71cd07c44",
+          "stepIndex": 0,
+          "stepText": "check the \"SMS\" radio button",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 12,
+            "type": "check",
+            "params": {
+              "value": "SMS",
+              "modifiers": []
+            },
+            "elementDescription": "SMS radio button"
+          },
+          "executedAt": "2026-01-10T16:36:23.459Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "radio",
+              "name": "SMS",
+              "exact": true
+            },
+            "mimicId": 12
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T16:34:02.521Z",
+        "lastPassedAt": "2026-01-10T16:36:23.462Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "d2f0dc75d480f0ec",
+      "testText": "check \"Daily Newsletter\"",
+      "stepsByHash": {
+        "d2f0dc75d480f0ec": {
+          "stepHash": "d2f0dc75d480f0ec",
+          "stepIndex": 0,
+          "stepText": "check \"Daily Newsletter\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 13,
+            "type": "check",
+            "params": {
+              "value": "Daily Newsletter",
+              "modifiers": []
+            },
+            "elementDescription": "Daily Newsletter checkbox"
+          },
+          "executedAt": "2026-01-10T16:35:38.582Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Daily Newsletter",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "d2f0dc75d480f0ec",
+          "stepIndex": 0,
+          "stepText": "check \"Daily Newsletter\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 13,
+            "type": "check",
+            "params": {
+              "value": "Daily Newsletter",
+              "modifiers": []
+            },
+            "elementDescription": "Daily Newsletter checkbox"
+          },
+          "executedAt": "2026-01-10T16:35:38.582Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Daily Newsletter",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T16:34:11.373Z",
+        "lastPassedAt": "2026-01-10T16:35:38.584Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "f86c328d1f9399e4",
+      "testText": "check \"Daily Newsletter\"\ncheck \"Weekly Digest\"\ncheck \"Promotional Emails\"",
+      "stepsByHash": {
+        "d2f0dc75d480f0ec": {
+          "stepHash": "d2f0dc75d480f0ec",
+          "stepIndex": 0,
+          "stepText": "check \"Daily Newsletter\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 13,
+                "confidence": 0.95,
+                "description": "Daily Newsletter checkbox"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.85,
+                "description": "Weekly Digest checkbox"
+              },
+              {
+                "mimicId": 15,
+                "confidence": 0.75,
+                "description": "Promotional Emails checkbox"
+              },
+              {
+                "mimicId": 28,
+                "confidence": 0.65,
+                "description": "Newsletter Preferences section"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.55,
+                "description": "Forms link in navigation menu"
+              }
+            ],
+            "clickType": "double",
+            "reasoning": "The Gherkin step 'check \"Daily Newsletter\"' implies selecting a checkbox related to the newsletter preferences. Based on the accessibility snapshot and the screenshot, the Daily Newsletter checkbox is identified as the most likely target with a high confidence level. The Weekly Digest and Promotional Emails checkboxes are closely followed. The Newsletter Preferences section provides context but may not be interacted directly. The 'Forms' link in the navigation menu is less relevant to the specific action of checking a newsletter preference."
+          },
+          "executedAt": "2026-01-10T16:42:41.737Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Daily Newsletter",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        },
+        "86ccb980d0d515df": {
+          "stepHash": "86ccb980d0d515df",
+          "stepIndex": 1,
+          "stepText": "check \"Weekly Digest\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 14,
+            "type": "check",
+            "params": {
+              "value": "Weekly Digest",
+              "modifiers": []
+            },
+            "elementDescription": "Weekly Digest checkbox"
+          },
+          "executedAt": "2026-01-10T16:42:41.737Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Weekly Digest",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        },
+        "ba3e0717989697ac": {
+          "stepHash": "ba3e0717989697ac",
+          "stepIndex": 2,
+          "stepText": "check \"Promotional Emails\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 15,
+                "confidence": 0.85,
+                "description": "Promotional Emails checkbox with text 'Promotional Emails'"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.75,
+                "description": "Daily Newsletter checkbox with text 'Daily Newsletter'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.65,
+                "description": "Weekly Digest checkbox with text 'Weekly Digest'"
+              },
+              {
+                "mimicId": 30,
+                "confidence": 0.55,
+                "description": "Newsletter Preferences heading"
+              }
+            ],
+            "clickType": "double",
+            "reasoning": "These checkboxes are most relevant to the 'Promotional Emails' text mentioned in the Gherkin step. The Daily Newsletter and Weekly Digest checkboxes have higher confidence as they are also part of the newsletter preferences group, making them more likely candidates."
+          },
+          "executedAt": "2026-01-10T16:42:41.737Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Promotional Emails",
+              "exact": true
+            },
+            "mimicId": 15
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "d2f0dc75d480f0ec",
+          "stepIndex": 0,
+          "stepText": "check \"Daily Newsletter\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 13,
+                "confidence": 0.95,
+                "description": "Daily Newsletter checkbox"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.85,
+                "description": "Weekly Digest checkbox"
+              },
+              {
+                "mimicId": 15,
+                "confidence": 0.75,
+                "description": "Promotional Emails checkbox"
+              },
+              {
+                "mimicId": 28,
+                "confidence": 0.65,
+                "description": "Newsletter Preferences section"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.55,
+                "description": "Forms link in navigation menu"
+              }
+            ],
+            "clickType": "double",
+            "reasoning": "The Gherkin step 'check \"Daily Newsletter\"' implies selecting a checkbox related to the newsletter preferences. Based on the accessibility snapshot and the screenshot, the Daily Newsletter checkbox is identified as the most likely target with a high confidence level. The Weekly Digest and Promotional Emails checkboxes are closely followed. The Newsletter Preferences section provides context but may not be interacted directly. The 'Forms' link in the navigation menu is less relevant to the specific action of checking a newsletter preference."
+          },
+          "executedAt": "2026-01-10T16:42:41.737Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Daily Newsletter",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        },
+        {
+          "stepHash": "86ccb980d0d515df",
+          "stepIndex": 1,
+          "stepText": "check \"Weekly Digest\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 14,
+            "type": "check",
+            "params": {
+              "value": "Weekly Digest",
+              "modifiers": []
+            },
+            "elementDescription": "Weekly Digest checkbox"
+          },
+          "executedAt": "2026-01-10T16:42:41.737Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Weekly Digest",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        },
+        {
+          "stepHash": "ba3e0717989697ac",
+          "stepIndex": 2,
+          "stepText": "check \"Promotional Emails\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 15,
+                "confidence": 0.85,
+                "description": "Promotional Emails checkbox with text 'Promotional Emails'"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.75,
+                "description": "Daily Newsletter checkbox with text 'Daily Newsletter'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.65,
+                "description": "Weekly Digest checkbox with text 'Weekly Digest'"
+              },
+              {
+                "mimicId": 30,
+                "confidence": 0.55,
+                "description": "Newsletter Preferences heading"
+              }
+            ],
+            "clickType": "double",
+            "reasoning": "These checkboxes are most relevant to the 'Promotional Emails' text mentioned in the Gherkin step. The Daily Newsletter and Weekly Digest checkboxes have higher confidence as they are also part of the newsletter preferences group, making them more likely candidates."
+          },
+          "executedAt": "2026-01-10T16:42:41.737Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Promotional Emails",
+              "exact": true
+            },
+            "mimicId": 15
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T16:35:21.088Z",
+        "lastPassedAt": "2026-01-10T16:42:41.738Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "5ab954bd8d013bef",
+      "testText": "check the terms and conditions checkbox",
+      "stepsByHash": {
+        "5ab954bd8d013bef": {
+          "stepHash": "5ab954bd8d013bef",
+          "stepIndex": 0,
+          "stepText": "check the terms and conditions checkbox",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 16,
+            "type": "check",
+            "params": {
+              "value": "",
+              "modifiers": []
+            },
+            "elementDescription": "Terms and conditions checkbox"
+          },
+          "executedAt": "2026-01-10T16:36:10.003Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "I agree to the terms and conditions",
+              "exact": true
+            },
+            "mimicId": 16
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "5ab954bd8d013bef",
+          "stepIndex": 0,
+          "stepText": "check the terms and conditions checkbox",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 16,
+            "type": "check",
+            "params": {
+              "value": "",
+              "modifiers": []
+            },
+            "elementDescription": "Terms and conditions checkbox"
+          },
+          "executedAt": "2026-01-10T16:36:10.003Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "I agree to the terms and conditions",
+              "exact": true
+            },
+            "mimicId": 16
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T16:36:10.003Z",
+        "lastPassedAt": "2026-01-10T16:36:10.006Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "1907e969dbe6d6a5",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T16:36:26.400Z",
+        "lastPassedAt": "2026-01-10T22:06:56.178Z",
+        "lastFailedAt": "2026-01-10T22:06:56.175Z",
+        "failureDetails": {
+          "failedStepIndex": 2,
+          "failedStepText": "select \"Australia\" from the country dropdown",
+          "error": "AI model call failed after 34471ms (tried both text-only and with image): No object generated: response did not match schema."
+        }
+      }
+    },
+    {
+      "testHash": "f6651d4b9c96f1ef",
+      "testText": "click on \"Submit Form\" without filling required fields",
+      "stepsByHash": {
+        "f6651d4b9c96f1ef": {
+          "stepHash": "f6651d4b9c96f1ef",
+          "stepIndex": 0,
+          "stepText": "click on \"Submit Form\" without filling required fields",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 17,
+                "confidence": 0.95,
+                "description": "Submit Form button with text 'Send Form'"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.9,
+                "description": "Reset Form button with text 'Reset Form'"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.75,
+                "description": "Your Name input field"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.75,
+                "description": "Email Address input field"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.7,
+                "description": "Message textarea"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "The Gherkin step implies clicking on 'Submit Form' without filling required fields. The Submit Form button is the most likely candidate given its text and purpose as described in the accessibility snapshot."
+          },
+          "executedAt": "2026-01-10T22:12:25.739Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Send Form",
+              "exact": true
+            },
+            "mimicId": 17
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "f6651d4b9c96f1ef",
+          "stepIndex": 0,
+          "stepText": "click on \"Submit Form\" without filling required fields",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 17,
+                "confidence": 0.95,
+                "description": "Submit Form button with text 'Send Form'"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.9,
+                "description": "Reset Form button with text 'Reset Form'"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.75,
+                "description": "Your Name input field"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.75,
+                "description": "Email Address input field"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.7,
+                "description": "Message textarea"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "The Gherkin step implies clicking on 'Submit Form' without filling required fields. The Submit Form button is the most likely candidate given its text and purpose as described in the accessibility snapshot."
+          },
+          "executedAt": "2026-01-10T22:12:25.739Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Send Form",
+              "exact": true
+            },
+            "mimicId": 17
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T16:37:11.464Z",
+        "lastPassedAt": "2026-01-10T22:12:25.743Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "30d9a6669ca38269",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T16:37:38.064Z",
+        "lastPassedAt": "2026-01-10T22:07:17.820Z",
+        "lastFailedAt": "2026-01-10T22:07:17.806Z",
+        "failureDetails": {
+          "failedStepIndex": 1,
+          "failedStepText": "type \"complete@test.com\" into the email field",
+          "error": "Unknown base action type: assertion"
+        }
       }
     }
   ]

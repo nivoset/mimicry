@@ -1,0 +1,239 @@
+{
+  "tests": [
+    {
+      "testHash": "9e21488af70417f0",
+      "testText": "navigate to https://playwright.dev/\nclick on \"get started\"\nand click on \"trace viewer\"",
+      "stepsByHash": {
+        "186b4cff77109001": {
+          "stepHash": "186b4cff77109001",
+          "stepIndex": 0,
+          "stepText": "navigate to https://playwright.dev/",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "https://playwright.dev/"
+            },
+            "description": "Navigate to https://playwright.dev/"
+          },
+          "executedAt": "2026-01-10T15:56:20.114Z"
+        },
+        "5a29d0b6d6c871dc": {
+          "stepHash": "5a29d0b6d6c871dc",
+          "stepIndex": 1,
+          "stepText": "click on \"get started\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 0.85,
+                "description": "Codegen link"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.75,
+                "description": "Playwright inspector link"
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.65,
+                "description": "Trace Viewer link"
+              },
+              {
+                "mimicId": 31,
+                "confidence": 0.9,
+                "description": "Getting started link"
+              },
+              {
+                "mimicId": 32,
+                "confidence": 0.8,
+                "description": "Playwright Training link"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "Based on the Gherkin step, it is likely referring to a navigation element or feature related to testing tools. The top candidates are Codegen, Playwright inspector, Trace Viewer, Getting started, and Playwright Training."
+          },
+          "executedAt": "2026-01-10T15:56:20.114Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "link",
+              "name": "Codegen.",
+              "exact": true
+            },
+            "mimicId": 19
+          }
+        },
+        "a995a244b63d7eee": {
+          "stepHash": "a995a244b63d7eee",
+          "stepIndex": 2,
+          "stepText": "and click on \"trace viewer\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 0.85,
+                "description": "Codegen."
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.75,
+                "description": "Playwright inspector."
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.65,
+                "description": "Trace Viewer."
+              },
+              {
+                "mimicId": 31,
+                "confidence": 0.95,
+                "description": "Getting started"
+              },
+              {
+                "mimicId": 35,
+                "confidence": 0.7,
+                "description": "Stack Overflow"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "These elements are closely related to the main functionalities of Playwright and seem like they could be relevant to a user interaction or test scenario."
+          },
+          "executedAt": "2026-01-10T15:56:20.114Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "link",
+              "name": "Codegen.",
+              "exact": true
+            },
+            "mimicId": 19
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "186b4cff77109001",
+          "stepIndex": 0,
+          "stepText": "navigate to https://playwright.dev/",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "https://playwright.dev/"
+            },
+            "description": "Navigate to https://playwright.dev/"
+          },
+          "executedAt": "2026-01-10T15:56:20.114Z"
+        },
+        {
+          "stepHash": "5a29d0b6d6c871dc",
+          "stepIndex": 1,
+          "stepText": "click on \"get started\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 0.85,
+                "description": "Codegen link"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.75,
+                "description": "Playwright inspector link"
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.65,
+                "description": "Trace Viewer link"
+              },
+              {
+                "mimicId": 31,
+                "confidence": 0.9,
+                "description": "Getting started link"
+              },
+              {
+                "mimicId": 32,
+                "confidence": 0.8,
+                "description": "Playwright Training link"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "Based on the Gherkin step, it is likely referring to a navigation element or feature related to testing tools. The top candidates are Codegen, Playwright inspector, Trace Viewer, Getting started, and Playwright Training."
+          },
+          "executedAt": "2026-01-10T15:56:20.114Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "link",
+              "name": "Codegen.",
+              "exact": true
+            },
+            "mimicId": 19
+          }
+        },
+        {
+          "stepHash": "a995a244b63d7eee",
+          "stepIndex": 2,
+          "stepText": "and click on \"trace viewer\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 0.85,
+                "description": "Codegen."
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.75,
+                "description": "Playwright inspector."
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.65,
+                "description": "Trace Viewer."
+              },
+              {
+                "mimicId": 31,
+                "confidence": 0.95,
+                "description": "Getting started"
+              },
+              {
+                "mimicId": 35,
+                "confidence": 0.7,
+                "description": "Stack Overflow"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "These elements are closely related to the main functionalities of Playwright and seem like they could be relevant to a user interaction or test scenario."
+          },
+          "executedAt": "2026-01-10T15:56:20.114Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "link",
+              "name": "Codegen.",
+              "exact": true
+            },
+            "mimicId": 19
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:56:20.114Z",
+        "lastPassedAt": "2026-01-10T15:56:20.115Z",
+        "lastFailedAt": null
+      }
+    }
+  ]
+}

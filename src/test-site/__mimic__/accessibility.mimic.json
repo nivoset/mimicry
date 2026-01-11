@@ -1,0 +1,2091 @@
+{
+  "tests": [
+    {
+      "testHash": "a49bd9a277e54ca8",
+      "testText": "click on the button with aria-label \"Search for items\"",
+      "stepsByHash": {
+        "a49bd9a277e54ca8": {
+          "stepHash": "a49bd9a277e54ca8",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Search for items\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 6,
+                "confidence": 1,
+                "description": "Search for items button with aria-label 'Search for items'"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.95,
+                "description": "Search input field with aria-label 'Search input'"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.9,
+                "description": "Save document button labeled 'Store' with aria-label 'Save document'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.8,
+                "description": "Login button with aria-label 'Submit the login form'"
+              },
+              {
+                "mimicId": 39,
+                "confidence": 0.75,
+                "description": "Heading for ARIA Landmarks region"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifically mentions a button with an aria-label of 'Search for items'. Marker 6 in the screenshot clearly identifies this element as the Search for items button. The other options are also interactive elements that could be relevant to a search functionality, but they do not directly match the specified text."
+          },
+          "executedAt": "2026-01-10T15:52:38.634Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Search for items",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "a49bd9a277e54ca8",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Search for items\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 6,
+                "confidence": 1,
+                "description": "Search for items button with aria-label 'Search for items'"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.95,
+                "description": "Search input field with aria-label 'Search input'"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.9,
+                "description": "Save document button labeled 'Store' with aria-label 'Save document'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.8,
+                "description": "Login button with aria-label 'Submit the login form'"
+              },
+              {
+                "mimicId": 39,
+                "confidence": 0.75,
+                "description": "Heading for ARIA Landmarks region"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifically mentions a button with an aria-label of 'Search for items'. Marker 6 in the screenshot clearly identifies this element as the Search for items button. The other options are also interactive elements that could be relevant to a search functionality, but they do not directly match the specified text."
+          },
+          "executedAt": "2026-01-10T15:52:38.634Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Search for items",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:49:46.387Z",
+        "lastPassedAt": "2026-01-10T15:52:38.636Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "e503d7a576f53a1e",
+      "testText": "click on the button with aria-label \"Close this dialog\"",
+      "stepsByHash": {
+        "e503d7a576f53a1e": {
+          "stepHash": "e503d7a576f53a1e",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Close this dialog\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Close this dialog button with aria-label 'Close this dialog'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "Save the current document button"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.7,
+                "description": "Print the current page button"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.6,
+                "description": "Search for items button"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.5,
+                "description": "Add a new item to the list button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies 'click on the button with aria-label 'Close this dialog''. Among the available markers, only marker ID 3 has an element with the exact aria-label specified in the Gherkin step."
+          },
+          "executedAt": "2026-01-10T15:51:01.639Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Close this dialog",
+              "exact": true
+            },
+            "mimicId": 3
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "e503d7a576f53a1e",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Close this dialog\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Close this dialog button with aria-label 'Close this dialog'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "Save the current document button"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.7,
+                "description": "Print the current page button"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.6,
+                "description": "Search for items button"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.5,
+                "description": "Add a new item to the list button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies 'click on the button with aria-label 'Close this dialog''. Among the available markers, only marker ID 3 has an element with the exact aria-label specified in the Gherkin step."
+          },
+          "executedAt": "2026-01-10T15:51:01.639Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Close this dialog",
+              "exact": true
+            },
+            "mimicId": 3
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:51:01.639Z",
+        "lastPassedAt": "2026-01-10T15:51:01.640Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "e70f5e11c562d65c",
+      "testText": "click on the button with aria-label \"Save the current document\"",
+      "stepsByHash": {
+        "e70f5e11c562d65c": {
+          "stepHash": "e70f5e11c562d65c",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Save the current document\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 4,
+                "confidence": 1,
+                "description": "Button with aria-label 'Save the current document'"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.85,
+                "description": "Button with text '💾' and aria-label 'Save document'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.75,
+                "description": "Close button with aria-label 'Close this dialog'"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.65,
+                "description": "Custom button with role and aria-label 'Custom button with role'"
+              },
+              {
+                "mimicId": 10,
+                "confidence": 0.6,
+                "description": "Custom link with role and aria-label 'Custom link with role'"
+              }
+            ],
+            "clickType": "right",
+            "reasoning": "The Gherkin step specifies clicking on a button with the aria-label 'Save the current document'. Based on this, marker ID 4 stands out as the most likely candidate. Marker IDs 22 and 9 also have aria-labels that are strong candidates for the specified action. Markers 3 and 10, while having roles or text, do not match the specific aria-label required. No additional context would change this ranking."
+          },
+          "executedAt": "2026-01-10T15:54:20.969Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Save the current document",
+              "exact": true
+            },
+            "mimicId": 4
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "e70f5e11c562d65c",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Save the current document\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 4,
+                "confidence": 1,
+                "description": "Button with aria-label 'Save the current document'"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.85,
+                "description": "Button with text '💾' and aria-label 'Save document'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.75,
+                "description": "Close button with aria-label 'Close this dialog'"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.65,
+                "description": "Custom button with role and aria-label 'Custom button with role'"
+              },
+              {
+                "mimicId": 10,
+                "confidence": 0.6,
+                "description": "Custom link with role and aria-label 'Custom link with role'"
+              }
+            ],
+            "clickType": "right",
+            "reasoning": "The Gherkin step specifies clicking on a button with the aria-label 'Save the current document'. Based on this, marker ID 4 stands out as the most likely candidate. Marker IDs 22 and 9 also have aria-labels that are strong candidates for the specified action. Markers 3 and 10, while having roles or text, do not match the specific aria-label required. No additional context would change this ranking."
+          },
+          "executedAt": "2026-01-10T15:54:20.969Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Save the current document",
+              "exact": true
+            },
+            "mimicId": 4
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:51:19.381Z",
+        "lastPassedAt": "2026-01-10T15:54:21.025Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "99e1a0acef3ac23f",
+      "testText": "click on the button with aria-label \"Add a new item to the list\"",
+      "stepsByHash": {
+        "99e1a0acef3ac23f": {
+          "stepHash": "99e1a0acef3ac23f",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Add a new item to the list\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 7,
+                "confidence": 1,
+                "description": "Button with aria-label 'Add a new item to the list'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.8,
+                "description": "Link labeled 'Accessibility' which could potentially be clicked"
+              },
+              {
+                "mimicId": 46,
+                "confidence": 0.7,
+                "description": "Main navigation link that might include a similar action"
+              },
+              {
+                "mimicId": 49,
+                "confidence": 0.6,
+                "description": "Region containing buttons with aria-labels including 'Add'"
+              },
+              {
+                "mimicId": 53,
+                "confidence": 0.5,
+                "description": "Region with role attributes that could contain buttons or links"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies clicking a button with an aria-label 'Add a new item to the list'. Marker 7 is explicitly labeled with this exact text and is therefore the most likely candidate. Other markers are potential indirect matches or less direct, but still plausible given the similar wording in their accessible names."
+          },
+          "executedAt": "2026-01-10T15:52:20.319Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Add a new item to the list",
+              "exact": true
+            },
+            "mimicId": 7
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "99e1a0acef3ac23f",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Add a new item to the list\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 7,
+                "confidence": 1,
+                "description": "Button with aria-label 'Add a new item to the list'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.8,
+                "description": "Link labeled 'Accessibility' which could potentially be clicked"
+              },
+              {
+                "mimicId": 46,
+                "confidence": 0.7,
+                "description": "Main navigation link that might include a similar action"
+              },
+              {
+                "mimicId": 49,
+                "confidence": 0.6,
+                "description": "Region containing buttons with aria-labels including 'Add'"
+              },
+              {
+                "mimicId": 53,
+                "confidence": 0.5,
+                "description": "Region with role attributes that could contain buttons or links"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies clicking a button with an aria-label 'Add a new item to the list'. Marker 7 is explicitly labeled with this exact text and is therefore the most likely candidate. Other markers are potential indirect matches or less direct, but still plausible given the similar wording in their accessible names."
+          },
+          "executedAt": "2026-01-10T15:52:20.319Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Add a new item to the list",
+              "exact": true
+            },
+            "mimicId": 7
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:52:20.319Z",
+        "lastPassedAt": "2026-01-10T15:52:20.320Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "7faa7cb64cbb404b",
+      "testText": "click on the button with aria-label \"Print the current page\"",
+      "stepsByHash": {
+        "7faa7cb64cbb404b": {
+          "stepHash": "7faa7cb64cbb404b",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Print the current page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 5,
+                "confidence": 1,
+                "description": "Button with aria-label 'Print the current page'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.9,
+                "description": "Button with aria-label 'Close this dialog'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "Button with aria-label 'Save the current document'"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.7,
+                "description": "Button with aria-label 'Search for items'"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.6,
+                "description": "Button with aria-label 'Add a new item to the list'"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "The Gherkin step specifically mentions clicking on the button with an aria-label of 'Print the current page'. Among all the elements in the screenshot and accessibility snapshot, Marker 5 is the only one that matches this description exactly. Therefore, it is the most likely element being referred to by the Gherkin step."
+          },
+          "executedAt": "2026-01-10T15:53:22.370Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Print the current page",
+              "exact": true
+            },
+            "mimicId": 5
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "7faa7cb64cbb404b",
+          "stepIndex": 0,
+          "stepText": "click on the button with aria-label \"Print the current page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 5,
+                "confidence": 1,
+                "description": "Button with aria-label 'Print the current page'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.9,
+                "description": "Button with aria-label 'Close this dialog'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "Button with aria-label 'Save the current document'"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.7,
+                "description": "Button with aria-label 'Search for items'"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.6,
+                "description": "Button with aria-label 'Add a new item to the list'"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "The Gherkin step specifically mentions clicking on the button with an aria-label of 'Print the current page'. Among all the elements in the screenshot and accessibility snapshot, Marker 5 is the only one that matches this description exactly. Therefore, it is the most likely element being referred to by the Gherkin step."
+          },
+          "executedAt": "2026-01-10T15:53:22.370Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Print the current page",
+              "exact": true
+            },
+            "mimicId": 5
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:53:22.370Z",
+        "lastPassedAt": "2026-01-10T15:53:22.372Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "2c40a7c2236b36a2",
+      "testText": "type \"password123\" into the password field",
+      "stepsByHash": {
+        "2c40a7c2236b36a2": {
+          "stepHash": "2c40a7c2236b36a2",
+          "stepIndex": 0,
+          "stepText": "type \"password123\" into the password field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 12,
+            "type": "fill",
+            "params": {
+              "value": "password123",
+              "modifiers": []
+            },
+            "elementDescription": "Password input field labeled 'Password'"
+          },
+          "executedAt": "2026-01-10T15:55:49.966Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Password",
+              "exact": true
+            },
+            "mimicId": 12
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "2c40a7c2236b36a2",
+          "stepIndex": 0,
+          "stepText": "type \"password123\" into the password field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 12,
+            "type": "fill",
+            "params": {
+              "value": "password123",
+              "modifiers": []
+            },
+            "elementDescription": "Password input field labeled 'Password'"
+          },
+          "executedAt": "2026-01-10T15:55:49.966Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Password",
+              "exact": true
+            },
+            "mimicId": 12
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:53:38.044Z",
+        "lastPassedAt": "2026-01-10T15:55:49.968Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "2eb9490b6dbd68fb",
+      "testText": "check the remember me checkbox",
+      "stepsByHash": {
+        "2eb9490b6dbd68fb": {
+          "stepHash": "2eb9490b6dbd68fb",
+          "stepIndex": 0,
+          "stepText": "check the remember me checkbox",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 13,
+            "type": "check",
+            "params": {
+              "value": "",
+              "modifiers": []
+            },
+            "elementDescription": "Remember me checkbox"
+          },
+          "executedAt": "2026-01-10T15:57:27.158Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Remember me on this device",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "2eb9490b6dbd68fb",
+          "stepIndex": 0,
+          "stepText": "check the remember me checkbox",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 13,
+            "type": "check",
+            "params": {
+              "value": "",
+              "modifiers": []
+            },
+            "elementDescription": "Remember me checkbox"
+          },
+          "executedAt": "2026-01-10T15:57:27.158Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Remember me on this device",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:54:06.225Z",
+        "lastPassedAt": "2026-01-10T15:57:27.160Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "9b6fcff17d6efe0b",
+      "testText": "click on \"Read More\" in the article",
+      "stepsByHash": {
+        "9b6fcff17d6efe0b": {
+          "stepHash": "9b6fcff17d6efe0b",
+          "stepIndex": 0,
+          "stepText": "click on \"Read More\" in the article",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 8,
+                "confidence": 1,
+                "description": "Read More button in the article section"
+              },
+              {
+                "mimicId": 51,
+                "confidence": 0.9,
+                "description": "Article element with the text 'This is an article element with semantic meaning.' followed by a 'Read More' button"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.8,
+                "description": "Heading 'Article Title'"
+              },
+              {
+                "mimicId": 28,
+                "confidence": 0.7,
+                "description": "Generic text element within the article section"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "The Gherkin step specifies 'click on 'Read More' in the article', and based on the provided information, elements with 'Read More' are found in the article context. The highest confidence is given to the direct button with 'Read More', followed by relevant parts of the article structure."
+          },
+          "executedAt": "2026-01-10T15:54:16.342Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Read More",
+              "exact": true
+            },
+            "mimicId": 8
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "9b6fcff17d6efe0b",
+          "stepIndex": 0,
+          "stepText": "click on \"Read More\" in the article",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 8,
+                "confidence": 1,
+                "description": "Read More button in the article section"
+              },
+              {
+                "mimicId": 51,
+                "confidence": 0.9,
+                "description": "Article element with the text 'This is an article element with semantic meaning.' followed by a 'Read More' button"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.8,
+                "description": "Heading 'Article Title'"
+              },
+              {
+                "mimicId": 28,
+                "confidence": 0.7,
+                "description": "Generic text element within the article section"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "The Gherkin step specifies 'click on 'Read More' in the article', and based on the provided information, elements with 'Read More' are found in the article context. The highest confidence is given to the direct button with 'Read More', followed by relevant parts of the article structure."
+          },
+          "executedAt": "2026-01-10T15:54:16.342Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Read More",
+              "exact": true
+            },
+            "mimicId": 8
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:54:16.342Z",
+        "lastPassedAt": "2026-01-10T15:54:16.343Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "2fbec3881ffa33e9",
+      "testText": "type \"testuser\" into the username field",
+      "stepsByHash": {
+        "2fbec3881ffa33e9": {
+          "stepHash": "2fbec3881ffa33e9",
+          "stepIndex": 0,
+          "stepText": "type \"testuser\" into the username field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 11,
+            "type": "fill",
+            "params": {
+              "value": "testuser",
+              "modifiers": []
+            },
+            "elementDescription": "Username input field labeled 'Username'"
+          },
+          "executedAt": "2026-01-10T15:54:25.407Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Username",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "2fbec3881ffa33e9",
+          "stepIndex": 0,
+          "stepText": "type \"testuser\" into the username field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 11,
+            "type": "fill",
+            "params": {
+              "value": "testuser",
+              "modifiers": []
+            },
+            "elementDescription": "Username input field labeled 'Username'"
+          },
+          "executedAt": "2026-01-10T15:54:25.407Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Username",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:54:25.407Z",
+        "lastPassedAt": "2026-01-10T15:54:25.409Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "f561ab62c9034317",
+      "testText": "type \"user@example.com\" into the username field\ntype \"securepass\" into the password field\ncheck the remember me checkbox\nclick on \"Login\"",
+      "stepsByHash": {
+        "bd0c0bf4acf7e8f2": {
+          "stepHash": "bd0c0bf4acf7e8f2",
+          "stepIndex": 0,
+          "stepText": "type \"user@example.com\" into the username field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 11,
+            "type": "fill",
+            "params": {
+              "value": "user@example.com",
+              "modifiers": []
+            },
+            "elementDescription": "Email input field labeled 'Username'"
+          },
+          "executedAt": "2026-01-10T16:08:29.226Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Username",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        },
+        "a07fc7d457289444": {
+          "stepHash": "a07fc7d457289444",
+          "stepIndex": 1,
+          "stepText": "type \"securepass\" into the password field",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 12,
+                "confidence": 0.95,
+                "description": "Password input field"
+              },
+              {
+                "mimicId": 38,
+                "confidence": 0.8,
+                "description": "Help text below the password field"
+              },
+              {
+                "mimicId": 11,
+                "confidence": 0.75,
+                "description": "Username input field"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.6,
+                "description": "Accessibility page link in navigation"
+              },
+              {
+                "mimicId": 37,
+                "confidence": 0.5,
+                "description": "Password label above the password input field"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The most likely element is the password input field (Marker 12) as it directly corresponds to the Gherkin step mentioning 'type "
+          },
+          "executedAt": "2026-01-10T16:08:29.226Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Password",
+              "exact": true
+            },
+            "mimicId": 12
+          }
+        },
+        "2eb9490b6dbd68fb": {
+          "stepHash": "2eb9490b6dbd68fb",
+          "stepIndex": 2,
+          "stepText": "check the remember me checkbox",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 13,
+                "confidence": 1,
+                "description": "Remember me checkbox with text 'Remember me on this device'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.8,
+                "description": "Login button with text 'Submit the login form'"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.7,
+                "description": "Update Live Region button with text 'Update Live Region'"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.6,
+                "description": "Custom Button with text 'Custom button with role'"
+              },
+              {
+                "mimicId": 10,
+                "confidence": 0.5,
+                "description": "Custom Link with text 'Custom link with role'"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "Based on the previous steps and the Gherkin step implying a 'check' action, the most likely element is the checkbox labeled 'Remember me on this device'. This matches semantic HTML usage for remember me functionality. The next closest candidates are interactive buttons and links that do not directly relate to form submission or updating states."
+          },
+          "executedAt": "2026-01-10T16:08:29.226Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Remember me on this device",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        },
+        "8978899170faa7a8": {
+          "stepHash": "8978899170faa7a8",
+          "stepIndex": 3,
+          "stepText": "click on \"Login\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 1,
+                "description": "Login button with text 'Submit the login form' and aria-label 'Submit the login form'"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.8,
+                "description": "Sign In button with text 'Sign In' and aria-label 'Submit search'"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.7,
+                "description": "Save button with text 'Saves your changes to the server.' and aria-label 'Save document'"
+              },
+              {
+                "mimicId": 39,
+                "confidence": 0.6,
+                "description": "Section 1 link with text 'Section 1' and aria-label 'Secondary navigation'"
+              },
+              {
+                "mimicId": 42,
+                "confidence": 0.5,
+                "description": "Delete item button with text 'This action cannot be undone.' and aria-label 'Delete item'"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "The Gherkin step mentions 'click on 'Login'', which aligns with the 'Submit the login form' button. This element is the most directly relevant to logging in, making it the top candidate."
+          },
+          "executedAt": "2026-01-10T16:08:29.226Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Submit the login form",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "bd0c0bf4acf7e8f2",
+          "stepIndex": 0,
+          "stepText": "type \"user@example.com\" into the username field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 11,
+            "type": "fill",
+            "params": {
+              "value": "user@example.com",
+              "modifiers": []
+            },
+            "elementDescription": "Email input field labeled 'Username'"
+          },
+          "executedAt": "2026-01-10T16:08:29.226Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Username",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        },
+        {
+          "stepHash": "a07fc7d457289444",
+          "stepIndex": 1,
+          "stepText": "type \"securepass\" into the password field",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 12,
+                "confidence": 0.95,
+                "description": "Password input field"
+              },
+              {
+                "mimicId": 38,
+                "confidence": 0.8,
+                "description": "Help text below the password field"
+              },
+              {
+                "mimicId": 11,
+                "confidence": 0.75,
+                "description": "Username input field"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.6,
+                "description": "Accessibility page link in navigation"
+              },
+              {
+                "mimicId": 37,
+                "confidence": 0.5,
+                "description": "Password label above the password input field"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The most likely element is the password input field (Marker 12) as it directly corresponds to the Gherkin step mentioning 'type "
+          },
+          "executedAt": "2026-01-10T16:08:29.226Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Password",
+              "exact": true
+            },
+            "mimicId": 12
+          }
+        },
+        {
+          "stepHash": "2eb9490b6dbd68fb",
+          "stepIndex": 2,
+          "stepText": "check the remember me checkbox",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 13,
+                "confidence": 1,
+                "description": "Remember me checkbox with text 'Remember me on this device'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.8,
+                "description": "Login button with text 'Submit the login form'"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.7,
+                "description": "Update Live Region button with text 'Update Live Region'"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.6,
+                "description": "Custom Button with text 'Custom button with role'"
+              },
+              {
+                "mimicId": 10,
+                "confidence": 0.5,
+                "description": "Custom Link with text 'Custom link with role'"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "Based on the previous steps and the Gherkin step implying a 'check' action, the most likely element is the checkbox labeled 'Remember me on this device'. This matches semantic HTML usage for remember me functionality. The next closest candidates are interactive buttons and links that do not directly relate to form submission or updating states."
+          },
+          "executedAt": "2026-01-10T16:08:29.226Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Remember me on this device",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        },
+        {
+          "stepHash": "8978899170faa7a8",
+          "stepIndex": 3,
+          "stepText": "click on \"Login\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 1,
+                "description": "Login button with text 'Submit the login form' and aria-label 'Submit the login form'"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.8,
+                "description": "Sign In button with text 'Sign In' and aria-label 'Submit search'"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.7,
+                "description": "Save button with text 'Saves your changes to the server.' and aria-label 'Save document'"
+              },
+              {
+                "mimicId": 39,
+                "confidence": 0.6,
+                "description": "Section 1 link with text 'Section 1' and aria-label 'Secondary navigation'"
+              },
+              {
+                "mimicId": 42,
+                "confidence": 0.5,
+                "description": "Delete item button with text 'This action cannot be undone.' and aria-label 'Delete item'"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "The Gherkin step mentions 'click on 'Login'', which aligns with the 'Submit the login form' button. This element is the most directly relevant to logging in, making it the top candidate."
+          },
+          "executedAt": "2026-01-10T16:08:29.226Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Submit the login form",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:54:32.630Z",
+        "lastPassedAt": "2026-01-10T16:08:29.232Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "08c4d680128977ca",
+      "testText": "click on \"Custom Link\"",
+      "stepsByHash": {
+        "08c4d680128977ca": {
+          "stepHash": "08c4d680128977ca",
+          "stepIndex": 0,
+          "stepText": "click on \"Custom Link\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 10,
+                "confidence": 1,
+                "description": "Custom Link with role"
+              },
+              {
+                "mimicId": 25,
+                "confidence": 0.9,
+                "description": "Heading for 'Elements with Aria Labels'"
+              },
+              {
+                "mimicId": 48,
+                "confidence": 0.8,
+                "description": "Banner with page title"
+              },
+              {
+                "mimicId": 31,
+                "confidence": 0.7,
+                "description": "Heading for 'Elements with Role Attributes'"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.6,
+                "description": "Custom Button with role"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "The Gherkin step explicitly mentions clicking on 'Custom Link'. This element is uniquely identifiable by its mimicId and is the most likely candidate."
+          },
+          "executedAt": "2026-01-10T15:57:08.335Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "link",
+              "name": "Custom link with role",
+              "exact": true
+            },
+            "mimicId": 10
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "08c4d680128977ca",
+          "stepIndex": 0,
+          "stepText": "click on \"Custom Link\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 10,
+                "confidence": 1,
+                "description": "Custom Link with role"
+              },
+              {
+                "mimicId": 25,
+                "confidence": 0.9,
+                "description": "Heading for 'Elements with Aria Labels'"
+              },
+              {
+                "mimicId": 48,
+                "confidence": 0.8,
+                "description": "Banner with page title"
+              },
+              {
+                "mimicId": 31,
+                "confidence": 0.7,
+                "description": "Heading for 'Elements with Role Attributes'"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.6,
+                "description": "Custom Button with role"
+              }
+            ],
+            "clickType": "hover",
+            "reasoning": "The Gherkin step explicitly mentions clicking on 'Custom Link'. This element is uniquely identifiable by its mimicId and is the most likely candidate."
+          },
+          "executedAt": "2026-01-10T15:57:08.335Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "link",
+              "name": "Custom link with role",
+              "exact": true
+            },
+            "mimicId": 10
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:56:05.560Z",
+        "lastPassedAt": "2026-01-10T15:57:08.337Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "862435557023af45",
+      "testText": "click on \"Custom Button\"",
+      "stepsByHash": {
+        "862435557023af45": {
+          "stepHash": "862435557023af45",
+          "stepIndex": 0,
+          "stepText": "click on \"Custom Button\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 9,
+                "confidence": 1,
+                "description": "Custom Button with role"
+              },
+              {
+                "mimicId": 10,
+                "confidence": 0.8,
+                "description": "Custom Link with role"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.7,
+                "description": "Update Live Region button"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.6,
+                "description": "Save document button"
+              },
+              {
+                "mimicId": 58,
+                "confidence": 0.5,
+                "description": "ARIA Descriptions region containing multiple buttons and descriptions"
+              }
+            ],
+            "clickType": "double",
+            "reasoning": "The Gherkin step explicitly mentions 'Custom Button'. Marker 9 represents a button with the accessible name 'Custom button with role', which is the most direct match for the specified text. Markers 10, 20, 22, and 58 are potential candidates based on their roles or content, but they do not exactly match the text 'Custom Button'."
+          },
+          "executedAt": "2026-01-10T15:56:23.969Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Custom button with role",
+              "exact": true
+            },
+            "mimicId": 9
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "862435557023af45",
+          "stepIndex": 0,
+          "stepText": "click on \"Custom Button\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 9,
+                "confidence": 1,
+                "description": "Custom Button with role"
+              },
+              {
+                "mimicId": 10,
+                "confidence": 0.8,
+                "description": "Custom Link with role"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.7,
+                "description": "Update Live Region button"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.6,
+                "description": "Save document button"
+              },
+              {
+                "mimicId": 58,
+                "confidence": 0.5,
+                "description": "ARIA Descriptions region containing multiple buttons and descriptions"
+              }
+            ],
+            "clickType": "double",
+            "reasoning": "The Gherkin step explicitly mentions 'Custom Button'. Marker 9 represents a button with the accessible name 'Custom button with role', which is the most direct match for the specified text. Markers 10, 20, 22, and 58 are potential candidates based on their roles or content, but they do not exactly match the text 'Custom Button'."
+          },
+          "executedAt": "2026-01-10T15:56:23.969Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Custom button with role",
+              "exact": true
+            },
+            "mimicId": 9
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:56:23.969Z",
+        "lastPassedAt": "2026-01-10T15:56:23.972Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "a28f4d4401929aaf",
+      "testText": "type \"test query\" into the search input\nclick on \"Search\"",
+      "stepsByHash": {
+        "6730c00c7ec41913": {
+          "stepHash": "6730c00c7ec41913",
+          "stepIndex": 0,
+          "stepText": "type \"test query\" into the search input",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 18,
+            "type": "fill",
+            "params": {
+              "value": "test query",
+              "modifiers": []
+            },
+            "elementDescription": "Search input field"
+          },
+          "executedAt": "2026-01-10T16:01:05.073Z",
+          "targetElement": {
+            "selector": {
+              "type": "label",
+              "value": "Search input",
+              "exact": true
+            },
+            "mimicId": 18
+          }
+        },
+        "f1a2e33ee94e6146": {
+          "stepHash": "f1a2e33ee94e6146",
+          "stepIndex": 1,
+          "stepText": "click on \"Search\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 6,
+                "confidence": 0.95,
+                "description": "Search button with an icon of a magnifying glass (🔍)"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.85,
+                "description": "Search input field"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.75,
+                "description": "Submit search button with text 'Send'"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.65,
+                "description": "Update live region button"
+              },
+              {
+                "mimicId": 41,
+                "confidence": 0.6,
+                "description": "Initial status message displayed as a live region"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step 'click on \"Search\"' is most likely referring to the search button, which has an icon of a magnifying glass. The search input and submit search button are also relevant but less likely as they do not have the same specific label or intent."
+          },
+          "executedAt": "2026-01-10T16:01:05.073Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Search for items",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "6730c00c7ec41913",
+          "stepIndex": 0,
+          "stepText": "type \"test query\" into the search input",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 18,
+            "type": "fill",
+            "params": {
+              "value": "test query",
+              "modifiers": []
+            },
+            "elementDescription": "Search input field"
+          },
+          "executedAt": "2026-01-10T16:01:05.073Z",
+          "targetElement": {
+            "selector": {
+              "type": "label",
+              "value": "Search input",
+              "exact": true
+            },
+            "mimicId": 18
+          }
+        },
+        {
+          "stepHash": "f1a2e33ee94e6146",
+          "stepIndex": 1,
+          "stepText": "click on \"Search\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 6,
+                "confidence": 0.95,
+                "description": "Search button with an icon of a magnifying glass (🔍)"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.85,
+                "description": "Search input field"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.75,
+                "description": "Submit search button with text 'Send'"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.65,
+                "description": "Update live region button"
+              },
+              {
+                "mimicId": 41,
+                "confidence": 0.6,
+                "description": "Initial status message displayed as a live region"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step 'click on \"Search\"' is most likely referring to the search button, which has an icon of a magnifying glass. The search input and submit search button are also relevant but less likely as they do not have the same specific label or intent."
+          },
+          "executedAt": "2026-01-10T16:01:05.073Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Search for items",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:56:27.000Z",
+        "lastPassedAt": "2026-01-10T16:01:05.075Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "f1a1bd9084680bcb",
+      "testText": "click on \"Update Live Region\"\nclick on \"Update Live Region\"\nclick on \"Update Live Region\"",
+      "stepsByHash": {
+        "24c9f3236b1e5182": {
+          "stepHash": "24c9f3236b1e5182",
+          "stepIndex": 2,
+          "stepText": "click on \"Update Live Region\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 20,
+                "confidence": 1,
+                "description": "Update Live Region button"
+              },
+              {
+                "mimicId": 41,
+                "confidence": 0.8,
+                "description": "Status updated: Processing request... status element"
+              },
+              {
+                "mimicId": 39,
+                "confidence": 0.7,
+                "description": "ARIA Landmarks section heading"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.6,
+                "description": "Search input textbox"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.5,
+                "description": "Submit search button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "Based on the provided Gherkin step, 'click on \"Update Live Region\"', and the accessibility snapshot, the element with mimicId=20 is the most likely candidate as it directly matches the text in the step. The status element with mimicId=41 is also highly relevant because the phrase 'Status updated: Processing request...' suggests an interaction that could trigger a live region update. Additionally, the search input and submit button (mimicIds 18 and 19) are related to interactive elements but do not match the text in the Gherkin step as closely."
+          },
+          "executedAt": "2026-01-10T22:05:01.448Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Update Live Region",
+              "exact": true
+            },
+            "mimicId": 20
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "24c9f3236b1e5182",
+          "stepIndex": 2,
+          "stepText": "click on \"Update Live Region\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 20,
+                "confidence": 1,
+                "description": "Update Live Region button"
+              },
+              {
+                "mimicId": 41,
+                "confidence": 0.8,
+                "description": "Status updated: Processing request... status element"
+              },
+              {
+                "mimicId": 39,
+                "confidence": 0.7,
+                "description": "ARIA Landmarks section heading"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.6,
+                "description": "Search input textbox"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.5,
+                "description": "Submit search button"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "Based on the provided Gherkin step, 'click on \"Update Live Region\"', and the accessibility snapshot, the element with mimicId=20 is the most likely candidate as it directly matches the text in the step. The status element with mimicId=41 is also highly relevant because the phrase 'Status updated: Processing request...' suggests an interaction that could trigger a live region update. Additionally, the search input and submit button (mimicIds 18 and 19) are related to interactive elements but do not match the text in the Gherkin step as closely."
+          },
+          "executedAt": "2026-01-10T22:05:01.448Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Update Live Region",
+              "exact": true
+            },
+            "mimicId": 20
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:57:38.399Z",
+        "lastPassedAt": "2026-01-10T22:05:01.453Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "24c9f3236b1e5182",
+      "testText": "click on \"Update Live Region\"",
+      "stepsByHash": {
+        "24c9f3236b1e5182": {
+          "stepHash": "24c9f3236b1e5182",
+          "stepIndex": 0,
+          "stepText": "click on \"Update Live Region\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 20,
+                "confidence": 1,
+                "description": "Update Live Region button"
+              },
+              {
+                "mimicId": 40,
+                "confidence": 0.8,
+                "description": "Live Regions heading"
+              },
+              {
+                "mimicId": 57,
+                "confidence": 0.6,
+                "description": "Live Regions region"
+              },
+              {
+                "mimicId": 41,
+                "confidence": 0.5,
+                "description": "Initial status message within the Live Regions"
+              },
+              {
+                "mimicId": 39,
+                "confidence": 0.4,
+                "description": "ARIA Landmarks heading"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step 'click on \"Update Live Region\"' clearly indicates an interaction with a button labeled 'Update Live Region'. Among the available markers, only Marker 20 has a textual label matching this description. The other elements listed, while within the same region or having similar roles, do not directly match the specific text of the button being clicked."
+          },
+          "executedAt": "2026-01-10T15:57:42.308Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Update Live Region",
+              "exact": true
+            },
+            "mimicId": 20
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "24c9f3236b1e5182",
+          "stepIndex": 0,
+          "stepText": "click on \"Update Live Region\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 20,
+                "confidence": 1,
+                "description": "Update Live Region button"
+              },
+              {
+                "mimicId": 40,
+                "confidence": 0.8,
+                "description": "Live Regions heading"
+              },
+              {
+                "mimicId": 57,
+                "confidence": 0.6,
+                "description": "Live Regions region"
+              },
+              {
+                "mimicId": 41,
+                "confidence": 0.5,
+                "description": "Initial status message within the Live Regions"
+              },
+              {
+                "mimicId": 39,
+                "confidence": 0.4,
+                "description": "ARIA Landmarks heading"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step 'click on \"Update Live Region\"' clearly indicates an interaction with a button labeled 'Update Live Region'. Among the available markers, only Marker 20 has a textual label matching this description. The other elements listed, while within the same region or having similar roles, do not directly match the specific text of the button being clicked."
+          },
+          "executedAt": "2026-01-10T15:57:42.308Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Update Live Region",
+              "exact": true
+            },
+            "mimicId": 20
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:57:42.308Z",
+        "lastPassedAt": "2026-01-10T15:57:42.309Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "b5988d7b2ca76c91",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:59:06.752Z",
+        "lastPassedAt": "2026-01-10T22:05:24.187Z",
+        "lastFailedAt": "2026-01-10T22:05:24.169Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "type \"accessibility@test.com\" into the username field",
+          "error": "Unknown base action type: assertion"
+        }
+      }
+    },
+    {
+      "testHash": "a367877639e71ebf",
+      "testText": "click on \"Save\"",
+      "stepsByHash": {
+        "a367877639e71ebf": {
+          "stepHash": "a367877639e71ebf",
+          "stepIndex": 0,
+          "stepText": "click on \"Save\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 4,
+                "confidence": 1,
+                "description": "Save button with a save icon"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.8,
+                "description": "Save document button with a text 'Store'"
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.7,
+                "description": "Delete item button with a text 'Delete'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.6,
+                "description": "Close dialog button with a close icon"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.5,
+                "description": "Print document button with a print icon"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step mentions 'Save', which corresponds to the save functionality. Among the available markers, 'Save' and 'Store' have similar intent and are likely candidates."
+          },
+          "executedAt": "2026-01-10T16:01:17.967Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Save the current document",
+              "exact": true
+            },
+            "mimicId": 4
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "a367877639e71ebf",
+          "stepIndex": 0,
+          "stepText": "click on \"Save\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 4,
+                "confidence": 1,
+                "description": "Save button with a save icon"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.8,
+                "description": "Save document button with a text 'Store'"
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.7,
+                "description": "Delete item button with a text 'Delete'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.6,
+                "description": "Close dialog button with a close icon"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.5,
+                "description": "Print document button with a print icon"
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step mentions 'Save', which corresponds to the save functionality. Among the available markers, 'Save' and 'Store' have similar intent and are likely candidates."
+          },
+          "executedAt": "2026-01-10T16:01:17.967Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Save the current document",
+              "exact": true
+            },
+            "mimicId": 4
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T15:59:45.552Z",
+        "lastPassedAt": "2026-01-10T16:01:17.970Z",
+        "lastFailedAt": null
+      }
+    },
+    {
+      "testHash": "ddd3b56cb6a326d1",
+      "testText": "click on \"Delete\"",
+      "stepsByHash": {
+        "ddd3b56cb6a326d1": {
+          "stepHash": "ddd3b56cb6a326d1",
+          "stepIndex": 0,
+          "stepText": "click on \"Delete\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 21,
+                "confidence": 0.95,
+                "description": "Button with visible text 'Delete' and aria-label 'Delete item'. This is a strong candidate for a delete action."
+              },
+              {
+                "mimicId": 43,
+                "confidence": 0.85,
+                "description": "Generic element with the text 'This action cannot be undone.' which might provide context to the delete action."
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.75,
+                "description": "Button with visible text '💾' (save icon) and aria-label 'Save document'. This could be a secondary or alternative save button near the delete option."
+              },
+              {
+                "mimicId": 34,
+                "confidence": 0.65,
+                "description": "Heading with the text 'Proper Label Associations', which might indicate a section containing related interactive elements like a delete button."
+              },
+              {
+                "mimicId": 44,
+                "confidence": 0.6,
+                "description": "Generic element with the text 'Saves your changes to the server.', which could provide additional context about the save action."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies a click on 'Delete', and based on the visual analysis of the screenshot and accessibility snapshot, the most likely elements are those explicitly labeled as 'Delete' or related to a delete action. The element with mimicId=21 has both visible text and an aria-label that clearly indicate a delete function."
+          },
+          "executedAt": "2026-01-10T16:00:08.114Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Delete item",
+              "exact": true
+            },
+            "mimicId": 21
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "ddd3b56cb6a326d1",
+          "stepIndex": 0,
+          "stepText": "click on \"Delete\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 21,
+                "confidence": 0.95,
+                "description": "Button with visible text 'Delete' and aria-label 'Delete item'. This is a strong candidate for a delete action."
+              },
+              {
+                "mimicId": 43,
+                "confidence": 0.85,
+                "description": "Generic element with the text 'This action cannot be undone.' which might provide context to the delete action."
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.75,
+                "description": "Button with visible text '💾' (save icon) and aria-label 'Save document'. This could be a secondary or alternative save button near the delete option."
+              },
+              {
+                "mimicId": 34,
+                "confidence": 0.65,
+                "description": "Heading with the text 'Proper Label Associations', which might indicate a section containing related interactive elements like a delete button."
+              },
+              {
+                "mimicId": 44,
+                "confidence": 0.6,
+                "description": "Generic element with the text 'Saves your changes to the server.', which could provide additional context about the save action."
+              }
+            ],
+            "clickType": "left",
+            "reasoning": "The Gherkin step specifies a click on 'Delete', and based on the visual analysis of the screenshot and accessibility snapshot, the most likely elements are those explicitly labeled as 'Delete' or related to a delete action. The element with mimicId=21 has both visible text and an aria-label that clearly indicate a delete function."
+          },
+          "executedAt": "2026-01-10T16:00:08.114Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Delete item",
+              "exact": true
+            },
+            "mimicId": 21
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T16:00:08.114Z",
+        "lastPassedAt": "2026-01-10T16:00:08.117Z",
+        "lastFailedAt": null
+      }
+    }
+  ]
+}

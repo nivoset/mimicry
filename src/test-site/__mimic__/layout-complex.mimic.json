@@ -1,0 +1,307 @@
+{
+  "tests": [
+    {
+      "testHash": "f35801657a7e004a",
+      "testText": "click on \"Open Simple Modal\"",
+      "stepsByHash": {
+        "f35801657a7e004a": {
+          "stepHash": "f35801657a7e004a",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Simple Modal\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "Button with text 'Open Confirmation Dialog' under the 'Information Overlay'. It is an interactive element that matches the intent of opening a modal or dialog."
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.85,
+                "description": "Button with text 'Show Confirmation' labeled as part of the 'Dropdown Menus' section. It is an interactive element used to trigger actions within dropdowns."
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.75,
+                "description": "Button with text 'Confirm Action' under the 'Overlays' section. It is an interactive element that matches the intent of confirming actions in overlays."
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.65,
+                "description": "Button with text 'Confirm' labeled as part of the 'Modals and Dialogs' section. It is an interactive element used to confirm modal actions."
+              },
+              {
+                "mimicId": 11,
+                "confidence": 0.55,
+                "description": "Button with text 'Open Confirmation Dialog' under a tab ('Tab 1'). It is an interactive element that matches the intent of opening a modal or dialog within a specific tab."
+              }
+            ],
+            "clickType": "middle",
+            "reasoning": "The most likely elements to be clicked based on the Gherkin step 'click on 'Open Simple Modal'' are those labeled as interactive and with text related to opening modals or dialogs. The elements identified have a high probability of being buttons used for these purposes."
+          },
+          "executedAt": "2026-01-10T17:36:54.232Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Open Confirmation Dialog",
+              "exact": true,
+              "nth": 2
+            },
+            "mimicId": 14
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "f35801657a7e004a",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Simple Modal\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "Button with text 'Open Confirmation Dialog' under the 'Information Overlay'. It is an interactive element that matches the intent of opening a modal or dialog."
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.85,
+                "description": "Button with text 'Show Confirmation' labeled as part of the 'Dropdown Menus' section. It is an interactive element used to trigger actions within dropdowns."
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.75,
+                "description": "Button with text 'Confirm Action' under the 'Overlays' section. It is an interactive element that matches the intent of confirming actions in overlays."
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.65,
+                "description": "Button with text 'Confirm' labeled as part of the 'Modals and Dialogs' section. It is an interactive element used to confirm modal actions."
+              },
+              {
+                "mimicId": 11,
+                "confidence": 0.55,
+                "description": "Button with text 'Open Confirmation Dialog' under a tab ('Tab 1'). It is an interactive element that matches the intent of opening a modal or dialog within a specific tab."
+              }
+            ],
+            "clickType": "middle",
+            "reasoning": "The most likely elements to be clicked based on the Gherkin step 'click on 'Open Simple Modal'' are those labeled as interactive and with text related to opening modals or dialogs. The elements identified have a high probability of being buttons used for these purposes."
+          },
+          "executedAt": "2026-01-10T17:36:54.232Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Open Confirmation Dialog",
+              "exact": true,
+              "nth": 2
+            },
+            "mimicId": 14
+          }
+        }
+      ],
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T17:32:36.845Z",
+        "lastPassedAt": "2026-01-10T22:25:46.668Z",
+        "lastFailedAt": "2026-01-10T22:25:46.452Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Open Simple Modal\"",
+          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"6\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"6\" data-mimic-type=\"interactive\" onclick=\"toggleDropdown('dropdown1')\">Open Simple Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    402 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "cb7680d023c0967d",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T19:44:17.799Z",
+        "lastPassedAt": "2026-01-10T22:19:50.460Z",
+        "lastFailedAt": "2026-01-10T22:19:50.447Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Open Simple Modal\"",
+          "error": "locator.hover: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"11\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"11\" data-mimic-type=\"interactive\">OK</button>\u001b[22m\n\u001b[2m  - attempting hover action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m      - element is visible and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying hover action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m      - element is visible and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying hover action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    437 × waiting for element to be visible and stable\u001b[22m\n\u001b[2m        - element is visible and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying hover action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "99b1f0fed9f07611",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T17:43:37.090Z",
+        "lastPassedAt": "2026-01-10T22:22:29.196Z",
+        "lastFailedAt": "2026-01-10T22:22:26.914Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Open Confirmation Dialog\"",
+          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Show Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    360 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "57d9457b43eef2e0",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T17:50:16.105Z",
+        "lastPassedAt": "2026-01-10T22:22:03.574Z",
+        "lastFailedAt": "2026-01-10T22:22:03.479Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Open Confirmation Dialog\"",
+          "error": "AI model call failed after 107059ms (tried both text-only and with image): No object generated: response did not match schema."
+        }
+      }
+    },
+    {
+      "testHash": "7883f9d66f6fb059",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T18:17:52.847Z",
+        "lastPassedAt": "2026-01-10T22:23:50.382Z",
+        "lastFailedAt": "2026-01-10T22:23:50.350Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Open Confirmation Dialog\"",
+          "error": "AI model call failed after 75896ms (tried both text-only and with image): No object generated: response did not match schema."
+        }
+      }
+    },
+    {
+      "testHash": "623e7737cc2d49e9",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T19:03:58.488Z",
+        "lastPassedAt": "2026-01-10T22:30:21.966Z",
+        "lastFailedAt": "2026-01-10T22:30:21.839Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Open Alert Dialog\"",
+          "error": "locator.click: Timeout 300000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Open Confirmation Dialog</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    439 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
+        }
+      }
+    },
+    {
+      "testHash": "2bdb8507f2eb2f41",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T19:22:33.312Z",
+        "lastPassedAt": "2026-01-10T22:26:06.568Z",
+        "lastFailedAt": "2026-01-10T22:26:06.566Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Open Alert Dialog\"",
+          "error": "Unknown base action type: assertion"
+        }
+      }
+    },
+    {
+      "testHash": "f0407f3f37eb2045",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T22:26:00.334Z",
+        "lastPassedAt": "2026-01-10T22:26:00.355Z",
+        "lastFailedAt": "2026-01-10T22:26:00.334Z"
+      }
+    },
+    {
+      "testHash": "f0471cdd2198dae6",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T22:29:28.355Z",
+        "lastPassedAt": "2026-01-10T22:29:28.373Z",
+        "lastFailedAt": "2026-01-10T22:29:28.355Z"
+      }
+    },
+    {
+      "testHash": "14284dd840918348",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-10T22:31:59.520Z",
+        "lastPassedAt": "2026-01-10T22:31:59.539Z",
+        "lastFailedAt": "2026-01-10T22:31:59.520Z"
+      }
+    }
+  ]
+}

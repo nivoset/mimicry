@@ -109,6 +109,29 @@ Your task is to analyze:
 2. An accessibility snapshot (provided below) that describes the page structure with roles, names, data-testid, and data-mimic-* attributes
 3. A single Gherkin step that implies a click action
 
+**CRITICAL: Click Type Determination**
+You must determine the correct click type from the Gherkin step. Use these rules:
+
+**Click Type Equivalencies (these are the SAME):**
+- "click", "left click", and "primary click" → use "primary"
+- "right click" and "secondary click" → use "secondary"  
+- "middle click" and "tertiary click" → use "tertiary"
+- "double click" or "double-click" → use "double"
+
+**Default Behavior:**
+- If the step just says "click" (without specifying left/right/middle/double), ALWAYS use "primary"
+- "click" by itself means a standard left/primary click, NOT a hover
+
+**Hover Rules (STRICT):**
+- ONLY use "hover" when the Gherkin step EXPLICITLY mentions "hover", "hover over", or "move mouse over"
+- NEVER use "hover" for a step that says "click" - these are DIFFERENT actions
+- Hover is ONLY for revealing tooltips, dropdowns, or additional UI elements that appear on mouseover
+- If the step says "click", it means click, NOT hover
+
+**Modifier Keys:**
+- Detect if modifier keys are mentioned: shift, control (ctrl), alt, meta (command)
+- These are optional and should be included in the modifiers field if present
+
 **IMPORTANT**: Look at the screenshot to identify elements by their marker numbers. Each element has a numbered badge:
 - **RED badges** = Interactive elements (buttons, links, inputs, etc.)
 - **BLUE badges** = Display-only content elements
@@ -153,6 +176,11 @@ ${ariaSnapshot}
 
 ## Analyze the screenshot and accessibility snapshot, then return up to the top 5 most likely elements that the Gherkin step is referring to.
 Use the marker ID numbers (mimicId) shown on the badges in the screenshot and referenced in the accessibility snapshot to identify elements.
+
+**Remember:**
+- "click" = primary click (left click) - the default for any click action
+- "hover" is ONLY for explicit hover instructions, NEVER for click steps
+- When in doubt about click type, default to "primary"
 `;
   const promptTime = Date.now() - promptStart;
   console.log(`📝 [getClickAction] Built prompt in ${promptTime}ms, prompt length: ${prompt.length} chars`);
@@ -292,16 +320,16 @@ export const executeClickAction = async (
   // Build annotation description based on click type
   let annotationDescription = '';
   switch (clickActionResult.clickType) {
-    case 'left':
+    case 'primary':
       annotationDescription = `→ Clicking on ${elementDescription} with left mouse button`;
       break;
-    case 'right':
+    case 'secondary':
       annotationDescription = `→ Right-clicking on ${elementDescription} to open context menu`;
       break;
     case 'double':
       annotationDescription = `→ Double-clicking on ${elementDescription} to activate`;
       break;
-    case 'middle':
+    case 'tertiary':
       annotationDescription = `→ Clicking on ${elementDescription} with middle mouse button`;
       break;
     case 'hover':
@@ -319,8 +347,8 @@ export const executeClickAction = async (
   try {
     // Generate the best selector descriptor from the element
     // This gives us a descriptive, stable selector for snapshot storage
-    // Use 5-minute timeout (300000ms) for slow tests - selector generation can be slow
-    const selectorDescriptor = await generateBestSelectorForElement(element, { timeout: 300000 });
+    // Use 30-second timeout for selector generation
+    const selectorDescriptor = await generateBestSelectorForElement(element, { timeout: 30000 });
     const selectorCode = selectorToPlaywrightCode(selectorDescriptor);
     playwrightCode = generateClickCode(selectorCode, clickActionResult.clickType);
     
@@ -355,16 +383,16 @@ export const executeClickAction = async (
 
   // Perform the click action
   switch (clickActionResult.clickType) {
-    case 'left':
+    case 'primary':
       await element.click();
       break;
-    case 'right':
+    case 'secondary':
       await element.click({ button: 'right' });
       break;
     case 'double':
       await element.dblclick();
       break;
-    case 'middle':
+    case 'tertiary':
       await element.click({ button: 'middle' });
       break;
     case 'hover':

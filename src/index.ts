@@ -12,7 +12,7 @@ export { getBaseAction } from './mimic/actionType.js';
 export { getClickAction, executeClickAction } from './mimic/click.js';
 export { getNavigationAction, executeNavigationAction } from './mimic/navigation.js';
 export { getFormAction, executeFormAction, type FormActionResult } from './mimic/forms.js';
-export { captureMarkers, getMimic, type MarkerElementInfo, type CaptureMarkersOptions } from './mimic/markers.js';
+export { getMimic, type MarkerElementInfo } from './mimic/markers.js';
 
 // Schema types
 export type {

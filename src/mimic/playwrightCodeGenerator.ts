@@ -199,16 +199,16 @@ export function selectorToPlaywrightCode(
  */
 export function generateClickCode(
   selectorCode: string,
-  clickType: 'left' | 'right' | 'double' | 'middle' | 'hover'
+  clickType: 'primary' | 'secondary' | 'tertiary' | 'double' | 'hover'
 ): string {
   switch (clickType) {
-    case 'left':
+    case 'primary':
       return `await ${selectorCode}.click();`;
-    case 'right':
+    case 'secondary':
       return `await ${selectorCode}.click({ button: 'right' });`;
     case 'double':
       return `await ${selectorCode}.dblclick();`;
-    case 'middle':
+    case 'tertiary':
       return `await ${selectorCode}.click({ button: 'middle' });`;
     case 'hover':
       return `await ${selectorCode}.hover();`;

@@ -125,8 +125,9 @@ export const zClickActionResult = z.object({
    * Determined from the Gherkin step (e.g., "right click", "double click")
    */
   clickType: z
-    .enum(["left", "right", "double", "middle", "hover"])
+    .enum(["primary", "secondary", "tertiary", "double", "hover"])
     .describe("Click type determined from the Gherkin step"),
+  modifiers: zModifierKeys.nullish().describe("Optional modifier keys to use for the click action."),
   /**
    * Brief explanation of the matching logic and reasoning
    */

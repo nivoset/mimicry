@@ -14,12 +14,19 @@ import { getMimic } from './markers.js';
  * 
  * @param page - Playwright Page object (or parent Locator for nested selectors)
  * @param descriptor - SelectorDescriptor (from JSON)
+ * @param depth - Current recursion depth (internal use, defaults to 0)
  * @returns Playwright Locator reconstructed from the descriptor
  */
 export function getFromSelector(
   page: Page | Locator,
-  descriptor: SelectorDescriptor
+  descriptor: SelectorDescriptor,
+  depth: number = 0
 ): Locator {
+  // Prevent infinite recursion by limiting depth to 10 levels
+  const MAX_DEPTH = 10;
+  if (depth >= MAX_DEPTH) {
+    throw new Error(`Maximum selector nesting depth (${MAX_DEPTH}) exceeded. This may indicate a circular reference in the selector descriptor.`);
+  }
   let baseLocator: Locator;
   
   // Build base locator based on selector type
@@ -130,7 +137,7 @@ export function getFromSelector(
   
   // If there's a nested child selector, recursively build it from the base locator
   if (descriptor.child) {
-    return getFromSelector(baseLocator, descriptor.child);
+    return getFromSelector(baseLocator, descriptor.child, depth + 1);
   }
   
   return baseLocator;
@@ -174,7 +181,7 @@ export async function getMimicIdFromLocator(
  * @param page - Playwright Page object
  * @param descriptor - SelectorDescriptor to verify
  * @param targetMimicId - Optional mimic ID to verify the match is correct
- * @param timeout - Optional timeout in milliseconds for locator operations (default: 300000 = 5 minutes)
+ * @param timeout - Optional timeout in milliseconds for locator operations (default: 30000 = 30 seconds)
  * @returns Promise resolving to an object with:
  *   - unique: true if selector is unique (and matches target if provided)
  *   - locator: The Locator returned by getFromSelector (nested type preserved)
@@ -185,8 +192,8 @@ export async function verifySelectorUniqueness(
   targetMimicId?: null | number,
   timeout?: number
 ): Promise<{ unique: boolean; locator: Locator; count?: number; index?: number | undefined }> {
-  // Default to 5 minutes for slow tests
-  const operationTimeout = timeout ?? 300000;
+  // Default to 30 seconds for selector operations
+  const operationTimeout = timeout ?? 30000;
   
   try {
     // Get the locator from the selector descriptor (preserves nested type)

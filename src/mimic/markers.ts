@@ -83,7 +83,12 @@ const MARKER_CODE = `
       return rect.width > 0 && rect.height > 0;
     }
   
-    function isDisplayOnlyElement(el) {
+    function isDisplayOnlyElement(el, depth) {
+      // Prevent stack overflow by limiting depth to 50 levels
+      const MAX_DEPTH = 50;
+      if (depth === undefined) depth = 0;
+      if (depth >= MAX_DEPTH) return false;
+      
       if (!(el instanceof Element)) return false;
       if (el.matches(INTERACTIVE_SELECTOR)) return false;
       if (el.querySelector(INTERACTIVE_SELECTOR)) return false;
@@ -98,7 +103,7 @@ const MARKER_CODE = `
         if (node.nodeType === Node.ELEMENT_NODE) {
           const childEl = node;
           if (!ALLOWED_INLINE_TAGS.has(childEl.tagName)) return false;
-          if (!isDisplayOnlyElement(childEl)) return false;
+          if (!isDisplayOnlyElement(childEl, depth + 1)) return false;
           continue;
         }
   
@@ -163,7 +168,7 @@ const MARKER_CODE = `
       if (!isVisible(el)) continue;
       // Skip if already marked as interactive
       if (el.getAttribute("data-mimic-id")) continue;
-      if (isDisplayOnlyElement(el)) {
+      if (isDisplayOnlyElement(el, 0)) {
         const id = getOrAssignStableId(el, 'display');
         const rect = el.getBoundingClientRect();
         markers.push({
@@ -284,209 +289,6 @@ export interface MarkerElementInfo {
 }
 
 /**
- * Options for capturing elements with markers
- */
-export interface CaptureMarkersOptions {
-  /** Only capture interactive elements (buttons, links, inputs, etc.) */
-  interactableOnly?: boolean;
-}
-
-/**
- * Capture elements from the page using the markers system
- * 
- * This function replaces captureTargets() and uses marker IDs instead of TargetInfo.
- * It captures all elements that have been marked by the overlay system and returns
- * their metadata along with their mimic IDs.
- * 
- * @param page - Playwright Page object
- * @param options - Optional configuration for capturing elements
- * @returns Promise resolving to array of MarkerElementInfo objects
- * 
- * @deprecated Use captureTargets() instead
- */
-export async function captureMarkers(
-  page: Page,
-  options: CaptureMarkersOptions = {}
-): Promise<MarkerElementInfo[]> {
-  const { interactableOnly = false } = options;
-  
-  return await page.evaluate((interactableOnlyFlag) => {
-    const elements: MarkerElementInfo[] = [];
-    
-    // Get all elements with mimic IDs
-    const allElements = document.querySelectorAll('[data-mimic-id]');
-    
-    // Define interactive selectors for filtering
-    const interactiveSelectors = [
-      'button',
-      'a[href]',
-      'input:not([type="hidden"])',
-      'select',
-      'textarea',
-      '[role="button"]',
-      '[role="link"]',
-      '[role="textbox"]',
-      '[role="checkbox"]',
-      '[role="radio"]',
-      '[role="combobox"]',
-      '[role="menuitem"]',
-      '[role="tab"]',
-      '[role="option"]',
-      '[tabindex]:not([tabindex="-1"])',
-    ];
-    
-    // Helper to check if element is visible
-    function isVisible(el: Element): boolean {
-      const style = window.getComputedStyle(el);
-      if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
-        return false;
-      }
-      const rect = el.getBoundingClientRect();
-      return rect.width > 0 && rect.height > 0;
-    }
-    
-    // Helper to normalize text
-    function normalizeText(text: string): string {
-      return text.trim().replace(/\s+/g, ' ');
-    }
-    
-    // Helper to get label
-    function getLabel(el: Element): string | null {
-      const ariaLabel = el.getAttribute('aria-label');
-      if (ariaLabel) return ariaLabel.trim();
-      
-      const labelledBy = el.getAttribute('aria-labelledby');
-      if (labelledBy) {
-        const labelEl = document.getElementById(labelledBy);
-        if (labelEl) return normalizeText(labelEl.textContent || '');
-      }
-      
-      if (el.id) {
-        const labelFor = document.querySelector(`label[for="${el.id}"]`);
-        if (labelFor) return normalizeText(labelFor.textContent || '');
-      }
-      
-      const parentLabel = el.closest('label');
-      if (parentLabel) return normalizeText(parentLabel.textContent || '');
-      
-      return null;
-    }
-    
-    // Helper to infer role
-    function inferRole(el: Element): string | null {
-      const role = el.getAttribute('role');
-      if (role) return role;
-      
-      const tag = el.tagName.toLowerCase();
-      if (tag === 'button') return 'button';
-      if (tag === 'a') return 'link';
-      if (tag === 'input') {
-        const inputType = (el as HTMLInputElement).type;
-        if (inputType === 'button' || inputType === 'submit' || inputType === 'reset') return 'button';
-        if (inputType === 'checkbox') return 'checkbox';
-        if (inputType === 'radio') return 'radio';
-        return 'textbox';
-      }
-      if (tag === 'select') return 'combobox';
-      if (tag === 'textarea') return 'textbox';
-      if (tag === 'img') return 'img';
-      
-      return null;
-    }
-    
-    // Helper to get dataset
-    function getDataset(el: Element): Record<string, string> {
-      const dataset: Record<string, string> = {};
-      for (let i = 0; i < el.attributes.length; i++) {
-        const attr = el.attributes[i];
-        if (attr && attr.name && attr.name.startsWith('data-')) {
-          let key = attr.name.replace(/^data-/, '');
-          // Convert kebab-case to camelCase
-          let result = '';
-          let capitalizeNext = false;
-          for (let j = 0; j < key.length; j++) {
-            const char = key[j];
-            if (char) {
-              if (char === '-') {
-                capitalizeNext = true;
-              } else {
-                result += capitalizeNext ? char.toUpperCase() : char;
-                capitalizeNext = false;
-              }
-            }
-          }
-          dataset[result] = attr.value;
-        }
-      }
-      return dataset;
-    }
-    
-    // Helper to get nth-of-type
-    function getNthOfType(el: Element): number {
-      const tagName = el.tagName;
-      let nthOfType = 1;
-      let sibling = el.previousElementSibling;
-      while (sibling) {
-        if (sibling.tagName === tagName) {
-          nthOfType++;
-        }
-        sibling = sibling.previousElementSibling;
-      }
-      return nthOfType;
-    }
-    
-    // Process all elements with mimic IDs
-    for (let i = 0; i < allElements.length; i++) {
-      const el = allElements[i];
-      
-      // Skip if not visible
-      if (!isVisible(el)) continue;
-      
-      // Filter by interactable only if requested
-      if (interactableOnlyFlag) {
-        let isInteractive = false;
-        for (const selector of interactiveSelectors) {
-          if (el.matches(selector)) {
-            isInteractive = true;
-            break;
-          }
-        }
-        if (!isInteractive) continue;
-      }
-      
-      // Get mimic ID
-      const mimicIdAttr = el.getAttribute('data-mimic-id');
-      if (!mimicIdAttr) continue;
-      const mimicId = Number(mimicIdAttr);
-      if (!mimicId || isNaN(mimicId)) continue;
-      
-      // Get element text
-      const text = normalizeText(el.textContent || '');
-      
-      // Build element info
-      const elementInfo: MarkerElementInfo = {
-        mimicId,
-        tag: el.tagName.toLowerCase(),
-        text,
-        id: el.id || null,
-        role: inferRole(el),
-        label: getLabel(el),
-        ariaLabel: el.getAttribute('aria-label') || null,
-        typeAttr: (el as HTMLInputElement).type || null,
-        nameAttr: el.getAttribute('name') || null,
-        href: (el as HTMLAnchorElement).href || null,
-        dataset: getDataset(el),
-        nthOfType: getNthOfType(el),
-      };
-      
-      elements.push(elementInfo);
-    }
-    
-    return elements;
-  }, interactableOnly);
-}
-
-/**
  * Draw colored markers on the screenshot image
  * 
  * Draws colored circular markers at the left center of each element's bounding box.
@@ -582,7 +384,7 @@ export const captureScreenshot = async (page: Page): Promise<{ image: Buffer, ma
   // Take screenshot (no observer issues since we're not doing visual overlays)
   const image = await page.screenshot({ 
     fullPage: true,
-    timeout: 300000 // 5 minutes for slow tests
+    timeout: 30000 // 30 seconds
   });
   const screenshotTime = performance.now() - start;
   console.log(`📸 [captureScreenshot] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);

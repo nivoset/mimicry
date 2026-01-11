@@ -321,8 +321,8 @@ export const executeFormAction = async (
   try {
     // Generate the best selector descriptor from the element
     // This gives us a descriptive, stable selector for snapshot storage
-    // Use 5-minute timeout (300000ms) for slow tests - selector generation can be slow
-    const selectorDescriptor = await generateBestSelectorForElement(targetElement, { timeout: 300000 });
+    // Use 30-second timeout for selector generation
+    const selectorDescriptor = await generateBestSelectorForElement(targetElement, { timeout: 30000 });
     const selectorCode = selectorToPlaywrightCode(selectorDescriptor);
     playwrightCode = generateFormCode(
       selectorCode,
@@ -377,7 +377,7 @@ export const executeFormAction = async (
           // Update Playwright code and selector for check action
           // Regenerate selector to ensure we have the best one for this specific action
           try {
-            const selectorDescriptor = await generateBestSelectorForElement(targetElement, { timeout: 300000 });
+            const selectorDescriptor = await generateBestSelectorForElement(targetElement, { timeout: 30000 });
             const selectorCode = selectorToPlaywrightCode(selectorDescriptor);
             playwrightCode = generateFormCode(selectorCode, 'check');
             // Store the updated selector descriptor
@@ -410,7 +410,7 @@ export const executeFormAction = async (
         // Update Playwright code and selector for fill action
         // Regenerate selector to ensure we have the best one for this specific action
         try {
-          const selectorDescriptor = await generateBestSelectorForElement(targetElement, { timeout: 300000 });
+          const selectorDescriptor = await generateBestSelectorForElement(targetElement, { timeout: 30000 });
           const selectorCode = selectorToPlaywrightCode(selectorDescriptor);
           playwrightCode = generateFormCode(selectorCode, 'fill', keyValue);
           // Store the updated selector descriptor
@@ -440,7 +440,7 @@ export const executeFormAction = async (
         if (!selector) {
           // If selector wasn't generated earlier, try to generate it now
           try {
-            selector = await generateBestSelectorForElement(targetElement, { timeout: 300000 });
+            selector = await generateBestSelectorForElement(targetElement, { timeout: 30000 });
             const selectorCode = selectorToPlaywrightCode(selector);
             // Use the selector to focus the element before pressing key
             playwrightCode = `${selectorCode}.focus();\nawait page.keyboard.press(${JSON.stringify(keyValue)});`;
@@ -478,7 +478,7 @@ export const executeFormAction = async (
       if (!selector) {
         // If selector wasn't generated earlier, try to generate it now
         try {
-          selector = await generateBestSelectorForElement(targetElement, { timeout: 300000 });
+          selector = await generateBestSelectorForElement(targetElement, { timeout: 30000 });
           const selectorCode = selectorToPlaywrightCode(selector);
           // Use the selector to focus the element before typing
           playwrightCode = `${selectorCode}.focus();\nawait page.keyboard.type(${JSON.stringify(formActionResult.params.value)});`;

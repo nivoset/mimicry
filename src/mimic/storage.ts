@@ -8,7 +8,7 @@
 import { createHash } from 'crypto';
 import fs from 'node:fs/promises';
 import { join, dirname, basename } from 'node:path';
-import type { Snapshot } from './types.js';
+import type { Snapshot, SnapshotStep } from './types.js';
 
 /**
  * Generate a hash from test text to create a unique identifier
@@ -255,9 +255,9 @@ export async function saveSnapshot(
     const mergedStepsByHash: Record<string, SnapshotStep> = {};
     
     // Start with existing steps (support both formats)
-    if (existingTest.stepsByHash) {
+    if (existingTest && existingTest.stepsByHash) {
       Object.assign(mergedStepsByHash, existingTest.stepsByHash);
-    } else if (existingTest.steps) {
+    } else if (existingTest && existingTest.steps) {
       // Convert old format to new format
       for (const step of existingTest.steps) {
         mergedStepsByHash[step.stepHash] = step;
@@ -338,7 +338,8 @@ export async function recordFailure(
     const failureSnapshot: Snapshot = {
       testHash,
       testText: '',
-      steps: [],
+      steps: [] ,
+      stepsByHash: {},
       flags: {
         needsRetry: true,
         hasErrors: true,
@@ -365,8 +366,8 @@ export async function recordFailure(
       skipSnapshot: false,
       forceRegenerate: false,
       debugMode: false,
-      createdAt: snapshot.flags?.createdAt || now,
-      lastPassedAt: snapshot.flags?.lastPassedAt || null,
+      createdAt: now,
+      lastPassedAt: null,
       lastFailedAt: now,
     };
   } else {
