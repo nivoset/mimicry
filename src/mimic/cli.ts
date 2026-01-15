@@ -5,13 +5,27 @@
  */
 
 /**
- * Check if troubleshoot mode is enabled via CLI argument
+ * Check if troubleshoot mode is enabled via CLI argument or environment variable
  * 
  * Troubleshoot mode forces tests to rebuild snapshots even when they fail.
  * This is useful for debugging and updating snapshots after fixing issues.
  * 
- * @returns true if --troubleshoot flag is present in process.argv
+ * Can be enabled via:
+ * - CLI flag: --troubleshoot
+ * - Environment variable: MIMIC_TROUBLESHOOT=true
+ * 
+ * @returns true if troubleshoot mode is enabled
  */
 export function isTroubleshootMode(): boolean {
-  return process.argv.includes('--troubleshoot');
+  // Check CLI argument
+  if (process.argv.includes('--troubleshoot')) {
+    return true;
+  }
+  
+  // Check environment variable
+  if (process.env.MIMIC_TROUBLESHOOT === 'true' || process.env.MIMIC_TROUBLESHOOT === '1') {
+    return true;
+  }
+  
+  return false;
 }

@@ -968,11 +968,11 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:36:26.400Z",
-        "lastPassedAt": "2026-01-11T19:57:07.846Z",
-        "lastFailedAt": "2026-01-11T19:57:07.842Z",
+        "lastPassedAt": "2026-01-12T23:06:18.078Z",
+        "lastFailedAt": "2026-01-12T23:06:18.076Z",
         "failureDetails": {
-          "failedStepIndex": 3,
-          "failedStepText": "check \"Daily Newsletter\"",
+          "failedStepIndex": 2,
+          "failedStepText": "select \"Australia\" from the country dropdown",
           "error": "Unknown base action type: assertion"
         }
       }
@@ -1108,11 +1108,11 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:37:38.064Z",
-        "lastPassedAt": "2026-01-11T19:59:38.026Z",
-        "lastFailedAt": "2026-01-11T19:59:38.025Z",
+        "lastPassedAt": "2026-01-12T23:08:44.703Z",
+        "lastFailedAt": "2026-01-12T23:08:44.700Z",
         "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "type \"Complete Test User\" into the name field",
+          "failedStepIndex": 2,
+          "failedStepText": "type \"1234567890\" into the phone field",
           "error": "Unknown base action type: assertion"
         }
       }
@@ -1288,24 +1288,567 @@
     },
     {
       "testHash": "93cd1c35e475878b",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "type \"Jane Smith\" into the name field\ntype \"jane@example.com\" into the email field\ntype \"5559876543\" into the phone field\nselect \"United Kingdom\" from the country dropdown\ntype \"Hello, this is a test message\" into the message field\nselect the \"Phone\" radio button\nselect \"Weekly Digest\"\nselect the terms and conditions checkbox\nclick on \"Submit Form\"",
+      "stepsByHash": {
+        "605157778ba1a588": {
+          "stepHash": "605157778ba1a588",
+          "stepIndex": 0,
+          "stepText": "type \"Jane Smith\" into the name field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 5,
+            "type": "fill",
+            "params": {
+              "value": "Jane Smith",
+              "modifiers": []
+            },
+            "elementDescription": "Name input field labeled 'Full Name'"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Full Name",
+              "exact": true
+            },
+            "mimicId": 5
+          }
+        },
+        "438b0e64962a1838": {
+          "stepHash": "438b0e64962a1838",
+          "stepIndex": 1,
+          "stepText": "type \"jane@example.com\" into the email field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 6,
+            "type": "fill",
+            "params": {
+              "value": "jane@example.com",
+              "modifiers": []
+            },
+            "elementDescription": "Email input field labeled 'Email Address'"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Email Address",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        },
+        "fd485340c2b49e05": {
+          "stepHash": "fd485340c2b49e05",
+          "stepIndex": 2,
+          "stepText": "type \"5559876543\" into the phone field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 7,
+            "type": "fill",
+            "params": {
+              "value": "5559876543",
+              "modifiers": []
+            },
+            "elementDescription": "Phone input field"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Phone Number",
+              "exact": true
+            },
+            "mimicId": 7
+          }
+        },
+        "32628f1df71226e9": {
+          "stepHash": "32628f1df71226e9",
+          "stepIndex": 3,
+          "stepText": "select \"United Kingdom\" from the country dropdown",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 8,
+            "type": "select",
+            "params": {
+              "value": "United Kingdom",
+              "modifiers": []
+            },
+            "elementDescription": "Country dropdown select element labeled 'Select a country'"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "combobox",
+              "name": "Country",
+              "exact": true
+            },
+            "mimicId": 8
+          }
+        },
+        "da4317632ca93fb3": {
+          "stepHash": "da4317632ca93fb3",
+          "stepIndex": 4,
+          "stepText": "type \"Hello, this is a test message\" into the message field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 9,
+            "type": "fill",
+            "params": {
+              "value": "Hello, this is a test message",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "Message textarea field labeled 'Message'"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Message",
+              "exact": true
+            },
+            "mimicId": 9
+          }
+        },
+        "d52ed3ba2934322c": {
+          "stepHash": "d52ed3ba2934322c",
+          "stepIndex": 5,
+          "stepText": "select the \"Phone\" radio button",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 11,
+                "confidence": 0.95,
+                "description": "Phone Number input field"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.8,
+                "description": "Visible text 'Phone Number'"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.6,
+                "description": "Accessible name 'Phone Number'"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.5,
+                "description": "Newsletter Preferences checkbox"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.4,
+                "description": "SMS radio button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifically mentions 'Phone' radio button. Among the options provided in the screenshot and accessibility snapshot, the Phone Number input field (mimicId 11) is the most likely element being referred to by this action."
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "radio",
+              "name": "Phone",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        },
+        "302a58a71bcf11be": {
+          "stepHash": "302a58a71bcf11be",
+          "stepIndex": 6,
+          "stepText": "select \"Weekly Digest\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 14,
+            "type": "check",
+            "params": {
+              "value": "Weekly Digest",
+              "modifiers": []
+            },
+            "elementDescription": "Weekly Digest checkbox"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Weekly Digest",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        },
+        "25e6eec7b5b989e5": {
+          "stepHash": "25e6eec7b5b989e5",
+          "stepIndex": 7,
+          "stepText": "select the terms and conditions checkbox",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 16,
+            "type": "check",
+            "params": {
+              "value": "",
+              "modifiers": []
+            },
+            "elementDescription": "I agree to the terms and conditions checkbox"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "I agree to the terms and conditions",
+              "exact": true
+            },
+            "mimicId": 16
+          }
+        },
+        "0979baee2fcf5dce": {
+          "stepHash": "0979baee2fcf5dce",
+          "stepIndex": 8,
+          "stepText": "click on \"Submit Form\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 17,
+                "confidence": 0.9,
+                "description": "Submit Form button with accessible name 'Submit Form' and role 'button'"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.8,
+                "description": "Name input field where Jane Smith was typed"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.7,
+                "description": "Email input field where jane@example.com was typed"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.7,
+                "description": "Phone input field where 5559876543 was typed"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.6,
+                "description": "Reset Form button with accessible name 'Reset Form' and role 'button'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly says 'click on 'Submit Form'' which corresponds to the button with mimicId 17. No other elements are as relevant or specifically mentioned in the step."
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Submit Form",
+              "exact": true
+            },
+            "mimicId": 17
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "605157778ba1a588",
+          "stepIndex": 0,
+          "stepText": "type \"Jane Smith\" into the name field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 5,
+            "type": "fill",
+            "params": {
+              "value": "Jane Smith",
+              "modifiers": []
+            },
+            "elementDescription": "Name input field labeled 'Full Name'"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Full Name",
+              "exact": true
+            },
+            "mimicId": 5
+          }
+        },
+        {
+          "stepHash": "438b0e64962a1838",
+          "stepIndex": 1,
+          "stepText": "type \"jane@example.com\" into the email field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 6,
+            "type": "fill",
+            "params": {
+              "value": "jane@example.com",
+              "modifiers": []
+            },
+            "elementDescription": "Email input field labeled 'Email Address'"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Email Address",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        },
+        {
+          "stepHash": "fd485340c2b49e05",
+          "stepIndex": 2,
+          "stepText": "type \"5559876543\" into the phone field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 7,
+            "type": "fill",
+            "params": {
+              "value": "5559876543",
+              "modifiers": []
+            },
+            "elementDescription": "Phone input field"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Phone Number",
+              "exact": true
+            },
+            "mimicId": 7
+          }
+        },
+        {
+          "stepHash": "32628f1df71226e9",
+          "stepIndex": 3,
+          "stepText": "select \"United Kingdom\" from the country dropdown",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 8,
+            "type": "select",
+            "params": {
+              "value": "United Kingdom",
+              "modifiers": []
+            },
+            "elementDescription": "Country dropdown select element labeled 'Select a country'"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "combobox",
+              "name": "Country",
+              "exact": true
+            },
+            "mimicId": 8
+          }
+        },
+        {
+          "stepHash": "da4317632ca93fb3",
+          "stepIndex": 4,
+          "stepText": "type \"Hello, this is a test message\" into the message field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 9,
+            "type": "fill",
+            "params": {
+              "value": "Hello, this is a test message",
+              "modifiers": [
+                "none"
+              ]
+            },
+            "elementDescription": "Message textarea field labeled 'Message'"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "textbox",
+              "name": "Message",
+              "exact": true
+            },
+            "mimicId": 9
+          }
+        },
+        {
+          "stepHash": "d52ed3ba2934322c",
+          "stepIndex": 5,
+          "stepText": "select the \"Phone\" radio button",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 11,
+                "confidence": 0.95,
+                "description": "Phone Number input field"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.8,
+                "description": "Visible text 'Phone Number'"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.6,
+                "description": "Accessible name 'Phone Number'"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.5,
+                "description": "Newsletter Preferences checkbox"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.4,
+                "description": "SMS radio button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifically mentions 'Phone' radio button. Among the options provided in the screenshot and accessibility snapshot, the Phone Number input field (mimicId 11) is the most likely element being referred to by this action."
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "radio",
+              "name": "Phone",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        },
+        {
+          "stepHash": "302a58a71bcf11be",
+          "stepIndex": 6,
+          "stepText": "select \"Weekly Digest\"",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 14,
+            "type": "check",
+            "params": {
+              "value": "Weekly Digest",
+              "modifiers": []
+            },
+            "elementDescription": "Weekly Digest checkbox"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "Weekly Digest",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        },
+        {
+          "stepHash": "25e6eec7b5b989e5",
+          "stepIndex": 7,
+          "stepText": "select the terms and conditions checkbox",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 16,
+            "type": "check",
+            "params": {
+              "value": "",
+              "modifiers": []
+            },
+            "elementDescription": "I agree to the terms and conditions checkbox"
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "checkbox",
+              "name": "I agree to the terms and conditions",
+              "exact": true
+            },
+            "mimicId": 16
+          }
+        },
+        {
+          "stepHash": "0979baee2fcf5dce",
+          "stepIndex": 8,
+          "stepText": "click on \"Submit Form\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 17,
+                "confidence": 0.9,
+                "description": "Submit Form button with accessible name 'Submit Form' and role 'button'"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.8,
+                "description": "Name input field where Jane Smith was typed"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.7,
+                "description": "Email input field where jane@example.com was typed"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.7,
+                "description": "Phone input field where 5559876543 was typed"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.6,
+                "description": "Reset Form button with accessible name 'Reset Form' and role 'button'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly says 'click on 'Submit Form'' which corresponds to the button with mimicId 17. No other elements are as relevant or specifically mentioned in the step."
+          },
+          "executedAt": "2026-01-12T00:41:22.778Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Submit Form",
+              "exact": true
+            },
+            "mimicId": 17
+          }
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-11T18:58:31.777Z",
-        "lastPassedAt": "2026-01-11T19:55:11.942Z",
-        "lastFailedAt": "2026-01-11T19:55:11.940Z",
-        "failureDetails": {
-          "failedStepIndex": 3,
-          "failedStepText": "select \"United Kingdom\" from the country dropdown",
-          "error": "Unknown base action type: assertion"
-        }
+        "lastPassedAt": "2026-01-12T00:41:22.781Z",
+        "lastFailedAt": null
       }
     }
   ]

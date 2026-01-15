@@ -22,7 +22,7 @@ test.describe('Simple Navigation Page', { tag: ['@navigation'] }, () => {
     await expect(page.locator('h1')).toContainText('Basic Forms');
   });
 
-  test('should navigate to buttons page via internal link', async ({ page, mimic }) => {
+  test('should navigate to buttons page via internal link', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Go to Buttons Page"`;
 
     expect(page.url()).toContain('buttons-variety.html');
@@ -35,7 +35,7 @@ test.describe('Simple Navigation Page', { tag: ['@navigation'] }, () => {
     expect(page.url()).toContain('dynamic-content.html');
   });
 
-  test('should navigate to accessibility page', async ({ page, mimic }) => {
+  test('should navigate to accessibility page', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Go to Accessibility Page"`;
 
     expect(page.url()).toContain('accessibility.html');
@@ -49,7 +49,7 @@ test.describe('Simple Navigation Page', { tag: ['@navigation'] }, () => {
     await expect(page.locator('#url-params')).toContainText('page=1');
   });
 
-  test('should navigate with different URL parameters', async ({ page, mimic }) => {
+  test('should navigate with different URL parameters', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Page 2, Filter Active"`;
 
     expect(page.url()).toContain('page=2');
@@ -63,7 +63,7 @@ test.describe('Simple Navigation Page', { tag: ['@navigation'] }, () => {
     expect(page.url()).toContain('view=list');
   });
 
-  test('should go back in browser history', async ({ page, mimic }) => {
+  test('should go back in browser history', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Go to Forms Page"
       go back
@@ -82,7 +82,7 @@ test.describe('Simple Navigation Page', { tag: ['@navigation'] }, () => {
     expect(page.url()).toContain('buttons-variety.html');
   });
 
-  test('should refresh the page', async ({ page, mimic }) => {
+  test('should refresh the page', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     const initialUrl = page.url();
     
     await mimic`click on "Refresh Page"`;
@@ -91,7 +91,7 @@ test.describe('Simple Navigation Page', { tag: ['@navigation'] }, () => {
     expect(page.url()).toContain('simple-navigation.html');
   });
 
-  test('should display current URL information', async ({ page }) => {
+  test('should display current URL information', { tag: ['@mimic'] }, async ({ page }) => {
     await expect(page.locator('#current-url')).toBeVisible();
     await expect(page.locator('#url-params')).toBeVisible();
     

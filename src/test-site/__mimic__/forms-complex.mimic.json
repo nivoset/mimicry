@@ -307,12 +307,10 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:41:02.817Z",
-        "lastPassedAt": "2026-01-11T15:19:42.030Z",
-        "lastFailedAt": "2026-01-11T15:19:42.026Z",
+        "lastPassedAt": "2026-01-15T00:47:27.000Z",
+        "lastFailedAt": "2026-01-15T00:47:26.991Z",
         "failureDetails": {
-          "failedStepIndex": 1,
-          "failedStepText": "type \"Johnson\" into the last name field",
-          "error": "Unknown base action type: assertion"
+          "error": "locator.fill: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n"
         }
       }
     },
@@ -593,14 +591,14 @@
               "value": "Business User",
               "modifiers": []
             },
-            "elementDescription": "First name input field"
+            "elementDescription": "First Name input field"
           },
-          "executedAt": "2026-01-11T15:27:44.936Z",
+          "executedAt": "2026-01-12T23:30:22.914Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "Given Name",
+              "name": "First Name",
               "exact": true
             },
             "mimicId": 4
@@ -610,40 +608,17 @@
           "stepHash": "5737c63b0656227e",
           "stepIndex": 1,
           "stepText": "type \"Corp\" into the last name field",
-          "actionKind": "click",
+          "actionKind": "form update",
           "actionDetails": {
-            "candidates": [
-              {
-                "mimicId": 5,
-                "confidence": 1,
-                "description": "Last Name input field with text 'Last Name'"
-              },
-              {
-                "mimicId": 4,
-                "confidence": 0.8,
-                "description": "Given Name input field with text 'Given Name'"
-              },
-              {
-                "mimicId": 6,
-                "confidence": 0.7,
-                "description": "Date of Birth input field with text 'Date of Birth'"
-              },
-              {
-                "mimicId": 12,
-                "confidence": 0.6,
-                "description": "Given Name label with text 'Given Name'"
-              },
-              {
-                "mimicId": 14,
-                "confidence": 0.5,
-                "description": "Date of Birth label with text 'Date of Birth'"
-              }
-            ],
-            "clickType": "primary",
-            "modifiers": [],
-            "reasoning": "The Gherkin step 'type \"Corp\" into the last name field' clearly refers to entering text into a Last Name input field. Marker ID 5 is associated with this input field based on the screenshot and accessibility snapshot."
+            "mimicId": 5,
+            "type": "fill",
+            "params": {
+              "value": "Corp",
+              "modifiers": []
+            },
+            "elementDescription": "Last name field labeled 'Last Name'"
           },
-          "executedAt": "2026-01-11T15:27:44.936Z",
+          "executedAt": "2026-01-12T23:30:22.914Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -666,9 +641,9 @@
               "value": "Business",
               "modifiers": []
             },
-            "elementDescription": "Account type dropdown"
+            "elementDescription": "Account Type dropdown"
           },
-          "executedAt": "2026-01-11T15:27:44.936Z",
+          "executedAt": "2026-01-12T23:30:22.914Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -683,17 +658,40 @@
           "stepHash": "13e0c8f043bc09df",
           "stepIndex": 3,
           "stepText": "type \"Test Company Inc\" into the company name field",
-          "actionKind": "form update",
+          "actionKind": "click",
           "actionDetails": {
-            "mimicId": 20,
-            "type": "fill",
-            "params": {
-              "value": "Test Company Inc",
-              "modifiers": []
-            },
-            "elementDescription": "Company Name input field"
+            "candidates": [
+              {
+                "mimicId": 20,
+                "confidence": 1,
+                "description": "Company Name input field with accessible name 'Company Name'"
+              },
+              {
+                "mimicId": 8,
+                "confidence": 0.9,
+                "description": "Next Step button"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "First Name input field"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.8,
+                "description": "Last Name input field"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.7,
+                "description": "Account Type dropdown"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The step explicitly mentions 'type' into a 'company name field', which indicates interaction with an input element. Marker ID 20 is the most likely candidate as it corresponds to the Company Name input field."
           },
-          "executedAt": "2026-01-11T15:27:44.936Z",
+          "executedAt": "2026-01-12T23:30:22.914Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -714,34 +712,34 @@
               {
                 "mimicId": 8,
                 "confidence": 1,
-                "description": "Button - Next Step with text 'Next Step'"
+                "description": "Button labeled 'Next Step'"
               },
               {
-                "mimicId": 20,
+                "mimicId": 16,
                 "confidence": 0.8,
-                "description": "Input field for Company Name with placeholder 'Test Company Inc'"
+                "description": "Generic step indicator element"
               },
               {
-                "mimicId": 4,
+                "mimicId": 17,
+                "confidence": 0.7,
+                "description": "Step number indicator"
+              },
+              {
+                "mimicId": 18,
                 "confidence": 0.6,
-                "description": "Input field for First Name"
+                "description": "Number element within step indicator"
               },
               {
-                "mimicId": 5,
-                "confidence": 0.6,
-                "description": "Input field for Last Name"
-              },
-              {
-                "mimicId": 7,
-                "confidence": 0.4,
-                "description": "Dropdown menu for Account Type with options 'Personal', 'Business', 'Organization'"
+                "mimicId": 19,
+                "confidence": 0.5,
+                "description": "Generic navigation list container"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step explicitly says 'click on \"Next Step\"'. The only element that matches this text and is also interactive (red badge) is the button labeled 'Next Step' with mimicId 8. Therefore, the primary click type applies."
+            "reasoning": "The Gherkin step 'click on \"Next Step\"' clearly refers to the button labeled 'Next Step', which is located at marker ID 8 in the screenshot. This element has a direct semantic match with the action described and is the most likely target for the click."
           },
-          "executedAt": "2026-01-11T15:27:44.936Z",
+          "executedAt": "2026-01-12T23:30:22.914Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -766,14 +764,14 @@
               "value": "Business User",
               "modifiers": []
             },
-            "elementDescription": "First name input field"
+            "elementDescription": "First Name input field"
           },
-          "executedAt": "2026-01-11T15:27:44.936Z",
+          "executedAt": "2026-01-12T23:30:22.914Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "Given Name",
+              "name": "First Name",
               "exact": true
             },
             "mimicId": 4
@@ -783,40 +781,17 @@
           "stepHash": "5737c63b0656227e",
           "stepIndex": 1,
           "stepText": "type \"Corp\" into the last name field",
-          "actionKind": "click",
+          "actionKind": "form update",
           "actionDetails": {
-            "candidates": [
-              {
-                "mimicId": 5,
-                "confidence": 1,
-                "description": "Last Name input field with text 'Last Name'"
-              },
-              {
-                "mimicId": 4,
-                "confidence": 0.8,
-                "description": "Given Name input field with text 'Given Name'"
-              },
-              {
-                "mimicId": 6,
-                "confidence": 0.7,
-                "description": "Date of Birth input field with text 'Date of Birth'"
-              },
-              {
-                "mimicId": 12,
-                "confidence": 0.6,
-                "description": "Given Name label with text 'Given Name'"
-              },
-              {
-                "mimicId": 14,
-                "confidence": 0.5,
-                "description": "Date of Birth label with text 'Date of Birth'"
-              }
-            ],
-            "clickType": "primary",
-            "modifiers": [],
-            "reasoning": "The Gherkin step 'type \"Corp\" into the last name field' clearly refers to entering text into a Last Name input field. Marker ID 5 is associated with this input field based on the screenshot and accessibility snapshot."
+            "mimicId": 5,
+            "type": "fill",
+            "params": {
+              "value": "Corp",
+              "modifiers": []
+            },
+            "elementDescription": "Last name field labeled 'Last Name'"
           },
-          "executedAt": "2026-01-11T15:27:44.936Z",
+          "executedAt": "2026-01-12T23:30:22.914Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -839,9 +814,9 @@
               "value": "Business",
               "modifiers": []
             },
-            "elementDescription": "Account type dropdown"
+            "elementDescription": "Account Type dropdown"
           },
-          "executedAt": "2026-01-11T15:27:44.936Z",
+          "executedAt": "2026-01-12T23:30:22.914Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -856,17 +831,40 @@
           "stepHash": "13e0c8f043bc09df",
           "stepIndex": 3,
           "stepText": "type \"Test Company Inc\" into the company name field",
-          "actionKind": "form update",
+          "actionKind": "click",
           "actionDetails": {
-            "mimicId": 20,
-            "type": "fill",
-            "params": {
-              "value": "Test Company Inc",
-              "modifiers": []
-            },
-            "elementDescription": "Company Name input field"
+            "candidates": [
+              {
+                "mimicId": 20,
+                "confidence": 1,
+                "description": "Company Name input field with accessible name 'Company Name'"
+              },
+              {
+                "mimicId": 8,
+                "confidence": 0.9,
+                "description": "Next Step button"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "First Name input field"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.8,
+                "description": "Last Name input field"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.7,
+                "description": "Account Type dropdown"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The step explicitly mentions 'type' into a 'company name field', which indicates interaction with an input element. Marker ID 20 is the most likely candidate as it corresponds to the Company Name input field."
           },
-          "executedAt": "2026-01-11T15:27:44.936Z",
+          "executedAt": "2026-01-12T23:30:22.914Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -887,34 +885,34 @@
               {
                 "mimicId": 8,
                 "confidence": 1,
-                "description": "Button - Next Step with text 'Next Step'"
+                "description": "Button labeled 'Next Step'"
               },
               {
-                "mimicId": 20,
+                "mimicId": 16,
                 "confidence": 0.8,
-                "description": "Input field for Company Name with placeholder 'Test Company Inc'"
+                "description": "Generic step indicator element"
               },
               {
-                "mimicId": 4,
+                "mimicId": 17,
+                "confidence": 0.7,
+                "description": "Step number indicator"
+              },
+              {
+                "mimicId": 18,
                 "confidence": 0.6,
-                "description": "Input field for First Name"
+                "description": "Number element within step indicator"
               },
               {
-                "mimicId": 5,
-                "confidence": 0.6,
-                "description": "Input field for Last Name"
-              },
-              {
-                "mimicId": 7,
-                "confidence": 0.4,
-                "description": "Dropdown menu for Account Type with options 'Personal', 'Business', 'Organization'"
+                "mimicId": 19,
+                "confidence": 0.5,
+                "description": "Generic navigation list container"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step explicitly says 'click on \"Next Step\"'. The only element that matches this text and is also interactive (red badge) is the button labeled 'Next Step' with mimicId 8. Therefore, the primary click type applies."
+            "reasoning": "The Gherkin step 'click on \"Next Step\"' clearly refers to the button labeled 'Next Step', which is located at marker ID 8 in the screenshot. This element has a direct semantic match with the action described and is the most likely target for the click."
           },
-          "executedAt": "2026-01-11T15:27:44.936Z",
+          "executedAt": "2026-01-12T23:30:22.914Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -934,7 +932,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:49:58.757Z",
-        "lastPassedAt": "2026-01-11T15:27:44.938Z",
+        "lastPassedAt": "2026-01-12T23:30:22.921Z",
         "lastFailedAt": null
       }
     },
@@ -958,7 +956,7 @@
             },
             "elementDescription": "First Name input field"
           },
-          "executedAt": "2026-01-11T15:35:28.111Z",
+          "executedAt": "2026-01-12T23:38:32.137Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -983,7 +981,7 @@
             },
             "elementDescription": "Last Name field labeled 'Last Name'"
           },
-          "executedAt": "2026-01-11T15:35:28.111Z",
+          "executedAt": "2026-01-12T23:38:32.137Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1003,40 +1001,40 @@
             "candidates": [
               {
                 "mimicId": 24,
-                "confidence": 0.95,
-                "description": "Submit button with text 'Submit'"
+                "confidence": 1,
+                "description": "Next Step button with text 'Next Step'"
               },
               {
-                "mimicId": 23,
-                "confidence": 0.9,
-                "description": "Send button with text 'Send'"
-              },
-              {
-                "mimicId": 1,
+                "mimicId": 30,
                 "confidence": 0.8,
-                "description": "Home link with text 'Home'"
+                "description": "Preferred Contact Method dropdown"
               },
               {
-                "mimicId": 3,
-                "confidence": 0.75,
-                "description": "Complex Forms link with text 'Complex Forms'"
+                "mimicId": 21,
+                "confidence": 0.7,
+                "description": "Phone Number input field"
               },
               {
-                "mimicId": 22,
+                "mimicId": 20,
                 "confidence": 0.65,
-                "description": "Preferred Contact Method combobox"
+                "description": "Email Address input field"
+              },
+              {
+                "mimicId": 28,
+                "confidence": 0.6,
+                "description": "Phone Number label with text 'Phone Number'"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The step explicitly says 'click on Next Step'. Given the context of form completion and navigation, the most likely elements are the Submit or Send buttons which conclude the form submission process. The Home and Complex Forms links are not interactive for form completion, while the Preferred Contact Method is a data entry field rather than a navigation or action element."
+            "reasoning": "The Gherkin step clearly states 'click on \"Next Step\"', so the primary click type is 'primary'. The element marked 24 is the 'Next Step' button, which is the most likely target."
           },
-          "executedAt": "2026-01-11T15:35:28.111Z",
+          "executedAt": "2026-01-12T23:38:32.137Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Submit",
+              "name": "Next Step",
               "exact": true
             },
             "mimicId": 24
@@ -1054,14 +1052,14 @@
               "value": "bob@example.com",
               "modifiers": []
             },
-            "elementDescription": "Email input field"
+            "elementDescription": "Email input field for entering an email address."
           },
-          "executedAt": "2026-01-11T15:35:28.111Z",
+          "executedAt": "2026-01-12T23:38:32.137Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "E-mail",
+              "name": "Email Address",
               "exact": true
             },
             "mimicId": 20
@@ -1081,7 +1079,7 @@
             },
             "elementDescription": "Phone input field"
           },
-          "executedAt": "2026-01-11T15:35:28.111Z",
+          "executedAt": "2026-01-12T23:38:32.137Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1110,7 +1108,7 @@
             },
             "elementDescription": "First Name input field"
           },
-          "executedAt": "2026-01-11T15:35:28.111Z",
+          "executedAt": "2026-01-12T23:38:32.137Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1135,7 +1133,7 @@
             },
             "elementDescription": "Last Name field labeled 'Last Name'"
           },
-          "executedAt": "2026-01-11T15:35:28.111Z",
+          "executedAt": "2026-01-12T23:38:32.137Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1158,14 +1156,14 @@
               "value": "bob@example.com",
               "modifiers": []
             },
-            "elementDescription": "Email input field"
+            "elementDescription": "Email input field for entering an email address."
           },
-          "executedAt": "2026-01-11T15:35:28.111Z",
+          "executedAt": "2026-01-12T23:38:32.137Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "E-mail",
+              "name": "Email Address",
               "exact": true
             },
             "mimicId": 20
@@ -1185,7 +1183,7 @@
             },
             "elementDescription": "Phone input field"
           },
-          "executedAt": "2026-01-11T15:35:28.111Z",
+          "executedAt": "2026-01-12T23:38:32.137Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1205,40 +1203,40 @@
             "candidates": [
               {
                 "mimicId": 24,
-                "confidence": 0.95,
-                "description": "Submit button with text 'Submit'"
+                "confidence": 1,
+                "description": "Next Step button with text 'Next Step'"
               },
               {
-                "mimicId": 23,
-                "confidence": 0.9,
-                "description": "Send button with text 'Send'"
-              },
-              {
-                "mimicId": 1,
+                "mimicId": 30,
                 "confidence": 0.8,
-                "description": "Home link with text 'Home'"
+                "description": "Preferred Contact Method dropdown"
               },
               {
-                "mimicId": 3,
-                "confidence": 0.75,
-                "description": "Complex Forms link with text 'Complex Forms'"
+                "mimicId": 21,
+                "confidence": 0.7,
+                "description": "Phone Number input field"
               },
               {
-                "mimicId": 22,
+                "mimicId": 20,
                 "confidence": 0.65,
-                "description": "Preferred Contact Method combobox"
+                "description": "Email Address input field"
+              },
+              {
+                "mimicId": 28,
+                "confidence": 0.6,
+                "description": "Phone Number label with text 'Phone Number'"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The step explicitly says 'click on Next Step'. Given the context of form completion and navigation, the most likely elements are the Submit or Send buttons which conclude the form submission process. The Home and Complex Forms links are not interactive for form completion, while the Preferred Contact Method is a data entry field rather than a navigation or action element."
+            "reasoning": "The Gherkin step clearly states 'click on \"Next Step\"', so the primary click type is 'primary'. The element marked 24 is the 'Next Step' button, which is the most likely target."
           },
-          "executedAt": "2026-01-11T15:35:28.111Z",
+          "executedAt": "2026-01-12T23:38:32.137Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Submit",
+              "name": "Next Step",
               "exact": true
             },
             "mimicId": 24
@@ -1253,7 +1251,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:54:09.585Z",
-        "lastPassedAt": "2026-01-11T15:35:28.124Z",
+        "lastPassedAt": "2026-01-12T23:38:32.208Z",
         "lastFailedAt": null
       }
     },
@@ -1270,40 +1268,40 @@
             "candidates": [
               {
                 "mimicId": 8,
-                "confidence": 0.95,
-                "description": "Proceed button with text 'Proceed'"
-              },
-              {
-                "mimicId": 7,
-                "confidence": 0.85,
-                "description": "Account Type dropdown with options"
-              },
-              {
-                "mimicId": 6,
-                "confidence": 0.8,
-                "description": "Date of Birth input field"
-              },
-              {
-                "mimicId": 5,
-                "confidence": 0.75,
-                "description": "Last Name input field"
+                "confidence": 1,
+                "description": "Next Step button"
               },
               {
                 "mimicId": 4,
+                "confidence": 0.9,
+                "description": "First Name input field"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.8,
+                "description": "Last Name input field"
+              },
+              {
+                "mimicId": 6,
                 "confidence": 0.7,
-                "description": "Given Name input field"
+                "description": "Date of Birth input field"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.6,
+                "description": "Account Type dropdown"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step 'click on \"Next Step\"' implies a primary click action. The most likely element based on the accessible name and visible text is the 'Proceed' button (Marker 8). Other form elements are less likely to be directly referred to by 'Next Step' in this context."
+            "reasoning": "The Gherkin step explicitly states 'click on \"Next Step\"'. Among the available elements, the button with mimicId=8 is clearly labeled as 'Next Step' and is marked as interactive. It's the most direct and semantic match for the described action."
           },
-          "executedAt": "2026-01-11T15:46:33.028Z",
+          "executedAt": "2026-01-12T02:34:02.276Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Proceed",
+              "name": "Next Step",
               "exact": true
             },
             "mimicId": 8
@@ -1323,7 +1321,7 @@
             },
             "elementDescription": "Preferred Contact Method dropdown"
           },
-          "executedAt": "2026-01-11T15:46:33.028Z",
+          "executedAt": "2026-01-12T02:34:02.276Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1345,40 +1343,40 @@
             "candidates": [
               {
                 "mimicId": 8,
-                "confidence": 0.95,
-                "description": "Proceed button with text 'Proceed'"
-              },
-              {
-                "mimicId": 7,
-                "confidence": 0.85,
-                "description": "Account Type dropdown with options"
-              },
-              {
-                "mimicId": 6,
-                "confidence": 0.8,
-                "description": "Date of Birth input field"
-              },
-              {
-                "mimicId": 5,
-                "confidence": 0.75,
-                "description": "Last Name input field"
+                "confidence": 1,
+                "description": "Next Step button"
               },
               {
                 "mimicId": 4,
+                "confidence": 0.9,
+                "description": "First Name input field"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.8,
+                "description": "Last Name input field"
+              },
+              {
+                "mimicId": 6,
                 "confidence": 0.7,
-                "description": "Given Name input field"
+                "description": "Date of Birth input field"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.6,
+                "description": "Account Type dropdown"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step 'click on \"Next Step\"' implies a primary click action. The most likely element based on the accessible name and visible text is the 'Proceed' button (Marker 8). Other form elements are less likely to be directly referred to by 'Next Step' in this context."
+            "reasoning": "The Gherkin step explicitly states 'click on \"Next Step\"'. Among the available elements, the button with mimicId=8 is clearly labeled as 'Next Step' and is marked as interactive. It's the most direct and semantic match for the described action."
           },
-          "executedAt": "2026-01-11T15:46:33.028Z",
+          "executedAt": "2026-01-12T02:34:02.276Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Proceed",
+              "name": "Next Step",
               "exact": true
             },
             "mimicId": 8
@@ -1398,7 +1396,7 @@
             },
             "elementDescription": "Preferred Contact Method dropdown"
           },
-          "executedAt": "2026-01-11T15:46:33.028Z",
+          "executedAt": "2026-01-12T02:34:02.276Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1418,7 +1416,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:01:04.444Z",
-        "lastPassedAt": "2026-01-11T15:46:33.030Z",
+        "lastPassedAt": "2026-01-12T02:34:02.277Z",
         "lastFailedAt": null
       }
     },
@@ -1436,18 +1434,16 @@
             "type": "fill",
             "params": {
               "value": "Test",
-              "modifiers": [
-                "none"
-              ]
+              "modifiers": []
             },
-            "elementDescription": "Email input field"
+            "elementDescription": "First name input field labeled 'First Name'"
           },
-          "executedAt": "2026-01-11T16:16:30.355Z",
+          "executedAt": "2026-01-12T02:41:35.217Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "Given Name",
+              "name": "First Name",
               "exact": true
             },
             "mimicId": 4
@@ -1463,22 +1459,22 @@
               {
                 "mimicId": 8,
                 "confidence": 1,
-                "description": "Submit Form button with text 'Submit Form'"
+                "description": "Next Step button with text 'Next Step'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.9,
+                "description": "Home link"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.8,
+                "description": "Basic Forms link"
               },
               {
                 "mimicId": 3,
-                "confidence": 0.9,
-                "description": "Complex Forms link with text 'Complex Forms'"
-              },
-              {
-                "mimicId": 17,
-                "confidence": 0.8,
-                "description": "Step 1 of 3 display element with text 'Step 1 of 3'"
-              },
-              {
-                "mimicId": 15,
                 "confidence": 0.7,
-                "description": "Account Type label with text 'Select account type'"
+                "description": "Complex Forms link"
               },
               {
                 "mimicId": 4,
@@ -1488,14 +1484,14 @@
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step is asking to click on 'Next Step'. Given the context of a multi-step form, the most logical element to click next would be the 'Submit Form' button as it typically concludes the current step and proceeds to the next. The other options are less relevant or do not fit the typical flow of a form submission process."
+            "reasoning": "The Gherkin step explicitly mentions 'click on Next Step', which directly corresponds to the button with mimicId 8 labeled as 'Next Step'. This is the most likely element for the given action. The other elements are less relevant because they do not match the specific action of clicking 'Next Step'."
           },
-          "executedAt": "2026-01-11T16:16:30.355Z",
+          "executedAt": "2026-01-12T02:41:35.217Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Submit Form",
+              "name": "Next Step",
               "exact": true
             },
             "mimicId": 8
@@ -1507,13 +1503,13 @@
           "stepText": "click on \"Previous\"",
           "actionKind": "navigation",
           "actionDetails": {
-            "type": "goBack",
+            "type": "navigate",
             "params": {
-              "url": "http://127.0.0.1:3000/pages/forms-complex.html"
+              "url": "/previous-step"
             },
-            "description": "Go back to previous page in browser history"
+            "description": "Navigate to previous step in browser history"
           },
-          "executedAt": "2026-01-11T16:16:30.355Z"
+          "executedAt": "2026-01-12T02:41:35.217Z"
         }
       },
       "steps": [
@@ -1527,18 +1523,16 @@
             "type": "fill",
             "params": {
               "value": "Test",
-              "modifiers": [
-                "none"
-              ]
+              "modifiers": []
             },
-            "elementDescription": "Email input field"
+            "elementDescription": "First name input field labeled 'First Name'"
           },
-          "executedAt": "2026-01-11T16:16:30.355Z",
+          "executedAt": "2026-01-12T02:41:35.217Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "Given Name",
+              "name": "First Name",
               "exact": true
             },
             "mimicId": 4
@@ -1554,22 +1548,22 @@
               {
                 "mimicId": 8,
                 "confidence": 1,
-                "description": "Submit Form button with text 'Submit Form'"
+                "description": "Next Step button with text 'Next Step'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.9,
+                "description": "Home link"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.8,
+                "description": "Basic Forms link"
               },
               {
                 "mimicId": 3,
-                "confidence": 0.9,
-                "description": "Complex Forms link with text 'Complex Forms'"
-              },
-              {
-                "mimicId": 17,
-                "confidence": 0.8,
-                "description": "Step 1 of 3 display element with text 'Step 1 of 3'"
-              },
-              {
-                "mimicId": 15,
                 "confidence": 0.7,
-                "description": "Account Type label with text 'Select account type'"
+                "description": "Complex Forms link"
               },
               {
                 "mimicId": 4,
@@ -1579,14 +1573,14 @@
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step is asking to click on 'Next Step'. Given the context of a multi-step form, the most logical element to click next would be the 'Submit Form' button as it typically concludes the current step and proceeds to the next. The other options are less relevant or do not fit the typical flow of a form submission process."
+            "reasoning": "The Gherkin step explicitly mentions 'click on Next Step', which directly corresponds to the button with mimicId 8 labeled as 'Next Step'. This is the most likely element for the given action. The other elements are less relevant because they do not match the specific action of clicking 'Next Step'."
           },
-          "executedAt": "2026-01-11T16:16:30.355Z",
+          "executedAt": "2026-01-12T02:41:35.217Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Submit Form",
+              "name": "Next Step",
               "exact": true
             },
             "mimicId": 8
@@ -1598,28 +1592,25 @@
           "stepText": "click on \"Previous\"",
           "actionKind": "navigation",
           "actionDetails": {
-            "type": "goBack",
+            "type": "navigate",
             "params": {
-              "url": "http://127.0.0.1:3000/pages/forms-complex.html"
+              "url": "/previous-step"
             },
-            "description": "Go back to previous page in browser history"
+            "description": "Navigate to previous step in browser history"
           },
-          "executedAt": "2026-01-11T16:16:30.355Z"
+          "executedAt": "2026-01-12T02:41:35.217Z"
         }
       ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:05:23.971Z",
-        "lastPassedAt": "2026-01-11T16:21:56.709Z",
-        "lastFailedAt": "2026-01-11T16:21:56.704Z",
-        "failureDetails": {
-          "error": "locator.fill: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n"
-        }
+        "lastPassedAt": "2026-01-12T02:41:35.218Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -1636,39 +1627,19 @@
               {
                 "mimicId": 8,
                 "confidence": 1,
-                "description": "Send button with text 'Send'"
-              },
-              {
-                "mimicId": 7,
-                "confidence": 0.9,
-                "description": "Account Type dropdown menu"
-              },
-              {
-                "mimicId": 6,
-                "confidence": 0.8,
-                "description": "Date of Birth input field"
-              },
-              {
-                "mimicId": 5,
-                "confidence": 0.7,
-                "description": "Last Name input field"
-              },
-              {
-                "mimicId": 4,
-                "confidence": 0.6,
-                "description": "First Name input field"
+                "description": "Button labeled 'Next Step'"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The step 'click on \"Next Step\"' implies a standard left click (primary click) to proceed with the next step in a form process. The top candidates are interactive elements that logically follow the current step and align with the concept of moving forward in a multi-step form."
+            "reasoning": "The Gherkin step explicitly says 'click on \"Next Step\"'. There is only one button with the text 'Next Step' in the form, which has a marker ID of 8."
           },
-          "executedAt": "2026-01-11T15:50:25.623Z",
+          "executedAt": "2026-01-12T02:37:30.923Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Send",
+              "name": "Next Step",
               "exact": true
             },
             "mimicId": 8
@@ -1684,11 +1655,14 @@
             "type": "select",
             "params": {
               "value": "Postal Mail",
-              "modifiers": []
+              "modifiers": [
+                "Shift",
+                "Control"
+              ]
             },
-            "elementDescription": "Preferred Contact Method dropdown"
+            "elementDescription": "Preferred Contact Method dropdown menu"
           },
-          "executedAt": "2026-01-11T15:50:25.623Z",
+          "executedAt": "2026-01-12T02:37:30.923Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1711,39 +1685,19 @@
               {
                 "mimicId": 8,
                 "confidence": 1,
-                "description": "Send button with text 'Send'"
-              },
-              {
-                "mimicId": 7,
-                "confidence": 0.9,
-                "description": "Account Type dropdown menu"
-              },
-              {
-                "mimicId": 6,
-                "confidence": 0.8,
-                "description": "Date of Birth input field"
-              },
-              {
-                "mimicId": 5,
-                "confidence": 0.7,
-                "description": "Last Name input field"
-              },
-              {
-                "mimicId": 4,
-                "confidence": 0.6,
-                "description": "First Name input field"
+                "description": "Button labeled 'Next Step'"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The step 'click on \"Next Step\"' implies a standard left click (primary click) to proceed with the next step in a form process. The top candidates are interactive elements that logically follow the current step and align with the concept of moving forward in a multi-step form."
+            "reasoning": "The Gherkin step explicitly says 'click on \"Next Step\"'. There is only one button with the text 'Next Step' in the form, which has a marker ID of 8."
           },
-          "executedAt": "2026-01-11T15:50:25.623Z",
+          "executedAt": "2026-01-12T02:37:30.923Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Send",
+              "name": "Next Step",
               "exact": true
             },
             "mimicId": 8
@@ -1759,11 +1713,14 @@
             "type": "select",
             "params": {
               "value": "Postal Mail",
-              "modifiers": []
+              "modifiers": [
+                "Shift",
+                "Control"
+              ]
             },
-            "elementDescription": "Preferred Contact Method dropdown"
+            "elementDescription": "Preferred Contact Method dropdown menu"
           },
-          "executedAt": "2026-01-11T15:50:25.623Z",
+          "executedAt": "2026-01-12T02:37:30.923Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1783,7 +1740,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:10:00.608Z",
-        "lastPassedAt": "2026-01-11T15:50:25.624Z",
+        "lastPassedAt": "2026-01-12T02:37:30.924Z",
         "lastFailedAt": null
       }
     },
@@ -1801,18 +1758,16 @@
             "type": "fill",
             "params": {
               "value": "User",
-              "modifiers": [
-                "none"
-              ]
+              "modifiers": []
             },
-            "elementDescription": "First name input field"
+            "elementDescription": "First Name input field"
           },
-          "executedAt": "2026-01-11T03:01:06.381Z",
+          "executedAt": "2026-01-12T02:54:04.284Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "First",
+              "name": "First Name",
               "exact": true
             },
             "mimicId": 4
@@ -1827,40 +1782,40 @@
             "candidates": [
               {
                 "mimicId": 8,
-                "confidence": 0.95,
-                "description": "Send button with text 'Next Step'"
+                "confidence": 1,
+                "description": "Button labeled 'Next Step'"
               },
               {
                 "mimicId": 3,
-                "confidence": 0.85,
-                "description": "Link to 'Complex Forms' page"
+                "confidence": 0.95,
+                "description": "Link to the 'Complex Forms' page"
               },
               {
                 "mimicId": 2,
-                "confidence": 0.75,
-                "description": "Link to 'Basic Forms' page"
+                "confidence": 0.85,
+                "description": "Link to the 'Basic Forms' page"
               },
               {
                 "mimicId": 1,
-                "confidence": 0.65,
-                "description": "Link to 'Home' page"
+                "confidence": 0.75,
+                "description": "Link to the 'Home' page"
               },
               {
                 "mimicId": 4,
-                "confidence": 0.55,
-                "description": "First name input field"
+                "confidence": 0.65,
+                "description": "First Name input field"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step specifies a click action without any modifiers or explicit hover instructions, so the default 'primary' (left) click type is used. The most likely element based on visible text and intent is the 'Send' button labeled 'Next Step', which matches the described action."
+            "reasoning": "The Gherkin step specifically mentions 'Next Step', and there is a button with this text marked by marker ID 8. No hover or modifier keys are mentioned in the step."
           },
-          "executedAt": "2026-01-11T03:01:06.381Z",
+          "executedAt": "2026-01-12T02:54:04.284Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Send",
+              "name": "Next Step",
               "exact": true
             },
             "mimicId": 8
@@ -1878,18 +1833,16 @@
             "type": "fill",
             "params": {
               "value": "User",
-              "modifiers": [
-                "none"
-              ]
+              "modifiers": []
             },
-            "elementDescription": "First name input field"
+            "elementDescription": "First Name input field"
           },
-          "executedAt": "2026-01-11T03:01:06.381Z",
+          "executedAt": "2026-01-12T02:54:04.284Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "textbox",
-              "name": "First",
+              "name": "First Name",
               "exact": true
             },
             "mimicId": 4
@@ -1904,40 +1857,40 @@
             "candidates": [
               {
                 "mimicId": 8,
-                "confidence": 0.95,
-                "description": "Send button with text 'Next Step'"
+                "confidence": 1,
+                "description": "Button labeled 'Next Step'"
               },
               {
                 "mimicId": 3,
-                "confidence": 0.85,
-                "description": "Link to 'Complex Forms' page"
+                "confidence": 0.95,
+                "description": "Link to the 'Complex Forms' page"
               },
               {
                 "mimicId": 2,
-                "confidence": 0.75,
-                "description": "Link to 'Basic Forms' page"
+                "confidence": 0.85,
+                "description": "Link to the 'Basic Forms' page"
               },
               {
                 "mimicId": 1,
-                "confidence": 0.65,
-                "description": "Link to 'Home' page"
+                "confidence": 0.75,
+                "description": "Link to the 'Home' page"
               },
               {
                 "mimicId": 4,
-                "confidence": 0.55,
-                "description": "First name input field"
+                "confidence": 0.65,
+                "description": "First Name input field"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step specifies a click action without any modifiers or explicit hover instructions, so the default 'primary' (left) click type is used. The most likely element based on visible text and intent is the 'Send' button labeled 'Next Step', which matches the described action."
+            "reasoning": "The Gherkin step specifically mentions 'Next Step', and there is a button with this text marked by marker ID 8. No hover or modifier keys are mentioned in the step."
           },
-          "executedAt": "2026-01-11T03:01:06.381Z",
+          "executedAt": "2026-01-12T02:54:04.284Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Send",
+              "name": "Next Step",
               "exact": true
             },
             "mimicId": 8
@@ -1952,7 +1905,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:12:41.673Z",
-        "lastPassedAt": "2026-01-11T03:01:06.383Z",
+        "lastPassedAt": "2026-01-12T02:54:04.285Z",
         "lastFailedAt": null
       }
     },
@@ -1969,11 +1922,11 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:19:30.294Z",
-        "lastPassedAt": "2026-01-11T02:09:55.055Z",
-        "lastFailedAt": "2026-01-11T02:09:55.021Z",
+        "lastPassedAt": "2026-01-13T00:02:38.957Z",
+        "lastFailedAt": "2026-01-13T00:02:38.955Z",
         "failureDetails": {
-          "failedStepIndex": 4,
-          "failedStepText": "type \"complete@test.com\" into the email field",
+          "failedStepIndex": 2,
+          "failedStepText": "select \"Personal\" from the account type dropdown",
           "error": "Unknown base action type: assertion"
         }
       }
@@ -1991,12 +1944,12 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:20:26.443Z",
-        "lastPassedAt": "2026-01-11T02:05:53.375Z",
-        "lastFailedAt": "2026-01-11T02:05:53.371Z",
+        "lastPassedAt": "2026-01-12T23:57:44.152Z",
+        "lastFailedAt": "2026-01-12T23:57:44.150Z",
         "failureDetails": {
-          "failedStepIndex": 4,
-          "failedStepText": "click on \"Next Step\"",
-          "error": "AI model call failed after 43792ms (tried both text-only and with image): No object generated: response did not match schema."
+          "failedStepIndex": 3,
+          "failedStepText": "type \"charlie@example.com\" into the email field",
+          "error": "AI model call failed after 58045ms (tried both text-only and with image): No object generated: response did not match schema."
         }
       }
     },
@@ -2020,7 +1973,7 @@
             },
             "elementDescription": "First name input field"
           },
-          "executedAt": "2026-01-11T04:24:11.219Z",
+          "executedAt": "2026-01-13T00:24:09.064Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2045,7 +1998,7 @@
             },
             "elementDescription": "Last name field labeled 'Last Name'"
           },
-          "executedAt": "2026-01-11T04:24:11.219Z",
+          "executedAt": "2026-01-13T00:24:09.064Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2064,44 +2017,44 @@
           "actionDetails": {
             "candidates": [
               {
-                "mimicId": 23,
-                "confidence": 0.95,
-                "description": "Submit button labeled 'Next Step'"
-              },
-              {
                 "mimicId": 24,
-                "confidence": 0.85,
-                "description": "Complete button labeled 'Next Step'"
+                "confidence": 1,
+                "description": "Next Step button with text 'Next Step'"
               },
               {
-                "mimicId": 16,
+                "mimicId": 9,
+                "confidence": 0.8,
+                "description": "Page title 'Complex Forms Test Page'"
+              },
+              {
+                "mimicId": 30,
                 "confidence": 0.7,
-                "description": "Step indicator showing 'Step 2 of 3'"
+                "description": "Label for Preferred Contact Method"
               },
               {
-                "mimicId": 17,
-                "confidence": 0.65,
-                "description": "Generic text indicating 'Step 2 of 3'"
-              },
-              {
-                "mimicId": 18,
+                "mimicId": 25,
                 "confidence": 0.6,
-                "description": "Numeric indicator showing '2' in the step indicator"
+                "description": "Heading for Step 2: Contact Information"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.4,
+                "description": "Navigation list containing links to Home, Basic Forms, and Complex Forms"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step is simply 'click on 'Next Step'', which implies a primary click. The Submit button with the text 'Next Step' (mimicId 23) and the Complete button with similar text (mimicId 24) are the most likely candidates, followed by various elements that indicate the current step of the form."
+            "reasoning": "The step clearly says 'click on \"Next Step\"'. Based on this instruction, the most likely element is the button with the text 'Next Step', which has a mimicId of 24. The click type is primary (left click) by default."
           },
-          "executedAt": "2026-01-11T04:24:11.219Z",
+          "executedAt": "2026-01-13T00:24:09.064Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Submit",
+              "name": "Next Step",
               "exact": true
             },
-            "mimicId": 23
+            "mimicId": 24
           }
         },
         "cc2250ccfe65588d": {
@@ -2118,7 +2071,7 @@
             },
             "elementDescription": "Email input field labeled 'Email Address'"
           },
-          "executedAt": "2026-01-11T04:24:11.219Z",
+          "executedAt": "2026-01-13T00:24:09.064Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2147,7 +2100,7 @@
             },
             "elementDescription": "First name input field"
           },
-          "executedAt": "2026-01-11T04:24:11.219Z",
+          "executedAt": "2026-01-13T00:24:09.064Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2172,7 +2125,7 @@
             },
             "elementDescription": "Last name field labeled 'Last Name'"
           },
-          "executedAt": "2026-01-11T04:24:11.219Z",
+          "executedAt": "2026-01-13T00:24:09.064Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2197,7 +2150,7 @@
             },
             "elementDescription": "Email input field labeled 'Email Address'"
           },
-          "executedAt": "2026-01-11T04:24:11.219Z",
+          "executedAt": "2026-01-13T00:24:09.064Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2216,44 +2169,44 @@
           "actionDetails": {
             "candidates": [
               {
-                "mimicId": 23,
-                "confidence": 0.95,
-                "description": "Submit button labeled 'Next Step'"
-              },
-              {
                 "mimicId": 24,
-                "confidence": 0.85,
-                "description": "Complete button labeled 'Next Step'"
+                "confidence": 1,
+                "description": "Next Step button with text 'Next Step'"
               },
               {
-                "mimicId": 16,
+                "mimicId": 9,
+                "confidence": 0.8,
+                "description": "Page title 'Complex Forms Test Page'"
+              },
+              {
+                "mimicId": 30,
                 "confidence": 0.7,
-                "description": "Step indicator showing 'Step 2 of 3'"
+                "description": "Label for Preferred Contact Method"
               },
               {
-                "mimicId": 17,
-                "confidence": 0.65,
-                "description": "Generic text indicating 'Step 2 of 3'"
-              },
-              {
-                "mimicId": 18,
+                "mimicId": 25,
                 "confidence": 0.6,
-                "description": "Numeric indicator showing '2' in the step indicator"
+                "description": "Heading for Step 2: Contact Information"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.4,
+                "description": "Navigation list containing links to Home, Basic Forms, and Complex Forms"
               }
             ],
             "clickType": "primary",
             "modifiers": [],
-            "reasoning": "The Gherkin step is simply 'click on 'Next Step'', which implies a primary click. The Submit button with the text 'Next Step' (mimicId 23) and the Complete button with similar text (mimicId 24) are the most likely candidates, followed by various elements that indicate the current step of the form."
+            "reasoning": "The step clearly says 'click on \"Next Step\"'. Based on this instruction, the most likely element is the button with the text 'Next Step', which has a mimicId of 24. The click type is primary (left click) by default."
           },
-          "executedAt": "2026-01-11T04:24:11.219Z",
+          "executedAt": "2026-01-13T00:24:09.064Z",
           "targetElement": {
             "selector": {
               "type": "role",
               "role": "button",
-              "name": "Submit",
+              "name": "Next Step",
               "exact": true
             },
-            "mimicId": 23
+            "mimicId": 24
           }
         }
       ],
@@ -2265,7 +2218,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:23:08.024Z",
-        "lastPassedAt": "2026-01-11T04:24:11.445Z",
+        "lastPassedAt": "2026-01-13T00:24:09.066Z",
         "lastFailedAt": null
       }
     }

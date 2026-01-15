@@ -29,14 +29,14 @@ test.describe('Complex Forms Page', { tag: ['@form-multi-page'] }, () => {
     await expect(page.locator('#current-step')).toContainText('2');
   });
 
-  test('should show business fields when business account type is selected', async ({ page, mimic }) => {
+  test('should show business fields when business account type is selected', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`select "Business" from the account type dropdown`;
 
     await expect(page.locator('#business-fields')).toBeVisible();
     await expect(page.locator('#company-name')).toBeVisible();
   });
 
-  test('should show organization fields when organization account type is selected', async ({ page, mimic }) => {
+  test('should show organization fields when organization account type is selected', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`select "Organization" from the account type dropdown`;
 
     await expect(page.locator('#organization-fields')).toBeVisible();
@@ -53,7 +53,7 @@ test.describe('Complex Forms Page', { tag: ['@form-multi-page'] }, () => {
     await expect(page.locator('#business-fields')).not.toBeVisible();
   });
 
-  test('should fill business fields and proceed', async ({ page, mimic }) => {
+  test('should fill business fields and proceed', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       type "Business User" into the first name field
       type "Corp" into the last name field
@@ -89,7 +89,7 @@ test.describe('Complex Forms Page', { tag: ['@form-multi-page'] }, () => {
     await expect(page.locator('#sms-number')).toBeVisible();
   });
 
-  test('should show mail fields when postal mail is selected', async ({ page, mimic }) => {
+  test('should show mail fields when postal mail is selected', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Next Step"
       select "Postal Mail" from the preferred contact method dropdown
@@ -113,7 +113,7 @@ test.describe('Complex Forms Page', { tag: ['@form-multi-page'] }, () => {
     await expect(page.locator('#current-step')).toContainText('1');
   });
 
-  test('should update progress bar as steps progress', async ({ page, mimic }) => {
+  test('should update progress bar as steps progress', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     const progress1 = await page.locator('#progress-fill').evaluate(el => (el as HTMLElement).style.width);
     expect(progress1).toBe('33.33%');
 
@@ -153,7 +153,7 @@ test.describe('Complex Forms Page', { tag: ['@form-multi-page'] }, () => {
     await expect(page.locator('input[value="music"]')).toBeChecked();
   });
 
-  test('should complete entire form flow', async ({ page, mimic }) => {
+  test('should complete entire form flow', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       type "Complete" into the first name field
       type "Form" into the last name field

@@ -305,8 +305,10 @@ async function drawMarkersOnScreenshot(
   imageBuffer: Buffer,
   markers: MarkerInfo[]
 ): Promise<Buffer> {
-  const markerSize = 12; // Size of the marker circle in pixels
+  const markerSize = 36; // Size of the marker circle in pixels (increased from 12 for better visibility)
   const markerRadius = markerSize / 2;
+  const fontSize = 14; // Font size for the number text
+  const fontFamily = 'Arial, sans-serif'; // Font family for better readability
   
   // Color mapping for element types
   const typeColors: Record<MarkerInfo['type'], string> = {
@@ -321,7 +323,7 @@ async function drawMarkersOnScreenshot(
   const imageHeight = metadata.height || 0;
   
   // Create an overlay image for all markers
-  // We'll use SVG to draw circles, then composite them
+  // We'll use SVG to draw circles with numbers, then composite them
   const overlays: Array<{
     input: Buffer;
     left: number;
@@ -329,7 +331,7 @@ async function drawMarkersOnScreenshot(
   }> = [];
   
   for (const marker of markers) {
-    const { rect, type } = marker;
+    const { rect, type, mimicId } = marker;
     
     // Calculate left center position
     // Left center means: x position is at the left edge, y is at vertical center
@@ -341,12 +343,25 @@ async function drawMarkersOnScreenshot(
       continue;
     }
     
-    // Create a colored circle SVG
+    // Create a colored circle SVG with number text
     const color = typeColors[type];
+    const textX = markerRadius;
+    const textY = markerRadius + fontSize / 3; // Adjust vertical centering for text
+    
     const svg = `
       <svg width="${markerSize}" height="${markerSize}" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="${markerRadius}" cy="${markerRadius}" r="${markerRadius - 1}" 
-                fill="${color}" stroke="white" stroke-width="1" opacity="0.9"/>
+        <circle cx="${markerRadius}" cy="${markerRadius}" r="${markerRadius - 2}" 
+                fill="${color}" stroke="white" stroke-width="2" opacity="0.95"/>
+        <text x="${textX}" y="${textY}" 
+              font-family="${fontFamily}" 
+              font-size="${fontSize}" 
+              font-weight="bold" 
+              fill="white" 
+              text-anchor="middle" 
+              dominant-baseline="middle"
+              stroke="black" 
+              stroke-width="0.5"
+              stroke-opacity="0.8">${mimicId}</text>
       </svg>
     `;
     

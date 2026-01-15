@@ -9,6 +9,11 @@ import { createMimic, type Mimic } from '../src/mimic';
 import { openai } from '@ai-sdk/openai';
 import { LanguageModel } from 'ai';
 
+// Silence AI SDK warnings locally
+if (typeof globalThis !== 'undefined') {
+  (globalThis as any).AI_SDK_LOG_WARNINGS = false;
+}
+
 const _ollamaBrain = ollama('qwen2.5-coder') as LanguageModel
 
 export const brains = openai('gpt-4o-mini');

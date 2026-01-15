@@ -6,7 +6,7 @@ import { test, expect } from './test-utils';
  */
 
 test.describe('Test Site - Simple Navigation', { tag: ['@navigation'] }, () => {
-  test('should navigate to simple navigation page and click links', async ({ page, mimic }) => {
+  test('should navigate to simple navigation page and click links', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/simple-navigation.html
       click on "Go to Forms Page"
@@ -15,7 +15,7 @@ test.describe('Test Site - Simple Navigation', { tag: ['@navigation'] }, () => {
     expect(page.url()).toContain('forms-basic.html');
   });
 
-  test('should navigate back using browser history', async ({ page, mimic }) => {
+  test('should navigate back using browser history', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/simple-navigation.html
       click on "Go to Buttons Page"
@@ -27,7 +27,7 @@ test.describe('Test Site - Simple Navigation', { tag: ['@navigation'] }, () => {
 });
 
 test.describe('Test Site - Basic Forms', { tag: ['@form-simple'] }, () => {
-  test('should fill out and submit basic form', async ({ page, mimic }) => {
+  test('should fill out and submit basic form', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/forms-basic.html
       type "John Doe" into the name field
@@ -46,7 +46,7 @@ test.describe('Test Site - Basic Forms', { tag: ['@form-simple'] }, () => {
 });
 
 test.describe('Test Site - Button Variety', { tag: ['@buttons'] }, () => {
-  test('should click button with text label', async ({ page, mimic }) => {
+  test('should click button with text label', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/buttons-variety.html
       click on "Click Me"
@@ -56,7 +56,7 @@ test.describe('Test Site - Button Variety', { tag: ['@buttons'] }, () => {
     await expect(page.getByTestId('click-results')).toBeVisible();
   });
 
-  test('should click button with aria-label', async ({ page, mimic }) => {
+  test('should click button with aria-label', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/buttons-variety.html
       click on the button with aria-label "Close dialog"
@@ -68,7 +68,7 @@ test.describe('Test Site - Button Variety', { tag: ['@buttons'] }, () => {
 });
 
 test.describe('Test Site - Dynamic Content', { tag: ['@dynamic-content'] }, () => {
-  test('should wait for dynamically loaded content', async ({ page, mimic }) => {
+  test('should wait for dynamically loaded content', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/dynamic-content.html
       click on "Load Content"
@@ -79,7 +79,7 @@ test.describe('Test Site - Dynamic Content', { tag: ['@dynamic-content'] }, () =
     await expect(page.getByTestId('dynamic-content-area')).toContainText('Content Loaded');
   });
 
-  test('should toggle element visibility', async ({ page, mimic }) => {
+  test('should toggle element visibility', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/dynamic-content.html
       click on "Toggle Visibility"
@@ -93,7 +93,7 @@ test.describe('Test Site - Dynamic Content', { tag: ['@dynamic-content'] }, () =
 });
 
 test.describe('Test Site - Complex Layout', { tag: ['@layout'] }, () => {
-  test('should open and close modal', async ({ page, mimic }) => {
+  test('should open and close modal', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/layout-complex.html
       click on "Open Simple Modal"
@@ -109,7 +109,7 @@ test.describe('Test Site - Complex Layout', { tag: ['@layout'] }, () => {
     await expect(page.getByRole('dialog', { name: 'Simple Modal' })).not.toBeVisible();
   });
 
-  test('should switch tabs', async ({ page, mimic }) => {
+  test('should switch tabs', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/layout-complex.html
       click on "Tab 2"
@@ -123,7 +123,7 @@ test.describe('Test Site - Complex Layout', { tag: ['@layout'] }, () => {
 });
 
 test.describe('Test Site - Multi-Step Flow', { tag: ['@form-multi-page', '@wizard'] }, () => {
-  test('should complete multi-step wizard', async ({ page, mimic }) => {
+  test('should complete multi-step wizard', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       navigate to /pages/multi-step-flow.html
       click on "Start Wizard"

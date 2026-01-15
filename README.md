@@ -100,9 +100,18 @@ During **Troubleshoot & Fix**, Mimic:
 
 Once repaired and validated, the test returns to Repeat mode — stable, fast, and low-cost again.
 
-**Troubleshoot Mode**: You can force Mimic to regenerate snapshots by running tests with the `--troubleshoot` flag:
+**Troubleshoot Mode**: You can force Mimic to regenerate snapshots by running tests with the `--troubleshoot` flag or using the environment variable:
+
 ```bash
+# Using CLI flag
 npx playwright test --troubleshoot
+# or with pnpm
+pnpm test --troubleshoot
+# or use the dedicated script
+pnpm test:troubleshoot
+
+# Using environment variable (works with pnpm)
+MIMIC_TROUBLESHOOT=true pnpm test
 ```
 
 Even in troubleshoot mode, Mimic will attempt to use existing snapshots first and only regenerate if replay fails.
@@ -608,10 +617,23 @@ If snapshots aren't working as expected:
 
 ### Troubleshoot Mode
 
-Troubleshoot mode can be enabled by passing the `--troubleshoot` flag when running tests:
+Troubleshoot mode can be enabled in several ways:
 
+**Method 1: CLI Flag**
 ```bash
 npx playwright test --troubleshoot
+# or with pnpm
+pnpm test --troubleshoot
+```
+
+**Method 2: Dedicated Script**
+```bash
+pnpm test:troubleshoot
+```
+
+**Method 3: Environment Variable** (recommended for pnpm)
+```bash
+MIMIC_TROUBLESHOOT=true pnpm test
 ```
 
 This mode:

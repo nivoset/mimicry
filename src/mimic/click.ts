@@ -146,11 +146,18 @@ You must return the **top 5 most likely elements** that the Gherkin step is refe
 
 - **ALWAYS use the marker ID (mimicId)** from the screenshot - this is the number shown on the element's badge
 - Rank elements from **most likely (rank 1)** to **least likely (rank 5)**
-- Prefer **semantic matches** first:
-  - Visible text (what you can read in the screenshot)
-  - Element position and visual appearance
-  - Accessible name (label, aria-label, role)
-  - Button / link intent
+- **Element Matching Strategy:**
+  1. **Be as literal as possible first**: Look for exact text matches from the Gherkin step (e.g., if step says "click save", look for a button with text "save" or "Save")
+  2. **If no exact match, look for similar/related terms**: 
+     - For form actions: "update" and "save" are similar (both submit changes)
+     - For names: "name" and "first name" are related (both refer to name fields)
+     - For buttons: "submit", "save", "update", "confirm" are similar actions
+     - Consider synonyms and related concepts
+  3. **Then consider semantic matches**:
+     - Visible text (what you can read in the screenshot)
+     - Element position and visual appearance
+     - Accessible name (label, aria-label, role)
+     - Button / link intent
 - Do NOT invent elements or marker IDs - only use marker IDs that are visible in the screenshot
 - Do NOT include more than 5 results
 - If fewer than 5 reasonable matches exist, return fewer

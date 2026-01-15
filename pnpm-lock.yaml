@@ -11,6 +11,9 @@ importers:
       ai:
         specifier: ^6.0.3
         version: 6.0.3(zod@4.2.1)
+      pocketflow:
+        specifier: ^1.0.4
+        version: 1.0.4
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
@@ -394,6 +397,10 @@ packages:
     resolution: {integrity: sha512-ilYQj1s8sr2ppEJ2YVadYBN0Mb3mdo9J0wQ+UuDhzYqURwSoW4n1Xs5vs7ORwgDGmyEh33tRMeS8KhdkMoLXQw==}
     engines: {node: '>=18'}
     hasBin: true
+
+  pocketflow@1.0.4:
+    resolution: {integrity: sha512-Lr84KTLJ48MkpT2MFhy9wb3ZuHocOWxsj7/g1eKj6q4HplWI69S1WB7acrN9XwRBTN0dz3Nzy2zOAB/H2TPiFw==}
+    engines: {node: '>=18.0.0'}
 
   portfinder@1.0.38:
     resolution: {integrity: sha512-rEwq/ZHlJIKw++XtLAO8PPuOQA/zaPJOZJ37BVuN97nLpMJeuDVLVGRwbFoBgLudgdTMP2hdRJP++H+8QOA3vg==}
@@ -782,6 +789,8 @@ snapshots:
       playwright-core: 1.57.0
     optionalDependencies:
       fsevents: 2.3.2
+
+  pocketflow@1.0.4: {}
 
   portfinder@1.0.38:
     dependencies:

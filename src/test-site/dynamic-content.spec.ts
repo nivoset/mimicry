@@ -34,7 +34,7 @@ test.describe.skip('Dynamic Content Page', { tag: ['@dynamic-content'] }, () => 
     await expect(page.locator('#dynamic-content-area')).toContainText('Content Loaded', { timeout: 3000 });
   });
 
-  test('should toggle element visibility', async ({ page, mimic }) => {
+  test('should toggle element visibility', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     // Initially visible
     await expect(page.locator('#toggleable-content')).toBeVisible();
 
@@ -65,7 +65,7 @@ test.describe.skip('Dynamic Content Page', { tag: ['@dynamic-content'] }, () => 
     await expect(page.locator('#changeable-content')).toBeVisible();
   });
 
-  test('should change content multiple times', async ({ page, mimic }) => {
+  test('should change content multiple times', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Change Content"
       click on "Change Content"
@@ -95,7 +95,7 @@ test.describe.skip('Dynamic Content Page', { tag: ['@dynamic-content'] }, () => 
     await expect(page.locator('.scroll-item')).toHaveCount(initialCount + 3);
   });
 
-  test('should load multiple batches of items', async ({ page, mimic }) => {
+  test('should load multiple batches of items', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     const initialCount = await page.locator('.scroll-item').count();
     
     await mimic`
@@ -113,7 +113,7 @@ test.describe.skip('Dynamic Content Page', { tag: ['@dynamic-content'] }, () => 
     await expect(page.locator('#status-messages .alert')).toBeVisible();
   });
 
-  test('should show multiple status messages', async ({ page, mimic }) => {
+  test('should show multiple status messages', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Show Status Message"
       click on "Show Status Message"

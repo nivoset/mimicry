@@ -23,7 +23,7 @@ test.describe('Basic Forms Page', { tag: ['@form-simple'] }, () => {
     await expect(page.locator('#name')).toHaveValue('John Doe');
   });
 
-  test('should fill out email field', async ({ page, mimic }) => {
+  test('should fill out email field', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`type "john@example.com" into the email field`;
 
     await expect(page.locator('#email')).toHaveValue('john@example.com');
@@ -60,7 +60,7 @@ test.describe('Basic Forms Page', { tag: ['@form-simple'] }, () => {
     await expect(page.locator('input[value="phone"]')).toBeChecked();
   });
 
-  test('should change radio button selection', async ({ page, mimic }) => {
+  test('should change radio button selection', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       check the "SMS" radio button
     `;
@@ -75,7 +75,7 @@ test.describe('Basic Forms Page', { tag: ['@form-simple'] }, () => {
     await expect(page.locator('input[value="daily"]')).toBeChecked();
   });
 
-  test('should check multiple newsletter checkboxes', async ({ page, mimic }) => {
+  test('should check multiple newsletter checkboxes', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       select "Daily Newsletter"
       and select "Weekly Digest"
@@ -128,7 +128,7 @@ test.describe('Basic Forms Page', { tag: ['@form-simple'] }, () => {
     await expect(page.locator('input[value="daily"]')).not.toBeChecked();
   });
 
-  test('should validate required fields on submit', async ({ page, mimic }) => {
+  test('should validate required fields on submit', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Submit Form" without filling required fields`;
 
     // Form should show validation (browser native validation)

@@ -136,6 +136,15 @@ You must determine:
 ### IMPORTANT RULES
 
 - **ALWAYS use the marker ID (mimicId)** from the screenshot - this is the number shown on the form element's badge
+- **Element Matching Strategy:**
+  1. **Be as literal as possible first**: Look for exact field name matches from the Gherkin step (e.g., if step says "fill in name", look for a field labeled "name" or with name="name")
+  2. **If no exact match, look for similar/related terms**: 
+     - For names: "name" and "first name" are related (both refer to name fields)
+     - For form actions: "update" and "save" are similar (both submit changes)
+     - For email: "email", "e-mail", "email address" are equivalent
+     - For phone: "phone", "telephone", "mobile", "phone number" are related
+     - Consider synonyms, abbreviations, and related concepts
+  3. **Then consider semantic context**: Look at field labels, placeholders, aria-labels, and surrounding context
 - Do NOT invent elements or marker IDs - only use marker IDs that are visible in the screenshot
 - For typing text (email addresses, names, messages, etc.), ALWAYS use "fill" or "type", NEVER "keypress"
 - For checkboxes, ALWAYS use "check" or "uncheck", NEVER "keypress" or "click"

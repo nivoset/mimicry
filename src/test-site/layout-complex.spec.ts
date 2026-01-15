@@ -23,7 +23,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
     await expect(page.locator('#modal1 h2')).toContainText('Simple Modal');
   });
 
-  test('should close simple modal', async ({ page, mimic }) => {
+  test('should close simple modal', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Open Simple Modal"
       click on "Close"
@@ -49,7 +49,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
     await expect(page.locator('#action-results .alert')).toContainText('Confirmed action');
   });
 
-  test('should cancel action in dialog', async ({ page, mimic }) => {
+  test('should cancel action in dialog', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Open Confirmation Dialog"
       click on "Cancel"
@@ -65,7 +65,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
     await expect(page.locator('#modal3 h2')).toContainText('Alert');
   });
 
-  test('should close alert dialog', async ({ page, mimic }) => {
+  test('should close alert dialog', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Open Alert Dialog"
       click on "OK"
@@ -102,7 +102,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
     await expect(page.locator('#action-results .alert')).toContainText('Edit');
   });
 
-  test('should click delete option in dropdown', async ({ page, mimic }) => {
+  test('should click delete option in dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Actions Menu"
       click on "Delete"
@@ -120,7 +120,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
     await expect(page.locator('#action-results .alert')).toContainText('Share');
   });
 
-  test('should open more options dropdown', async ({ page, mimic }) => {
+  test('should open more options dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "More Options"`;
 
     await expect(page.locator('#dropdown2')).toBeVisible();
@@ -153,7 +153,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
     await expect(page.locator('#tab-content-1')).toHaveClass(/active/);
   });
 
-  test('should click button in tab 2', async ({ page, mimic }) => {
+  test('should click button in tab 2', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`
       click on "Tab 2"
       click on "Action in Tab 2"
@@ -179,7 +179,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
     await expect(page.locator('.accordion-item .accordion-content').first()).toBeVisible();
   });
 
-  test('should expand accordion section 2', async ({ page, mimic }) => {
+  test('should expand accordion section 2', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Section 2"`;
 
     const secondItem = page.locator('.accordion-item').nth(1);
