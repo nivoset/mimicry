@@ -225,6 +225,7 @@ export async function saveSnapshot(
   }
   
   // Update timestamps in flags
+  // Only set/update timestamps if not already set (preserve original values)
   const now = new Date().toISOString();
   if (!snapshot.flags) {
     snapshot.flags = {
@@ -239,9 +240,15 @@ export async function saveSnapshot(
       lastFailedAt: null,
     };
   } else {
-    snapshot.flags.lastPassedAt = now;
+    // Preserve original createdAt - don't update it
     if (!snapshot.flags.createdAt) {
       snapshot.flags.createdAt = now;
+    }
+    // Only update lastPassedAt if it's being set (from the snapshot being passed in)
+    // The snapshot passed to saveSnapshot should already have the correct lastPassedAt
+    // Don't overwrite it here - preserve the original if not explicitly set
+    if (snapshot.flags.lastPassedAt === undefined || snapshot.flags.lastPassedAt === null) {
+      snapshot.flags.lastPassedAt = now;
     }
   }
   

@@ -80,6 +80,8 @@ export class SnapshotSaveNode extends Node<MimicSharedState> {
     // Check if this was a regeneration (snapshot existed but we regenerated)
     const existingSnapshot = await getSnapshot(testFilePath, testHash);
     const wasRegeneration = existingSnapshot !== null;
+    const wasFailureBeforeRegeneration = existingSnapshot?.flags?.lastFailedAt !== null;
+    const isFirstSuccessfulRun = existingSnapshot === null;
     const now = new Date().toISOString();
 
     // Hash each step text and create snapshot steps with hashes
@@ -127,6 +129,10 @@ export class SnapshotSaveNode extends Node<MimicSharedState> {
     const snapshotSteps: SnapshotStep[] = allSteps;
 
     // Build snapshot object (screenshot is attached to test report, not stored in JSON)
+    // Timestamp strategy:
+    // - First successful run: Set both createdAt and lastPassedAt to now
+    // - Regeneration after failure: Preserve createdAt, update lastPassedAt to now
+    // - Regeneration without prior failure: Preserve both createdAt and lastPassedAt (don't update)
     const snapshot = {
       testHash,
       testText: input,
@@ -139,9 +145,16 @@ export class SnapshotSaveNode extends Node<MimicSharedState> {
         skipSnapshot: false,
         forceRegenerate: false,
         debugMode: false,
+        // Preserve original creation time from first successful run
         createdAt: existingSnapshot?.flags?.createdAt || now,
-        lastPassedAt: now,
-        lastFailedAt: null,
+        // Only update lastPassedAt on first creation or after a failure was fixed
+        // Preserve the original first successful run time otherwise
+        lastPassedAt: isFirstSuccessfulRun
+          ? now // First successful run - set timestamp
+          : (wasFailureBeforeRegeneration 
+            ? now // Regeneration after failure - update timestamp
+            : existingSnapshot?.flags?.lastPassedAt || now), // Regeneration without failure - preserve original
+        lastFailedAt: null, // Clear failure timestamp on successful run
       },
     };
 
