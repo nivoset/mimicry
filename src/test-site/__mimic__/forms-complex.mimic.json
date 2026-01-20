@@ -18,7 +18,7 @@
             },
             "elementDescription": "First name input field"
           },
-          "executedAt": "2026-01-10T22:09:21.817Z",
+          "executedAt": "2026-01-20T12:45:29.196Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -65,7 +65,7 @@
             "clickType": "hover",
             "reasoning": "The step is to type 'Johnson' into the last name field. The last name field is clearly marked with a blue badge and has a data-testid attribute indicating it's an interactive element. The Gherkin step does not indicate any need for navigation, so the most likely target is the last name input field."
           },
-          "executedAt": "2026-01-10T22:09:21.817Z",
+          "executedAt": "2026-01-20T12:45:29.196Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -92,7 +92,7 @@
             },
             "elementDescription": "Account Type dropdown"
           },
-          "executedAt": "2026-01-10T22:09:21.817Z",
+          "executedAt": "2026-01-20T12:45:29.196Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -139,7 +139,7 @@
             "clickType": "double",
             "reasoning": "The Gherkin step 'click on 'Next Step'' indicates a navigation action to the next form step or section. The Proceed button (marker ID 8) is the most likely element to be clicked as it is explicitly mentioned in the previous steps and labeled clearly. Other elements are either non-interactive, lower-level navigation items, or not directly related to advancing the form step."
           },
-          "executedAt": "2026-01-10T22:09:21.817Z",
+          "executedAt": "2026-01-20T12:45:29.196Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -166,7 +166,7 @@
             },
             "elementDescription": "First name input field"
           },
-          "executedAt": "2026-01-10T22:09:21.817Z",
+          "executedAt": "2026-01-20T12:45:29.196Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -213,7 +213,7 @@
             "clickType": "hover",
             "reasoning": "The step is to type 'Johnson' into the last name field. The last name field is clearly marked with a blue badge and has a data-testid attribute indicating it's an interactive element. The Gherkin step does not indicate any need for navigation, so the most likely target is the last name input field."
           },
-          "executedAt": "2026-01-10T22:09:21.817Z",
+          "executedAt": "2026-01-20T12:45:29.196Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -240,7 +240,7 @@
             },
             "elementDescription": "Account Type dropdown"
           },
-          "executedAt": "2026-01-10T22:09:21.817Z",
+          "executedAt": "2026-01-20T12:45:29.196Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -287,7 +287,7 @@
             "clickType": "double",
             "reasoning": "The Gherkin step 'click on 'Next Step'' indicates a navigation action to the next form step or section. The Proceed button (marker ID 8) is the most likely element to be clicked as it is explicitly mentioned in the previous steps and labeled clearly. Other elements are either non-interactive, lower-level navigation items, or not directly related to advancing the form step."
           },
-          "executedAt": "2026-01-10T22:09:21.817Z",
+          "executedAt": "2026-01-20T12:45:29.196Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -302,15 +302,15 @@
       "flags": {
         "needsRetry": true,
         "hasErrors": true,
-        "troubleshootingEnabled": false,
+        "troubleshootingEnabled": true,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:41:02.817Z",
-        "lastPassedAt": "2026-01-15T00:47:27.000Z",
-        "lastFailedAt": "2026-01-15T00:47:26.991Z",
+        "lastPassedAt": "2026-01-20T12:45:29.196Z",
+        "lastFailedAt": "2026-01-20T12:48:12.128Z",
         "failureDetails": {
-          "error": "locator.fill: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n"
+          "error": "locator.fill: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n"
         }
       }
     },
@@ -956,7 +956,7 @@
             },
             "elementDescription": "First Name input field"
           },
-          "executedAt": "2026-01-12T23:38:32.137Z",
+          "executedAt": "2026-01-20T12:49:33.705Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -981,7 +981,7 @@
             },
             "elementDescription": "Last Name field labeled 'Last Name'"
           },
-          "executedAt": "2026-01-12T23:38:32.137Z",
+          "executedAt": "2026-01-20T12:49:33.705Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1029,7 +1029,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step clearly states 'click on \"Next Step\"', so the primary click type is 'primary'. The element marked 24 is the 'Next Step' button, which is the most likely target."
           },
-          "executedAt": "2026-01-12T23:38:32.137Z",
+          "executedAt": "2026-01-20T12:49:33.705Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1054,7 +1054,7 @@
             },
             "elementDescription": "Email input field for entering an email address."
           },
-          "executedAt": "2026-01-12T23:38:32.137Z",
+          "executedAt": "2026-01-20T12:49:33.705Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1079,7 +1079,7 @@
             },
             "elementDescription": "Phone input field"
           },
-          "executedAt": "2026-01-12T23:38:32.137Z",
+          "executedAt": "2026-01-20T12:49:33.705Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1108,7 +1108,7 @@
             },
             "elementDescription": "First Name input field"
           },
-          "executedAt": "2026-01-12T23:38:32.137Z",
+          "executedAt": "2026-01-20T12:49:33.705Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1133,7 +1133,7 @@
             },
             "elementDescription": "Last Name field labeled 'Last Name'"
           },
-          "executedAt": "2026-01-12T23:38:32.137Z",
+          "executedAt": "2026-01-20T12:49:33.705Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1158,7 +1158,7 @@
             },
             "elementDescription": "Email input field for entering an email address."
           },
-          "executedAt": "2026-01-12T23:38:32.137Z",
+          "executedAt": "2026-01-20T12:49:33.705Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1183,7 +1183,7 @@
             },
             "elementDescription": "Phone input field"
           },
-          "executedAt": "2026-01-12T23:38:32.137Z",
+          "executedAt": "2026-01-20T12:49:33.705Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1231,7 +1231,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step clearly states 'click on \"Next Step\"', so the primary click type is 'primary'. The element marked 24 is the 'Next Step' button, which is the most likely target."
           },
-          "executedAt": "2026-01-12T23:38:32.137Z",
+          "executedAt": "2026-01-20T12:49:33.705Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1246,7 +1246,7 @@
       "flags": {
         "needsRetry": false,
         "hasErrors": false,
-        "troubleshootingEnabled": false,
+        "troubleshootingEnabled": true,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
@@ -1973,7 +1973,7 @@
             },
             "elementDescription": "First name input field"
           },
-          "executedAt": "2026-01-13T00:24:09.064Z",
+          "executedAt": "2026-01-20T13:01:09.163Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -1998,7 +1998,7 @@
             },
             "elementDescription": "Last name field labeled 'Last Name'"
           },
-          "executedAt": "2026-01-13T00:24:09.064Z",
+          "executedAt": "2026-01-20T13:01:09.163Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2046,7 +2046,7 @@
             "modifiers": [],
             "reasoning": "The step clearly says 'click on \"Next Step\"'. Based on this instruction, the most likely element is the button with the text 'Next Step', which has a mimicId of 24. The click type is primary (left click) by default."
           },
-          "executedAt": "2026-01-13T00:24:09.064Z",
+          "executedAt": "2026-01-20T13:01:09.163Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2071,7 +2071,7 @@
             },
             "elementDescription": "Email input field labeled 'Email Address'"
           },
-          "executedAt": "2026-01-13T00:24:09.064Z",
+          "executedAt": "2026-01-20T13:01:09.163Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2100,7 +2100,7 @@
             },
             "elementDescription": "First name input field"
           },
-          "executedAt": "2026-01-13T00:24:09.064Z",
+          "executedAt": "2026-01-20T13:01:09.163Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2125,7 +2125,7 @@
             },
             "elementDescription": "Last name field labeled 'Last Name'"
           },
-          "executedAt": "2026-01-13T00:24:09.064Z",
+          "executedAt": "2026-01-20T13:01:09.163Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2150,7 +2150,7 @@
             },
             "elementDescription": "Email input field labeled 'Email Address'"
           },
-          "executedAt": "2026-01-13T00:24:09.064Z",
+          "executedAt": "2026-01-20T13:01:09.163Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2198,7 +2198,7 @@
             "modifiers": [],
             "reasoning": "The step clearly says 'click on \"Next Step\"'. Based on this instruction, the most likely element is the button with the text 'Next Step', which has a mimicId of 24. The click type is primary (left click) by default."
           },
-          "executedAt": "2026-01-13T00:24:09.064Z",
+          "executedAt": "2026-01-20T13:01:09.163Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -2213,7 +2213,7 @@
       "flags": {
         "needsRetry": false,
         "hasErrors": false,
-        "troubleshootingEnabled": false,
+        "troubleshootingEnabled": true,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,

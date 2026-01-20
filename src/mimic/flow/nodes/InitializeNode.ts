@@ -39,10 +39,11 @@ export class InitializeNode extends Node<MimicSharedState> {
     expectedStepCount: number;
   }> {
     // Parse input into steps
+    // Filter out empty lines to prevent processing blank steps
     const steps = input
       .split('\n')
       .map(step => step.trim())
-      .filter((step): step is string => step.length > 0);
+      .filter((step): step is string => step.length > 0); // Filter out empty lines after trimming
 
     const expectedStepCount = steps.length;
 

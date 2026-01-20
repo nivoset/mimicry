@@ -121,6 +121,29 @@ export function getSnapshotPath(testFilePath: string, testHash: string): string 
 
 
 /**
+ * Check if a snapshot is valid (has non-empty testText and at least one step)
+ * 
+ * A valid snapshot must have:
+ * - Non-empty testText (after trimming whitespace)
+ * - At least one step (either in steps array or stepsByHash)
+ * 
+ * @param snapshot - Snapshot object to validate
+ * @returns true if snapshot is valid, false otherwise
+ */
+export function isValidSnapshot(snapshot: Snapshot): boolean {
+  // Must have non-empty testText
+  if (!snapshot.testText || snapshot.testText.trim().length === 0) {
+    return false;
+  }
+  
+  // Must have at least one step
+  // Check both steps array and stepsByHash for backward compatibility
+  const stepCount = snapshot.steps?.length || 
+                    (snapshot.stepsByHash ? Object.keys(snapshot.stepsByHash).length : 0);
+  return stepCount > 0;
+}
+
+/**
  * Read a snapshot from disk
  * 
  * @param testFilePath - Full path to the test file
@@ -198,6 +221,38 @@ export async function saveSnapshot(
   snapshot: Snapshot
 ): Promise<void> {
   if (!testFilePath) {
+    return;
+  }
+
+  // Validate snapshot before saving
+  // If snapshot is invalid (empty testText or no steps), handle cleanup
+  if (!isValidSnapshot(snapshot)) {
+    // Check if this invalid snapshot exists in the file and remove it
+    await ensureMimicDir(testFilePath);
+    const mimicFilePath = getMimicFilePath(testFilePath);
+    
+    try {
+      const content = await fs.readFile(mimicFilePath, 'utf-8');
+      const mimicFile = JSON.parse(content) as MimicFile;
+      
+      if (mimicFile.tests) {
+        const existingIndex = mimicFile.tests.findIndex(test => test.testHash === snapshot.testHash);
+        if (existingIndex >= 0) {
+          // Remove invalid snapshot from file
+          mimicFile.tests.splice(existingIndex, 1);
+          await fs.writeFile(mimicFilePath, JSON.stringify(mimicFile, null, 2), 'utf-8');
+          console.warn(`⚠️  Removed invalid snapshot (empty testText or no steps) with hash ${snapshot.testHash} from ${mimicFilePath}`);
+        }
+      }
+    } catch (error) {
+      // File doesn't exist or can't be read - nothing to remove
+      if (error instanceof Error && 'code' in error && (error as any).code !== 'ENOENT') {
+        console.warn(`Failed to check for existing snapshot when removing invalid snapshot:`, error);
+      }
+    }
+    
+    // Don't save invalid snapshots
+    console.warn(`⚠️  Skipping save of invalid snapshot (empty testText or no steps) with hash ${snapshot.testHash}`);
     return;
   }
 
@@ -319,12 +374,14 @@ export async function saveSnapshot(
  * Record a test failure timestamp
  * 
  * Updates the snapshot's lastFailedAt timestamp and flags if the snapshot exists.
+ * Only creates a new snapshot if testText is provided (to avoid creating empty snapshots).
  * 
  * @param testFilePath - Full path to the test file
  * @param testHash - Hash identifier for the test
  * @param failedStepIndex - Index of the step that failed (optional)
  * @param failedStepText - Text of the step that failed (optional)
  * @param error - Error message (optional)
+ * @param testText - Original test text (optional, required to create new snapshot)
  * @returns Promise that resolves when failure is recorded
  */
 export async function recordFailure(
@@ -332,7 +389,8 @@ export async function recordFailure(
   testHash: string,
   failedStepIndex?: number,
   failedStepText?: string,
-  error?: string
+  error?: string,
+  testText?: string
 ): Promise<void> {
   if (!testFilePath) {
     return;
@@ -340,12 +398,19 @@ export async function recordFailure(
 
   const snapshot = await getSnapshot(testFilePath, testHash);
   if (!snapshot) {
-    // Create a minimal snapshot just for failure tracking
+    // Only create a snapshot for failure tracking if we have testText
+    // This prevents creating empty snapshots that cause false failures
+    if (!testText || testText.trim().length === 0) {
+      // No testText available and no existing snapshot - skip creating empty snapshot
+      return;
+    }
+    
+    // Create a minimal snapshot for failure tracking (will be updated when test succeeds)
     const now = new Date().toISOString();
     const failureSnapshot: Snapshot = {
       testHash,
-      testText: '',
-      steps: [] ,
+      testText: testText.trim(),
+      steps: [],
       stepsByHash: {},
       flags: {
         needsRetry: true,
@@ -427,6 +492,11 @@ export async function shouldUseSnapshot(
 
   const snapshot = await getSnapshot(testFilePath, testHash);
   if (!snapshot) {
+    return false;
+  }
+
+  // Don't use invalid snapshots (empty testText or no steps)
+  if (!isValidSnapshot(snapshot)) {
     return false;
   }
 

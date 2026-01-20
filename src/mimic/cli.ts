@@ -1,3 +1,4 @@
+import "dotenv/config";
 /**
  * CLI Argument Parsing
  * 
@@ -16,14 +17,18 @@
  * 
  * @returns true if troubleshoot mode is enabled
  */
+
+
 export function isTroubleshootMode(): boolean {
   // Check CLI argument
   if (process.argv.includes('--troubleshoot')) {
+    console.log('Troubleshoot mode is enabled via CLI argument');
     return true;
   }
   
   // Check environment variable
   if (process.env.MIMIC_TROUBLESHOOT === 'true' || process.env.MIMIC_TROUBLESHOOT === '1') {
+    console.log('Troubleshoot mode is enabled via environment variable');
     return true;
   }
   

@@ -15,6 +15,7 @@ import type { ClickActionResult } from './schema/action.js';
 import type { FormActionResult } from './forms.js';
 import { getMimic } from './markers.js';
 import { getFromSelector } from './selectorUtils.js';
+import { isValidSnapshot } from './storage.js';
 
 /**
  * Replay a complete test from a snapshot
@@ -32,6 +33,12 @@ export async function replayFromSnapshot(
   snapshot: Snapshot,
   testInfo?: TestInfo
 ): Promise<void> {
+  // Validate snapshot before replaying
+  // Don't replay invalid snapshots (empty testText or no steps)
+  if (!isValidSnapshot(snapshot)) {
+    throw new Error('Cannot replay invalid snapshot: empty testText or no steps');
+  }
+
   // Get steps array for replay (support both new and old format)
   // New format: use steps array (which is built from stepsByHash for backward compatibility)
   // Old format: use steps array directly

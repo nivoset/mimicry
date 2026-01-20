@@ -9,7 +9,7 @@ import { Node } from 'pocketflow';
 import type { MimicSharedState } from '../types.js';
 import { replayFromSnapshot } from '../../replay.js';
 import { addAnnotation } from '../../annotations.js';
-import { recordFailure } from '../../storage.js';
+import { recordFailure, isValidSnapshot } from '../../storage.js';
 
 /**
  * Snapshot Replay Node - Replays test from snapshot
@@ -30,6 +30,7 @@ export class SnapshotReplayNode extends Node<MimicSharedState> {
     testInfo: MimicSharedState['testInfo'];
     testHash: string;
     testFilePath: string | undefined;
+    input: string;
   }> {
     return {
       snapshot: shared.existingSnapshot,
@@ -37,6 +38,7 @@ export class SnapshotReplayNode extends Node<MimicSharedState> {
       testInfo: shared.testInfo,
       testHash: shared.testHash,
       testFilePath: shared.testFilePath,
+      input: shared.input,
     };
   }
 
@@ -49,15 +51,22 @@ export class SnapshotReplayNode extends Node<MimicSharedState> {
     testInfo,
     testHash,
     testFilePath,
+    input,
   }: {
     snapshot: MimicSharedState['existingSnapshot'];
     page: MimicSharedState['page'];
     testInfo: MimicSharedState['testInfo'];
     testHash: string;
     testFilePath: string | undefined;
+    input: string;
   }): Promise<{ success: boolean; error?: string }> {
     if (!snapshot) {
       return { success: false, error: 'No snapshot available' };
+    }
+
+    // Don't replay invalid snapshots (empty testText or no steps)
+    if (!isValidSnapshot(snapshot)) {
+      return { success: false, error: 'Invalid snapshot: empty testText or no steps' };
     }
 
     // Add annotation indicating we're loading from snapshot
@@ -83,13 +92,16 @@ export class SnapshotReplayNode extends Node<MimicSharedState> {
       );
 
       // Record the failure before regenerating
+      // Pass testText from input (shared.input) or snapshot.testText if available
       if (testFilePath) {
+        const testText = input || snapshot?.testText;
         await recordFailure(
           testFilePath,
           testHash,
           undefined,
           undefined,
-          errorMessage
+          errorMessage,
+          testText
         );
       }
 
@@ -108,6 +120,7 @@ export class SnapshotReplayNode extends Node<MimicSharedState> {
       testInfo: MimicSharedState['testInfo'];
       testHash: string;
       testFilePath: string | undefined;
+      input: string;
     },
     execRes: { success: boolean; error?: string }
   ): Promise<string | undefined> {

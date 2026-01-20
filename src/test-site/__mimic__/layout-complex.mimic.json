@@ -41,7 +41,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step specifies 'click on \"Open Simple Modal\"', which implies a primary (left) click. Among the available markers, those labeled as 'Menu' or 'Options' are more likely to be interactive elements that could open a modal when clicked."
           },
-          "executedAt": "2026-01-11T04:40:47.679Z",
+          "executedAt": "2026-01-20T13:05:42.518Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -92,7 +92,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step specifies 'click on \"Open Simple Modal\"', which implies a primary (left) click. Among the available markers, those labeled as 'Menu' or 'Options' are more likely to be interactive elements that could open a modal when clicked."
           },
-          "executedAt": "2026-01-11T04:40:47.679Z",
+          "executedAt": "2026-01-20T13:05:42.518Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -106,64 +106,15 @@
         }
       ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": true,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:32:36.845Z",
-        "lastPassedAt": "2026-01-13T00:53:42.465Z",
-        "lastFailedAt": "2026-01-13T00:53:42.462Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Simple Modal\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Open Simple Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    329 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "cb7680d023c0967d",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-10T19:44:17.799Z",
-        "lastPassedAt": "2026-01-13T01:06:49.505Z",
-        "lastFailedAt": "2026-01-13T01:06:49.483Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Simple Modal\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Open Simple Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    320 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "99b1f0fed9f07611",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-10T17:43:37.090Z",
-        "lastPassedAt": "2026-01-13T01:20:52.871Z",
-        "lastFailedAt": "2026-01-13T01:20:52.868Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"4\" class=\"btn secondary\" onclick=\"openModal('modal2')\" data-mimic-type=\"interactive\">Open Confirmation Dialog</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  78 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
-        }
+        "lastPassedAt": "2026-01-20T13:05:42.518Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -207,7 +158,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step specifies 'click on Open Confirmation Dialog.' Among the elements that could be related to a confirmation dialog, the OK buttons in the Information Overlay are the most likely candidates given their text content. The default click type for this step is 'primary' (left click)."
           },
-          "executedAt": "2026-01-11T03:21:05.773Z",
+          "executedAt": "2026-01-20T13:15:35.332Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -256,7 +207,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step says 'click on 'Confirm'' which implies a primary click. Among the available elements, the most likely candidates are the buttons with the text 'OK' or 'Confirm'. The OK button marked with mimicId 14 has a high confidence level as it directly matches the 'Confirm' text. Other buttons labeled 'OK' have moderate confidence levels. The Dismiss button is less likely as it is typically used for canceling, not confirming."
           },
-          "executedAt": "2026-01-11T03:21:05.773Z",
+          "executedAt": "2026-01-20T13:15:35.332Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -307,7 +258,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step specifies 'click on Open Confirmation Dialog.' Among the elements that could be related to a confirmation dialog, the OK buttons in the Information Overlay are the most likely candidates given their text content. The default click type for this step is 'primary' (left click)."
           },
-          "executedAt": "2026-01-11T03:21:05.773Z",
+          "executedAt": "2026-01-20T13:15:35.332Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -356,7 +307,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step says 'click on 'Confirm'' which implies a primary click. Among the available elements, the most likely candidates are the buttons with the text 'OK' or 'Confirm'. The OK button marked with mimicId 14 has a high confidence level as it directly matches the 'Confirm' text. Other buttons labeled 'OK' have moderate confidence levels. The Dismiss button is less likely as it is typically used for canceling, not confirming."
           },
-          "executedAt": "2026-01-11T03:21:05.773Z",
+          "executedAt": "2026-01-20T13:15:35.332Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -372,61 +323,17 @@
       "flags": {
         "needsRetry": true,
         "hasErrors": true,
-        "troubleshootingEnabled": false,
+        "troubleshootingEnabled": true,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:50:16.105Z",
-        "lastPassedAt": "2026-01-13T01:53:46.195Z",
-        "lastFailedAt": "2026-01-13T01:53:46.192Z",
+        "lastPassedAt": "2026-01-20T13:15:35.332Z",
+        "lastFailedAt": "2026-01-20T13:18:52.810Z",
         "failureDetails": {
           "failedStepIndex": 0,
           "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"4\" class=\"btn secondary\" onclick=\"openModal('modal2')\" data-mimic-type=\"interactive\">Open Confirmation Dialog</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  77 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "7883f9d66f6fb059",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-10T18:17:52.847Z",
-        "lastPassedAt": "2026-01-13T02:14:44.961Z",
-        "lastFailedAt": "2026-01-13T02:14:44.945Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"4\" class=\"btn secondary\" onclick=\"openModal('modal2')\" data-mimic-type=\"interactive\">Open Confirmation Dialog</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  78 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "623e7737cc2d49e9",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-10T19:03:58.488Z",
-        "lastPassedAt": "2026-01-13T02:36:10.377Z",
-        "lastFailedAt": "2026-01-13T02:36:10.371Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Alert Dialog\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"5\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"5\" class=\"btn danger\" onclick=\"openModal('modal3')\" data-mimic-type=\"interactive\">Open Alert Dialog</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  75 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n"
+          "error": "AI model call failed after 31090ms (tried both text-only and with image): No object generated: response did not match schema."
         }
       }
     },
@@ -471,7 +378,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step 'click on \"Open Alert Dialog\"' implies a primary click action. Based on the available markers and their semantic relevance to potential alert dialog triggers, the Options button (mimicId 14), followed by other actions buttons (3, 6, 11, and 12) are the most likely candidates as they are interactive elements that could potentially open an alert dialog."
           },
-          "executedAt": "2026-01-11T09:16:36.878Z",
+          "executedAt": "2026-01-20T13:27:21.572Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -520,7 +427,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step 'click on \"OK\"' implies a standard click action, so the primary click type is used."
           },
-          "executedAt": "2026-01-11T09:16:36.878Z",
+          "executedAt": "2026-01-20T13:27:21.572Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -571,7 +478,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step 'click on \"Open Alert Dialog\"' implies a primary click action. Based on the available markers and their semantic relevance to potential alert dialog triggers, the Options button (mimicId 14), followed by other actions buttons (3, 6, 11, and 12) are the most likely candidates as they are interactive elements that could potentially open an alert dialog."
           },
-          "executedAt": "2026-01-11T09:16:36.878Z",
+          "executedAt": "2026-01-20T13:27:21.572Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -620,7 +527,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step 'click on \"OK\"' implies a standard click action, so the primary click type is used."
           },
-          "executedAt": "2026-01-11T09:16:36.878Z",
+          "executedAt": "2026-01-20T13:27:21.572Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -634,20 +541,15 @@
         }
       ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": true,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T19:22:33.312Z",
-        "lastPassedAt": "2026-01-13T03:02:16.762Z",
-        "lastFailedAt": "2026-01-13T03:02:16.758Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Alert Dialog\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"5\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"5\" class=\"btn danger\" onclick=\"openModal('modal3')\" data-mimic-type=\"interactive\">Open Alert Dialog</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  73 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
-        }
+        "lastPassedAt": "2026-01-20T13:27:21.572Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -691,7 +593,7 @@
             "modifiers": [],
             "reasoning": "The step 'click on 'Actions Menu'' refers to a menu-like interaction typically found in dropdowns or modals. Among the candidates, the dismiss button for the information overlay (mimicId 14) is most likely due to its prominent position and role as an interactive element within an informational overlay. The OK button within the dropdown menu (mimicId 7), while also a potential candidate, is less likely than the dismiss button given its more generic nature. Other options such as modal OK/Close buttons are less probable without additional context. "
           },
-          "executedAt": "2026-01-11T06:19:48.370Z",
+          "executedAt": "2026-01-20T01:34:37.910Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -741,7 +643,7 @@
             "modifiers": [],
             "reasoning": "The step 'click on 'Actions Menu'' refers to a menu-like interaction typically found in dropdowns or modals. Among the candidates, the dismiss button for the information overlay (mimicId 14) is most likely due to its prominent position and role as an interactive element within an informational overlay. The OK button within the dropdown menu (mimicId 7), while also a potential candidate, is less likely than the dismiss button given its more generic nature. Other options such as modal OK/Close buttons are less probable without additional context. "
           },
-          "executedAt": "2026-01-11T06:19:48.370Z",
+          "executedAt": "2026-01-20T01:34:37.910Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -756,171 +658,15 @@
       "flags": {
         "needsRetry": true,
         "hasErrors": true,
-        "troubleshootingEnabled": false,
+        "troubleshootingEnabled": true,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T22:26:00.334Z",
-        "lastPassedAt": "2026-01-13T03:35:54.469Z",
-        "lastFailedAt": "2026-01-13T03:35:54.467Z",
+        "lastPassedAt": "2026-01-20T01:34:37.910Z",
+        "lastFailedAt": "2026-01-20T13:28:58.038Z",
         "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Actions Menu\"",
-          "error": "Unknown base action type: assertion"
-        }
-      }
-    },
-    {
-      "testHash": "f0471cdd2198dae6",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-10T22:29:28.355Z",
-        "lastPassedAt": "2026-01-13T04:14:22.324Z",
-        "lastFailedAt": "2026-01-13T04:14:22.272Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Actions Menu\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"6\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"6\" data-mimic-type=\"interactive\" onclick=\"toggleDropdown('dropdown1')\">Actions Menu</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    282 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "14284dd840918348",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-10T22:31:59.520Z",
-        "lastPassedAt": "2026-01-13T03:56:00.311Z",
-        "lastFailedAt": "2026-01-13T03:56:00.309Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Actions Menu\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"6\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"6\" data-mimic-type=\"interactive\" onclick=\"toggleDropdown('dropdown1')\">Actions Menu</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    290 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "d8f9a1a1d6389bb2",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-11T07:36:16.061Z",
-        "lastPassedAt": "2026-01-13T04:34:57.675Z",
-        "lastFailedAt": "2026-01-13T04:34:57.647Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Actions Menu\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"6\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"6\" data-mimic-type=\"interactive\" onclick=\"toggleDropdown('dropdown1')\">Actions Menu</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    288 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "3c15b11a7c994359",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T04:41:09.937Z",
-        "lastPassedAt": "2026-01-13T04:58:22.271Z",
-        "lastFailedAt": "2026-01-13T04:58:22.252Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Actions Menu\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"6\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"6\" data-mimic-type=\"interactive\" onclick=\"toggleDropdown('dropdown1')\">Actions Menu</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    284 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "b2b8bfe2f639f3e9",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T05:02:06.163Z",
-        "lastPassedAt": "2026-01-13T05:12:38.169Z",
-        "lastFailedAt": "2026-01-13T05:12:37.897Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"More Options\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"7\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"7\" class=\"btn secondary\" data-mimic-type=\"interactive\" onclick=\"toggleDropdown('dropdown2')\">More Options</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    279 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "ea17031c573ed491",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T05:16:04.375Z",
-        "lastPassedAt": "2026-01-13T05:26:22.804Z",
-        "lastFailedAt": "2026-01-13T05:26:22.786Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Tab 2\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"9\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"tab-2\" role=\"tab\" data-mimic-id=\"9\" class=\"tab-button\" aria-selected=\"false\" onclick=\"switchTab(2, event)\" aria-controls=\"tab-content-2\" data-mimic-type=\"interactive\">Tab 2</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    271 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "0f91241ae63592f0",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T05:29:43.862Z",
-        "lastPassedAt": "2026-01-13T05:41:02.038Z",
-        "lastFailedAt": "2026-01-13T05:41:02.027Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Tab 3\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"10\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"tab-3\" role=\"tab\" class=\"tab-button\" data-mimic-id=\"10\" aria-selected=\"false\" onclick=\"switchTab(3, event)\" aria-controls=\"tab-content-3\" data-mimic-type=\"interactive\">Tab 3</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    271 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
+          "error": "locator.click: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"14\"]')\u001b[22m\n"
         }
       }
     },
@@ -999,72 +745,6 @@
         "createdAt": "2026-01-13T05:48:07.522Z",
         "lastPassedAt": "2026-01-13T05:52:29.938Z",
         "lastFailedAt": null
-      }
-    },
-    {
-      "testHash": "596a49b591ac2669",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T05:56:16.426Z",
-        "lastPassedAt": "2026-01-13T06:03:56.730Z",
-        "lastFailedAt": "2026-01-13T06:03:56.232Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Tab 2\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"9\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"tab-2\" role=\"tab\" data-mimic-id=\"9\" class=\"tab-button\" aria-selected=\"false\" onclick=\"switchTab(2, event)\" aria-controls=\"tab-content-2\" data-mimic-type=\"interactive\">Tab 2</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    271 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "566ecc7c79e96659",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T06:11:00.969Z",
-        "lastPassedAt": "2026-01-13T06:16:11.794Z",
-        "lastFailedAt": "2026-01-13T06:16:11.790Z",
-        "failureDetails": {
-          "failedStepIndex": 1,
-          "failedStepText": "click on \"Action in Tab 3\"",
-          "error": "Unknown base action type: assertion"
-        }
-      }
-    },
-    {
-      "testHash": "b6e70660846204fe",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T06:16:38.993Z",
-        "lastPassedAt": "2026-01-13T06:22:03.735Z",
-        "lastFailedAt": "2026-01-13T06:22:03.716Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Section 1\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"23\"]')\u001b[22m\n\u001b[2m    - locator resolved to <div data-mimic-id=\"23\" class=\"accordion-header\" data-mimic-type=\"display\" onclick=\"toggleAccordion(1, event)\">…</div>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  63 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <p data-mimic-id=\"36\" data-mimic-type=\"display\">This is an informational overlay that appears on …</p> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
-        }
       }
     },
     {
@@ -1171,212 +851,17 @@
         }
       ],
       "flags": {
-        "needsRetry": false,
-        "hasErrors": false,
+        "needsRetry": true,
+        "hasErrors": true,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-13T06:26:31.538Z",
         "lastPassedAt": "2026-01-13T06:34:31.768Z",
-        "lastFailedAt": null
-      }
-    },
-    {
-      "testHash": "ae3375cd7881fb15",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T06:43:57.174Z",
-        "lastPassedAt": "2026-01-13T07:06:36.305Z",
-        "lastFailedAt": "2026-01-13T07:06:36.300Z",
+        "lastFailedAt": "2026-01-20T13:48:48.926Z",
         "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Section 1\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"24\"]')\u001b[22m\n\u001b[2m    - locator resolved to <span data-mimic-id=\"24\" data-mimic-type=\"display\">Section 1</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    253 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "f517b346e2816919",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T07:10:45.916Z",
-        "lastPassedAt": "2026-01-13T07:12:23.775Z",
-        "lastFailedAt": "2026-01-13T07:12:23.758Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Section 1\"",
-          "error": "AI model call failed after 34975ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
-      }
-    },
-    {
-      "testHash": "eaad5fdae800bc7a",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T07:16:03.957Z",
-        "lastPassedAt": "2026-01-13T07:34:23.052Z",
-        "lastFailedAt": "2026-01-13T07:34:23.035Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Show Loading Overlay\"",
-          "error": "AI model call failed after 35866ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
-      }
-    },
-    {
-      "testHash": "675e680ffd928e55",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T07:38:02.561Z",
-        "lastPassedAt": "2026-01-13T07:53:26.174Z",
-        "lastFailedAt": "2026-01-13T07:53:25.997Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Show Info Overlay\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"13\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"13\" class=\"btn secondary\" data-mimic-type=\"interactive\" onclick=\"showOverlay('overlay2')\">Show Info Overlay</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    67 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "57610ed4b21f1064",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T08:00:37.092Z",
-        "lastPassedAt": "2026-01-13T08:23:46.637Z",
-        "lastFailedAt": "2026-01-13T08:23:45.270Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Show Info Overlay\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"13\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"13\" class=\"btn secondary\" data-mimic-type=\"interactive\" onclick=\"showOverlay('overlay2')\">Show Info Overlay</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    67 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "d98559b9f7489461",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T08:30:54.477Z",
-        "lastPassedAt": "2026-01-13T08:48:50.674Z",
-        "lastFailedAt": "2026-01-13T08:48:50.670Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Simple Modal\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Open Simple Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    236 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "b2535c7d9a130708",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T08:57:29.960Z",
-        "lastPassedAt": "2026-01-13T09:23:28.976Z",
-        "lastFailedAt": "2026-01-13T09:23:28.966Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Actions Menu\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"6\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"6\" data-mimic-type=\"interactive\" onclick=\"toggleDropdown('dropdown1')\">Actions Menu</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    247 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
-    },
-    {
-      "testHash": "c6c7afa1ab21575f",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T09:29:17.552Z",
-        "lastPassedAt": "2026-01-13T09:47:55.301Z",
-        "lastFailedAt": "2026-01-13T09:47:55.295Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Simple Modal\"",
-          "error": "Unknown base action type: assertion"
-        }
-      }
-    },
-    {
-      "testHash": "b961fa66b8779df3",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T09:48:19.973Z",
-        "lastPassedAt": "2026-01-13T09:58:01.506Z",
-        "lastFailedAt": "2026-01-13T09:58:01.504Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "Unknown base action type: assertion"
+          "error": "locator.click: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"14\"]')\u001b[22m\n"
         }
       }
     }

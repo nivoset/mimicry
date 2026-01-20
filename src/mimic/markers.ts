@@ -305,9 +305,9 @@ async function drawMarkersOnScreenshot(
   imageBuffer: Buffer,
   markers: MarkerInfo[]
 ): Promise<Buffer> {
-  const markerSize = 36; // Size of the marker circle in pixels (increased from 12 for better visibility)
+  const markerSize = 44; // Size of the marker circle in pixels (increased for better visibility)
   const markerRadius = markerSize / 2;
-  const fontSize = 14; // Font size for the number text
+  const fontSize = 18; // Font size for the number text (increased for clarity)
   const fontFamily = 'Arial, sans-serif'; // Font family for better readability
   
   // Color mapping for element types
@@ -335,7 +335,8 @@ async function drawMarkersOnScreenshot(
     
     // Calculate left center position
     // Left center means: x position is at the left edge, y is at vertical center
-    const markerX = Math.max(0, Math.min(rect.x, imageWidth - markerSize));
+    // Offset slightly to the right to avoid covering text
+    const markerX = Math.max(0, Math.min(rect.x - markerSize + 8, imageWidth - markerSize));
     const markerY = Math.max(0, Math.min(rect.y + rect.height / 2 - markerRadius, imageHeight - markerSize));
     
     // Skip if marker is outside image bounds
@@ -350,8 +351,13 @@ async function drawMarkersOnScreenshot(
     
     const svg = `
       <svg width="${markerSize}" height="${markerSize}" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer shadow for better visibility -->
+        <circle cx="${markerRadius}" cy="${markerRadius}" r="${markerRadius}" 
+                fill="rgba(0, 0, 0, 0.2)" opacity="0.5"/>
+        <!-- Main circle with stronger border -->
         <circle cx="${markerRadius}" cy="${markerRadius}" r="${markerRadius - 2}" 
-                fill="${color}" stroke="white" stroke-width="2" opacity="0.95"/>
+                fill="${color}" stroke="white" stroke-width="3" opacity="0.98"/>
+        <!-- Number text with improved contrast -->
         <text x="${textX}" y="${textY}" 
               font-family="${fontFamily}" 
               font-size="${fontSize}" 
@@ -359,9 +365,10 @@ async function drawMarkersOnScreenshot(
               fill="white" 
               text-anchor="middle" 
               dominant-baseline="middle"
-              stroke="black" 
-              stroke-width="0.5"
-              stroke-opacity="0.8">${mimicId}</text>
+              stroke="rgba(0, 0, 0, 0.9)" 
+              stroke-width="1.5"
+              stroke-opacity="1"
+              paint-order="stroke fill">${mimicId}</text>
       </svg>
     `;
     

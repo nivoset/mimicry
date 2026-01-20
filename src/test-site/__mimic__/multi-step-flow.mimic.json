@@ -357,50 +357,6 @@
       }
     },
     {
-      "testHash": "29ae18899e9c6c38",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T10:05:47.608Z",
-        "lastPassedAt": "2026-01-13T10:09:56.818Z",
-        "lastFailedAt": "2026-01-13T10:09:56.816Z",
-        "failureDetails": {
-          "failedStepIndex": 1,
-          "failedStepText": "type \"Alice\" into the name field",
-          "error": "Unknown base action type: assertion"
-        }
-      }
-    },
-    {
-      "testHash": "7d5bc98bbd04c140",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T10:11:29.532Z",
-        "lastPassedAt": "2026-01-13T10:18:05.031Z",
-        "lastFailedAt": "2026-01-13T10:18:05.029Z",
-        "failureDetails": {
-          "failedStepIndex": 3,
-          "failedStepText": "click on \"Previous\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n"
-        }
-      }
-    },
-    {
       "testHash": "56e8ebbeeb7e1571",
       "testText": "",
       "steps": [],
@@ -414,77 +370,11 @@
         "debugMode": false,
         "createdAt": "2026-01-13T10:19:16.063Z",
         "lastPassedAt": "2026-01-13T10:26:58.921Z",
-        "lastFailedAt": "2026-01-13T10:26:58.920Z",
+        "lastFailedAt": "2026-01-16T09:02:33.420Z",
         "failureDetails": {
           "failedStepIndex": 0,
           "failedStepText": "click on \"Start Wizard\"",
-          "error": "AI model call failed after 29941ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
-      }
-    },
-    {
-      "testHash": "ab52c66c3399a6b1",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T10:27:17.004Z",
-        "lastPassedAt": "2026-01-13T10:30:44.799Z",
-        "lastFailedAt": "2026-01-13T10:30:44.797Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Start Wizard\"",
-          "error": "AI model call failed after 30465ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
-      }
-    },
-    {
-      "testHash": "546c75e130d657d5",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T10:32:45.857Z",
-        "lastPassedAt": "2026-01-13T10:39:56.907Z",
-        "lastFailedAt": "2026-01-13T10:39:56.905Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Start Wizard\"",
-          "error": "AI model call failed after 34399ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
-      }
-    },
-    {
-      "testHash": "d5821a5649963187",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T10:41:36.148Z",
-        "lastPassedAt": "2026-01-13T10:47:59.920Z",
-        "lastFailedAt": "2026-01-13T10:47:59.918Z",
-        "failureDetails": {
-          "failedStepIndex": 1,
-          "failedStepText": "type \"Complete User\" into the name field",
-          "error": "AI model call failed after 32056ms (tried both text-only and with image): No object generated: response did not match schema."
+          "error": "AI model call failed after 30670ms (tried both text-only and with image): No object generated: response did not match schema."
         }
       }
     },
@@ -681,72 +571,6 @@
         "createdAt": "2026-01-13T10:49:29.151Z",
         "lastPassedAt": "2026-01-13T10:50:45.556Z",
         "lastFailedAt": null
-      }
-    },
-    {
-      "testHash": "5ecaad12cf7e79a4",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T10:58:37.955Z",
-        "lastPassedAt": "2026-01-13T11:04:18.326Z",
-        "lastFailedAt": "2026-01-13T11:04:18.323Z",
-        "failureDetails": {
-          "failedStepIndex": 3,
-          "failedStepText": "check \"Option 1\"",
-          "error": "Unknown base action type: assertion"
-        }
-      }
-    },
-    {
-      "testHash": "52384d95f217e6bd",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T11:05:11.901Z",
-        "lastPassedAt": "2026-01-13T11:14:03.114Z",
-        "lastFailedAt": "2026-01-13T11:14:03.106Z",
-        "failureDetails": {
-          "failedStepIndex": 1,
-          "failedStepText": "type \"Full Flow\" into the name field",
-          "error": "AI model call failed after 39989ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
-      }
-    },
-    {
-      "testHash": "f40d80ddbbf9675e",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T11:14:56.688Z",
-        "lastPassedAt": "2026-01-13T11:16:44.922Z",
-        "lastFailedAt": "2026-01-13T11:16:44.921Z",
-        "failureDetails": {
-          "failedStepIndex": 2,
-          "failedStepText": "click on \"Next\"",
-          "error": "Unknown base action type: assertion"
-        }
       }
     }
   ]

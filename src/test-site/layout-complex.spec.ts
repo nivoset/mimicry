@@ -8,19 +8,27 @@ import { test, expect } from '../test-utils';
 test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/pages/layout-complex.html');
+    // Ensure all overlays are closed before each test to prevent interference
+    await page.evaluate(() => {
+      document.querySelectorAll('.overlay').forEach(overlay => {
+        overlay.classList.add('hidden');
+      });
+    });
+    // Wait for overlays to be hidden (not visible)
+    await expect(page.locator('#overlay1')).not.toBeVisible();
+    await expect(page.locator('#overlay2')).not.toBeVisible();
   });
 
   test('should display page correctly', async ({ page }) => {
-    await expect(page.locator('h1')).toContainText('Complex Layout Test Page');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Complex Layout Test Page');
   });
 
   // Modal Tests
   test('should open simple modal', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Open Simple Modal"`;
 
-    await expect(page.locator('#modal1')).toBeVisible();
-    await expect(page.locator('#modal1 .modal-content')).toBeVisible();
-    await expect(page.locator('#modal1 h2')).toContainText('Simple Modal');
+    await expect(page.getByRole('heading', { name: 'Information Overlay' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Simple Modal' })).toBeVisible();
   });
 
   test('should close simple modal', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -29,14 +37,13 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Close"
     `;
 
-    await expect(page.locator('#modal1')).not.toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Simple Modal' })).not.toBeVisible();
   });
 
   test('should open confirmation dialog', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Open Confirmation Dialog"`;
 
-    await expect(page.locator('#modal2')).toBeVisible();
-    await expect(page.locator('#modal2 h2')).toContainText('Confirm Action');
+    await expect(page.getByRole('heading', { name: 'Confirm Action' })).toBeVisible();
   });
 
   test('should confirm action in dialog', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -45,8 +52,8 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Confirm"
     `;
 
-    await expect(page.locator('#modal2')).not.toBeVisible();
-    await expect(page.locator('#action-results .alert')).toContainText('Confirmed action');
+    await expect(page.getByRole('heading', { name: 'Confirm Action' })).not.toBeVisible();
+    await expect(page.locator('#action-results').getByText('Confirmed action')).toBeVisible();
   });
 
   test('should cancel action in dialog', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -55,14 +62,13 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Cancel"
     `;
 
-    await expect(page.locator('#modal2')).not.toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Confirm Action' })).not.toBeVisible();
   });
 
   test('should open alert dialog', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Open Alert Dialog"`;
 
-    await expect(page.locator('#modal3')).toBeVisible();
-    await expect(page.locator('#modal3 h2')).toContainText('Alert');
+    await expect(page.getByRole('heading', { name: 'Alert' })).toBeVisible();
   });
 
   test('should close alert dialog', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -71,7 +77,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "OK"
     `;
 
-    await expect(page.locator('#modal3')).not.toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Alert' })).not.toBeVisible();
   });
 
   // Dropdown Tests
@@ -99,7 +105,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Edit"
     `;
 
-    await expect(page.locator('#action-results .alert')).toContainText('Edit');
+    await expect(page.locator('#action-results').getByText('Edit')).toBeVisible();
   });
 
   test('should click delete option in dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -108,7 +114,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Delete"
     `;
 
-    await expect(page.locator('#action-results .alert')).toContainText('Delete');
+    await expect(page.locator('#action-results').getByText('Delete')).toBeVisible();
   });
 
   test('should click share option in dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -117,7 +123,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Share"
     `;
 
-    await expect(page.locator('#action-results .alert')).toContainText('Share');
+    await expect(page.locator('#action-results').getByText('Share')).toBeVisible();
   });
 
   test('should open more options dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -159,7 +165,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Action in Tab 2"
     `;
 
-    await expect(page.locator('#tab-content-2 button')).toBeVisible();
+    await expect(page.locator('#tab-content-2').getByRole('button')).toBeVisible();
   });
 
   test('should click button in tab 3', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -168,21 +174,22 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Action in Tab 3"
     `;
 
-    await expect(page.locator('#tab-content-3 button')).toBeVisible();
+    await expect(page.locator('#tab-content-3').getByRole('button')).toBeVisible();
   });
 
   // Accordion Tests
   test('should expand accordion section 1', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Section 1"`;
 
-    await expect(page.locator('.accordion-item').first()).toHaveClass(/active/);
-    await expect(page.locator('.accordion-item .accordion-content').first()).toBeVisible();
+    const accordionItem = page.getByText('Section 1').locator('xpath=ancestor::div[contains(@class, "accordion-item")]');
+    await expect(accordionItem).toHaveClass(/active/);
+    await expect(accordionItem.locator('.accordion-content')).toBeVisible();
   });
 
   test('should expand accordion section 2', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Section 2"`;
 
-    const secondItem = page.locator('.accordion-item').nth(1);
+    const secondItem = page.getByText('Section 2').locator('xpath=ancestor::div[contains(@class, "accordion-item")]');
     await expect(secondItem).toHaveClass(/active/);
   });
 
@@ -192,7 +199,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Section 1"
     `;
 
-    const firstItem = page.locator('.accordion-item').first();
+    const firstItem = page.getByText('Section 1').locator('xpath=ancestor::div[contains(@class, "accordion-item")]');
     // Should toggle off
     const isActive = await firstItem.evaluate(el => el.classList.contains('active'));
     expect(isActive).toBe(false);
@@ -204,7 +211,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Button in Accordion 1"
     `;
 
-    await expect(page.locator('.accordion-item .accordion-content button').first()).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Button in Accordion 1' })).toBeVisible();
   });
 
   // Overlay Tests
@@ -212,14 +219,14 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
     await mimic`click on "Show Loading Overlay"`;
 
     await expect(page.locator('#overlay1')).toBeVisible();
-    await expect(page.locator('#overlay1 .spinner')).toBeVisible();
+    await expect(page.locator('#overlay1').getByText('Loading...')).toBeVisible();
+    await expect(page.locator('#overlay1').locator('.spinner')).toBeVisible();
   });
 
   test('should show info overlay', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Show Info Overlay"`;
 
-    await expect(page.locator('#overlay2')).toBeVisible();
-    await expect(page.locator('#overlay2 h3')).toContainText('Information Overlay');
+    await expect(page.getByRole('heading', { name: 'Information Overlay' })).toBeVisible();
   });
 
   test('should close info overlay', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -228,7 +235,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Close"
     `;
 
-    await expect(page.locator('#overlay2')).not.toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Information Overlay' })).not.toBeVisible();
   });
 
   // Combined Interaction Tests
@@ -249,7 +256,8 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Section 1"
     `;
 
-    await expect(page.locator('.accordion-item').first()).toHaveClass(/active/);
+    const accordionItem = page.getByText('Section 1').locator('xpath=ancestor::div[contains(@class, "accordion-item")]');
+    await expect(accordionItem).toHaveClass(/active/);
   });
 
   test('should interact with multiple modals', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -263,9 +271,9 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
     `;
 
     // All modals should be closed
-    await expect(page.locator('#modal1')).not.toBeVisible();
-    await expect(page.locator('#modal2')).not.toBeVisible();
-    await expect(page.locator('#modal3')).not.toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Simple Modal' })).not.toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Confirm Action' })).not.toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Alert' })).not.toBeVisible();
   });
 
   test('should verify action results are logged', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -276,7 +284,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Delete"
     `;
 
-    const alerts = page.locator('#action-results .alert');
+    const alerts = page.locator('#action-results').getByRole('alert');
     const count = await alerts.count();
     expect(count).toBeGreaterThan(0);
   });

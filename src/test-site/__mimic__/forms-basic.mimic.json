@@ -1109,11 +1109,11 @@
         "debugMode": false,
         "createdAt": "2026-01-10T16:37:38.064Z",
         "lastPassedAt": "2026-01-12T23:08:44.703Z",
-        "lastFailedAt": "2026-01-12T23:08:44.700Z",
+        "lastFailedAt": "2026-01-15T22:20:09.038Z",
         "failureDetails": {
-          "failedStepIndex": 2,
-          "failedStepText": "type \"1234567890\" into the phone field",
-          "error": "Unknown base action type: assertion"
+          "failedStepIndex": 0,
+          "failedStepText": "type \"Complete Test User\" into the name field",
+          "error": "AI model call failed after 28185ms (tried both text-only and with image): No object generated: response did not match schema."
         }
       }
     },

@@ -98,7 +98,8 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
         shared.testHash,
         stepIndex,
         step,
-        error instanceof Error ? error.message : String(error)
+        error instanceof Error ? error.message : String(error),
+        shared.input
       );
     }
     
@@ -110,17 +111,26 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
     );
   }
 }
+/**
+ * Trims and normalizes template literal input
+ * Filters out empty lines to prevent processing blank steps
+ * 
+ * @param strings - Template string array
+ * @param values - Interpolated values
+ * @returns Normalized string with empty lines removed
+ */
 function trimTemplate(strings: TemplateStringsArray, ...values: any[]): string {
   // Combine the template string with interpolated values
   let result = strings.reduce((acc, str, i) => {
     return acc + str + (values[i] ?? '');
   }, '');
 
-  // Split into lines, trim each, filter out empty lines, and join back
+  // Split into lines, trim whitespace, filter out empty lines, and join back
+  // Empty lines are filtered out to prevent processing blank steps
   return result
     .split('\n')
     .map(line => line.trim())
-    .filter(line => line.length > 0)
+    .filter(line => line.length > 0) // Filter out empty lines after trimming
     .join('\n');
 }
 
