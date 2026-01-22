@@ -41,7 +41,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step specifies 'click on \"Open Simple Modal\"', which implies a primary (left) click. Among the available markers, those labeled as 'Menu' or 'Options' are more likely to be interactive elements that could open a modal when clicked."
           },
-          "executedAt": "2026-01-20T13:05:42.518Z",
+          "executedAt": "2026-01-21T01:56:59.997Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -92,7 +92,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step specifies 'click on \"Open Simple Modal\"', which implies a primary (left) click. Among the available markers, those labeled as 'Menu' or 'Options' are more likely to be interactive elements that could open a modal when clicked."
           },
-          "executedAt": "2026-01-20T13:05:42.518Z",
+          "executedAt": "2026-01-21T01:56:59.997Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -113,7 +113,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:32:36.845Z",
-        "lastPassedAt": "2026-01-20T13:05:42.518Z",
+        "lastPassedAt": "2026-01-21T01:56:59.997Z",
         "lastFailedAt": null
       }
     },
@@ -158,7 +158,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step specifies 'click on Open Confirmation Dialog.' Among the elements that could be related to a confirmation dialog, the OK buttons in the Information Overlay are the most likely candidates given their text content. The default click type for this step is 'primary' (left click)."
           },
-          "executedAt": "2026-01-20T13:15:35.332Z",
+          "executedAt": "2026-01-21T02:09:21.330Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -207,7 +207,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step says 'click on 'Confirm'' which implies a primary click. Among the available elements, the most likely candidates are the buttons with the text 'OK' or 'Confirm'. The OK button marked with mimicId 14 has a high confidence level as it directly matches the 'Confirm' text. Other buttons labeled 'OK' have moderate confidence levels. The Dismiss button is less likely as it is typically used for canceling, not confirming."
           },
-          "executedAt": "2026-01-20T13:15:35.332Z",
+          "executedAt": "2026-01-21T02:09:21.330Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -258,7 +258,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step specifies 'click on Open Confirmation Dialog.' Among the elements that could be related to a confirmation dialog, the OK buttons in the Information Overlay are the most likely candidates given their text content. The default click type for this step is 'primary' (left click)."
           },
-          "executedAt": "2026-01-20T13:15:35.332Z",
+          "executedAt": "2026-01-21T02:09:21.330Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -307,7 +307,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step says 'click on 'Confirm'' which implies a primary click. Among the available elements, the most likely candidates are the buttons with the text 'OK' or 'Confirm'. The OK button marked with mimicId 14 has a high confidence level as it directly matches the 'Confirm' text. Other buttons labeled 'OK' have moderate confidence levels. The Dismiss button is less likely as it is typically used for canceling, not confirming."
           },
-          "executedAt": "2026-01-20T13:15:35.332Z",
+          "executedAt": "2026-01-21T02:09:21.330Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -321,20 +321,15 @@
         }
       ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": true,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:50:16.105Z",
-        "lastPassedAt": "2026-01-20T13:15:35.332Z",
-        "lastFailedAt": "2026-01-20T13:18:52.810Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "AI model call failed after 31090ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
+        "lastPassedAt": "2026-01-21T02:09:21.330Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -378,7 +373,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step 'click on \"Open Alert Dialog\"' implies a primary click action. Based on the available markers and their semantic relevance to potential alert dialog triggers, the Options button (mimicId 14), followed by other actions buttons (3, 6, 11, and 12) are the most likely candidates as they are interactive elements that could potentially open an alert dialog."
           },
-          "executedAt": "2026-01-20T13:27:21.572Z",
+          "executedAt": "2026-01-21T02:20:40.979Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -427,7 +422,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step 'click on \"OK\"' implies a standard click action, so the primary click type is used."
           },
-          "executedAt": "2026-01-20T13:27:21.572Z",
+          "executedAt": "2026-01-21T02:20:40.979Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -478,7 +473,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step 'click on \"Open Alert Dialog\"' implies a primary click action. Based on the available markers and their semantic relevance to potential alert dialog triggers, the Options button (mimicId 14), followed by other actions buttons (3, 6, 11, and 12) are the most likely candidates as they are interactive elements that could potentially open an alert dialog."
           },
-          "executedAt": "2026-01-20T13:27:21.572Z",
+          "executedAt": "2026-01-21T02:20:40.979Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -527,7 +522,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step 'click on \"OK\"' implies a standard click action, so the primary click type is used."
           },
-          "executedAt": "2026-01-20T13:27:21.572Z",
+          "executedAt": "2026-01-21T02:20:40.979Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -548,7 +543,7 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T19:22:33.312Z",
-        "lastPassedAt": "2026-01-20T13:27:21.572Z",
+        "lastPassedAt": "2026-01-21T02:20:40.979Z",
         "lastFailedAt": null
       }
     },
@@ -593,7 +588,7 @@
             "modifiers": [],
             "reasoning": "The step 'click on 'Actions Menu'' refers to a menu-like interaction typically found in dropdowns or modals. Among the candidates, the dismiss button for the information overlay (mimicId 14) is most likely due to its prominent position and role as an interactive element within an informational overlay. The OK button within the dropdown menu (mimicId 7), while also a potential candidate, is less likely than the dismiss button given its more generic nature. Other options such as modal OK/Close buttons are less probable without additional context. "
           },
-          "executedAt": "2026-01-20T01:34:37.910Z",
+          "executedAt": "2026-01-21T02:24:27.671Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -643,7 +638,7 @@
             "modifiers": [],
             "reasoning": "The step 'click on 'Actions Menu'' refers to a menu-like interaction typically found in dropdowns or modals. Among the candidates, the dismiss button for the information overlay (mimicId 14) is most likely due to its prominent position and role as an interactive element within an informational overlay. The OK button within the dropdown menu (mimicId 7), while also a potential candidate, is less likely than the dismiss button given its more generic nature. Other options such as modal OK/Close buttons are less probable without additional context. "
           },
-          "executedAt": "2026-01-20T01:34:37.910Z",
+          "executedAt": "2026-01-21T02:24:27.671Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -656,18 +651,15 @@
         }
       ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": true,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T22:26:00.334Z",
-        "lastPassedAt": "2026-01-20T01:34:37.910Z",
-        "lastFailedAt": "2026-01-20T13:28:58.038Z",
-        "failureDetails": {
-          "error": "locator.click: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"14\"]')\u001b[22m\n"
-        }
+        "lastPassedAt": "2026-01-21T02:24:27.671Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -788,7 +780,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step 'click on \"Section 2\"' is ambiguous and does not specify any modifiers or explicit hover instructions. The closest elements to Section 2 in the given context are the Action in Tab 1 button (Marker 11) and the Tab 1 tab (Marker 8). Given that these are interactive elements, a primary click is most likely intended."
           },
-          "executedAt": "2026-01-13T06:34:31.665Z",
+          "executedAt": "2026-01-21T02:50:16.943Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -838,7 +830,7 @@
             "modifiers": [],
             "reasoning": "The Gherkin step 'click on \"Section 2\"' is ambiguous and does not specify any modifiers or explicit hover instructions. The closest elements to Section 2 in the given context are the Action in Tab 1 button (Marker 11) and the Tab 1 tab (Marker 8). Given that these are interactive elements, a primary click is most likely intended."
           },
-          "executedAt": "2026-01-13T06:34:31.665Z",
+          "executedAt": "2026-01-21T02:50:16.943Z",
           "targetElement": {
             "selector": {
               "type": "role",
@@ -853,13 +845,13 @@
       "flags": {
         "needsRetry": true,
         "hasErrors": true,
-        "troubleshootingEnabled": false,
+        "troubleshootingEnabled": true,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-13T06:26:31.538Z",
-        "lastPassedAt": "2026-01-13T06:34:31.768Z",
-        "lastFailedAt": "2026-01-20T13:48:48.926Z",
+        "lastPassedAt": "2026-01-21T02:50:16.943Z",
+        "lastFailedAt": "2026-01-21T02:52:58.954Z",
         "failureDetails": {
           "error": "locator.click: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"14\"]')\u001b[22m\n"
         }

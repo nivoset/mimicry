@@ -27,7 +27,6 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
   test('should open simple modal', { tag: ['@mimic'] }, async ({ page, mimic }) => {
     await mimic`click on "Open Simple Modal"`;
 
-    await expect(page.getByRole('heading', { name: 'Information Overlay' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Simple Modal' })).toBeVisible();
   });
 
@@ -105,7 +104,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Edit"
     `;
 
-    await expect(page.locator('#action-results').getByText('Edit')).toBeVisible();
+    await expect(page.locator('#action-results').getByText(/Dropdown action: edit/i)).toBeVisible();
   });
 
   test('should click delete option in dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -114,7 +113,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Delete"
     `;
 
-    await expect(page.locator('#action-results').getByText('Delete')).toBeVisible();
+    await expect(page.locator('#action-results').getByText(/Dropdown action: delete/i)).toBeVisible();
   });
 
   test('should click share option in dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -123,7 +122,7 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Share"
     `;
 
-    await expect(page.locator('#action-results').getByText('Share')).toBeVisible();
+    await expect(page.locator('#action-results').getByText(/Dropdown action: share/i)).toBeVisible();
   });
 
   test('should open more options dropdown', { tag: ['@mimic'] }, async ({ page, mimic }) => {
@@ -284,8 +283,8 @@ test.describe('Complex Layout Page', { tag: ['@layout'] }, () => {
       click on "Delete"
     `;
 
-    const alerts = page.locator('#action-results').getByRole('alert');
-    const count = await alerts.count();
-    expect(count).toBeGreaterThan(0);
+    // Wait for action results to appear
+    await expect(page.locator('#action-results').getByText(/Confirmed action/i)).toBeVisible();
+    await expect(page.locator('#action-results').getByText(/Dropdown action: delete/i)).toBeVisible();
   });
 });

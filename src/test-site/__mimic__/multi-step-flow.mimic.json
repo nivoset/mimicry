@@ -357,28 +357,6 @@
       }
     },
     {
-      "testHash": "56e8ebbeeb7e1571",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
-      "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
-        "troubleshootingEnabled": false,
-        "skipSnapshot": false,
-        "forceRegenerate": false,
-        "debugMode": false,
-        "createdAt": "2026-01-13T10:19:16.063Z",
-        "lastPassedAt": "2026-01-13T10:26:58.921Z",
-        "lastFailedAt": "2026-01-16T09:02:33.420Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Start Wizard\"",
-          "error": "AI model call failed after 30670ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
-      }
-    },
-    {
       "testHash": "0d6e7ff5c0beef69",
       "testText": "click on \"Start Wizard\"\ntype \"Indicator\" into the name field\nclick on \"Next\"",
       "stepsByHash": {

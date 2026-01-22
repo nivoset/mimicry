@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Multi-Step Flow - Test Site</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
+  <!-- Error handler to suppress browser extension message channel errors -->
+  <script type="module">
+    import { initErrorHandler } from '../assets/js/error-handler.js';
+    initErrorHandler({ logSuppressed: false });
+  </script>
 </head>
 <body>
   <nav>
