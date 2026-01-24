@@ -16,6 +16,7 @@ import { selectorToPlaywrightCode, generateAssertionCode } from './playwrightCod
 import { captureScreenshot, generateAriaSnapshot } from './markers.js';
 import type { SelectorDescriptor } from './selectorTypes.js';
 import { wrapErrorWithContext } from './errorFormatter.js';
+import { logger } from './logger.js';
 
 /**
  * Assertion types supported by mimic
@@ -128,7 +129,7 @@ export async function getAssertionAction(
   testCaseName?: string
 ): Promise<AssertionActionResult> {
   // Capture screenshot with markers
-  console.log('📸 [getAssertionAction] Starting screenshot capture with markers...');
+  logger.info('📸 [getAssertionAction] Starting screenshot capture with markers...');
   const { markers: markerData } = await captureScreenshot(page);
   
   // Generate accessibility snapshot
@@ -243,7 +244,7 @@ Analyze the screenshot and determine:
   await countTokens(result, testCaseName);
   
   const actionResult = result.output;
-  console.log(`✅ [getAssertionAction] Determined assertion: ${actionResult.type} on element ${actionResult.mimicId || 'page'}`);
+  logger.info({ type: actionResult.type, mimicId: actionResult.mimicId }, `✅ [getAssertionAction] Determined assertion: ${actionResult.type} on element ${actionResult.mimicId || 'page'}`);
   
   return actionResult;
 }
@@ -280,7 +281,7 @@ export async function executeAssertionAction(
       const selectorCode = selectorToPlaywrightCode(selector);
       playwrightCode = selectorCode;
     } catch (error) {
-      console.warn(`⚠️  Could not generate selector for assertion target: ${error instanceof Error ? error.message : String(error)}`);
+      logger.warn({ error: error instanceof Error ? error.message : String(error) }, `⚠️  Could not generate selector for assertion target: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
   

@@ -7,6 +7,7 @@
 
 import type { Page } from '@playwright/test';
 import sharp from 'sharp';
+import { logger } from './logger.js';
 
 /**
  * Marker information returned from the browser
@@ -387,7 +388,7 @@ export const captureScreenshot = async (page: Page): Promise<{ image: Buffer, ma
     timeout: 30000 // 30 seconds
   });
   const screenshotTime = performance.now() - start;
-  console.log(`📸 [captureScreenshot] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);
+  logger.info({ screenshotTime }, `📸 [captureScreenshot] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);
   
   // Draw colored markers on the screenshot
   const markerDrawStart = performance.now();
@@ -396,7 +397,7 @@ export const captureScreenshot = async (page: Page): Promise<{ image: Buffer, ma
   console.log(`🎨 [captureScreenshot] Drew ${markers.length} markers on screenshot in ${markerDrawTime}ms (${(markerDrawTime / 1000).toFixed(2)}s)`);
   
   const end = performance.now();
-  console.log(`⏱️  [captureScreenshot] Total time: ${end - start}ms (${((end - start) / 1000).toFixed(2)}s)`);
+  logger.debug({ totalTime: end - start }, `⏱️  [captureScreenshot] Total time: ${end - start}ms (${((end - start) / 1000).toFixed(2)}s)`);
   
   return { image: imageWithMarkers, markers };
 }

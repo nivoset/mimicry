@@ -17,6 +17,7 @@ import type { FormActionResult } from './forms.js';
 import type { AssertionActionResult } from './assertions.js';
 import { getMimic } from './markers.js';
 import { getFromSelector } from './selectorUtils.js';
+import { logger } from './logger.js';
 
 /**
  * Replay a complete test from a snapshot
@@ -40,7 +41,7 @@ export async function replayFromSnapshot(
   const stepsToReplay = snapshot.steps || [];
   
   if (stepsToReplay.length === 0) {
-    console.warn('⚠️  Snapshot has no steps to replay');
+    logger.warn('⚠️  Snapshot has no steps to replay');
     return;
   }
   
@@ -116,7 +117,7 @@ async function replayClickStep(
   } catch (error) {
     // Selector might be stale, fall back to marker ID
     if (step.targetElement.mimicId !== undefined) {
-      console.warn(`Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
+      logger.warn({ stepIndex: step.stepIndex, mimicId: step.targetElement.mimicId }, `Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
       element = getMimic(page, step.targetElement.mimicId);
     } else {
       throw new Error(`Snapshot step ${step.stepIndex} (click) selector failed and no mimicId fallback available`);
@@ -171,7 +172,7 @@ async function replayFormStep(
   } catch (error) {
     // Selector might be stale, fall back to marker ID
     if (step.targetElement.mimicId !== undefined) {
-      console.warn(`Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
+      logger.warn({ stepIndex: step.stepIndex, mimicId: step.targetElement.mimicId }, `Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
       element = getMimic(page, step.targetElement.mimicId);
     } else {
       throw new Error(`Snapshot step ${step.stepIndex} (form) selector failed and no mimicId fallback available`);
@@ -216,7 +217,7 @@ async function replayAssertionStep(
     } catch (error) {
       // Selector might be stale, fall back to marker ID
       if (step.targetElement.mimicId !== undefined) {
-        console.warn(`Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
+        logger.warn({ stepIndex: step.stepIndex, mimicId: step.targetElement.mimicId }, `Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
         element = getMimic(page, step.targetElement.mimicId);
       } else {
         throw new Error(`Snapshot step ${step.stepIndex} (assertion) selector failed and no mimicId fallback available`);

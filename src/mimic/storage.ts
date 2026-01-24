@@ -9,6 +9,7 @@ import { createHash } from 'crypto';
 import fs from 'node:fs/promises';
 import { join, dirname, basename } from 'node:path';
 import type { Snapshot, SnapshotStep } from './types.js';
+import { logger } from './logger.js';
 
 /**
  * Generate a hash from test text to create a unique identifier
@@ -219,7 +220,7 @@ export async function saveSnapshot(
       mimicFile = { tests: [] };
     } else {
       // For other errors, log and start fresh
-      console.warn(`Failed to read existing mimic file at ${mimicFilePath}, starting fresh:`, error);
+      logger.warn({ error, mimicFilePath }, `Failed to read existing mimic file at ${mimicFilePath}, starting fresh: ${error instanceof Error ? error.message : String(error)}`);
       mimicFile = { tests: [] };
     }
   }
