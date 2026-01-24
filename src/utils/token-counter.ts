@@ -1,4 +1,5 @@
 import { generateText } from 'ai';
+import { logger } from '../mimic/logger.js';
 
 type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
@@ -117,11 +118,11 @@ export const displayTokens = async (testCaseName?: string) => {
       .map(([key, value]) => `  - ${key}: ${value}`)
       .join('\n');
     
-    console.log(`Tokens for "${testCaseName}":\n${entries}`);
+    logger.info({ testCaseName, entries }, `Tokens for "${testCaseName}":\n${entries}`);
   } else {
     // Display holistic and all test cases
     if (holisticCounter.size === 0 && testCaseCounters.size === 0) {
-      console.log('Tokens: No tokens counted yet');
+      logger.info('Tokens: No tokens counted yet');
       return;
     }
     
@@ -137,7 +138,7 @@ export const displayTokens = async (testCaseName?: string) => {
     
     // Display per-test-case counts
     if (testCaseCounters.size > 0) {
-      console.log('\nPer-Test-Case Tokens:');
+      logger.info('\nPer-Test-Case Tokens:');
       const sortedTestCases = Array.from(testCaseCounters.entries())
         .sort(([a], [b]) => a.localeCompare(b));
       
@@ -147,7 +148,7 @@ export const displayTokens = async (testCaseName?: string) => {
           .map(([key, value]) => `    - ${key}: ${value}`)
           .join('\n');
         
-        console.log(`  "${testCase}":\n${entries}`);
+        logger.info({ testCase, entries }, `  "${testCase}":\n${entries}`);
       }
     }
   }

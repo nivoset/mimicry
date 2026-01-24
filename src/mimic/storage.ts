@@ -8,7 +8,9 @@
 import { createHash } from 'crypto';
 import fs from 'node:fs/promises';
 import { join, dirname, basename } from 'node:path';
-import type { Snapshot, SnapshotStep } from './types.js';
+import type { Snapshot, SnapshotStep, MarkerTargetElement } from './types.js';
+import type { SelectorDescriptor, PlaywrightLocatorJson } from './selectorTypes.js';
+import { selectorDescriptorToPlaywrightJson, playwrightJsonToSelectorDescriptor } from './selectorSerialization.js';
 import { logger } from './logger.js';
 
 /**
@@ -122,7 +124,21 @@ export function getSnapshotPath(testFilePath: string, testHash: string): string 
 
 
 /**
+ * Current snapshot format version
+ * Version 2.0.0 introduces Playwright-compatible selector format
+ */
+const CURRENT_SNAPSHOT_VERSION = '2.0.0';
+
+/**
+ * Legacy snapshot format version (for backward compatibility)
+ */
+const LEGACY_SNAPSHOT_VERSION = '1.0.0';
+
+/**
  * Read a snapshot from disk
+ * 
+ * Handles both legacy (version 1.0.0) and new (version 2.0.0) snapshot formats.
+ * Legacy snapshots are read as-is without conversion (lazy migration).
  * 
  * @param testFilePath - Full path to the test file
  * @param testHash - Hash identifier for the test
@@ -144,7 +160,41 @@ export async function getSnapshot(
     
     // Find the test by testHash
     const snapshot = mimicFile.tests?.find(test => test.testHash === testHash);
-    return snapshot || null;
+    if (!snapshot) {
+      return null;
+    }
+    
+    // Determine version - default to legacy if missing
+    const version = snapshot.version || LEGACY_SNAPSHOT_VERSION;
+    
+    // For legacy snapshots, ensure selectorFormat is set on steps
+    if (version === LEGACY_SNAPSHOT_VERSION) {
+      // Mark all steps as legacy format if not already set
+      if (snapshot.steps) {
+        for (const step of snapshot.steps) {
+          if (!step.selectorFormat) {
+            step.selectorFormat = 'legacy';
+          }
+          // Ensure targetElement has selectorFormat if present
+          if (step.targetElement && !step.targetElement.selectorFormat) {
+            step.targetElement.selectorFormat = 'legacy';
+          }
+        }
+      }
+      // Also update stepsByHash if present
+      if (snapshot.stepsByHash) {
+        for (const step of Object.values(snapshot.stepsByHash)) {
+          if (!step.selectorFormat) {
+            step.selectorFormat = 'legacy';
+          }
+          if (step.targetElement && !step.targetElement.selectorFormat) {
+            step.targetElement.selectorFormat = 'legacy';
+          }
+        }
+      }
+    }
+    
+    return snapshot;
   } catch (error) {
     // File doesn't exist or is invalid - return null
     if (error instanceof Error && 'code' in error && (error as any).code === 'ENOENT') {
@@ -152,7 +202,7 @@ export async function getSnapshot(
       return getSnapshotLegacy(testFilePath, testHash);
     }
     // For other errors (parse errors, etc.), log and return null
-    console.warn(`Failed to read snapshot at ${mimicFilePath}:`, error);
+    logger.warn({ error, mimicFilePath }, `Failed to read snapshot at ${mimicFilePath}: ${error instanceof Error ? error.message : String(error)}`);
     return null;
   }
 }
@@ -185,10 +235,42 @@ async function getSnapshotLegacy(
 }
 
 /**
+ * Convert a MarkerTargetElement selector to Playwright format if needed
+ * 
+ * @param targetElement - Target element with selector (may be legacy or Playwright format)
+ * @returns Target element with selector in Playwright format
+ */
+function convertTargetElementToPlaywrightFormat(targetElement: MarkerTargetElement): MarkerTargetElement {
+  // If already in Playwright format, return as-is
+  if (targetElement.selectorFormat === 'playwright') {
+    return targetElement;
+  }
+  
+  // If selector is already PlaywrightLocatorJson, just update format flag
+  if ('kind' in targetElement.selector) {
+    return {
+      ...targetElement,
+      selectorFormat: 'playwright',
+    };
+  }
+  
+  // Convert from legacy SelectorDescriptor to Playwright format
+  const playwrightSelector = selectorDescriptorToPlaywrightJson(targetElement.selector as SelectorDescriptor);
+  return {
+    ...targetElement,
+    selector: playwrightSelector,
+    selectorFormat: 'playwright',
+  };
+}
+
+/**
  * Save a snapshot to disk
  * 
  * Saves all tests from a test file into a single JSON file in __mimic__ directory.
  * Updates existing test entry if testHash already exists, otherwise adds new test.
+ * 
+ * New snapshots are saved with version 2.0.0 and Playwright-compatible selector format.
+ * Legacy snapshots are migrated to Playwright format when saved.
  * 
  * @param testFilePath - Full path to the test file
  * @param snapshot - Snapshot object to save
@@ -246,14 +328,59 @@ export async function saveSnapshot(
     }
   }
   
+  // Convert selectors to Playwright format and set version
+  // Create a copy of the snapshot to avoid mutating the original
+  const snapshotToSave: Snapshot = {
+    ...snapshot,
+    version: CURRENT_SNAPSHOT_VERSION,
+  };
+  
+  // Convert steps to Playwright format
+  if (snapshotToSave.steps) {
+    snapshotToSave.steps = snapshotToSave.steps.map(step => {
+      const convertedStep: SnapshotStep = {
+        ...step,
+        selectorFormat: 'playwright',
+      };
+      
+      // Convert targetElement selector to Playwright format if present
+      if (step.targetElement) {
+        convertedStep.targetElement = convertTargetElementToPlaywrightFormat(step.targetElement);
+      }
+      
+      return convertedStep;
+    });
+  }
+  
+  // Convert stepsByHash to Playwright format
+  if (snapshotToSave.stepsByHash) {
+    const convertedStepsByHash: Record<string, SnapshotStep> = {};
+    for (const [stepHash, step] of Object.entries(snapshotToSave.stepsByHash)) {
+      const convertedStep: SnapshotStep = {
+        ...step,
+        selectorFormat: 'playwright',
+      };
+      
+      if (step.targetElement) {
+        convertedStep.targetElement = convertTargetElementToPlaywrightFormat(step.targetElement);
+      }
+      
+      convertedStepsByHash[stepHash] = convertedStep;
+    }
+    snapshotToSave.stepsByHash = convertedStepsByHash;
+  }
+  
   // Find existing test by testHash and update, or add new
-  const existingIndex = mimicFile.tests.findIndex(test => test.testHash === snapshot.testHash);
+  const existingIndex = mimicFile.tests.findIndex(test => test.testHash === snapshotToSave.testHash);
   let contentChanged = false;
   let shouldUpdateLastPassedAt = false;
   
   if (existingIndex >= 0) {
     // Merge with existing test: preserve existing steps that weren't regenerated
     const existingTest = mimicFile.tests[existingIndex];
+    
+    // Check if this is a new test (testHash didn't exist before)
+    const isNewTest = false; // We found existing test, so it's not new
     
     // Merge stepsByHash: new steps overwrite old ones, but keep steps that weren't regenerated
     const mergedStepsByHash: Record<string, SnapshotStep> = {};
@@ -269,8 +396,8 @@ export async function saveSnapshot(
     }
     
     // Add/overwrite with new steps from snapshot
-    if (snapshot.stepsByHash) {
-      for (const [stepHash, newStep] of Object.entries(snapshot.stepsByHash)) {
+    if (snapshotToSave.stepsByHash) {
+      for (const [stepHash, newStep] of Object.entries(snapshotToSave.stepsByHash)) {
         const existingStep = mergedStepsByHash[stepHash];
         // Check if this step is new or changed (compare action details and target element, not timestamps)
         const stepContentChanged = !existingStep || 
@@ -287,9 +414,9 @@ export async function saveSnapshot(
           mergedStepsByHash[stepHash] = existingStep;
         }
       }
-    } else if (snapshot.steps) {
+    } else if (snapshotToSave.steps) {
       // Convert new snapshot's steps array to stepsByHash if needed
-      for (const newStep of snapshot.steps) {
+      for (const newStep of snapshotToSave.steps) {
         const stepHash = newStep.stepHash;
         const existingStep = mergedStepsByHash[stepHash];
         // Check if this step is new or changed
@@ -313,7 +440,7 @@ export async function saveSnapshot(
       throw new Error('existingTest is undefined');
     }
     const existingFlags = existingTest.flags;
-    const newFlags = snapshot.flags;
+    const newFlags = snapshotToSave.flags;
     if (existingFlags && newFlags) {
       // Compare flags (excluding timestamps)
       const flagsChanged = 
@@ -347,14 +474,14 @@ export async function saveSnapshot(
       throw new Error('existingTest is undefined');
     }
     const finalFlags = {
-      ...snapshot.flags,
-      lastPassedAt: shouldUpdateLastPassedAt ? now : (existingTest.flags?.lastPassedAt || snapshot.flags.lastPassedAt),
-      createdAt: existingTest.flags?.createdAt || snapshot.flags.createdAt || now,
+      ...snapshotToSave.flags,
+      lastPassedAt: shouldUpdateLastPassedAt ? now : (existingTest.flags?.lastPassedAt || snapshotToSave.flags.lastPassedAt),
+      createdAt: existingTest.flags?.createdAt || snapshotToSave.flags.createdAt || now,
     };
     
     // Update the test with merged data
     mimicFile.tests[existingIndex] = {
-      ...snapshot,
+      ...snapshotToSave,
       flags: finalFlags,
       stepsByHash: mergedStepsByHash,
       steps: allMergedSteps, // Maintain backward compatibility with steps array
@@ -362,11 +489,11 @@ export async function saveSnapshot(
   } else {
     // Add new test - ensure steps array exists even if only stepsByHash is provided
     const finalSnapshot: Snapshot = {
-      ...snapshot,
-      steps: snapshot.steps || (snapshot.stepsByHash ? Object.values(snapshot.stepsByHash).sort((a, b) => a.stepIndex - b.stepIndex) : []),
-      stepsByHash: snapshot.stepsByHash || (snapshot.steps ? (() => {
+      ...snapshotToSave,
+      steps: snapshotToSave.steps || (snapshotToSave.stepsByHash ? Object.values(snapshotToSave.stepsByHash).sort((a, b) => a.stepIndex - b.stepIndex) : []),
+      stepsByHash: snapshotToSave.stepsByHash || (snapshotToSave.steps ? (() => {
         const hash: Record<string, SnapshotStep> = {};
-        for (const step of snapshot.steps) {
+        for (const step of snapshotToSave.steps) {
           hash[step.stepHash] = step;
         }
         return hash;

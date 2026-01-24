@@ -380,7 +380,7 @@ export const captureScreenshot = async (page: Page): Promise<{ image: Buffer, ma
   
   // Add markers and get marker information (no CSS/visual changes)
   const markers = await addMarkerCode(page);
-  console.log(`🏷️  [captureScreenshot] Added ${markers.length} markers`);
+  logger.info({ markerCount: markers.length }, `🏷️  [captureScreenshot] Added ${markers.length} markers`);
   
   // Take screenshot (no observer issues since we're not doing visual overlays)
   const image = await page.screenshot({ 
@@ -394,7 +394,7 @@ export const captureScreenshot = async (page: Page): Promise<{ image: Buffer, ma
   const markerDrawStart = performance.now();
   const imageWithMarkers = await drawMarkersOnScreenshot(image, markers);
   const markerDrawTime = performance.now() - markerDrawStart;
-  console.log(`🎨 [captureScreenshot] Drew ${markers.length} markers on screenshot in ${markerDrawTime}ms (${(markerDrawTime / 1000).toFixed(2)}s)`);
+  logger.info({ markerCount: markers.length, markerDrawTime }, `🎨 [captureScreenshot] Drew ${markers.length} markers on screenshot in ${markerDrawTime}ms (${(markerDrawTime / 1000).toFixed(2)}s)`);
   
   const end = performance.now();
   logger.debug({ totalTime: end - start }, `⏱️  [captureScreenshot] Total time: ${end - start}ms (${((end - start) / 1000).toFixed(2)}s)`);

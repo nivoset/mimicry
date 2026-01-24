@@ -12,6 +12,7 @@ import type {
   AriaRole,
 } from './selectorTypes.js';
 import { verifySelectorUniqueness, getMimicIdFromLocator } from './selectorUtils.js';
+import { logger } from './logger.js';
 
 /**
  * Browser context types (used in page.evaluate)
@@ -317,7 +318,7 @@ export async function captureTargets(
         case 'url':
           return 'textbox';
         default:
-          console.log(`Unknown input type: ${type}`);
+          logger.warn({ type }, `Unknown input type: ${type}`);
           return 'unknown';
       }
     }
@@ -1141,11 +1142,11 @@ export async function generateBestSelectorForElement(
     
     // Check if this is the __name error
     if (errorMessage.includes('__name') || errorStack.includes('__name')) {
-      console.error('Error in generateBestSelectorForElement - page.evaluate failed');
-      console.error('Error message:', errorMessage);
-      console.error('Error stack:', errorStack);
-      console.error('This error typically occurs when TypeScript type annotations are used in arrow functions within page.evaluate');
-      console.error('Please check for any remaining type annotations in the evaluate function');
+      logger.error({ errorMessage, errorStack }, 'Error in generateBestSelectorForElement - page.evaluate failed');
+      logger.error({ errorMessage }, `Error message: ${errorMessage}`);
+      logger.error({ errorStack }, `Error stack: ${errorStack}`);
+      logger.error('This error typically occurs when TypeScript type annotations are used in arrow functions within page.evaluate');
+      logger.error('Please check for any remaining type annotations in the evaluate function');
     }
     
     throw new Error(
@@ -1241,11 +1242,11 @@ export async function generateBestSelectorForElement(
       // If page closed during parent evaluation, just return null (parent selector is optional)
       const errorMessage = error?.message || String(error);
       if (page.isClosed() || errorMessage.includes('closed') || errorMessage.includes('Target page')) {
-        console.warn('Page closed during parent selector evaluation, skipping parent selector');
+        logger.warn('Page closed during parent selector evaluation, skipping parent selector');
         return null;
       }
       // For other errors, log but don't fail - parent selector is optional
-      console.warn('Error evaluating parent candidates:', errorMessage);
+      logger.warn({ error: errorMessage }, `Error evaluating parent candidates: ${errorMessage}`);
       return null;
     }
     
