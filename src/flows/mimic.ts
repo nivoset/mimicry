@@ -2,6 +2,7 @@ import { ToolLoopAgent, tool } from 'ai'
 import { chromium, type Locator } from '@playwright/test'
 import { openai } from '@ai-sdk/openai'
 import { z } from 'zod'
+import { logger } from '../mimic/logger.js'
 
 const browser = await chromium.launch({ headless: true })
 
@@ -60,7 +61,7 @@ Use 'select_options' to get all valid options from a select/dropdown element.
   }),
   needsApproval: false,
   execute: async ({ lookingFor, role, element }) => {
-    console.log(`\n🔍 [browserTool] Called with:`, {
+    logger.info(`\n🔍 [browserTool] Called with:`, {
       lookingFor,
       role: role || 'none',
       element: element ? JSON.stringify(element) : 'none',
@@ -68,7 +69,7 @@ Use 'select_options' to get all valid options from a select/dropdown element.
     
     // Handle full page screenshot request
     if (lookingFor === 'full_page_screenshot') {
-      console.log(`   → Taking full page screenshot`)
+      logger.info(`   → Taking full page screenshot`)
       const pageScreenshot = await page.screenshot({ type: 'png', fullPage: true })
       const pageScreenshotBase64 = pageScreenshot.toString('base64')
       const bodyAria = await page.locator('body').ariaSnapshot()
@@ -84,17 +85,17 @@ Use 'select_options' to get all valid options from a select/dropdown element.
     // Handle select options request
     if (lookingFor === 'select_options') {
       if (!element) {
-        console.log(`❌ [browserTool] Element is required for select_options`)
+        logger.info(`❌ [browserTool] Element is required for select_options`)
         return [{
           aria: `Error: Element is required when lookingFor is 'select_options'. Provide element identifier (role, testid, label, text, etc.)`
         }]
       }
       
-      console.log(`   → Getting options for select element`)
+      logger.info(`   → Getting options for select element`)
       const selectElement = await getSelector(element)
       
       if (!selectElement) {
-        console.log(`❌ [browserTool] Select element not found`)
+        logger.info(`❌ [browserTool] Select element not found`)
         return [{
           aria: `Error: Could not find select element with identifier: ${JSON.stringify(element)}`
         }]
@@ -140,12 +141,12 @@ ${optionsList}
 
 To select an option, use interactionTool with action "select" and value set to one of the option values above.`
         
-        console.log(`✅ [browserTool] Found ${optionsData.length} option(s) for select element`)
+        logger.info(`✅ [browserTool] Found ${optionsData.length} option(s) for select element`)
         return [{
           aria: result
         }]
       } catch (error) {
-        console.log(`❌ [browserTool] Error getting select options: ${error instanceof Error ? error.message : String(error)}`)
+        logger.info(`❌ [browserTool] Error getting select options: ${error instanceof Error ? error.message : String(error)}`)
         return [{
           aria: `Error getting select options: ${error instanceof Error ? error.message : String(error)}`
         }]
@@ -232,7 +233,7 @@ To select an option, use interactionTool with action "select" and value set to o
 const getSelector = async (element: z.infer<typeof elementSchema>): Promise<Locator | null> => {
   // Priority 1: testid (most specific and reliable)
   if (element.testid) {
-    console.log(`   → Getting element by testid: ${element.testid}`)
+    logger.info(`   → Getting element by testid: ${element.testid}`)
     return page.getByTestId(element.testid);
   }
   
@@ -243,39 +244,39 @@ const getSelector = async (element: z.infer<typeof elementSchema>): Promise<Loca
     
     if (element.role === 'button' && element.text) {
       // For buttons, use getByRole with text content
-      console.log(`   → Getting button by role and text: "${element.text}"`)
+      logger.info(`   → Getting button by role and text: "${element.text}"`)
       return page.getByRole('button', { name: element.text, exact: false });
     } else if (nameOptions) {
-      console.log(`   → Getting element by role: ${element.role} with name: "${nameOptions}"`)
+      logger.info(`   → Getting element by role: ${element.role} with name: "${nameOptions}"`)
       return page.getByRole(element.role, { name: nameOptions });
     } else {
-      console.log(`   → Getting element by role: ${element.role}`)
+      logger.info(`   → Getting element by role: ${element.role}`)
       return page.getByRole(element.role);
     }
   }
   
   // Priority 3: label
   if (element.label) {
-    console.log(`   → Getting element by label: ${element.label}`)
+    logger.info(`   → Getting element by label: ${element.label}`)
     return page.getByLabel(element.label);
   }
   
   // Priority 4: text content (especially useful for buttons and links)
   if (element.text) {
-    console.log(`   → Getting element by text content: "${element.text}"`)
+    logger.info(`   → Getting element by text content: "${element.text}"`)
     // Try to find by text - works well for buttons, links, and other elements
     return page.getByText(element.text, { exact: false });
   }
   
   // Priority 5: href (for links)
   if (element.href) {
-    console.log(`   → Getting link by href: ${element.href}`)
+    logger.info(`   → Getting link by href: ${element.href}`)
     return page.getByRole('link', { name: element.href });
   }
   
   // Priority 6: data attributes
   if (element.dataAttributes && element.dataAttributes.length > 0) {
-    console.log(`   → Getting element by data attributes: ${element.dataAttributes.join(', ')}`)
+    logger.info(`   → Getting element by data attributes: ${element.dataAttributes.join(', ')}`)
     const selector = element.dataAttributes.map(attr => `[${attr}]`).join('');
     return page.locator(selector);
   }
@@ -311,7 +312,7 @@ this will return data about a list of elements
     value: z.string().or(z.boolean()).describe("value to set").optional().describe("value to set if it is a select or fill-out type on an input type"),
   }),
   execute: async ({ action, element, value, button, modifiers }) => {
-    console.log(`\n🖱️  [interactionTool] Called with:`, {
+    logger.info(`\n🖱️  [interactionTool] Called with:`, {
       action,
       element,
       value: typeof value === 'string' ? value.substring(0, 50) : value,
@@ -322,39 +323,39 @@ this will return data about a list of elements
     const el = await getSelector(element);
 
     if (!el) {
-      console.log(`❌ [interactionTool] Element not found`)
+      logger.info(`❌ [interactionTool] Element not found`)
       return `No element found for selector: ${JSON.stringify(element)} try again with a different data`
     }
 
     if (action === 'click') {
-      console.log(`   → Clicking element with button: ${button || 'left'}`)
+      logger.info(`   → Clicking element with button: ${button || 'left'}`)
       await el.click({ button, modifiers });
     }
     if (action === 'type' && typeof value === 'string') {
-      console.log(`   → Typing value: "${value.substring(0, 30)}${value.length > 30 ? '...' : ''}"`)
+      logger.info(`   → Typing value: "${value.substring(0, 30)}${value.length > 30 ? '...' : ''}"`)
       await el.fill(value, {});
     }
     if (action === 'select' && typeof value === 'string') {
-      console.log(`   → Selecting option: "${value}"`)
+      logger.info(`   → Selecting option: "${value}"`)
       await el.selectOption(value);
     }
     if (action === 'fill-out' && typeof value === 'string') {
       if (typeof value === 'boolean') {
-        console.log(`   → ${value ? 'Checking' : 'Unchecking'} element`)
+        logger.info(`   → ${value ? 'Checking' : 'Unchecking'} element`)
         if (value) {
           await el.check();
         } else {
           await el.uncheck();
         }
       } else if (typeof value === 'string') {
-        console.log(`   → Filling with value: "${value.substring(0, 30)}${value.length > 30 ? '...' : ''}"`)
+        logger.info(`   → Filling with value: "${value.substring(0, 30)}${value.length > 30 ? '...' : ''}"`)
         await el.fill(value);
       } else {
-        console.log(`❌ [interactionTool] Invalid value type: ${typeof value}`)
+        logger.info(`❌ [interactionTool] Invalid value type: ${typeof value}`)
         return `Invalid value type: ${typeof value} for fill-out action on element, this needs to be a string or boolean`
       }
     }
-    console.log(`✅ [interactionTool] Successfully performed ${action} action`)
+    logger.info(`✅ [interactionTool] Successfully performed ${action} action`)
     return `Successfully performed ${action} action on element`
   },
 })
@@ -382,7 +383,7 @@ this will return data about the current page
     ]).describe("wait until to wait for the page to load").optional().default("networkidle"),
   }),
   execute: async ({ type, url, waitUntil }) => {
-    console.log(`\n🧭 [navigationTool] Called with:`, {
+    logger.info(`\n🧭 [navigationTool] Called with:`, {
       type,
       url: url || 'none',
       waitUntil: waitUntil || 'networkidle',
@@ -392,34 +393,34 @@ this will return data about the current page
       case 'openPage':
         case 'navigate':
         if (url) {
-          console.log(`   → Navigating to: ${url}`)
+          logger.info(`   → Navigating to: ${url}`)
           await page.goto(url, { waitUntil });
-          console.log(`   → Page loaded, waiting for: ${waitUntil}`)
+          logger.info(`   → Page loaded, waiting for: ${waitUntil}`)
         } else {
-          console.log(`❌ [navigationTool] URL required for ${type}`)
+          logger.info(`❌ [navigationTool] URL required for ${type}`)
         }
         break;
       case 'closePage':
-        console.log(`   → Closing page`)
+        logger.info(`   → Closing page`)
         await page.close({});
         break;
       case 'goBack':
-        console.log(`   → Going back in history`)
+        logger.info(`   → Going back in history`)
         await page.goBack({ waitUntil });
         break;
       case 'goForward':
-        console.log(`   → Going forward in history`)
+        logger.info(`   → Going forward in history`)
         await page.goForward({ waitUntil });
         break;
       case 'refresh':
-        console.log(`   → Refreshing page`)
+        logger.info(`   → Refreshing page`)
         await page.reload({ waitUntil });
         break;
       default:
-        console.log(`❌ [navigationTool] Invalid navigation type: ${type}`)
+        logger.info(`❌ [navigationTool] Invalid navigation type: ${type}`)
         return `Invalid navigation type: ${type}`
     }
-    console.log(`✅ [navigationTool] Successfully performed ${type} navigation`)
+    logger.info(`✅ [navigationTool] Successfully performed ${type} navigation`)
     return `Successfully performed ${type} navigation`
   },
 })
@@ -494,7 +495,7 @@ form submissions, navigation, or any async operations.
    * @returns Status message describing what was waited for and the result
    */
   execute: async ({ waitType, element, elementState, text, timeout, duration, loaderTimeout, waitForNetworkIdle }) => {
-    console.log(`\n⏳ [waitTool] Called with:`, {
+    logger.info(`\n⏳ [waitTool] Called with:`, {
       waitType,
       element: element ? JSON.stringify(element) : 'none',
       elementState: elementState || 'visible',
@@ -550,7 +551,7 @@ form submissions, navigation, or any async operations.
           }
 
           if (visibleLoaders.length > 0) {
-            console.log(`   → Detected ${visibleLoaders.length} loading indicator(s), waiting for them to disappear...`)
+            logger.info(`   → Detected ${visibleLoaders.length} loading indicator(s), waiting for them to disappear...`)
             // Wait for loaders to disappear
             const startTime = Date.now();
             while (Date.now() - startTime < defaultLoaderTimeout) {
@@ -571,14 +572,14 @@ form submissions, navigation, or any async operations.
                 const waitDuration = Date.now() - startTime;
                 // Optionally wait for network idle
                 if (waitForNetworkIdle) {
-                  console.log(`   → Waiting for network idle...`)
+                  logger.info(`   → Waiting for network idle...`)
                   try {
                     await page.waitForLoadState('networkidle', { timeout: 5000 });
                   } catch {
                     // Ignore network idle timeout
                   }
                 }
-                console.log(`✅ [waitTool] Smart wait completed: ${visibleLoaders.length} loader(s) disappeared in ${waitDuration}ms`)
+                logger.info(`✅ [waitTool] Smart wait completed: ${visibleLoaders.length} loader(s) disappeared in ${waitDuration}ms`)
                 return `Smart wait: Detected and waited for ${visibleLoaders.length} loading indicator(s) to disappear (${waitDuration}ms)`;
               }
               
@@ -586,27 +587,27 @@ form submissions, navigation, or any async operations.
             }
             
             const remainingLoaders = visibleLoaders.length;
-            console.log(`⚠️  [waitTool] Smart wait timeout after ${defaultLoaderTimeout}ms`)
+            logger.info(`⚠️  [waitTool] Smart wait timeout after ${defaultLoaderTimeout}ms`)
             return `Smart wait: Timeout after ${defaultLoaderTimeout}ms. ${remainingLoaders} loading indicator(s) may still be visible.`;
           } else {
             // No loaders detected, use fallback timeout
-            console.log(`   → No loaders detected, using fallback timeout: ${defaultDuration}ms`)
+            logger.info(`   → No loaders detected, using fallback timeout: ${defaultDuration}ms`)
             await page.waitForTimeout(defaultDuration);
             if (waitForNetworkIdle) {
-              console.log(`   → Waiting for network idle...`)
+              logger.info(`   → Waiting for network idle...`)
               try {
                 await page.waitForLoadState('networkidle', { timeout: 5000 });
               } catch {
                 // Ignore network idle timeout
               }
             }
-            console.log(`✅ [waitTool] Smart wait completed: No loaders, waited ${defaultDuration}ms`)
+            logger.info(`✅ [waitTool] Smart wait completed: No loaders, waited ${defaultDuration}ms`)
             return `Smart wait: No loading indicators detected, waited ${defaultDuration}ms`;
           }
         }
 
         case 'loaders': {
-          console.log(`   → Waiting for loading indicators to disappear...`)
+          logger.info(`   → Waiting for loading indicators to disappear...`)
           // Explicitly wait for loading indicators (same as smart but more explicit)
           const LOADING_INDICATORS = [
             '[class*="loading"]',
@@ -644,102 +645,102 @@ form submissions, navigation, or any async operations.
             
             if (!hasVisibleLoader) {
               const waitDuration = Date.now() - startTime;
-              console.log(`✅ [waitTool] Loaders wait completed: All indicators disappeared in ${waitDuration}ms`)
+              logger.info(`✅ [waitTool] Loaders wait completed: All indicators disappeared in ${waitDuration}ms`)
               return `Loaders wait: All loading indicators disappeared (${waitDuration}ms)`;
             }
             
             await page.waitForTimeout(100);
           }
           
-          console.log(`⚠️  [waitTool] Loaders wait timeout after ${defaultLoaderTimeout}ms`)
+          logger.info(`⚠️  [waitTool] Loaders wait timeout after ${defaultLoaderTimeout}ms`)
           return `Loaders wait: Timeout after ${defaultLoaderTimeout}ms. Some loading indicators may still be visible.`;
         }
 
         case 'element': {
           if (!element) {
-            console.log(`❌ [waitTool] Element is required for 'element' wait type`)
+            logger.info(`❌ [waitTool] Element is required for 'element' wait type`)
             return `Error: Element is required for 'element' wait type`;
           }
 
           const el = await getSelector(element);
           if (!el) {
-            console.log(`❌ [waitTool] Could not find element`)
+            logger.info(`❌ [waitTool] Could not find element`)
             return `Error: Could not find element for selector: ${JSON.stringify(element)}`;
           }
 
           const state = elementState || 'visible';
           const elementTimeout = timeout || 5000;
-          console.log(`   → Waiting for element to become ${state} (timeout: ${elementTimeout}ms)`)
+          logger.info(`   → Waiting for element to become ${state} (timeout: ${elementTimeout}ms)`)
 
           try {
             switch (state) {
               case 'visible':
                 await el.waitFor({ state: 'visible', timeout: elementTimeout });
-                console.log(`✅ [waitTool] Element wait completed: Element became visible`)
+                logger.info(`✅ [waitTool] Element wait completed: Element became visible`)
                 return `Element wait: Element became visible`;
               case 'hidden':
                 await el.waitFor({ state: 'hidden', timeout: elementTimeout });
-                console.log(`✅ [waitTool] Element wait completed: Element became hidden`)
+                logger.info(`✅ [waitTool] Element wait completed: Element became hidden`)
                 return `Element wait: Element became hidden`;
               case 'attached':
                 await el.waitFor({ state: 'attached', timeout: elementTimeout });
-                console.log(`✅ [waitTool] Element wait completed: Element attached to DOM`)
+                logger.info(`✅ [waitTool] Element wait completed: Element attached to DOM`)
                 return `Element wait: Element attached to DOM`;
               case 'detached':
                 await el.waitFor({ state: 'detached', timeout: elementTimeout });
-                console.log(`✅ [waitTool] Element wait completed: Element detached from DOM`)
+                logger.info(`✅ [waitTool] Element wait completed: Element detached from DOM`)
                 return `Element wait: Element detached from DOM`;
             }
           } catch (error) {
-            console.log(`⚠️  [waitTool] Element wait timeout after ${elementTimeout}ms`)
+            logger.info(`⚠️  [waitTool] Element wait timeout after ${elementTimeout}ms`)
             return `Element wait: Timeout waiting for element to become ${state} after ${elementTimeout}ms`;
           }
         }
 
         case 'text': {
           if (!text) {
-            console.log(`❌ [waitTool] Text is required for 'text' wait type`)
+            logger.info(`❌ [waitTool] Text is required for 'text' wait type`)
             return `Error: Text is required for 'text' wait type`;
           }
 
           const textTimeout = timeout || 5000;
-          console.log(`   → Waiting for text "${text}" to appear (timeout: ${textTimeout}ms)`)
+          logger.info(`   → Waiting for text "${text}" to appear (timeout: ${textTimeout}ms)`)
           try {
             await page.waitForSelector(`text=${text}`, { timeout: textTimeout });
-            console.log(`✅ [waitTool] Text wait completed: Text "${text}" appeared`)
+            logger.info(`✅ [waitTool] Text wait completed: Text "${text}" appeared`)
             return `Text wait: Text "${text}" appeared`;
           } catch (error) {
-            console.log(`⚠️  [waitTool] Text wait timeout after ${textTimeout}ms`)
+            logger.info(`⚠️  [waitTool] Text wait timeout after ${textTimeout}ms`)
             return `Text wait: Timeout waiting for text "${text}" after ${textTimeout}ms`;
           }
         }
 
         case 'network': {
           const networkTimeout = timeout || 10000;
-          console.log(`   → Waiting for network to become idle (timeout: ${networkTimeout}ms)`)
+          logger.info(`   → Waiting for network to become idle (timeout: ${networkTimeout}ms)`)
           try {
             await page.waitForLoadState('networkidle', { timeout: networkTimeout });
-            console.log(`✅ [waitTool] Network wait completed: Network became idle`)
+            logger.info(`✅ [waitTool] Network wait completed: Network became idle`)
             return `Network wait: Network became idle`;
           } catch (error) {
-            console.log(`⚠️  [waitTool] Network wait timeout after ${networkTimeout}ms`)
+            logger.info(`⚠️  [waitTool] Network wait timeout after ${networkTimeout}ms`)
             return `Network wait: Timeout waiting for network idle after ${networkTimeout}ms`;
           }
         }
 
         case 'fixed': {
-          console.log(`   → Fixed wait: ${defaultDuration}ms`)
+          logger.info(`   → Fixed wait: ${defaultDuration}ms`)
           await page.waitForTimeout(defaultDuration);
-          console.log(`✅ [waitTool] Fixed wait completed: ${defaultDuration}ms`)
+          logger.info(`✅ [waitTool] Fixed wait completed: ${defaultDuration}ms`)
           return `Fixed wait: Waited for ${defaultDuration}ms`;
         }
 
         default:
-          console.log(`❌ [waitTool] Unknown wait type: ${waitType}`)
+          logger.info(`❌ [waitTool] Unknown wait type: ${waitType}`)
           return `Error: Unknown wait type: ${waitType}`;
       }
     } catch (error) {
-      console.log(`❌ [waitTool] Error: ${error instanceof Error ? error.message : String(error)}`)
+      logger.info(`❌ [waitTool] Error: ${error instanceof Error ? error.message : String(error)}`)
       return `Wait error: ${error instanceof Error ? error.message : String(error)}`;
     }
   },
@@ -828,7 +829,7 @@ This helps you avoid duplicate work and ensures all tasks are completed.
     
     const memory = (globalThis as any).__workingMemory as WorkingMemory;
     
-    console.log(`\n🧠 [workingMemoryTool] Action: ${action}`, {
+    logger.info(`\n🧠 [workingMemoryTool] Action: ${action}`, {
       taskId: taskId || 'none',
       taskDescription: taskDescription || 'none',
       taskCount: tasks?.length || memory.tasks.size,
@@ -855,7 +856,7 @@ This helps you avoid duplicate work and ensures all tasks are completed.
           .map(t => `- [${t.status === 'completed' ? 'x' : ' '}] ${t.id}: ${t.description}`)
           .join('\n');
         
-        console.log(`✅ [workingMemoryTool] Initialized ${memory.tasks.size} task(s)`)
+        logger.info(`✅ [workingMemoryTool] Initialized ${memory.tasks.size} task(s)`)
         return `Initialized working memory with ${memory.tasks.size} task(s):\n${taskList}`;
       }
 
@@ -873,7 +874,7 @@ This helps you avoid duplicate work and ensures all tasks are completed.
         task.completedAt = Date.now();
         memory.tasks.set(taskId, task);
         
-        console.log(`✅ [workingMemoryTool] Marked task as completed: ${taskId}`)
+        logger.info(`✅ [workingMemoryTool] Marked task as completed: ${taskId}`)
         return `Task "${taskId}" marked as completed: ${task.description}`;
       }
 
@@ -891,7 +892,7 @@ This helps you avoid duplicate work and ensures all tasks are completed.
         delete task.completedAt;
         memory.tasks.set(taskId, task);
         
-        console.log(`🔄 [workingMemoryTool] Marked task as pending: ${taskId}`)
+        logger.info(`🔄 [workingMemoryTool] Marked task as pending: ${taskId}`)
         return `Task "${taskId}" marked as pending: ${task.description}`;
       }
 
@@ -906,7 +907,7 @@ This helps you avoid duplicate work and ensures all tasks are completed.
           status: 'pending',
         });
         
-        console.log(`➕ [workingMemoryTool] Added task: ${taskId}`)
+        logger.info(`➕ [workingMemoryTool] Added task: ${taskId}`)
         return `Task "${taskId}" added: ${taskDescription}`;
       }
 
@@ -927,7 +928,7 @@ ${pending.length > 0 ? `\nPending tasks:\n${pending.map(t => `  - ${t.id}: ${t.d
 ${completed.length > 0 ? `\nCompleted tasks:\n${completed.map(t => `  - ${t.id}: ${t.description}`).join('\n')}` : ''}
         `.trim();
         
-        console.log(`📊 [workingMemoryTool] Status: ${completed.length}/${allTasks.length} completed`)
+        logger.info(`📊 [workingMemoryTool] Status: ${completed.length}/${allTasks.length} completed`)
         return summary;
       }
 
@@ -943,7 +944,7 @@ ${completed.length > 0 ? `\nCompleted tasks:\n${completed.map(t => `  - ${t.id}:
           .map(t => `- ${t.id}: ${t.description}`)
           .join('\n');
         
-        console.log(`📋 [workingMemoryTool] Found ${pending.length} pending task(s)`)
+        logger.info(`📋 [workingMemoryTool] Found ${pending.length} pending task(s)`)
         return `Pending tasks (${pending.length}):\n${pendingList}`;
       }
 
@@ -959,7 +960,7 @@ ${completed.length > 0 ? `\nCompleted tasks:\n${completed.map(t => `  - ${t.id}:
           .map(t => `- ${t.id}: ${t.description}${t.completedAt ? ` (completed at ${new Date(t.completedAt).toLocaleTimeString()})` : ''}`)
           .join('\n');
         
-        console.log(`✅ [workingMemoryTool] Found ${completed.length} completed task(s)`)
+        logger.info(`✅ [workingMemoryTool] Found ${completed.length} completed task(s)`)
         return `Completed tasks (${completed.length}):\n${completedList}`;
       }
 
@@ -1111,7 +1112,7 @@ await page.goto('http://localhost:3000/pages/card-system.html');
 // then click on the submit button
 // `}).catch(error => {
   
-//   console.log("Error happened")
+//   logger.info("Error happened")
 // })
 
 // await page.close()
@@ -1132,11 +1133,11 @@ await mimic.generate({
   
 
 // import { getFromSelector, getSelectorDescriptor } from '../mimic/selectorDescriptor.js';
-// // console.log(await getSelectorDescriptor(await page.getByRole('textbox', { name: 'name' })))
+// // logger.info(await getSelectorDescriptor(await page.getByRole('textbox', { name: 'name' })))
 // const twentyEight = await getSelectorDescriptor(await page.locator('[data-mimic-id="30"]'))
 
-// console.log(twentyEight)
-// console.log(await getFromSelector(page, twentyEight).ariaSnapshot())
+// logger.info(twentyEight)
+// logger.info(await getFromSelector(page, twentyEight).ariaSnapshot())
 
 // await page.screenshot({ path: 'screenshot.png' })
 
