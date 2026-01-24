@@ -133,7 +133,7 @@ export const displayTokens = async (testCaseName?: string) => {
         .map(([key, value]) => `  - ${key}: ${value}`)
         .join('\n');
       
-      console.log(`Holistic Tokens (All Test Cases):\n${holisticEntries}`);
+      logger.info({ holisticEntries }, `Holistic Tokens (All Test Cases):\n${holisticEntries}`);
     }
     
     // Display per-test-case counts
