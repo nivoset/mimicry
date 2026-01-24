@@ -382,7 +382,7 @@ export const executeClickAction = async (
     
     // Check if page closed - this can happen with navigation after clicks
     if (errorMessage.includes('closed') || errorMessage.includes('Target page')) {
-      console.warn('Page closed during selector generation, using mimicId fallback');
+      logger.warn('Page closed during selector generation, using mimicId fallback');
     }
     
     if (selectedCandidate.mimicId) {
@@ -395,7 +395,7 @@ export const executeClickAction = async (
       };
     } else {
       // If we can't generate the code, that's okay - just skip it
-      console.warn('Could not generate Playwright code for click action:', errorMessage);
+      logger.warn({ error: errorMessage }, `Could not generate Playwright code for click action: ${errorMessage}`);
     }
   }
 
