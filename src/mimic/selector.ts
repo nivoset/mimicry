@@ -582,7 +582,6 @@ export async function captureTargets(
     
     // Collect content elements only if interactableOnly is false
     if (!interactableOnlyFlag) {
-      // console.log('Collecting content elements ------------------------------');
       collectContent();
     }
 
