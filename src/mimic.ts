@@ -24,6 +24,7 @@ import { addAnnotation } from '@mimic/annotations.js';
 import type { StepExecutionResult } from '@mimic/types.js';
 import { getAssertionAction, executeAssertionAction, type AssertionActionResult } from '@mimic/assertions.js';
 import { formatErrorWithPlaywrightCode } from '@mimic/errorFormatter.js';
+import { logger } from '@mimic/logger.js';
 
 
 export type Mimic = (steps: TemplateStringsArray, ...args: unknown[]) => Promise<void>;
@@ -151,16 +152,16 @@ Be strict: only mark as accomplished if the intent is FULLY satisfied. If the st
     const output = result.output;
     
     if (!output.accomplished && output.remainingActions && output.remainingActions.trim()) {
-      console.log(`→ Step intent not yet accomplished. ${output.reasoning}`);
-      console.log(`→ Remaining: ${output.remainingActions}`);
+      logger.info({ reasoning: output.reasoning, remainingActions: output.remainingActions }, `→ Step intent not yet accomplished. ${output.reasoning}`);
+      logger.info({ remainingActions: output.remainingActions }, `→ Remaining: ${output.remainingActions}`);
     } else if (output.accomplished) {
-      console.log(`✓ Step intent accomplished: ${output.reasoning}`);
+      logger.info({ reasoning: output.reasoning }, `✓ Step intent accomplished: ${output.reasoning}`);
     }
     
     return output.accomplished;
   } catch (error) {
     // If intent check fails, default to false (continue trying)
-    console.warn(`Failed to check intent accomplishment: ${error instanceof Error ? error.message : String(error)}`);
+    logger.warn({ error: error instanceof Error ? error.message : String(error) }, `Failed to check intent accomplishment: ${error instanceof Error ? error.message : String(error)}`);
     return false;
   }
 }
@@ -299,9 +300,9 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
   // This provides a visual reference of the initial page state with all markers
   // Attach it to the test report so it's visible in Playwright HTML reports
   try {
-    console.log('📸 [mimic] Capturing initial screenshot with markers for test attachment...');
+    logger.info('📸 [mimic] Capturing initial screenshot with markers for test attachment...');
     const { image: screenshot } = await captureScreenshot(page);
-    console.log(`📸 [mimic] Screenshot captured (${(screenshot.length / 1024).toFixed(2)}KB)`);
+    logger.info({ screenshotSizeKB: (screenshot.length / 1024).toFixed(2) }, `📸 [mimic] Screenshot captured (${(screenshot.length / 1024).toFixed(2)}KB)`);
     
     // Attach screenshot to test report if testInfo is available
     // This makes it visible in Playwright HTML reports like a regular screenshot
@@ -310,11 +311,11 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
         body: screenshot,
         contentType: 'image/png',
       });
-      console.log('📎 [mimic] Screenshot attached to test report');
+      logger.info('📎 [mimic] Screenshot attached to test report');
     }
   } catch (error) {
     // If screenshot capture fails, log but don't fail the test
-    console.warn('⚠️  [mimic] Failed to capture initial screenshot:', error instanceof Error ? error.message : String(error));
+    logger.warn({ error: error instanceof Error ? error.message : String(error) }, `⚠️  [mimic] Failed to capture initial screenshot: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   test.slow(true);
@@ -338,7 +339,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
     // We skip selective regeneration if we already did full replay (useSnapshot path)
     if (existingStep && existingSnapshot && !existingSnapshot.flags?.forceRegenerate && !useSnapshot) {
       // Step exists in snapshot - replay it instead of regenerating
-      console.log(`📦 [mimic] Using cached step: "${step}" (hash: ${stepHash})`);
+      logger.info({ step, stepHash }, `📦 [mimic] Using cached step: "${step}" (hash: ${stepHash})`);
       try {
         await test.step(step, async () => {
           // Replay the step from snapshot
@@ -423,12 +424,12 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
         continue; // Skip to next step
       } catch (error) {
         // Replay failed - fall through to regenerate
-        console.warn(`⚠️  [mimic] Cached step replay failed, regenerating: ${error instanceof Error ? error.message : String(error)}`);
+        logger.warn({ step, stepHash, error: error instanceof Error ? error.message : String(error) }, `⚠️  [mimic] Cached step replay failed, regenerating: ${error instanceof Error ? error.message : String(error)}`);
       }
     }
     
     // Step doesn't exist in snapshot or replay failed - regenerate it
-    console.log(`🔄 [mimic] Regenerating step: "${step}" (hash: ${stepHash})`);
+    logger.info({ step, stepHash }, `🔄 [mimic] Regenerating step: "${step}" (hash: ${stepHash})`);
     try {
       await test.step(step, async () => {
         // Build test context from previous steps and current state
@@ -467,10 +468,10 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
           if (actionCount > 1) {
             intentAccomplished = await checkIntentAccomplished(page, brains, step, stepActions, testCaseName);
             if (intentAccomplished) {
-              console.log(`✓ Step intent accomplished after ${actionCount - 1} action(s)`);
+              logger.info({ step, actionCount: actionCount - 1 }, `✓ Step intent accomplished after ${actionCount - 1} action(s)`);
               break;
             }
-            console.log(`→ Continuing to add actions for step (attempt ${actionCount})...`);
+            logger.info({ step, actionCount }, `→ Continuing to add actions for step (attempt ${actionCount})...`);
             break;
           }
           // Get the next action to execute for this step
@@ -585,7 +586,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
                     mimicId: assertionActionResult.mimicId
                   };
                 } catch (error) {
-                  console.warn(`⚠️  Could not generate selector for assertion target: ${error instanceof Error ? error.message : String(error)}`);
+                  logger.warn({ error: error instanceof Error ? error.message : String(error) }, `⚠️  Could not generate selector for assertion target: ${error instanceof Error ? error.message : String(error)}`);
                 }
               }
               
@@ -626,7 +627,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
         executedSteps.push(...stepActions);
         
         if (actionCount >= maxActionsPerStep && !intentAccomplished) {
-          console.warn(`⚠️  Reached maximum actions (${maxActionsPerStep}) for step: ${step}. Intent may not be fully accomplished.`);
+          logger.warn({ step, actionCount, maxActionsPerStep }, `⚠️  Reached maximum actions (${maxActionsPerStep}) for step: ${step}. Intent may not be fully accomplished.`);
         }
       });
     } catch (error) {
@@ -762,7 +763,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
       }
     } else {
       // Not all steps were executed - don't save incomplete snapshot
-      console.warn(`⚠️  Not saving snapshot: only ${executedStepCount} of ${expectedStepCount} steps executed`);
+      logger.warn({ executedStepCount, expectedStepCount }, `⚠️  Not saving snapshot: only ${executedStepCount} of ${expectedStepCount} steps executed`);
     }
   }
 
