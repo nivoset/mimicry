@@ -109,7 +109,7 @@ export const displayTokens = async (testCaseName?: string) => {
     // Display specific test case
     const testCaseCounter = testCaseCounters.get(testCaseName);
     if (!testCaseCounter || testCaseCounter.size === 0) {
-      console.log(`Tokens for "${testCaseName}": No tokens counted yet`);
+      logger.info({ testCaseName }, `Tokens for "${testCaseName}": No tokens counted yet`);
       return;
     }
     
