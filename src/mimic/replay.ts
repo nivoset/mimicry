@@ -10,9 +10,11 @@ import type { Snapshot, SnapshotStep } from './types.js';
 import { executeNavigationAction } from './navigation.js';
 import { executeClickAction } from './click.js';
 import { executeFormAction } from './forms.js';
+import { executeAssertionAction } from './assertions.js';
 import type { NavigationAction } from './schema/action.js';
 import type { ClickActionResult } from './schema/action.js';
 import type { FormActionResult } from './forms.js';
+import type { AssertionActionResult } from './assertions.js';
 import { getMimic } from './markers.js';
 import { getFromSelector } from './selectorUtils.js';
 
@@ -54,6 +56,9 @@ export async function replayFromSnapshot(
           break;
         case 'form update':
           await replayFormStep(page, step, testInfo);
+          break;
+        case 'assertion':
+          await replayAssertionStep(page, step, testInfo);
           break;
         default:
           throw new Error(`Unknown action kind in snapshot: ${(step as any).actionKind}`);
@@ -174,6 +179,52 @@ async function replayFormStep(
   }
 
   await executeFormAction(
+    page,
+    actionDetails,
+    element,
+    testInfo,
+    step.stepText
+  );
+}
+
+/**
+ * Replay an assertion step from snapshot
+ * 
+ * Reconstructs the element locator from stored target element information (if applicable).
+ * 
+ * @param page - Playwright Page object
+ * @param step - Snapshot step containing assertion action
+ * @param testInfo - Playwright TestInfo for annotations (optional)
+ * @returns Promise that resolves when assertion is complete
+ */
+async function replayAssertionStep(
+  page: Page,
+  step: SnapshotStep,
+  testInfo?: TestInfo
+): Promise<void> {
+  const actionDetails = step.actionDetails as AssertionActionResult;
+  
+  // Get target element if mimicId is provided (null for page-level assertions like URL/title)
+  let element = null;
+  if (step.targetElement) {
+    // Use the stored selector descriptor (primary) to reconstruct the locator
+    // Fall back to mimicId if selector fails
+    try {
+      element = getFromSelector(page, step.targetElement.selector);
+      // Verify the element exists
+      await element.waitFor({ timeout: 5000 });
+    } catch (error) {
+      // Selector might be stale, fall back to marker ID
+      if (step.targetElement.mimicId !== undefined) {
+        console.warn(`Stored selector failed for step ${step.stepIndex}, using marker ID ${step.targetElement.mimicId}`);
+        element = getMimic(page, step.targetElement.mimicId);
+      } else {
+        throw new Error(`Snapshot step ${step.stepIndex} (assertion) selector failed and no mimicId fallback available`);
+      }
+    }
+  }
+  
+  await executeAssertionAction(
     page,
     actionDetails,
     element,

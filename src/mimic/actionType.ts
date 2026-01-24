@@ -5,8 +5,8 @@ import { Page } from '@playwright/test'
 import {
   zGeneralActionPlan, 
 } from './schema/action.js'
-import { countTokens } from '../utils/token-counter.js';
-import type { TestContext } from '../mimic.js';
+import { countTokens } from '@utils/token-counter.js';
+import type { TestContext } from '@/mimic.js';
 
 
 

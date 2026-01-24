@@ -296,3 +296,89 @@ export function generateNavigationCode(
       throw new Error(`Unknown navigation action type: ${actionType}`);
   }
 }
+
+/**
+ * Generate Playwright code for an assertion action
+ * 
+ * @param selectorCode - Playwright locator code string (null for page-level assertions)
+ * @param assertionType - Type of assertion action
+ * @param expected - Expected value for the assertion
+ * @param normalizeDynamicContent - Whether to normalize dynamic content (for text assertions)
+ * @returns Playwright code string for the assertion action
+ */
+export function generateAssertionCode(
+  selectorCode: string | null,
+  assertionType: 'visible' | 'notVisible' | 'text' | 'textContains' | 'value' | 'checked' | 'notChecked' | 'enabled' | 'disabled' | 'count' | 'url' | 'title',
+  expected: string,
+  normalizeDynamicContent: boolean = false
+): string {
+  switch (assertionType) {
+    case 'visible':
+      if (!selectorCode) {
+        throw new Error('Visibility assertion requires a selector');
+      }
+      return `await expect(${selectorCode}).toBeVisible();`;
+    case 'notVisible':
+      if (!selectorCode) {
+        throw new Error('Not visible assertion requires a selector');
+      }
+      return `await expect(${selectorCode}).not.toBeVisible();`;
+    case 'text':
+      if (!selectorCode) {
+        throw new Error('Text assertion requires a selector');
+      }
+      if (normalizeDynamicContent) {
+        // Note: normalizeDynamicText would need to be called at runtime
+        return `await expect(${selectorCode}).toHaveText(${JSON.stringify(expected)}); // Note: normalizeDynamicContent=true, may need custom normalization`;
+      }
+      return `await expect(${selectorCode}).toHaveText(${JSON.stringify(expected)});`;
+    case 'textContains':
+      if (!selectorCode) {
+        throw new Error('Text contains assertion requires a selector');
+      }
+      if (normalizeDynamicContent) {
+        return `await expect(${selectorCode}).toContainText(${JSON.stringify(expected)}); // Note: normalizeDynamicContent=true, may need custom normalization`;
+      }
+      return `await expect(${selectorCode}).toContainText(${JSON.stringify(expected)});`;
+    case 'value':
+      if (!selectorCode) {
+        throw new Error('Value assertion requires a selector');
+      }
+      return `await expect(${selectorCode}).toHaveValue(${JSON.stringify(expected)});`;
+    case 'checked':
+      if (!selectorCode) {
+        throw new Error('Checked assertion requires a selector');
+      }
+      return `await expect(${selectorCode}).toBeChecked();`;
+    case 'notChecked':
+      if (!selectorCode) {
+        throw new Error('Not checked assertion requires a selector');
+      }
+      return `await expect(${selectorCode}).not.toBeChecked();`;
+    case 'enabled':
+      if (!selectorCode) {
+        throw new Error('Enabled assertion requires a selector');
+      }
+      return `await expect(${selectorCode}).toBeEnabled();`;
+    case 'disabled':
+      if (!selectorCode) {
+        throw new Error('Disabled assertion requires a selector');
+      }
+      return `await expect(${selectorCode}).toBeDisabled();`;
+    case 'count':
+      if (!selectorCode) {
+        throw new Error('Count assertion requires a selector');
+      }
+      const count = parseInt(expected, 10);
+      if (isNaN(count)) {
+        throw new Error(`Invalid count value: ${expected}`);
+      }
+      return `expect(await ${selectorCode}.count()).toBe(${count});`;
+    case 'url':
+      return `await expect(page).toHaveURL(${JSON.stringify(expected)});`;
+    case 'title':
+      return `await expect(page).toHaveTitle(${JSON.stringify(expected)});`;
+    default:
+      throw new Error(`Unknown assertion type: ${assertionType}`);
+  }
+}

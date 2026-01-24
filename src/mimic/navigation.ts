@@ -5,10 +5,11 @@ import {
   zNavigationAction,
   type NavigationAction,
 } from './schema/action.js'
-import { countTokens } from '../utils/token-counter.js';
+import { countTokens } from '@utils/token-counter.js';
 import { addAnnotation } from './annotations.js';
-import type { TestContext } from '../mimic.js';
+import type { TestContext } from '@/mimic.js';
 import { generateNavigationCode } from './playwrightCodeGenerator.js';
+import { wrapErrorWithContext } from './errorFormatter.js';
 
 export const getNavigationAction = async (
   _page: Page, 
@@ -96,7 +97,8 @@ export const executeNavigationAction = async (
     navigationAction.params.newWindow,
   );
 
-  switch (navigationAction.type) {
+  try {
+    switch (navigationAction.type) {
     case 'openPage':
     case 'navigate':
       // Check if we need to open in a new window/tab
@@ -128,8 +130,13 @@ export const executeNavigationAction = async (
     case 'goBack':
       // Capture current URL before going back for better traceability
       const currentUrlBeforeBack = page.url();
-      await page.goBack();
+      // Go back and wait for navigation to complete
+      await page.goBack({ waitUntil: 'networkidle' });
+      // Additional wait for client-side routing if applicable
       try {
+        await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {
+          // Timeout is acceptable - page might already be stable
+        });
         const urlAfterBack = page.url();
         addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeBack} to ${urlAfterBack})`, playwrightCode);
       } catch {
@@ -139,8 +146,13 @@ export const executeNavigationAction = async (
     case 'goForward':
       // Capture current URL before going forward for better traceability
       const currentUrlBeforeForward = page.url();
-      await page.goForward();
+      // Go forward and wait for navigation to complete
+      await page.goForward({ waitUntil: 'networkidle' });
+      // Additional wait for client-side routing if applicable
       try {
+        await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {
+          // Timeout is acceptable - page might already be stable
+        });
         const urlAfterForward = page.url();
         addAnnotation(testInfo, gherkinStep, `→ ${actionDescription} (from ${currentUrlBeforeForward} to ${urlAfterForward})`, playwrightCode);
       } catch {
@@ -155,6 +167,15 @@ export const executeNavigationAction = async (
       break;
     default:
       throw new Error(`Unknown navigation action type: ${navigationAction.type}`);
+    }
+  } catch (error) {
+    // Wrap error with Playwright code context for better error messages
+    throw wrapErrorWithContext(
+      error,
+      playwrightCode,
+      actionDescription,
+      gherkinStep
+    );
   }
   
   // Return the action for snapshot storage

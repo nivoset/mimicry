@@ -2,25 +2,28 @@
  * Minimal flow example function
  */
 
-import { Page, TestInfo, test } from '@playwright/test';
+import { Page, TestInfo, test, type Locator } from '@playwright/test';
 import type { LanguageModel } from 'ai';
 import { generateText, Output } from 'ai';
 import { z } from 'zod';
-import { getBaseAction } from './mimic/actionType.js';
-import { getNavigationAction,  executeNavigationAction } from './mimic/navigation.js';
-import { captureScreenshot, getMimic } from './mimic/markers.js';
-import type { MarkerTargetElement, SnapshotStep, Snapshot } from './mimic/types.js';
-import { executeClickAction, getClickAction } from './mimic/click.js';
-import { getFormAction, executeFormAction, type FormActionResult } from './mimic/forms.js';
-import type { NavigationAction } from './mimic/schema/action.js';
-import type { ClickActionResult } from './mimic/schema/action.js';
-import { getFromSelector } from './mimic/selectorUtils.js';
-import { startTestCase, countTokens, getTestCaseTokens } from './utils/token-counter.js';
-import { hashTestText, hashStepText, getSnapshot, saveSnapshot, recordFailure, shouldUseSnapshot } from './mimic/storage.js';
-import { replayFromSnapshot } from './mimic/replay.js';
-import { isTroubleshootMode } from './mimic/cli.js';
-import { addAnnotation } from './mimic/annotations.js';
-import type { StepExecutionResult } from './mimic/types.js';
+import { getBaseAction } from '@mimic/actionType.js';
+import { getNavigationAction,  executeNavigationAction } from '@mimic/navigation.js';
+import { captureScreenshot, getMimic } from '@mimic/markers.js';
+import type { MarkerTargetElement, SnapshotStep, Snapshot } from '@mimic/types.js';
+import { executeClickAction, getClickAction } from '@mimic/click.js';
+import { getFormAction, executeFormAction, type FormActionResult } from '@mimic/forms.js';
+import type { NavigationAction } from '@mimic/schema/action.js';
+import type { ClickActionResult } from '@mimic/schema/action.js';
+import { getFromSelector } from '@mimic/selectorUtils.js';
+import { generateBestSelectorForElement } from '@mimic/selector.js';
+import { startTestCase, countTokens, getTestCaseTokens } from '@utils/token-counter.js';
+import { hashTestText, hashStepText, getSnapshot, saveSnapshot, recordFailure, shouldUseSnapshot } from '@mimic/storage.js';
+import { replayFromSnapshot } from '@mimic/replay.js';
+import { isTroubleshootMode } from '@mimic/cli.js';
+import { addAnnotation } from '@mimic/annotations.js';
+import type { StepExecutionResult } from '@mimic/types.js';
+import { getAssertionAction, executeAssertionAction, type AssertionActionResult } from '@mimic/assertions.js';
+import { formatErrorWithPlaywrightCode } from '@mimic/errorFormatter.js';
 
 
 export type Mimic = (steps: TemplateStringsArray, ...args: unknown[]) => Promise<void>;
@@ -384,15 +387,36 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
               }
               await executeFormAction(page, formAction, formElement, testInfo, step);
               break;
+            case 'assertion':
+              const assertionAction = existingStep.actionDetails as AssertionActionResult;
+              // Get target element if mimicId is provided (null for page-level assertions)
+              let assertionElement: Locator | null = null;
+              if (existingStep.targetElement) {
+                try {
+                  assertionElement = getFromSelector(page, existingStep.targetElement.selector);
+                  await assertionElement.waitFor({ timeout: 5000 });
+                } catch (error) {
+                  if (existingStep.targetElement.mimicId !== undefined) {
+                    assertionElement = getMimic(page, existingStep.targetElement.mimicId);
+                  } else {
+                    throw error;
+                  }
+                }
+              }
+              await executeAssertionAction(page, assertionAction, assertionElement, testInfo, step);
+              break;
           }
           
           // Add to executed steps for snapshot
-          const cachedStepResult: StepExecutionResult = {
+          // Mark this as a replayed step so we preserve the original executedAt
+          const cachedStepResult: StepExecutionResult & { _wasReplayed?: boolean; _originalExecutedAt?: string } = {
             stepIndex,
             stepText: step,
             actionKind: existingStep.actionKind,
             actionDetails: existingStep.actionDetails,
             ...(existingStep.targetElement && { targetElement: existingStep.targetElement }),
+            _wasReplayed: true,
+            _originalExecutedAt: existingStep.executedAt,
           };
           executedSteps.push(cachedStepResult);
         });
@@ -543,6 +567,46 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
               };
               break;
               
+            case 'assertion':
+              // Assertion actions will log their own plain English annotations
+              const assertionActionResult = await getAssertionAction(page, brains, step, testContext, testCaseName);
+              
+              // Get target element if mimicId is provided (null for page-level assertions like URL/title)
+              let assertionTargetElement: Locator | null = null;
+              let assertionTargetMarker: MarkerTargetElement | undefined = undefined;
+              
+              if (assertionActionResult.mimicId !== null) {
+                assertionTargetElement = getMimic(page, assertionActionResult.mimicId);
+                // Generate selector for the target element
+                try {
+                  const assertionSelector = await generateBestSelectorForElement(assertionTargetElement);
+                  assertionTargetMarker = {
+                    selector: assertionSelector,
+                    mimicId: assertionActionResult.mimicId
+                  };
+                } catch (error) {
+                  console.warn(`⚠️  Could not generate selector for assertion target: ${error instanceof Error ? error.message : String(error)}`);
+                }
+              }
+              
+              await executeAssertionAction(
+                page,
+                assertionActionResult,
+                assertionTargetElement,
+                testInfo,
+                step
+              );
+              
+              // Store selector if we have one (may be null for page-level assertions)
+              stepResult = {
+                stepIndex,
+                stepText: step,
+                actionKind: 'assertion',
+                actionDetails: assertionActionResult,
+                ...(assertionTargetMarker && { targetElement: assertionTargetMarker }),
+              };
+              break;
+              
             default:
               throw new Error(`Unknown base action type: ${baseAction.kind}`);
           }
@@ -577,9 +641,21 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
         );
       }
       
-      throw new Error(
-        `Step ${stepIndex + 1} failed: ${step}\n${error instanceof Error ? error.message : String(error)}`
-      );
+      // If error already has Playwright code context (from MimicError), use it
+      // Otherwise, format it with step information
+      if (error instanceof Error && 'playwrightCode' in error) {
+        // Error already has context, just rethrow it
+        throw error;
+      } else {
+        // Format error with step context
+        const formattedError = formatErrorWithPlaywrightCode(
+          error,
+          undefined, // No Playwright code available at this level
+          undefined, // No action description at this level
+          step
+        );
+        throw new Error(formattedError);
+      }
     }
   }
 
@@ -618,13 +694,23 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
       // This will overwrite existing steps that were regenerated, but preserve others
       for (const step of executedSteps) {
         const stepHash = hashStepText(step.stepText);
+        
+        // Check if this step was replayed from cache
+        // We track this via a special property on StepExecutionResult
+        const wasReplayed = (step as any)._wasReplayed === true;
+        const originalExecutedAt = (step as any)._originalExecutedAt;
+        
+        // Only set new executedAt if this step was regenerated (not replayed)
+        // If replayed, preserve the original executedAt
+        const executedAt = wasReplayed && originalExecutedAt ? originalExecutedAt : now;
+        
         const baseStep: Omit<SnapshotStep, 'targetElement'> = {
           stepHash,
           stepIndex: step.stepIndex,
           stepText: step.stepText,
           actionKind: step.actionKind,
           actionDetails: step.actionDetails,
-          executedAt: now,
+          executedAt,
         };
         
         // Conditionally include targetElement only if it exists
@@ -643,6 +729,8 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
       const snapshotSteps: SnapshotStep[] = allSteps;
       
       // Build snapshot object (screenshot is attached to test report, not stored in JSON)
+      // Only update lastPassedAt if this is a new test or content changed
+      // saveSnapshot will handle the comparison and only update if needed
       const snapshot: Snapshot = {
         testHash,
         testText: input,
@@ -656,7 +744,8 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
           forceRegenerate: false,
           debugMode: false,
           createdAt: existingSnapshot?.flags?.createdAt || now,
-          lastPassedAt: now,
+          // Don't set lastPassedAt here - saveSnapshot will only update it if content changed
+          lastPassedAt: existingSnapshot?.flags?.lastPassedAt || now,
           lastFailedAt: null,
         },
       };

@@ -239,7 +239,7 @@ export async function saveSnapshot(
       lastFailedAt: null,
     };
   } else {
-    snapshot.flags.lastPassedAt = now;
+    // Don't update lastPassedAt here - we'll only update it if content actually changed
     if (!snapshot.flags.createdAt) {
       snapshot.flags.createdAt = now;
     }
@@ -247,6 +247,9 @@ export async function saveSnapshot(
   
   // Find existing test by testHash and update, or add new
   const existingIndex = mimicFile.tests.findIndex(test => test.testHash === snapshot.testHash);
+  let contentChanged = false;
+  let shouldUpdateLastPassedAt = false;
+  
   if (existingIndex >= 0) {
     // Merge with existing test: preserve existing steps that weren't regenerated
     const existingTest = mimicFile.tests[existingIndex];
@@ -266,21 +269,92 @@ export async function saveSnapshot(
     
     // Add/overwrite with new steps from snapshot
     if (snapshot.stepsByHash) {
-      Object.assign(mergedStepsByHash, snapshot.stepsByHash);
+      for (const [stepHash, newStep] of Object.entries(snapshot.stepsByHash)) {
+        const existingStep = mergedStepsByHash[stepHash];
+        // Check if this step is new or changed (compare action details and target element, not timestamps)
+        const stepContentChanged = !existingStep || 
+          JSON.stringify(existingStep.actionDetails) !== JSON.stringify(newStep.actionDetails) ||
+          JSON.stringify(existingStep.targetElement || null) !== JSON.stringify(newStep.targetElement || null);
+        
+        if (stepContentChanged) {
+          contentChanged = true;
+          shouldUpdateLastPassedAt = true;
+          // New step or content changed, use new executedAt
+          mergedStepsByHash[stepHash] = newStep;
+        } else {
+          // Step unchanged, preserve original executedAt
+          mergedStepsByHash[stepHash] = existingStep;
+        }
+      }
     } else if (snapshot.steps) {
       // Convert new snapshot's steps array to stepsByHash if needed
-      for (const step of snapshot.steps) {
-        mergedStepsByHash[step.stepHash] = step;
+      for (const newStep of snapshot.steps) {
+        const stepHash = newStep.stepHash;
+        const existingStep = mergedStepsByHash[stepHash];
+        // Check if this step is new or changed
+        const stepContentChanged = !existingStep || 
+          JSON.stringify(existingStep.actionDetails) !== JSON.stringify(newStep.actionDetails) ||
+          JSON.stringify(existingStep.targetElement || null) !== JSON.stringify(newStep.targetElement || null);
+        
+        if (stepContentChanged) {
+          contentChanged = true;
+          shouldUpdateLastPassedAt = true;
+          mergedStepsByHash[stepHash] = newStep;
+        } else {
+          // Step unchanged, preserve original executedAt
+          mergedStepsByHash[stepHash] = existingStep;
+        }
       }
+    }
+    
+    // Check if flags changed (excluding lastPassedAt which we'll update conditionally)
+    if (!existingTest) {
+      throw new Error('existingTest is undefined');
+    }
+    const existingFlags = existingTest.flags;
+    const newFlags = snapshot.flags;
+    if (existingFlags && newFlags) {
+      // Compare flags (excluding timestamps)
+      const flagsChanged = 
+        existingFlags.needsRetry !== newFlags.needsRetry ||
+        existingFlags.hasErrors !== newFlags.hasErrors ||
+        existingFlags.troubleshootingEnabled !== newFlags.troubleshootingEnabled ||
+        existingFlags.skipSnapshot !== newFlags.skipSnapshot ||
+        existingFlags.forceRegenerate !== newFlags.forceRegenerate ||
+        existingFlags.debugMode !== newFlags.debugMode;
+      if (flagsChanged) {
+        contentChanged = true;
+        shouldUpdateLastPassedAt = true;
+      }
+    } else if (!existingFlags && newFlags) {
+      contentChanged = true;
+      shouldUpdateLastPassedAt = true;
+    }
+    
+    // Also update lastPassedAt if this is the first time passing (was previously failed)
+    if (existingFlags && existingFlags.lastFailedAt && !existingFlags.lastPassedAt) {
+      shouldUpdateLastPassedAt = true;
+      contentChanged = true;
     }
     
     // Build merged steps array from mergedStepsByHash, sorted by stepIndex
     const allMergedSteps = Object.values(mergedStepsByHash);
     allMergedSteps.sort((a, b) => a.stepIndex - b.stepIndex);
     
+    // Only update lastPassedAt if content actually changed or first time passing
+    if (!existingTest) {
+      throw new Error('existingTest is undefined');
+    }
+    const finalFlags = {
+      ...snapshot.flags,
+      lastPassedAt: shouldUpdateLastPassedAt ? now : (existingTest.flags?.lastPassedAt || snapshot.flags.lastPassedAt),
+      createdAt: existingTest.flags?.createdAt || snapshot.flags.createdAt || now,
+    };
+    
     // Update the test with merged data
     mimicFile.tests[existingIndex] = {
       ...snapshot,
+      flags: finalFlags,
       stepsByHash: mergedStepsByHash,
       steps: allMergedSteps, // Maintain backward compatibility with steps array
     };
@@ -298,14 +372,18 @@ export async function saveSnapshot(
       })() : {}),
     };
     mimicFile.tests.push(finalSnapshot);
+    contentChanged = true; // New test, content changed
+    shouldUpdateLastPassedAt = true; // First time passing
   }
 
-  // Write back to file
-  await fs.writeFile(
-    mimicFilePath,
-    JSON.stringify(mimicFile, null, 2),
-    'utf-8'
-  );
+  // Only write file if content actually changed
+  if (contentChanged) {
+    await fs.writeFile(
+      mimicFilePath,
+      JSON.stringify(mimicFile, null, 2),
+      'utf-8'
+    );
+  }
 }
 
 /**

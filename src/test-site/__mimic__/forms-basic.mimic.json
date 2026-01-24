@@ -968,11 +968,11 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:36:26.400Z",
-        "lastPassedAt": "2026-01-11T19:57:07.846Z",
-        "lastFailedAt": "2026-01-11T19:57:07.842Z",
+        "lastPassedAt": "2026-01-23T11:44:43.094Z",
+        "lastFailedAt": "2026-01-23T11:44:43.092Z",
         "failureDetails": {
-          "failedStepIndex": 3,
-          "failedStepText": "check \"Daily Newsletter\"",
+          "failedStepIndex": 1,
+          "failedStepText": "type \"test@example.com\" into the email field",
           "error": "Unknown base action type: assertion"
         }
       }
@@ -1108,8 +1108,8 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:37:38.064Z",
-        "lastPassedAt": "2026-01-11T19:59:38.026Z",
-        "lastFailedAt": "2026-01-11T19:59:38.025Z",
+        "lastPassedAt": "2026-01-23T11:46:01.229Z",
+        "lastFailedAt": "2026-01-23T11:46:01.228Z",
         "failureDetails": {
           "failedStepIndex": 0,
           "failedStepText": "type \"Complete Test User\" into the name field",
@@ -1299,11 +1299,11 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-11T18:58:31.777Z",
-        "lastPassedAt": "2026-01-11T19:55:11.942Z",
-        "lastFailedAt": "2026-01-11T19:55:11.940Z",
+        "lastPassedAt": "2026-01-23T11:43:20.656Z",
+        "lastFailedAt": "2026-01-23T11:43:20.655Z",
         "failureDetails": {
-          "failedStepIndex": 3,
-          "failedStepText": "select \"United Kingdom\" from the country dropdown",
+          "failedStepIndex": 0,
+          "failedStepText": "type \"Jane Smith\" into the name field",
           "error": "Unknown base action type: assertion"
         }
       }

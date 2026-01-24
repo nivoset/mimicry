@@ -1,13 +1,14 @@
 import { Locator, Page, TestInfo } from '@playwright/test';
 import { type LanguageModel, generateText, Output } from 'ai'
 import z from 'zod';
-import { countTokens } from '../utils/token-counter';
+import { countTokens } from '@utils/token-counter';
 import { generateBestSelectorForElement } from './selector';
 import { addAnnotation } from './annotations.js';
-import type { TestContext } from '../mimic.js';
+import type { TestContext } from '@/mimic.js';
 import { selectorToPlaywrightCode, generateFormCode } from './playwrightCodeGenerator.js';
 import { captureScreenshot, generateAriaSnapshot } from './markers.js';
 import type { SelectorDescriptor } from './selectorTypes.js';
+import { wrapErrorWithContext } from './errorFormatter.js';
 
 const zFormActionResult = z.object({
   /**
@@ -362,7 +363,8 @@ export const executeFormAction = async (
   }
 
   // Perform the form action with appropriate plain English annotation
-  switch (formActionResult.type) {
+  try {
+    switch (formActionResult.type) {
     case 'keypress':
       // Validate that keypress is only used for single keys, not text strings
       const keyValue = formActionResult.params.value;
@@ -545,6 +547,15 @@ export const executeFormAction = async (
       break;
     default:
       throw new Error(`Unknown form action type: ${formActionResult.type}`);
+    }
+  } catch (error) {
+    // Wrap error with Playwright code context for better error messages
+    throw wrapErrorWithContext(
+      error,
+      playwrightCode,
+      annotationDescription || `Form action: ${formActionResult.type}`,
+      gherkinStep
+    );
   }
   
   // Ensure selector is always set before returning

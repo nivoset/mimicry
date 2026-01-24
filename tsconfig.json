@@ -6,6 +6,12 @@
     "moduleResolution": "node",
     "rootDir": "./src",
     "outDir": "./dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@mimic/*": ["./mimic/*"],
+      "@utils/*": ["./utils/*"],
+      "@/*": ["./*"]
+    },
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

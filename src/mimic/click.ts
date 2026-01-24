@@ -5,13 +5,14 @@ import {
   zClickActionResult,
   type ClickActionResult
 } from './schema/action.js'
-import { countTokens } from '../utils/token-counter.js';
+import { countTokens } from '@utils/token-counter.js';
 import { addAnnotation } from './annotations.js';
-import type { TestContext } from '../mimic.js';
+import type { TestContext } from '@/mimic.js';
 import { generateBestSelectorForElement } from './selector.js';
 import { selectorToPlaywrightCode, generateClickCode } from './playwrightCodeGenerator.js';
 import { captureScreenshot, generateAriaSnapshot } from './markers.js';
 import type { SelectorDescriptor } from './selectorTypes.js';
+import { wrapErrorWithContext } from './errorFormatter.js';
 
 /**
  * Get click action by matching Gherkin step against captured target elements
@@ -383,24 +384,56 @@ export const executeClickAction = async (
   addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
 
   // Perform the click action
-  switch (clickActionResult.clickType) {
-    case 'primary':
-      await element.click();
-      break;
-    case 'secondary':
-      await element.click({ button: 'right' });
-      break;
-    case 'double':
-      await element.dblclick();
-      break;
-    case 'tertiary':
-      await element.click({ button: 'middle' });
-      break;
-    case 'hover':
-      await element.hover();
-      break;
-    default:
-      throw new Error(`Unknown click type: ${clickActionResult.clickType}`);
+  // Check if this is a link that might cause navigation
+  const isLink = await element.evaluate((el) => {
+    return el.tagName === 'A' || el.getAttribute('role') === 'link';
+  }).catch(() => false);
+
+  try {
+    switch (clickActionResult.clickType) {
+      case 'primary':
+        // Playwright's click() automatically waits for navigation when clicking links
+        // However, for client-side routing, we add an additional wait after the click
+        await element.click();
+        
+        // After clicking a link, wait for network to be idle to ensure client-side routing completes
+        // This helps with SPAs and client-side navigation that might not trigger full page loads
+        if (isLink) {
+          try {
+            // Wait for network to be idle, but don't fail if it times out
+            // Some pages might have ongoing network activity
+            await element.page().waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {
+              // Timeout is acceptable - page might already be stable or have ongoing activity
+              console.log('⏳ [executeClickAction] Network idle wait completed or timed out');
+            });
+          } catch {
+            // Ignore errors - page might already be loaded or navigation might not have occurred
+          }
+        }
+        break;
+      case 'secondary':
+        await element.click({ button: 'right' });
+        break;
+      case 'double':
+        await element.dblclick();
+        break;
+      case 'tertiary':
+        await element.click({ button: 'middle' });
+        break;
+      case 'hover':
+        await element.hover();
+        break;
+      default:
+        throw new Error(`Unknown click type: ${clickActionResult.clickType}`);
+    }
+  } catch (error) {
+    // Wrap error with Playwright code context for better error messages
+    throw wrapErrorWithContext(
+      error,
+      playwrightCode,
+      annotationDescription,
+      gherkinStep
+    );
   }
   
   // Return action result and selector for snapshot storage

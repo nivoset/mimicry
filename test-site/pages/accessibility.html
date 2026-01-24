@@ -193,6 +193,24 @@
       liveCounter = (liveCounter + 1) % liveMessages.length;
       liveRegion.textContent = liveMessages[liveCounter];
     });
+
+    // Prevent form submission to avoid page reload during tests
+    // This allows tests to verify form field values after clicking submit
+    const loginForm = document.querySelector('section[aria-labelledby="labels-heading"] form');
+    if (loginForm) {
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Form values remain in fields for test verification
+      });
+    }
+
+    // Also prevent search form submission
+    const searchForm = document.querySelector('form[role="search"]');
+    if (searchForm) {
+      searchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+      });
+    }
   </script>
 </body>
 </html>

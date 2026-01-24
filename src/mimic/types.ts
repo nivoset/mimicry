@@ -7,6 +7,7 @@
 import type { NavigationAction } from './schema/action.js';
 import type { ClickActionResult } from './schema/action.js';
 import type { FormActionResult } from './forms.js';
+import type { AssertionActionResult } from './assertions.js';
 import type { SelectorDescriptor } from './selectorTypes.js';
 
 /**
@@ -29,11 +30,11 @@ export interface SnapshotStep {
   stepIndex: number;
   /** Original step text (Gherkin step) */
   stepText: string;
-  /** Type of action (navigation, click, form update) */
-  actionKind: 'navigation' | 'click' | 'form update';
+  /** Type of action (navigation, click, form update, assertion) */
+  actionKind: 'navigation' | 'click' | 'form update' | 'assertion';
   /** Full action details (varies by actionKind) */
-  actionDetails: NavigationAction | ClickActionResult | FormActionResult;
-  /** Target element information using marker ID (for click and form actions) */
+  actionDetails: NavigationAction | ClickActionResult | FormActionResult | AssertionActionResult;
+  /** Target element information using marker ID (for click, form, and assertion actions) */
   targetElement?: MarkerTargetElement;
   /** Timestamp when this step was executed */
   executedAt: string;
@@ -81,10 +82,10 @@ export interface StepExecutionResult {
   stepIndex: number;
   /** Original step text (Gherkin step) */
   stepText: string;
-  /** Type of action (navigation, click, form update) */
-  actionKind: 'navigation' | 'click' | 'form update';
+  /** Type of action (navigation, click, form update, assertion) */
+  actionKind: 'navigation' | 'click' | 'form update' | 'assertion';
   /** Full action details (varies by actionKind) */
-  actionDetails: NavigationAction | ClickActionResult | FormActionResult;
-  /** Target element information using marker ID (for click and form actions) */
+  actionDetails: NavigationAction | ClickActionResult | FormActionResult | AssertionActionResult;
+  /** Target element information using marker ID (for click, form, and assertion actions) */
   targetElement?: MarkerTargetElement;
 }
