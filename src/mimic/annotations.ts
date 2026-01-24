@@ -6,12 +6,13 @@
  */
 
 import { TestInfo } from '@playwright/test';
+import { logger } from './logger.js';
 
 /**
  * Add a test annotation with consistent formatting
  * 
  * This function handles the common pattern of adding annotations when testInfo
- * is available, or falling back to console.log when it's not (e.g., in agentic context).
+ * is available, or falling back to logger when it's not (e.g., in agentic context).
  * 
  * @param testInfo - Playwright TestInfo object (optional, for test context)
  * @param gherkinStep - The original Gherkin step that triggered this action (used as annotation type)
@@ -37,7 +38,7 @@ export function addAnnotation(
       description: fullDescription
     });
   } else {
-    // Fallback to console.log when testInfo is not available
-    console.log(fullDescription);
+    // Fallback to logger when testInfo is not available
+    logger.info(fullDescription);
   }
 }
