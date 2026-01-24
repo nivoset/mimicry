@@ -9,6 +9,7 @@ import { selectorToPlaywrightCode, generateFormCode } from './playwrightCodeGene
 import { captureScreenshot, generateAriaSnapshot } from './markers.js';
 import type { SelectorDescriptor } from './selectorTypes.js';
 import { wrapErrorWithContext } from './errorFormatter.js';
+import { logger } from './logger.js';
 
 const zFormActionResult = z.object({
   /**
@@ -41,23 +42,23 @@ export const getFormAction = async (
   const startTime = Date.now();
   
   // Capture screenshot with markers and positioning data
-  console.log('📸 [getFormAction] Starting screenshot capture with markers...');
+  logger.info('📸 [getFormAction] Starting screenshot capture with markers...');
   const screenshotStart = Date.now();
   const { image: screenshot, markers: markerData } = await captureScreenshot(page);
   const screenshotTime = Date.now() - screenshotStart;
-  console.log(`📸 [getFormAction] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);
+  logger.info({ screenshotTime }, `📸 [getFormAction] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);
   
   const base64Start = Date.now();
   const screenshotBase64 = screenshot.toString('base64');
   const base64Time = Date.now() - base64Start;
-  console.log(`📸 [getFormAction] Screenshot converted to base64 in ${base64Time}ms (${(base64Time / 1000).toFixed(2)}s), size: ${(screenshotBase64.length / 1024).toFixed(2)}KB`);
+  logger.info({ base64Time, screenshotSizeKB: (screenshotBase64.length / 1024).toFixed(2) }, `📸 [getFormAction] Screenshot converted to base64 in ${base64Time}ms (${(base64Time / 1000).toFixed(2)}s), size: ${(screenshotBase64.length / 1024).toFixed(2)}KB`);
   
   // Generate accessibility snapshot to explain the screenshot structure
-  console.log('🔍 [getFormAction] Generating accessibility snapshot...');
+  logger.info('🔍 [getFormAction] Generating accessibility snapshot...');
   const ariaSnapshotStart = Date.now();
   const ariaSnapshot = await generateAriaSnapshot(page);
   const ariaSnapshotTime = Date.now() - ariaSnapshotStart;
-  console.log(`🔍 [getFormAction] Accessibility snapshot generated in ${ariaSnapshotTime}ms (${(ariaSnapshotTime / 1000).toFixed(2)}s), length: ${ariaSnapshot.length} chars`);
+  logger.info({ ariaSnapshotTime, ariaSnapshotLength: ariaSnapshot.length }, `🔍 [getFormAction] Accessibility snapshot generated in ${ariaSnapshotTime}ms (${(ariaSnapshotTime / 1000).toFixed(2)}s), length: ${ariaSnapshot.length} chars`);
   
   // Convert marker data to format expected by prompt
   const markerStart = Date.now();
@@ -79,7 +80,7 @@ export const getFormAction = async (
     };
   });
   const markerTime = Date.now() - markerStart;
-  console.log(`🔍 [getFormAction] Processed ${markerInfo.length} markers in ${markerTime}ms (${(markerTime / 1000).toFixed(2)}s)`);
+  logger.info({ markerCount: markerInfo.length, markerTime }, `🔍 [getFormAction] Processed ${markerInfo.length} markers in ${markerTime}ms (${(markerTime / 1000).toFixed(2)}s)`);
   
   // Filter to form elements only (inputs, textareas, selects, buttons)
   const filterStart = Date.now();
@@ -87,7 +88,7 @@ export const getFormAction = async (
     m.tag === 'input' || m.tag === 'textarea' || m.tag === 'select' || m.tag === 'button'
   );
   const filterTime = Date.now() - filterStart;
-  console.log(`🔍 [getFormAction] Filtered to ${formMarkers.length} form elements in ${filterTime}ms`);
+  logger.info({ formMarkerCount: formMarkers.length, filterTime }, `🔍 [getFormAction] Filtered to ${formMarkers.length} form elements in ${filterTime}ms`);
   
   // Build marker summary for the prompt
   const summaryStart = Date.now();
@@ -96,7 +97,7 @@ export const getFormAction = async (
     .map(m => `  Marker ${m.id}: ${m.tag}${m.role ? ` (role: ${m.role})` : ''}${m.text ? ` - "${m.text.substring(0, 50)}"` : ''}${m.ariaLabel ? ` [aria-label: "${m.ariaLabel}"]` : ''}`)
     .join('\n');
   const summaryTime = Date.now() - summaryStart;
-  console.log(`📝 [getFormAction] Built marker summary in ${summaryTime}ms`);
+  logger.info({ summaryTime }, `📝 [getFormAction] Built marker summary in ${summaryTime}ms`);
   
   // Build context description for the prompt
   const promptStart = Date.now();
@@ -181,7 +182,7 @@ ${ariaSnapshot}
 
 Use the marker ID numbers (mimicId) shown on the badges in the screenshot and referenced in the accessibility snapshot to identify the form element.`;
   const promptTime = Date.now() - promptStart;
-  console.log(`📝 [getFormAction] Built prompt in ${promptTime}ms, prompt length: ${prompt.length} chars`);
+  logger.info({ promptTime, promptLength: prompt.length }, `📝 [getFormAction] Built prompt in ${promptTime}ms, prompt length: ${prompt.length} chars`);
 
   // Build message content - try without image first, then retry with image if needed
   const messageStart = Date.now();
@@ -196,7 +197,7 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
     { type: 'image', image: screenshotBase64 }
   ];
   const messageTime = Date.now() - messageStart;
-  console.log(`📨 [getFormAction] Built message content in ${messageTime}ms`);
+  logger.info({ messageTime }, `📨 [getFormAction] Built message content in ${messageTime}ms`);
 
   // Set explicit timeout for AI calls to prevent indefinite hangs
   // 2 minutes should be sufficient for most AI responses, even with retries
@@ -206,7 +207,7 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
   let usedImage = false;
 
   // First attempt: try without image (text-only with accessibility snapshot)
-  console.log('🤖 [getFormAction] Calling AI model (text-only, no image)...');
+  logger.info('🤖 [getFormAction] Calling AI model (text-only, no image)...');
   const aiStart = Date.now();
   try {
     res = await Promise.race([
@@ -232,10 +233,10 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
     }
     
     aiTime = Date.now() - aiStart;
-    console.log(`✅ [getFormAction] AI model responded successfully (text-only) in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
+    logger.info({ aiTime, usedImage: false }, `✅ [getFormAction] AI model responded successfully (text-only) in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
   } catch (error) {
     // First attempt failed - retry with image
-    console.log(`⚠️  [getFormAction] First attempt failed, retrying with image: ${error instanceof Error ? error.message : String(error)}`);
+    logger.warn({ error: error instanceof Error ? error.message : String(error) }, `⚠️  [getFormAction] First attempt failed, retrying with image: ${error instanceof Error ? error.message : String(error)}`);
     const retryStart = Date.now();
     usedImage = true;
     
@@ -258,7 +259,7 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
       ]);
       
       aiTime = Date.now() - retryStart;
-      console.log(`✅ [getFormAction] AI model responded successfully (with image) in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
+      logger.info({ aiTime, usedImage: true }, `✅ [getFormAction] AI model responded successfully (with image) in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
     } catch (retryError) {
       const elapsed = Date.now() - aiStart;
       throw new Error(`AI model call failed after ${elapsed}ms (tried both text-only and with image): ${retryError instanceof Error ? retryError.message : String(retryError)}`);
@@ -268,8 +269,28 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
   await countTokens(res, testCaseName);
   
   const totalTime = Date.now() - startTime;
-  console.log(`⏱️  [getFormAction] Total time: ${totalTime}ms (${(totalTime / 1000).toFixed(2)}s)${usedImage ? ' (used image on retry)' : ' (text-only, no image needed)'}`);
-  console.log(`   Breakdown: screenshot=${screenshotTime}ms, base64=${base64Time}ms, markers=${markerTime}ms, filter=${filterTime}ms, summary=${summaryTime}ms, prompt=${promptTime}ms, message=${messageTime}ms, AI=${aiTime}ms`);
+  logger.debug({ 
+    totalTime, 
+    screenshotTime, 
+    base64Time, 
+    markerTime, 
+    filterTime,
+    summaryTime, 
+    promptTime, 
+    messageTime, 
+    aiTime, 
+    usedImage 
+  }, `⏱️  [getFormAction] Total time: ${totalTime}ms (${(totalTime / 1000).toFixed(2)}s)${usedImage ? ' (used image on retry)' : ' (text-only, no image needed)'}`);
+  logger.debug({ 
+    screenshotTime, 
+    base64Time, 
+    markerTime, 
+    filterTime,
+    summaryTime, 
+    promptTime, 
+    messageTime, 
+    aiTime 
+  }, `   Breakdown: screenshot=${screenshotTime}ms, base64=${base64Time}ms, markers=${markerTime}ms, filter=${filterTime}ms, summary=${summaryTime}ms, prompt=${promptTime}ms, message=${messageTime}ms, AI=${aiTime}ms`);
 
   // Validate that the AI model returned a valid structured output
   // The output should always be defined when using structured outputs, but add defensive check
@@ -341,7 +362,7 @@ export const executeFormAction = async (
     
     // Check if page closed - this is a common issue with form submissions
     if (errorMessage.includes('closed') || errorMessage.includes('Target page')) {
-      console.warn('Page closed during selector generation, using mimicId fallback');
+      logger.warn('Page closed during selector generation, using mimicId fallback');
     }
     
     if (formActionResult.mimicId) {
@@ -358,7 +379,7 @@ export const executeFormAction = async (
       };
     } else {
       // If we can't generate the code and no mimicId, log the error
-      console.warn('Could not generate Playwright code for form action:', errorMessage);
+      logger.warn({ error: errorMessage }, `Could not generate Playwright code for form action: ${errorMessage}`);
     }
   }
 
@@ -375,7 +396,7 @@ export const executeFormAction = async (
         // If empty value and step mentions "check", convert to check action
         const stepLower = (gherkinStep || '').toLowerCase();
         if (stepLower.includes('check') || stepLower.includes('select')) {
-          console.warn(`⚠️  keypress action received empty value for checkbox operation - converting to check action`);
+          logger.warn(`⚠️  keypress action received empty value for checkbox operation - converting to check action`);
           annotationDescription = `→ Checking ${elementDescription} to select the option`;
           // Update Playwright code and selector for check action
           // Regenerate selector to ensure we have the best one for this specific action
@@ -398,7 +419,7 @@ export const executeFormAction = async (
                 };
               }
             } else {
-              console.debug('Could not generate Playwright code for check action:', error);
+              logger.debug({ error }, `Could not generate Playwright code for check action: ${error instanceof Error ? error.message : String(error)}`);
             }
           }
           addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
@@ -408,7 +429,7 @@ export const executeFormAction = async (
         }
       } else if (keyValue.length > 1 && !validSingleKeys.includes(keyValue)) {
         // If it's not a valid single key and looks like text, use fill instead
-        console.warn(`⚠️  keypress action received text "${keyValue}" - converting to fill action`);
+        logger.warn({ keyValue }, `⚠️  keypress action received text "${keyValue}" - converting to fill action`);
         annotationDescription = `→ Filling ${elementDescription} with value "${keyValue}"`;
         // Update Playwright code and selector for fill action
         // Regenerate selector to ensure we have the best one for this specific action
@@ -431,7 +452,7 @@ export const executeFormAction = async (
               };
             }
           } else {
-            console.debug('Could not generate Playwright code for fill action:', error);
+            logger.debug({ error }, `Could not generate Playwright code for fill action: ${error instanceof Error ? error.message : String(error)}`);
           }
         }
         addAnnotation(testInfo, gherkinStep, annotationDescription, playwrightCode);
@@ -459,7 +480,7 @@ export const executeFormAction = async (
             } else {
               // Last resort: use generic keyboard press without selector
               playwrightCode = `await page.keyboard.press(${JSON.stringify(keyValue)});`;
-              console.warn('Could not generate selector for keypress action, using generic keyboard press');
+              logger.warn('Could not generate selector for keypress action, using generic keyboard press');
             }
           }
         } else {
@@ -497,7 +518,7 @@ export const executeFormAction = async (
           } else {
             // Last resort: use generic keyboard type without selector
             playwrightCode = `await page.keyboard.type(${JSON.stringify(formActionResult.params.value)});`;
-            console.warn('Could not generate selector for type action, using generic keyboard type');
+            logger.warn('Could not generate selector for type action, using generic keyboard type');
           }
         }
       } else {
@@ -567,7 +588,7 @@ export const executeFormAction = async (
         type: 'css',
         selector: `[data-mimic-id="${formActionResult.mimicId}"]`
       };
-      console.warn(`⚠️  Using mimicId fallback selector for form action: ${formActionResult.type}`);
+      logger.warn({ actionType: formActionResult.type }, `⚠️  Using mimicId fallback selector for form action: ${formActionResult.type}`);
     } else {
       throw new Error(`Could not generate or determine selector for form action: ${formActionResult.type}. This is required for snapshot storage.`);
     }
