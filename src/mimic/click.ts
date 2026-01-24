@@ -13,6 +13,7 @@ import { selectorToPlaywrightCode, generateClickCode } from './playwrightCodeGen
 import { captureScreenshot, generateAriaSnapshot } from './markers.js';
 import type { SelectorDescriptor } from './selectorTypes.js';
 import { wrapErrorWithContext } from './errorFormatter.js';
+import { logger } from './logger.js';
 
 /**
  * Get click action by matching Gherkin step against captured target elements
@@ -38,23 +39,23 @@ export const getClickAction = async (
   const startTime = Date.now();
   
   // Capture screenshot with markers and positioning data
-  console.log('📸 [getClickAction] Starting screenshot capture with markers...');
+  logger.info('📸 [getClickAction] Starting screenshot capture with markers...');
   const screenshotStart = Date.now();
   const { image: screenshot, markers: markerData } = await captureScreenshot(page);
   const screenshotTime = Date.now() - screenshotStart;
-  console.log(`📸 [getClickAction] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);
+  logger.info({ screenshotTime }, `📸 [getClickAction] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);
   
   const base64Start = Date.now();
   const screenshotBase64 = screenshot.toString('base64');
   const base64Time = Date.now() - base64Start;
-  console.log(`📸 [getClickAction] Screenshot converted to base64 in ${base64Time}ms (${(base64Time / 1000).toFixed(2)}s), size: ${(screenshotBase64.length / 1024).toFixed(2)}KB`);
+  logger.info({ base64Time, screenshotSizeKB: (screenshotBase64.length / 1024).toFixed(2) }, `📸 [getClickAction] Screenshot converted to base64 in ${base64Time}ms (${(base64Time / 1000).toFixed(2)}s), size: ${(screenshotBase64.length / 1024).toFixed(2)}KB`);
   
   // Generate accessibility snapshot to explain the screenshot structure
-  console.log('🔍 [getClickAction] Generating accessibility snapshot...');
+  logger.info('🔍 [getClickAction] Generating accessibility snapshot...');
   const ariaSnapshotStart = Date.now();
   const ariaSnapshot = await generateAriaSnapshot(page);
   const ariaSnapshotTime = Date.now() - ariaSnapshotStart;
-  console.log(`🔍 [getClickAction] Accessibility snapshot generated in ${ariaSnapshotTime}ms (${(ariaSnapshotTime / 1000).toFixed(2)}s), length: ${ariaSnapshot.length} chars`);
+  logger.info({ ariaSnapshotTime, ariaSnapshotLength: ariaSnapshot.length }, `🔍 [getClickAction] Accessibility snapshot generated in ${ariaSnapshotTime}ms (${(ariaSnapshotTime / 1000).toFixed(2)}s), length: ${ariaSnapshot.length} chars`);
   
   // Convert marker data to format expected by prompt
   const markerStart = Date.now();
@@ -76,7 +77,7 @@ export const getClickAction = async (
   });
   
   const markerTime = Date.now() - markerStart;
-  console.log(`🔍 [getClickAction] Processed ${markerInfo.length} markers in ${markerTime}ms (${(markerTime / 1000).toFixed(2)}s)`);
+  logger.info({ markerCount: markerInfo.length, markerTime }, `🔍 [getClickAction] Processed ${markerInfo.length} markers in ${markerTime}ms (${(markerTime / 1000).toFixed(2)}s)`);
   
   // Build marker summary for the prompt
   const summaryStart = Date.now();
@@ -85,7 +86,7 @@ export const getClickAction = async (
     .map(m => `  Marker ${m.id}: ${m.tag}${m.role ? ` (role: ${m.role})` : ''}${m.text ? ` - "${m.text.substring(0, 50)}"` : ''}${m.ariaLabel ? ` [aria-label: "${m.ariaLabel}"]` : ''}`)
     .join('\n');
   const summaryTime = Date.now() - summaryStart;
-  console.log(`📝 [getClickAction] Built marker summary in ${summaryTime}ms`);
+  logger.info({ summaryTime }, `📝 [getClickAction] Built marker summary in ${summaryTime}ms`);
   
   // Build context description for the prompt
   const promptStart = Date.now();
@@ -185,7 +186,7 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
 - When in doubt about click type, default to "primary"
 `;
   const promptTime = Date.now() - promptStart;
-  console.log(`📝 [getClickAction] Built prompt in ${promptTime}ms, prompt length: ${prompt.length} chars`);
+  logger.info({ promptTime, promptLength: prompt.length }, `📝 [getClickAction] Built prompt in ${promptTime}ms, prompt length: ${prompt.length} chars`);
 
   // Build message content - try without image first, then retry with image if needed
   const messageStart = Date.now();
@@ -200,7 +201,7 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
     { type: 'image', image: screenshotBase64 }
   ];
   const messageTime = Date.now() - messageStart;
-  console.log(`📨 [getClickAction] Built message content in ${messageTime}ms`);
+  logger.info({ messageTime }, `📨 [getClickAction] Built message content in ${messageTime}ms`);
 
   // Set explicit timeout for AI calls to prevent indefinite hangs
   // 2 minutes should be sufficient for most AI responses, even with retries
@@ -210,7 +211,7 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
   let usedImage = false;
 
   // First attempt: try without image (text-only with accessibility snapshot)
-  console.log('🤖 [getClickAction] Calling AI model (text-only, no image)...');
+  logger.info('🤖 [getClickAction] Calling AI model (text-only, no image)...');
   const aiStart = Date.now();
   try {
     res = await Promise.race([
@@ -236,10 +237,10 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
     }
     
     aiTime = Date.now() - aiStart;
-    console.log(`✅ [getClickAction] AI model responded successfully (text-only) in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
+    logger.info({ aiTime, usedImage: false }, `✅ [getClickAction] AI model responded successfully (text-only) in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
   } catch (error) {
     // First attempt failed - retry with image
-    console.log(`⚠️  [getClickAction] First attempt failed, retrying with image: ${error instanceof Error ? error.message : String(error)}`);
+    logger.warn({ error: error instanceof Error ? error.message : String(error) }, `⚠️  [getClickAction] First attempt failed, retrying with image: ${error instanceof Error ? error.message : String(error)}`);
     const retryStart = Date.now();
     usedImage = true;
     
@@ -262,7 +263,7 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
       ]);
       
       aiTime = Date.now() - retryStart;
-      console.log(`✅ [getClickAction] AI model responded successfully (with image) in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
+      logger.info({ aiTime, usedImage: true }, `✅ [getClickAction] AI model responded successfully (with image) in ${aiTime}ms (${(aiTime / 1000).toFixed(2)}s)`);
     } catch (retryError) {
       const elapsed = Date.now() - aiStart;
       throw new Error(`AI model call failed after ${elapsed}ms (tried both text-only and with image): ${retryError instanceof Error ? retryError.message : String(retryError)}`);
@@ -272,8 +273,26 @@ Use the marker ID numbers (mimicId) shown on the badges in the screenshot and re
   await countTokens(res, testCaseName);
 
   const totalTime = Date.now() - startTime;
-  console.log(`⏱️  [getClickAction] Total time: ${totalTime}ms (${(totalTime / 1000).toFixed(2)}s)${usedImage ? ' (used image on retry)' : ' (text-only, no image needed)'}`);
-  console.log(`   Breakdown: screenshot=${screenshotTime}ms, base64=${base64Time}ms, markers=${markerTime}ms, summary=${summaryTime}ms, prompt=${promptTime}ms, message=${messageTime}ms, AI=${aiTime}ms`);
+  logger.debug({ 
+    totalTime, 
+    screenshotTime, 
+    base64Time, 
+    markerTime, 
+    summaryTime, 
+    promptTime, 
+    messageTime, 
+    aiTime, 
+    usedImage 
+  }, `⏱️  [getClickAction] Total time: ${totalTime}ms (${(totalTime / 1000).toFixed(2)}s)${usedImage ? ' (used image on retry)' : ' (text-only, no image needed)'}`);
+  logger.debug({ 
+    screenshotTime, 
+    base64Time, 
+    markerTime, 
+    summaryTime, 
+    promptTime, 
+    messageTime, 
+    aiTime 
+  }, `   Breakdown: screenshot=${screenshotTime}ms, base64=${base64Time}ms, markers=${markerTime}ms, summary=${summaryTime}ms, prompt=${promptTime}ms, message=${messageTime}ms, AI=${aiTime}ms`);
 
   // Validate that the AI model returned a valid structured output
   // The output should always be defined when using structured outputs, but add defensive check
@@ -404,7 +423,7 @@ export const executeClickAction = async (
             // Some pages might have ongoing network activity
             await element.page().waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {
               // Timeout is acceptable - page might already be stable or have ongoing activity
-              console.log('⏳ [executeClickAction] Network idle wait completed or timed out');
+              logger.debug('⏳ [executeClickAction] Network idle wait completed or timed out');
             });
           } catch {
             // Ignore errors - page might already be loaded or navigation might not have occurred
