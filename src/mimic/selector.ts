@@ -13,6 +13,9 @@ import type {
 } from './selectorTypes.js';
 import { verifySelectorUniqueness, getMimicIdFromLocator } from './selectorUtils.js';
 import { logger } from './logger.js';
+import { extractElementInfo } from './elementInfo.js';
+import { findBestMatchingElement } from './selectorScoring.js';
+import { generateSelectorWithStrategies } from './selectorStrategies.js';
 
 /**
  * Browser context types (used in page.evaluate)
@@ -624,150 +627,6 @@ function escapeSelectorValue(value: string): string {
  * @param target - TargetInfo object containing element metadata
  * @returns Playwright selector string optimized for stability and reliability
  */
-/**
- * Score how well an element matches the target information
- * Higher score = better match
- * 
- * @param elementIndex - Index of the element in the locator's matches
- * @param locator - Playwright Locator that matches multiple elements
- * @param target - TargetInfo to match against
- * @returns Score indicating match quality (0-100)
- */
-async function scoreElementMatch(
-  elementIndex: number,
-  locator: any,
-  target: TargetInfo
-): Promise<number> {
-  // Get element properties by evaluating on the specific element
-  // Note: Inside evaluate(), we're in the browser context where DOM APIs are available
-  const elementInfo = await locator.nth(elementIndex).evaluate((el: any) => {
-    const getVisibleText = (element: any): string => {
-      // @ts-ignore - window is available in browser context
-      const style = window.getComputedStyle(element);
-      if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
-        return '';
-      }
-      return (element.textContent || '').trim().replace(/\s+/g, ' ');
-    };
-
-    const getLabel = (element: any): string | null => {
-      const ariaLabel = element.getAttribute('aria-label');
-      if (ariaLabel) return ariaLabel.trim();
-      
-      const labelledBy = element.getAttribute('aria-labelledby');
-      if (labelledBy) {
-        // @ts-ignore - document is available in browser context
-        const labelEl = document.getElementById(labelledBy);
-        if (labelEl) return (labelEl.textContent || '').trim();
-      }
-      
-      if (element.id) {
-        // @ts-ignore - document is available in browser context
-        const label = document.querySelector(`label[for="${element.id}"]`);
-        if (label) return (label.textContent || '').trim();
-      }
-      
-      const parentLabel = element.closest('label');
-      if (parentLabel) return (parentLabel.textContent || '').trim();
-      
-      return null;
-    };
-
-    const dataset: Record<string, string> = {};
-    for (const attr of el.attributes) {
-      if (attr.name.startsWith('data-')) {
-        // Convert data-test-id to testId (camelCase)
-        // Note: No type annotations in arrow function to avoid serialization issues in locator.evaluate
-        // @param {string} _match - Full match string (unused, but required by replace callback)
-        // @param {string} letter - Captured letter group to uppercase
-        // @ts-expect-error - Type annotations removed to prevent serialization issues in browser context
-        const key = attr.name.replace(/^data-/, '').replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase());
-        dataset[key] = attr.value;
-      }
-    }
-
-    return {
-      tag: el.tagName.toLowerCase(),
-      text: getVisibleText(el),
-      id: el.id || null,
-      role: el.getAttribute('role') || null,
-      label: getLabel(el),
-      ariaLabel: el.getAttribute('aria-label') || null,
-      typeAttr: el.type || null,
-      nameAttr: el.getAttribute('name') || null,
-      dataset,
-    };
-  });
-
-  if (!elementInfo) return 0;
-
-  let score = 0;
-
-  // Tag match (10 points)
-  if (elementInfo.tag === target.tag) {
-    score += 10;
-  }
-
-  // ID match (30 points - very specific)
-  if (target.id && elementInfo.id === target.id) {
-    score += 30;
-  }
-
-  // Role match (15 points)
-  if (target.role && elementInfo.role === target.role) {
-    score += 15;
-  }
-
-  // Text match (20 points)
-  if (target.text && elementInfo.text) {
-    const targetText = target.text.trim().toLowerCase();
-    const elementText = elementInfo.text.trim().toLowerCase();
-    if (targetText === elementText) {
-      score += 20; // Exact match
-    } else if (elementText.includes(targetText) || targetText.includes(elementText)) {
-      score += 10; // Partial match
-    }
-  }
-
-  // Aria-label match (15 points)
-  if (target.ariaLabel && elementInfo.ariaLabel) {
-    if (target.ariaLabel.trim().toLowerCase() === elementInfo.ariaLabel.trim().toLowerCase()) {
-      score += 15;
-    }
-  }
-
-  // Label match (15 points)
-  if (target.label && elementInfo.label) {
-    if (target.label.trim().toLowerCase() === elementInfo.label.trim().toLowerCase()) {
-      score += 15;
-    }
-  }
-
-  // Type attribute match (10 points)
-  if (target.typeAttr && elementInfo.typeAttr === target.typeAttr) {
-    score += 10;
-  }
-
-  // Name attribute match (15 points)
-  if (target.nameAttr && elementInfo.nameAttr === target.nameAttr) {
-    score += 15;
-  }
-
-  // Dataset match (10 points for testid, 5 for others)
-  if (target.dataset && elementInfo.dataset) {
-    if (target.dataset.testid && elementInfo.dataset.testid === target.dataset.testid) {
-      score += 10;
-    }
-    // Check other dataset keys
-    for (const key in target.dataset) {
-      if (target.dataset[key] && elementInfo.dataset[key] === target.dataset[key]) {
-        score += 5;
-      }
-    }
-  }
-
-  return score;
-}
 
 /**
  * Build the best Playwright locator for a given target element
@@ -789,45 +648,9 @@ export async function buildSelectorForTarget(page: Page, target?: TargetInfo): P
   if (!target) {
     return null;
   }
-  /**
-   * Helper function to check if locator matches multiple elements and pick the best one
-   */
+  // Use the extracted scoring module to find best matching element
   const resolveBestLocator = async (locator: any): Promise<any> => {
-    let count: number;
-    try {
-      count = await locator.count();
-    } catch (error) {
-      // If page is closed, throw a more descriptive error
-      if (error instanceof Error && error.message.includes('closed')) {
-        throw new Error('Cannot resolve locator: page, context or browser has been closed. This may happen if a previous action closed the page unexpectedly.');
-      }
-      throw error;
-    }
-    
-    // If only one match, return it directly
-    if (count <= 1) {
-      return locator;
-    }
-
-    // If multiple matches, score each one and pick the best
-    const scores: Array<{ index: number; score: number }> = [];
-    
-    for (let i = 0; i < count; i++) {
-      const score = await scoreElementMatch(i, locator, target);
-      scores.push({ index: i, score });
-    }
-
-    // Sort by score (highest first)
-    scores.sort((a, b) => b.score - a.score);
-
-    // Return the best matching element using .nth()
-    // We know scores has at least one element since count > 1
-    const bestMatch = scores[0];
-    if (!bestMatch) {
-      // Fallback to first element if somehow scores is empty
-      return locator.first();
-    }
-    return locator.nth(bestMatch.index);
+    return await findBestMatchingElement(locator, target);
   };
 
   // Priority 1: data-testid (Playwright's #1 recommendation)
@@ -988,173 +811,8 @@ export async function generateBestSelectorForElement(
   // This could happen if markers haven't been installed yet
   // We'll still try to generate a selector, but verification will be less strict
   
-  // Get element handle from locator for page.evaluate() calls
-  // We still need this for browser context evaluation
-  let targetElementHandle;
-  try {
-    targetElementHandle = await locator.elementHandle({ timeout });
-  } catch (error: any) {
-    // Check if page closed during element handle retrieval
-    if (page.isClosed() || (error?.message && error.message.includes('closed'))) {
-      throw new Error('Cannot get element handle: page, context or browser has been closed. This may happen if a previous action closed the page unexpectedly.');
-    }
-    throw error;
-  }
-  
-  if (!targetElementHandle) {
-    throw new Error('Cannot get element handle from locator');
-  }
-  
-  // Double-check page is still open before evaluate
-  if (page.isClosed()) {
-    throw new Error('Page closed before evaluation: page, context or browser has been closed. This may happen if a previous action closed the page unexpectedly.');
-  }
-  
-  // Get element information in browser context
-  let elementInfo;
-  try {
-    elementInfo = await page.evaluate((element) => {
-      // @ts-ignore - window is available in browser context
-      const win = window;
-      // @ts-ignore - document is available in browser context
-      const doc = document;
-      
-      // Inline all logic to avoid nested functions that get transformed by toolchain
-      // Get visible text - inline logic
-      const style = win.getComputedStyle(element);
-      const isVisible = style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
-      const text = isVisible ? (element.textContent || '').trim().replace(/\s+/g, ' ') : '';
-      
-      // Get label - inline logic
-      let label = null;
-      const ariaLabelAttr = element.getAttribute('aria-label');
-      if (ariaLabelAttr) {
-        label = ariaLabelAttr.trim();
-      } else {
-        const labelledBy = element.getAttribute('aria-labelledby');
-        if (labelledBy) {
-          const labelEl = doc.getElementById(labelledBy);
-          if (labelEl) label = (labelEl.textContent || '').trim();
-        }
-        if (!label && element.id) {
-          const labelFor = doc.querySelector('label[for="' + element.id + '"]');
-          if (labelFor) label = (labelFor.textContent || '').trim();
-        }
-        if (!label) {
-          const parentLabel = element.closest('label');
-          if (parentLabel) label = (parentLabel.textContent || '').trim();
-        }
-      }
-      
-      // Infer role - inline logic
-      let role = element.getAttribute('role');
-      if (!role) {
-        const tag = element.tagName.toLowerCase();
-        if (tag === 'button') {
-          role = 'button';
-        } else if (tag === 'a') {
-          role = 'link';
-        } else if (tag === 'input') {
-          const inputType = (element as any).type;
-          if (inputType === 'button' || inputType === 'submit' || inputType === 'reset') {
-            role = 'button';
-          } else if (inputType === 'checkbox') {
-            role = 'checkbox';
-          } else if (inputType === 'radio') {
-            role = 'radio';
-          } else {
-            role = 'textbox';
-          }
-        } else if (tag === 'select') {
-          role = 'combobox';
-        } else if (tag === 'textarea') {
-          role = 'textbox';
-        } else if (tag === 'img') {
-          role = 'img';
-        }
-      }
-      
-      // Get dataset - inline logic with simple replace (no arrow function)
-      const dataset = {};
-      for (let i = 0; i < element.attributes.length; i++) {
-        const attr = element.attributes[i];
-        if (attr && attr.name && attr.name.startsWith('data-')) {
-          // Convert data-test-id to testId (camelCase) - using simple string manipulation
-          let key = attr.name.replace(/^data-/, '');
-          // Replace -x with X (camelCase conversion)
-          let result = '';
-          let capitalizeNext = false;
-          for (let j = 0; j < key.length; j++) {
-            const char = key[j];
-            if (char) {
-              if (char === '-') {
-                capitalizeNext = true;
-              } else {
-                result += capitalizeNext ? char.toUpperCase() : char;
-                capitalizeNext = false;
-              }
-            }
-          }
-          (dataset as any)[result] = attr.value;
-        }
-      }
-      
-      // Get nth-of-type - inline logic
-      const tagName = element.tagName;
-      let nthOfType = 1;
-      let sibling = element.previousElementSibling;
-      while (sibling) {
-        if (sibling.tagName === tagName) {
-          nthOfType++;
-        }
-        sibling = sibling.previousElementSibling;
-      }
-      
-      return {
-        tag: element.tagName.toLowerCase(),
-        text: text,
-        id: element.id || null,
-        role: role,
-        label: label,
-        ariaLabel: element.getAttribute('aria-label') || null,
-        placeholder: element.getAttribute('placeholder') || null,
-        alt: element.getAttribute('alt') || null,
-        title: element.getAttribute('title') || null,
-        typeAttr: (element as any).type || null,
-        nameAttr: element.getAttribute('name') || null,
-        dataset: dataset,
-        nthOfType: nthOfType,
-      };
-    }, targetElementHandle);
-  } catch (error: any) {
-    // Enhanced error reporting to help identify the exact location of the issue
-    const errorMessage = error?.message || String(error);
-    const errorStack = error?.stack || '';
-    
-    // Check if page is closed - this is a common issue
-    if (page.isClosed() || errorMessage.includes('closed') || errorMessage.includes('Target page')) {
-      throw new Error(
-        `Cannot generate selector: page, context or browser has been closed. ` +
-        `This may happen if a previous action (like form submission or navigation) closed the page unexpectedly. ` +
-        `Original error: ${errorMessage}`
-      );
-    }
-    
-    // Check if this is the __name error
-    if (errorMessage.includes('__name') || errorStack.includes('__name')) {
-      logger.error({ errorMessage, errorStack }, 'Error in generateBestSelectorForElement - page.evaluate failed');
-      logger.error({ errorMessage }, `Error message: ${errorMessage}`);
-      logger.error({ errorStack }, `Error stack: ${errorStack}`);
-      logger.error('This error typically occurs when TypeScript type annotations are used in arrow functions within page.evaluate');
-      logger.error('Please check for any remaining type annotations in the evaluate function');
-    }
-    
-    throw new Error(
-      `Failed to evaluate element in browser context: ${errorMessage}. ` +
-      `This may be caused by TypeScript type annotations in the evaluate function. ` +
-      `Original error: ${errorStack}`
-    );
-  }
+  // Get element information using the extracted module
+  const elementInfo = await extractElementInfo(locator);
   
   // Find the best parent/ancestor selector by checking multiple levels and selector types
   // This handles cases where the locator was created from a parent chain
@@ -1163,6 +821,24 @@ export async function generateBestSelectorForElement(
     // Check if page is still open before parent evaluation
     if (page.isClosed()) {
       throw new Error('Page closed during parent selector search: page, context or browser has been closed.');
+    }
+    
+    // Get element handle for parent traversal
+    let targetElementHandle;
+    try {
+      targetElementHandle = await locator.elementHandle({ timeout });
+    } catch (error: any) {
+      if (page.isClosed() || (error?.message && error.message.includes('closed'))) {
+        logger.warn('Page closed during element handle retrieval for parent selector, skipping');
+        return null;
+      }
+      logger.warn({ error: error?.message }, 'Error getting element handle for parent selector, skipping');
+      return null;
+    }
+    
+    if (!targetElementHandle) {
+      logger.warn('Cannot get element handle for parent selector, skipping');
+      return null;
     }
     
     let parentCandidates;
@@ -1400,8 +1076,22 @@ export async function generateBestSelectorForElement(
   
   const bestParentSelector = await findBestParentSelector();
 
-  // Try to find selector on element itself first
+  // Try to find selector on element itself first using strategy-based approach
   const tryElementSelector = async (): Promise<SelectorDescriptor | null> => {
+    // Use strategy-based selector generation
+    const selector = await generateSelectorWithStrategies(page, elementInfo, targetMimicId ?? null, timeout);
+    
+    if (selector) {
+      // Verify the selector is unique (strategies already check, but double-check here)
+      const verification = await verifySelectorUniqueness(page, selector, targetMimicId ?? null, timeout);
+      if (verification.unique) {
+        return selector;
+      }
+      // If not unique but we have an index, the selector already has nth property from strategy
+      return selector;
+    }
+    
+    // Fallback: try individual strategies manually for edge cases
     // Priority 1: data-testid
     const dataset = elementInfo.dataset as Record<string, string>;
     if (dataset && dataset.testid) {

@@ -9,8 +9,8 @@ import { createHash } from 'crypto';
 import fs from 'node:fs/promises';
 import { join, dirname, basename } from 'node:path';
 import type { Snapshot, SnapshotStep, MarkerTargetElement } from './types.js';
-import type { SelectorDescriptor, PlaywrightLocatorJson } from './selectorTypes.js';
-import { selectorDescriptorToPlaywrightJson, playwrightJsonToSelectorDescriptor } from './selectorSerialization.js';
+import type { SelectorDescriptor } from './selectorTypes.js';
+import { selectorDescriptorToPlaywrightJson } from './selectorSerialization.js';
 import { logger } from './logger.js';
 
 /**
@@ -378,9 +378,6 @@ export async function saveSnapshot(
   if (existingIndex >= 0) {
     // Merge with existing test: preserve existing steps that weren't regenerated
     const existingTest = mimicFile.tests[existingIndex];
-    
-    // Check if this is a new test (testHash didn't exist before)
-    const isNewTest = false; // We found existing test, so it's not new
     
     // Merge stepsByHash: new steps overwrite old ones, but keep steps that weren't regenerated
     const mergedStepsByHash: Record<string, SnapshotStep> = {};

@@ -1,0 +1,1461 @@
+{
+  "tests": [
+    {
+      "testHash": "e69db4114371a8d5",
+      "testText": "click on \"Start Wizard\"",
+      "stepsByHash": {
+        "e69db4114371a8d5": {
+          "stepHash": "e69db4114371a8d5",
+          "stepIndex": 0,
+          "stepText": "click on \"Start Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Start Wizard button with visible text 'Start Wizard'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.8,
+                "description": "Multi-Step Flow link with visible text 'Multi-Step Flow'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.7,
+                "description": "Home link with visible text 'Home'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.5,
+                "description": "Heading element with accessible name 'Multi-Step Flow Test Page'"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.4,
+                "description": "Welcome to the Wizard heading with visible text 'Welcome to the Wizard'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step simply says 'click on 'Start Wizard''. The most likely element based on the accessible name and visible text is Marker 3, which corresponds to the 'Start Wizard' button. All other elements are less relevant or don't match the specific action required."
+          },
+          "executedAt": "2026-01-25T06:55:23.306Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Start Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "e69db4114371a8d5",
+          "stepIndex": 0,
+          "stepText": "click on \"Start Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Start Wizard button with visible text 'Start Wizard'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.8,
+                "description": "Multi-Step Flow link with visible text 'Multi-Step Flow'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.7,
+                "description": "Home link with visible text 'Home'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.5,
+                "description": "Heading element with accessible name 'Multi-Step Flow Test Page'"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.4,
+                "description": "Welcome to the Wizard heading with visible text 'Welcome to the Wizard'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step simply says 'click on 'Start Wizard''. The most likely element based on the accessible name and visible text is Marker 3, which corresponds to the 'Start Wizard' button. All other elements are less relevant or don't match the specific action required."
+          },
+          "executedAt": "2026-01-25T06:55:23.306Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Start Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T06:55:23.306Z",
+        "lastPassedAt": "2026-01-25T06:55:23.306Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "3fe0a5c3b3997aaa",
+      "testText": "click on \"Start Wizard\"\ntype \"Test User\" into the name field\ntype \"test@example.com\" into the email field",
+      "stepsByHash": {
+        "e69db4114371a8d5": {
+          "stepHash": "e69db4114371a8d5",
+          "stepIndex": 0,
+          "stepText": "click on \"Start Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Start Wizard button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"Start Wizard\"' directly refers to the button labeled 'Start Wizard', which is clearly marked as marker 3 in the screenshot. Since it's an interactive element (button), and no specific click type was mentioned, we default to a primary (left) click."
+          },
+          "executedAt": "2026-01-25T07:02:22.880Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Start Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "8630b9ebc5611f6d": {
+          "stepHash": "8630b9ebc5611f6d",
+          "stepIndex": 1,
+          "stepText": "type \"Test User\" into the name field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 16,
+            "type": "fill",
+            "params": {
+              "value": "Test User",
+              "modifiers": []
+            },
+            "elementDescription": "Name input field labeled 'Your Name'"
+          },
+          "executedAt": "2026-01-25T07:02:22.880Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Your Name",
+                "exact": true
+              }
+            },
+            "mimicId": 16,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "7de3f53fa8c37947": {
+          "stepHash": "7de3f53fa8c37947",
+          "stepIndex": 2,
+          "stepText": "type \"test@example.com\" into the email field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 17,
+            "type": "fill",
+            "params": {
+              "value": "test@example.com",
+              "modifiers": [
+                "Shift"
+              ]
+            },
+            "elementDescription": "Email input field labeled 'Your Email'"
+          },
+          "executedAt": "2026-01-25T07:02:22.880Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Your Email",
+                "exact": true
+              }
+            },
+            "mimicId": 17,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "e69db4114371a8d5",
+          "stepIndex": 0,
+          "stepText": "click on \"Start Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Start Wizard button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"Start Wizard\"' directly refers to the button labeled 'Start Wizard', which is clearly marked as marker 3 in the screenshot. Since it's an interactive element (button), and no specific click type was mentioned, we default to a primary (left) click."
+          },
+          "executedAt": "2026-01-25T07:02:22.880Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Start Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "8630b9ebc5611f6d",
+          "stepIndex": 1,
+          "stepText": "type \"Test User\" into the name field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 16,
+            "type": "fill",
+            "params": {
+              "value": "Test User",
+              "modifiers": []
+            },
+            "elementDescription": "Name input field labeled 'Your Name'"
+          },
+          "executedAt": "2026-01-25T07:02:22.880Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Your Name",
+                "exact": true
+              }
+            },
+            "mimicId": 16,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "7de3f53fa8c37947",
+          "stepIndex": 2,
+          "stepText": "type \"test@example.com\" into the email field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 17,
+            "type": "fill",
+            "params": {
+              "value": "test@example.com",
+              "modifiers": [
+                "Shift"
+              ]
+            },
+            "elementDescription": "Email input field labeled 'Your Email'"
+          },
+          "executedAt": "2026-01-25T07:02:22.880Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Your Email",
+                "exact": true
+              }
+            },
+            "mimicId": 17,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T06:57:56.013Z",
+        "lastPassedAt": "2026-01-25T07:02:22.884Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "29ae18899e9c6c38",
+      "testText": "click on \"Start Wizard\"\ntype \"Alice\" into the name field\ntype \"alice@test.com\" into the email field\nclick on \"Next\"",
+      "stepsByHash": {
+        "e69db4114371a8d5": {
+          "stepHash": "e69db4114371a8d5",
+          "stepIndex": 0,
+          "stepText": "click on \"Start Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Button labeled 'Start Wizard'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.8,
+                "description": "Link labeled 'Home'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.7,
+                "description": "Link labeled 'Multi-Step Flow'"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.5,
+                "description": "Heading labeled 'Welcome to the Wizard'"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.4,
+                "description": "Generic text 'This is a multi-step wizard flow.'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly says 'click on' which defaults to a primary (left) click."
+          },
+          "executedAt": "2026-01-25T07:03:38.286Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Start Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "db43d51ace746bb8": {
+          "stepHash": "db43d51ace746bb8",
+          "stepIndex": 1,
+          "stepText": "type \"Alice\" into the name field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 16,
+            "type": "fill",
+            "params": {
+              "value": "Alice",
+              "modifiers": []
+            },
+            "elementDescription": "Name input field labeled 'Your Name'"
+          },
+          "executedAt": "2026-01-25T07:03:38.286Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Your Name",
+                "exact": true
+              }
+            },
+            "mimicId": 16,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "ef01526d123c21dc": {
+          "stepHash": "ef01526d123c21dc",
+          "stepIndex": 2,
+          "stepText": "type \"alice@test.com\" into the email field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 17,
+            "type": "fill",
+            "params": {
+              "value": "alice@test.com",
+              "modifiers": []
+            },
+            "elementDescription": "Email input field"
+          },
+          "executedAt": "2026-01-25T07:03:38.286Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Your Email",
+                "exact": true
+              }
+            },
+            "mimicId": 17,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "1b4f5cbd1764bfc9": {
+          "stepHash": "1b4f5cbd1764bfc9",
+          "stepIndex": 3,
+          "stepText": "click on \"Next\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 1,
+                "description": "Next button with text 'Next' - Clearly labeled as the next step action."
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.8,
+                "description": "Container for Step 2 content including input fields and buttons, which contains the Next button."
+              },
+              {
+                "mimicId": 16,
+                "confidence": 0.7,
+                "description": "Textbox labeled 'Your Name', which could be interacted with but is not likely intended as the click target for 'Next'."
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.7,
+                "description": "Textbox labeled 'Your Email', similar to the name textbox, likely not directly intended for clicking."
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.6,
+                "description": "Email input field with the label 'Your Email' - While it contains the cursor, it's probably not the primary target of the 'Next' action."
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies a simple 'click on 'Next'' without any modifiers. Given that there are two buttons labeled 'Previous' and 'Next', and considering the context of moving to the next step in a wizard-like process, the Next button (mimicId 19) is clearly the intended target."
+          },
+          "executedAt": "2026-01-25T07:03:38.286Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Next",
+                "exact": true
+              }
+            },
+            "mimicId": 19,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "e69db4114371a8d5",
+          "stepIndex": 0,
+          "stepText": "click on \"Start Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Button labeled 'Start Wizard'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.8,
+                "description": "Link labeled 'Home'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.7,
+                "description": "Link labeled 'Multi-Step Flow'"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.5,
+                "description": "Heading labeled 'Welcome to the Wizard'"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.4,
+                "description": "Generic text 'This is a multi-step wizard flow.'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly says 'click on' which defaults to a primary (left) click."
+          },
+          "executedAt": "2026-01-25T07:03:38.286Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Start Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "db43d51ace746bb8",
+          "stepIndex": 1,
+          "stepText": "type \"Alice\" into the name field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 16,
+            "type": "fill",
+            "params": {
+              "value": "Alice",
+              "modifiers": []
+            },
+            "elementDescription": "Name input field labeled 'Your Name'"
+          },
+          "executedAt": "2026-01-25T07:03:38.286Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Your Name",
+                "exact": true
+              }
+            },
+            "mimicId": 16,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "ef01526d123c21dc",
+          "stepIndex": 2,
+          "stepText": "type \"alice@test.com\" into the email field",
+          "actionKind": "form update",
+          "actionDetails": {
+            "mimicId": 17,
+            "type": "fill",
+            "params": {
+              "value": "alice@test.com",
+              "modifiers": []
+            },
+            "elementDescription": "Email input field"
+          },
+          "executedAt": "2026-01-25T07:03:38.286Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Your Email",
+                "exact": true
+              }
+            },
+            "mimicId": 17,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "1b4f5cbd1764bfc9",
+          "stepIndex": 3,
+          "stepText": "click on \"Next\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 1,
+                "description": "Next button with text 'Next' - Clearly labeled as the next step action."
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.8,
+                "description": "Container for Step 2 content including input fields and buttons, which contains the Next button."
+              },
+              {
+                "mimicId": 16,
+                "confidence": 0.7,
+                "description": "Textbox labeled 'Your Name', which could be interacted with but is not likely intended as the click target for 'Next'."
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.7,
+                "description": "Textbox labeled 'Your Email', similar to the name textbox, likely not directly intended for clicking."
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.6,
+                "description": "Email input field with the label 'Your Email' - While it contains the cursor, it's probably not the primary target of the 'Next' action."
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies a simple 'click on 'Next'' without any modifiers. Given that there are two buttons labeled 'Previous' and 'Next', and considering the context of moving to the next step in a wizard-like process, the Next button (mimicId 19) is clearly the intended target."
+          },
+          "executedAt": "2026-01-25T07:03:38.286Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Next",
+                "exact": true
+              }
+            },
+            "mimicId": 19,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T07:03:38.286Z",
+        "lastPassedAt": "2026-01-25T07:03:38.286Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "7d5bc98bbd04c140",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T07:04:15.993Z",
+        "lastPassedAt": "2026-01-25T07:05:00.095Z",
+        "lastFailedAt": "2026-01-25T07:05:00.093Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Start Wizard\"",
+          "error": "AI model call failed after 26804ms (tried both text-only and with image): No object generated: response did not match schema."
+        }
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "56e8ebbeeb7e1571",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T07:08:57.322Z",
+        "lastPassedAt": "2026-01-25T07:13:02.925Z",
+        "lastFailedAt": "2026-01-25T07:13:02.921Z",
+        "failureDetails": {
+          "failedStepIndex": 4,
+          "failedStepText": "check \"Option 1\"",
+          "error": "Step: \"check \"Option 1\"\"\nAction: Assertion: checked\n\nPlaywright command executed:\n  page.getByRole(\"checkbox\", { name: \"Option 1\", exact: true })\n\nError:\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeChecked\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-mimic-id=\"23\"]')\nExpected: checked\nReceived: unchecked\nTimeout:  120000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeChecked\" with timeout 120000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-mimic-id=\"23\"]')\u001b[22m\n\u001b[2m    120 × locator resolved to <input name=\"pref\" type=\"checkbox\" value=\"option1\" data-mimic-id=\"23\" data-mimic-type=\"interactive\"/>\u001b[22m\n\u001b[2m        - unexpected value \"unchecked\"\u001b[22m\n"
+        }
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "ab52c66c3399a6b1",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T07:19:06.011Z",
+        "lastPassedAt": "2026-01-25T07:22:21.122Z",
+        "lastFailedAt": "2026-01-25T07:22:21.120Z",
+        "failureDetails": {
+          "failedStepIndex": 1,
+          "failedStepText": "type \"Review User\" into the name field",
+          "error": "Step: \"type \"Review User\" into the name field\"\nAction: Assertion: text\n\nPlaywright command executed:\n  page.getByRole(\"textbox\", { name: \"Your Name\", exact: true })\n\nError:\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-mimic-id=\"16\"]')\nExpected: \u001b[32m\"Review User\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  120000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" with timeout 120000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-mimic-id=\"16\"]')\u001b[22m\n\u001b[2m    121 × locator resolved to <input type=\"text\" name=\"name\" id=\"wizard-name\" data-mimic-id=\"16\" placeholder=\"Enter your name\" data-mimic-type=\"interactive\"/>\u001b[22m\n\u001b[2m        - unexpected value \"\"\u001b[22m\n"
+        }
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "546c75e130d657d5",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T07:27:19.038Z",
+        "lastPassedAt": "2026-01-25T07:29:59.612Z",
+        "lastFailedAt": "2026-01-25T07:29:59.610Z",
+        "failureDetails": {
+          "failedStepIndex": 1,
+          "failedStepText": "type \"Review Test\" into the name field",
+          "error": "Step: \"type \"Review Test\" into the name field\"\nAction: Assertion: text\n\nPlaywright command executed:\n  page.getByRole(\"textbox\", { name: \"Your Name\", exact: true })\n\nError:\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-mimic-id=\"16\"]')\nExpected: \u001b[32m\"Review Test\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  120000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" with timeout 120000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-mimic-id=\"16\"]')\u001b[22m\n\u001b[2m    120 × locator resolved to <input type=\"text\" name=\"name\" id=\"wizard-name\" data-mimic-id=\"16\" placeholder=\"Enter your name\" data-mimic-type=\"interactive\"/>\u001b[22m\n\u001b[2m        - unexpected value \"\"\u001b[22m\n"
+        }
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "d5821a5649963187",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T07:33:59.282Z",
+        "lastPassedAt": "2026-01-25T07:34:52.633Z",
+        "lastFailedAt": "2026-01-25T07:34:52.631Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Start Wizard\"",
+          "error": "AI model call failed after 26761ms (tried both text-only and with image): No object generated: response did not match schema."
+        }
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "0d6e7ff5c0beef69",
+      "testText": "click on \"Start Wizard\"\ntype \"Indicator\" into the name field\nclick on \"Next\"",
+      "stepsByHash": {
+        "e69db4114371a8d5": {
+          "stepHash": "e69db4114371a8d5",
+          "stepIndex": 0,
+          "stepText": "click on \"Start Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Start Wizard button with text 'Start Wizard'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.8,
+                "description": "Home link"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.7,
+                "description": "Multi-Step Flow link"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.6,
+                "description": "Generic text element with role 'generic'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.5,
+                "description": "Generic text element with role 'generic'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step says 'click on \"Start Wizard\"', which clearly refers to the button labeled 'Start Wizard'. This is explicitly marked with a green badge (marker ID 3) and has a button role. Therefore, the most likely element is Marker 3. The default click type for any click action in Playwright is primary unless otherwise specified."
+          },
+          "executedAt": "2026-01-25T07:42:46.418Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Start Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "17a2a64a11ddf62c": {
+          "stepHash": "17a2a64a11ddf62c",
+          "stepIndex": 1,
+          "stepText": "type \"Indicator\" into the name field",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 16,
+                "confidence": 0.9,
+                "description": "Textbox labeled 'Your Name' where the user should type 'Indicator'"
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.8,
+                "description": "Textbox labeled 'Your Email' (less likely for 'Indicator')"
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.7,
+                "description": "Label for 'Your Name', which should be clicked if the intention is to type into it"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.6,
+                "description": "Button labeled 'Previous' - less likely for typing 'Indicator'"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.5,
+                "description": "Button labeled 'Next' - least likely for typing 'Indicator'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step instructs the user to type into a field, which indicates they are clicking on an input element. The textbox labeled 'Your Name' is the most obvious and logical target for this action based on the provided information."
+          },
+          "executedAt": "2026-01-25T07:42:46.418Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Your Name",
+                "exact": true
+              }
+            },
+            "mimicId": 16,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "1b4f5cbd1764bfc9": {
+          "stepHash": "1b4f5cbd1764bfc9",
+          "stepIndex": 2,
+          "stepText": "click on \"Next\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 1,
+                "description": "Next button at the bottom of Step 2 form"
+              },
+              {
+                "mimicId": 8,
+                "confidence": 0.9,
+                "description": "Step 3 indicator in Wizard Progress section"
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.8,
+                "description": "Email input field for Step 2 form"
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.7,
+                "description": "Name input field for Step 2 form"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.6,
+                "description": "Wizard Progress heading, containing all step indicators"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"Next\"' clearly indicates a click action. Given the context of being at Step 2 and needing to move to Step 3, the Next button is the most likely target."
+          },
+          "executedAt": "2026-01-25T07:42:46.418Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Next",
+                "exact": true
+              }
+            },
+            "mimicId": 19,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "e69db4114371a8d5",
+          "stepIndex": 0,
+          "stepText": "click on \"Start Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Start Wizard button with text 'Start Wizard'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.8,
+                "description": "Home link"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.7,
+                "description": "Multi-Step Flow link"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.6,
+                "description": "Generic text element with role 'generic'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.5,
+                "description": "Generic text element with role 'generic'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step says 'click on \"Start Wizard\"', which clearly refers to the button labeled 'Start Wizard'. This is explicitly marked with a green badge (marker ID 3) and has a button role. Therefore, the most likely element is Marker 3. The default click type for any click action in Playwright is primary unless otherwise specified."
+          },
+          "executedAt": "2026-01-25T07:42:46.418Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Start Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "17a2a64a11ddf62c",
+          "stepIndex": 1,
+          "stepText": "type \"Indicator\" into the name field",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 16,
+                "confidence": 0.9,
+                "description": "Textbox labeled 'Your Name' where the user should type 'Indicator'"
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.8,
+                "description": "Textbox labeled 'Your Email' (less likely for 'Indicator')"
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.7,
+                "description": "Label for 'Your Name', which should be clicked if the intention is to type into it"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.6,
+                "description": "Button labeled 'Previous' - less likely for typing 'Indicator'"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.5,
+                "description": "Button labeled 'Next' - least likely for typing 'Indicator'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step instructs the user to type into a field, which indicates they are clicking on an input element. The textbox labeled 'Your Name' is the most obvious and logical target for this action based on the provided information."
+          },
+          "executedAt": "2026-01-25T07:42:46.418Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Your Name",
+                "exact": true
+              }
+            },
+            "mimicId": 16,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "1b4f5cbd1764bfc9",
+          "stepIndex": 2,
+          "stepText": "click on \"Next\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 1,
+                "description": "Next button at the bottom of Step 2 form"
+              },
+              {
+                "mimicId": 8,
+                "confidence": 0.9,
+                "description": "Step 3 indicator in Wizard Progress section"
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.8,
+                "description": "Email input field for Step 2 form"
+              },
+              {
+                "mimicId": 21,
+                "confidence": 0.7,
+                "description": "Name input field for Step 2 form"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.6,
+                "description": "Wizard Progress heading, containing all step indicators"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"Next\"' clearly indicates a click action. Given the context of being at Step 2 and needing to move to Step 3, the Next button is the most likely target."
+          },
+          "executedAt": "2026-01-25T07:42:46.418Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Next",
+                "exact": true
+              }
+            },
+            "mimicId": 19,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T07:40:28.358Z",
+        "lastPassedAt": "2026-01-25T07:42:46.420Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "5ecaad12cf7e79a4",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T07:50:00.372Z",
+        "lastPassedAt": "2026-01-25T07:52:48.146Z",
+        "lastFailedAt": "2026-01-25T07:52:48.125Z",
+        "failureDetails": {
+          "failedStepIndex": 1,
+          "failedStepText": "type \"Reset User\" into the name field",
+          "error": "Step: \"type \"Reset User\" into the name field\"\nAction: Assertion: text\n\nPlaywright command executed:\n  page.getByRole(\"textbox\", { name: \"Your Name\", exact: true })\n\nError:\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-mimic-id=\"16\"]')\nExpected: \u001b[32m\"Reset User\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\nTimeout:  120000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" with timeout 120000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-mimic-id=\"16\"]')\u001b[22m\n\u001b[2m    120 × locator resolved to <input type=\"text\" name=\"name\" id=\"wizard-name\" data-mimic-id=\"16\" placeholder=\"Enter your name\" data-mimic-type=\"interactive\"/>\u001b[22m\n\u001b[2m        - unexpected value \"\"\u001b[22m\n"
+        }
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "52384d95f217e6bd",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T07:57:41.034Z",
+        "lastPassedAt": "2026-01-25T07:58:48.192Z",
+        "lastFailedAt": "2026-01-25T07:58:48.190Z",
+        "failureDetails": {
+          "failedStepIndex": 1,
+          "failedStepText": "type \"Full Flow\" into the name field",
+          "error": "AI model call failed after 37173ms (tried both text-only and with image): No object generated: response did not match schema."
+        }
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "f40d80ddbbf9675e",
+      "testText": "click on \"Start Wizard\"\nclick on \"Next\"\nclick on \"Next\"\nclick on \"Complete Wizard\"",
+      "stepsByHash": {
+        "e69db4114371a8d5": {
+          "stepHash": "e69db4114371a8d5",
+          "stepIndex": 0,
+          "stepText": "click on \"Start Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Start Wizard button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly mentions 'click on \"Start Wizard\"', and the accessibility snapshot confirms this is a button with the text 'Start Wizard'. There are no other elements in the screenshot that could plausibly be referred to by this description."
+          },
+          "executedAt": "2026-01-25T08:04:13.602Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Start Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "1b4f5cbd1764bfc9": {
+          "stepHash": "1b4f5cbd1764bfc9",
+          "stepIndex": 2,
+          "stepText": "click on \"Next\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 1,
+                "description": "Next button labeled 'Next'"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.8,
+                "description": "Heading for Step 2: Provide Information"
+              },
+              {
+                "mimicId": 16,
+                "confidence": 0.7,
+                "description": "Textbox for Your Name"
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.7,
+                "description": "Textbox for Your Email"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.5,
+                "description": "Page title 'Multi-Step Flow Test Page'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step is a simple click on 'Next'. Given the context of moving to the next step in a wizard-style flow, the most likely element is the 'Next' button. It has a clear accessible name and a specific role that identifies it as an interactive element. The heading and textboxes are less likely targets for a simple click action."
+          },
+          "executedAt": "2026-01-25T08:04:13.602Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Next",
+                "exact": true
+              }
+            },
+            "mimicId": 19,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "2faf5affee23c2e4": {
+          "stepHash": "2faf5affee23c2e4",
+          "stepIndex": 3,
+          "stepText": "click on \"Complete Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 17,
+                "confidence": 1,
+                "description": "Complete Wizard button"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.8,
+                "description": "Step 4: Review and Complete heading"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.7,
+                "description": "List item containing step2 information"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.6,
+                "description": "List item containing step3 information"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.5,
+                "description": "Generic text element containing review information"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly says 'click on \"Complete Wizard\"', so we use a primary click as the default behavior. The most likely candidates are the 'Complete Wizard' button (marker ID 17) and related elements like the heading or list items containing review information."
+          },
+          "executedAt": "2026-01-25T08:13:13.811Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Complete Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 17,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "e69db4114371a8d5",
+          "stepIndex": 0,
+          "stepText": "click on \"Start Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 3,
+                "confidence": 1,
+                "description": "Start Wizard button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly mentions 'click on \"Start Wizard\"', and the accessibility snapshot confirms this is a button with the text 'Start Wizard'. There are no other elements in the screenshot that could plausibly be referred to by this description."
+          },
+          "executedAt": "2026-01-25T08:04:13.602Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Start Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "1b4f5cbd1764bfc9",
+          "stepIndex": 2,
+          "stepText": "click on \"Next\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 19,
+                "confidence": 1,
+                "description": "Next button labeled 'Next'"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.8,
+                "description": "Heading for Step 2: Provide Information"
+              },
+              {
+                "mimicId": 16,
+                "confidence": 0.7,
+                "description": "Textbox for Your Name"
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.7,
+                "description": "Textbox for Your Email"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.5,
+                "description": "Page title 'Multi-Step Flow Test Page'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step is a simple click on 'Next'. Given the context of moving to the next step in a wizard-style flow, the most likely element is the 'Next' button. It has a clear accessible name and a specific role that identifies it as an interactive element. The heading and textboxes are less likely targets for a simple click action."
+          },
+          "executedAt": "2026-01-25T08:04:13.602Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Next",
+                "exact": true
+              }
+            },
+            "mimicId": 19,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "2faf5affee23c2e4",
+          "stepIndex": 3,
+          "stepText": "click on \"Complete Wizard\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 17,
+                "confidence": 1,
+                "description": "Complete Wizard button"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.8,
+                "description": "Step 4: Review and Complete heading"
+              },
+              {
+                "mimicId": 20,
+                "confidence": 0.7,
+                "description": "List item containing step2 information"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.6,
+                "description": "List item containing step3 information"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.5,
+                "description": "Generic text element containing review information"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly says 'click on \"Complete Wizard\"', so we use a primary click as the default behavior. The most likely candidates are the 'Complete Wizard' button (marker ID 17) and related elements like the heading or list items containing review information."
+          },
+          "executedAt": "2026-01-25T08:13:13.811Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Complete Wizard",
+                "exact": true
+              }
+            },
+            "mimicId": 17,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:02:49.982Z",
+        "lastPassedAt": "2026-01-25T08:13:13.813Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    }
+  ]
+}

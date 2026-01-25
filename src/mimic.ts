@@ -41,6 +41,8 @@ export interface TestContext {
     url?: string;
     pageTitle?: string;
   }>;
+  /** All steps in the test (for full context) */
+  allSteps: string[];
   /** Current page state */
   currentState: {
     url: string;
@@ -446,6 +448,7 @@ export async function mimic(input: string, { page, brains, testInfo, testFilePat
               ? (executedStep.actionDetails as any).params?.url || undefined
               : undefined,
           })),
+          allSteps: steps, // Include all steps for full test context
           currentState: {
             url: currentUrl,
             pageTitle: currentPageTitle,

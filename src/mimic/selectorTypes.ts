@@ -140,3 +140,39 @@ export type SelectorDescriptor =
   | TitleSelector
   | TextSelector
   | CssSelector;
+
+/**
+ * Playwright-compatible locator JSON structure matching JsonlLocatorFactory format
+ * 
+ * This format matches Playwright's internal JSON representation for locators,
+ * enabling better compatibility with Playwright's codegen and future tooling.
+ * 
+ * Structure:
+ * - `kind`: The type of locator (role, text, label, etc.)
+ * - `body`: The main value (string, RegExp, or regex pattern object)
+ * - `options`: Optional configuration (attrs, exact, name, hasText, etc.)
+ * - `next`: For chaining multiple locators together
+ * 
+ * @see https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/server/recorder/jsonlLocatorFactory.ts
+ */
+export interface PlaywrightLocatorJson {
+  /** Type of locator - matches Playwright's locator kinds */
+  kind: 'role' | 'text' | 'label' | 'placeholder' | 'alt' | 'title' | 'test-id' | 'nth' | 'first' | 'last' | 'visible' | 'has-text' | 'has-not-text' | 'has' | 'hasNot' | 'and' | 'or' | 'chain' | 'default';
+  /** Main locator value - string, RegExp, or regex pattern object */
+  body: string | RegExp | RegexPattern;
+  /** Optional configuration for the locator */
+  options?: {
+    /** Attribute filters (for role selectors) */
+    attrs?: { name: string; value: string | boolean | number }[];
+    /** Whether to match exactly (for text-based selectors) */
+    exact?: boolean;
+    /** Name parameter (for role selectors) */
+    name?: string | RegExp | RegexPattern;
+    /** Text content filter */
+    hasText?: string | RegExp | RegexPattern;
+    /** Negative text content filter */
+    hasNotText?: string | RegExp | RegexPattern;
+  };
+  /** Next locator in the chain (for nested/child selectors) */
+  next?: PlaywrightLocatorJson;
+}

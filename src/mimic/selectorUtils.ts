@@ -1,27 +1,49 @@
 import { Locator, Page } from '@playwright/test';
-import type { SelectorDescriptor } from './selectorTypes.js';
-import { jsonToStringOrRegex } from './selectorSerialization.js';
+import type { SelectorDescriptor, PlaywrightLocatorJson } from './selectorTypes.js';
+import { jsonToStringOrRegex, playwrightJsonToSelectorDescriptor } from './selectorSerialization.js';
 import { getMimic } from './markers.js';
 
 /**
- * Reconstruct a Playwright Locator from a stored SelectorDescriptor
+ * Normalize a selector to SelectorDescriptor format
+ * 
+ * Converts PlaywrightLocatorJson to SelectorDescriptor if needed.
+ * This allows functions that expect SelectorDescriptor to work with both formats.
+ * 
+ * @param selector - SelectorDescriptor or PlaywrightLocatorJson
+ * @returns SelectorDescriptor
+ */
+function normalizeSelector(selector: SelectorDescriptor | PlaywrightLocatorJson): SelectorDescriptor {
+  // Check if it's already a SelectorDescriptor (has 'type' property)
+  if ('type' in selector) {
+    return selector as SelectorDescriptor;
+  }
+  
+  // Convert PlaywrightLocatorJson to SelectorDescriptor
+  return playwrightJsonToSelectorDescriptor(selector as PlaywrightLocatorJson);
+}
+
+/**
+ * Reconstruct a Playwright Locator from a stored SelectorDescriptor or PlaywrightLocatorJson
  * 
  * This function recursively builds a locator from a selector descriptor,
  * handling nested selectors by chaining locator method calls.
  * 
+ * Supports both legacy SelectorDescriptor format and new PlaywrightLocatorJson format.
  * The descriptor uses JSON-serializable formats (StringOrRegexJson), which are
  * converted to runtime formats (StringOrRegex) as needed when calling Playwright APIs.
  * 
  * @param page - Playwright Page object (or parent Locator for nested selectors)
- * @param descriptor - SelectorDescriptor (from JSON)
+ * @param selector - SelectorDescriptor or PlaywrightLocatorJson (from JSON)
  * @param depth - Current recursion depth (internal use, defaults to 0)
- * @returns Playwright Locator reconstructed from the descriptor
+ * @returns Playwright Locator reconstructed from the selector
  */
 export function getFromSelector(
   page: Page | Locator,
-  descriptor: SelectorDescriptor,
+  selector: SelectorDescriptor | PlaywrightLocatorJson,
   depth: number = 0
 ): Locator {
+  // Normalize to SelectorDescriptor format
+  const descriptor = normalizeSelector(selector);
   // Prevent infinite recursion by limiting depth to 10 levels
   const MAX_DEPTH = 10;
   if (depth >= MAX_DEPTH) {

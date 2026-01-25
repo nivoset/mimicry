@@ -21,6 +21,939 @@
           "error": "AI model call failed after 35387ms (tried both text-only and with image): No object generated: response did not match schema."
         }
       }
+    },
+    {
+      "testHash": "67f7f2843270ce7f",
+      "testText": "navigate to /pages/simple-navigation.html\nclick on \"Go to Forms Page\"",
+      "stepsByHash": {
+        "eddf60739be6bb82": {
+          "stepHash": "eddf60739be6bb82",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/simple-navigation.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/simple-navigation.html",
+              "newWindow": false
+            },
+            "description": "Navigate to /pages/simple-navigation.html"
+          },
+          "executedAt": "2026-01-25T08:22:25.269Z",
+          "selectorFormat": "playwright"
+        },
+        "f1725db978620eac": {
+          "stepHash": "f1725db978620eac",
+          "stepIndex": 1,
+          "stepText": "click on \"Go to Forms Page\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 5,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "click on 'Go to Forms Page'"
+          },
+          "executedAt": "2026-01-25T08:22:25.269Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Go to Forms Page",
+                "exact": true
+              }
+            },
+            "mimicId": 5,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "eddf60739be6bb82",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/simple-navigation.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/simple-navigation.html",
+              "newWindow": false
+            },
+            "description": "Navigate to /pages/simple-navigation.html"
+          },
+          "executedAt": "2026-01-25T08:22:25.269Z",
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "f1725db978620eac",
+          "stepIndex": 1,
+          "stepText": "click on \"Go to Forms Page\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 5,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "click on 'Go to Forms Page'"
+          },
+          "executedAt": "2026-01-25T08:22:25.269Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Go to Forms Page",
+                "exact": true
+              }
+            },
+            "mimicId": 5,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:22:25.269Z",
+        "lastPassedAt": "2026-01-25T08:22:25.269Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "9156c907a2373dea",
+      "testText": "navigate to /pages/simple-navigation.html\nclick on \"Go to Buttons Page\"\ngo back",
+      "stepsByHash": {
+        "eddf60739be6bb82": {
+          "stepHash": "eddf60739be6bb82",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/simple-navigation.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/simple-navigation.html"
+            },
+            "description": "Navigate to /pages/simple-navigation.html"
+          },
+          "executedAt": "2026-01-25T08:23:39.558Z",
+          "selectorFormat": "playwright"
+        },
+        "3bf63876e993dd98": {
+          "stepHash": "3bf63876e993dd98",
+          "stepIndex": 1,
+          "stepText": "click on \"Go to Buttons Page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 6,
+                "confidence": 1,
+                "description": "Go to Buttons Page link with text 'Go to Buttons Page'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "Buttons link with text 'Buttons'"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.7,
+                "description": "Go to Forms Page link with text 'Go to Forms Page'"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.6,
+                "description": "Internal Links heading"
+              },
+              {
+                "mimicId": 34,
+                "confidence": 0.5,
+                "description": "Navigation menu with multiple links"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly states 'Go to Buttons Page', which directly corresponds to the link with mimicId 6. This is a semantic match as it matches exactly with the text in the screenshot and accessibility snapshot."
+          },
+          "executedAt": "2026-01-25T08:23:39.558Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Go to Buttons Page",
+                "exact": true
+              }
+            },
+            "mimicId": 6,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "8aaf5e76b6032ccb": {
+          "stepHash": "8aaf5e76b6032ccb",
+          "stepIndex": 2,
+          "stepText": "go back",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "goBack",
+            "params": {
+              "url": null,
+              "newWindow": false
+            },
+            "description": "Go back to previous page in browser history"
+          },
+          "executedAt": "2026-01-25T08:23:39.558Z",
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "eddf60739be6bb82",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/simple-navigation.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/simple-navigation.html"
+            },
+            "description": "Navigate to /pages/simple-navigation.html"
+          },
+          "executedAt": "2026-01-25T08:23:39.558Z",
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "3bf63876e993dd98",
+          "stepIndex": 1,
+          "stepText": "click on \"Go to Buttons Page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 6,
+                "confidence": 1,
+                "description": "Go to Buttons Page link with text 'Go to Buttons Page'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "Buttons link with text 'Buttons'"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.7,
+                "description": "Go to Forms Page link with text 'Go to Forms Page'"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.6,
+                "description": "Internal Links heading"
+              },
+              {
+                "mimicId": 34,
+                "confidence": 0.5,
+                "description": "Navigation menu with multiple links"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly states 'Go to Buttons Page', which directly corresponds to the link with mimicId 6. This is a semantic match as it matches exactly with the text in the screenshot and accessibility snapshot."
+          },
+          "executedAt": "2026-01-25T08:23:39.558Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Go to Buttons Page",
+                "exact": true
+              }
+            },
+            "mimicId": 6,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "8aaf5e76b6032ccb",
+          "stepIndex": 2,
+          "stepText": "go back",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "goBack",
+            "params": {
+              "url": null,
+              "newWindow": false
+            },
+            "description": "Go back to previous page in browser history"
+          },
+          "executedAt": "2026-01-25T08:23:39.558Z",
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:23:39.558Z",
+        "lastPassedAt": "2026-01-25T08:23:39.558Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "2349f9258331cdab",
+      "testText": "navigate to /pages/buttons-variety.html\nclick on \"Click Me\"",
+      "stepsByHash": {
+        "25f87361c45d7735": {
+          "stepHash": "25f87361c45d7735",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/buttons-variety.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/buttons-variety.html",
+              "newWindow": false
+            },
+            "description": "Navigate to /pages/buttons-variety.html"
+          },
+          "executedAt": "2026-01-25T08:36:43.511Z",
+          "selectorFormat": "playwright"
+        },
+        "b98c4d8e65b12d96": {
+          "stepHash": "b98c4d8e65b12d96",
+          "stepIndex": 1,
+          "stepText": "click on \"Click Me\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 4,
+                "confidence": 0.95,
+                "description": "Click Me button with text 'Click Me'"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.85,
+                "description": "Link styled as a button labeled 'Link as Button'"
+              },
+              {
+                "mimicId": 23,
+                "confidence": 0.75,
+                "description": "Primary Button with text 'Primary Button'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.65,
+                "description": "First Save button with text 'Save'"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.6,
+                "description": "Submit Action button with data-testid='submit-action'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies a simple click without any special instructions. The 'Click Me' button has the most direct and explicit mention in both the visual elements (RED badge) and the accessibility snapshot, making it the most likely candidate for the action."
+          },
+          "executedAt": "2026-01-25T08:36:43.511Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Click Me",
+                "exact": true
+              }
+            },
+            "mimicId": 4,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "25f87361c45d7735",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/buttons-variety.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/buttons-variety.html",
+              "newWindow": false
+            },
+            "description": "Navigate to /pages/buttons-variety.html"
+          },
+          "executedAt": "2026-01-25T08:36:43.511Z",
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "b98c4d8e65b12d96",
+          "stepIndex": 1,
+          "stepText": "click on \"Click Me\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 4,
+                "confidence": 0.95,
+                "description": "Click Me button with text 'Click Me'"
+              },
+              {
+                "mimicId": 19,
+                "confidence": 0.85,
+                "description": "Link styled as a button labeled 'Link as Button'"
+              },
+              {
+                "mimicId": 23,
+                "confidence": 0.75,
+                "description": "Primary Button with text 'Primary Button'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.65,
+                "description": "First Save button with text 'Save'"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.6,
+                "description": "Submit Action button with data-testid='submit-action'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies a simple click without any special instructions. The 'Click Me' button has the most direct and explicit mention in both the visual elements (RED badge) and the accessibility snapshot, making it the most likely candidate for the action."
+          },
+          "executedAt": "2026-01-25T08:36:43.511Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Click Me",
+                "exact": true
+              }
+            },
+            "mimicId": 4,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:35:58.916Z",
+        "lastPassedAt": "2026-01-25T08:36:43.513Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "b0b83816906ddb85",
+      "testText": "navigate to /pages/buttons-variety.html\nclick on the button with aria-label \"Close dialog\"",
+      "stepsByHash": {
+        "25f87361c45d7735": {
+          "stepHash": "25f87361c45d7735",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/buttons-variety.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/buttons-variety.html",
+              "newWindow": false
+            },
+            "description": "Navigate to /pages/buttons-variety.html"
+          },
+          "executedAt": "2026-01-25T08:37:18.137Z",
+          "selectorFormat": "playwright"
+        },
+        "2df9acf355940d29": {
+          "stepHash": "2df9acf355940d29",
+          "stepIndex": 1,
+          "stepText": "click on the button with aria-label \"Close dialog\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 9,
+                "confidence": 1,
+                "description": "Close dialog button with aria-label 'Close dialog'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "Click Me button"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.7,
+                "description": "Submit button"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.6,
+                "description": "Save Changes button"
+              },
+              {
+                "mimicId": 23,
+                "confidence": 0.5,
+                "description": "Primary Button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly mentions 'button with aria-label 'Close dialog'', which directly corresponds to Marker ID 9. No other elements have this specific text or role that matches the description in the step."
+          },
+          "executedAt": "2026-01-25T08:37:18.137Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Close dialog",
+                "exact": true
+              }
+            },
+            "mimicId": 9,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "25f87361c45d7735",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/buttons-variety.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/buttons-variety.html",
+              "newWindow": false
+            },
+            "description": "Navigate to /pages/buttons-variety.html"
+          },
+          "executedAt": "2026-01-25T08:37:18.137Z",
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "2df9acf355940d29",
+          "stepIndex": 1,
+          "stepText": "click on the button with aria-label \"Close dialog\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 9,
+                "confidence": 1,
+                "description": "Close dialog button with aria-label 'Close dialog'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.8,
+                "description": "Click Me button"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.7,
+                "description": "Submit button"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.6,
+                "description": "Save Changes button"
+              },
+              {
+                "mimicId": 23,
+                "confidence": 0.5,
+                "description": "Primary Button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly mentions 'button with aria-label 'Close dialog'', which directly corresponds to Marker ID 9. No other elements have this specific text or role that matches the description in the step."
+          },
+          "executedAt": "2026-01-25T08:37:18.137Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Close dialog",
+                "exact": true
+              }
+            },
+            "mimicId": 9,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:37:18.137Z",
+        "lastPassedAt": "2026-01-25T08:37:18.137Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "9daf81607ccae98b",
+      "testText": "navigate to /pages/dynamic-content.html\nclick on \"Load Content\"",
+      "stepsByHash": {
+        "6056d834fc073ae0": {
+          "stepHash": "6056d834fc073ae0",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/dynamic-content.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/dynamic-content.html"
+            },
+            "description": "Navigate to /pages/dynamic-content.html"
+          },
+          "executedAt": "2026-01-25T08:37:44.324Z",
+          "selectorFormat": "playwright"
+        },
+        "d3d8d151cf4c76ff": {
+          "stepHash": "d3d8d151cf4c76ff",
+          "stepIndex": 1,
+          "stepText": "click on \"Load Content\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 3,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Load Content' button should be visible after clicking it."
+          },
+          "executedAt": "2026-01-25T08:37:44.324Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Load Content",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "6056d834fc073ae0",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/dynamic-content.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/dynamic-content.html"
+            },
+            "description": "Navigate to /pages/dynamic-content.html"
+          },
+          "executedAt": "2026-01-25T08:37:44.324Z",
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "d3d8d151cf4c76ff",
+          "stepIndex": 1,
+          "stepText": "click on \"Load Content\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 3,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Load Content' button should be visible after clicking it."
+          },
+          "executedAt": "2026-01-25T08:37:44.324Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Load Content",
+                "exact": true
+              }
+            },
+            "mimicId": 3,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:37:44.324Z",
+        "lastPassedAt": "2026-01-25T08:37:44.324Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "5ea49f3e0ec6cc52",
+      "testText": "navigate to /pages/dynamic-content.html\nclick on \"Toggle Visibility\"",
+      "stepsByHash": {
+        "6056d834fc073ae0": {
+          "stepHash": "6056d834fc073ae0",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/dynamic-content.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/dynamic-content.html",
+              "newWindow": false
+            },
+            "description": "Navigate to /pages/dynamic-content.html"
+          },
+          "executedAt": "2026-01-25T08:47:39.792Z",
+          "selectorFormat": "playwright"
+        },
+        "7380452886a70a39": {
+          "stepHash": "7380452886a70a39",
+          "stepIndex": 1,
+          "stepText": "click on \"Toggle Visibility\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 4,
+                "confidence": 1,
+                "description": "Toggle Visibility button"
+              },
+              {
+                "mimicId": 25,
+                "confidence": 0.8,
+                "description": "Button 3"
+              },
+              {
+                "mimicId": 26,
+                "confidence": 0.7,
+                "description": "Button 4"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.6,
+                "description": "Button 1"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.5,
+                "description": "Button 2"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"Toggle Visibility\"' is most likely referring to the button with the text 'Toggle Visibility'. This button has a high confidence of being the correct target for this action. The other buttons listed are lower in confidence as they share similar names and could be mistaken."
+          },
+          "executedAt": "2026-01-25T08:47:39.792Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Toggle Visibility",
+                "exact": true
+              }
+            },
+            "mimicId": 4,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "6056d834fc073ae0",
+          "stepIndex": 0,
+          "stepText": "navigate to /pages/dynamic-content.html",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/dynamic-content.html",
+              "newWindow": false
+            },
+            "description": "Navigate to /pages/dynamic-content.html"
+          },
+          "executedAt": "2026-01-25T08:47:39.792Z",
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "7380452886a70a39",
+          "stepIndex": 1,
+          "stepText": "click on \"Toggle Visibility\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 4,
+                "confidence": 1,
+                "description": "Toggle Visibility button"
+              },
+              {
+                "mimicId": 25,
+                "confidence": 0.8,
+                "description": "Button 3"
+              },
+              {
+                "mimicId": 26,
+                "confidence": 0.7,
+                "description": "Button 4"
+              },
+              {
+                "mimicId": 24,
+                "confidence": 0.6,
+                "description": "Button 1"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.5,
+                "description": "Button 2"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"Toggle Visibility\"' is most likely referring to the button with the text 'Toggle Visibility'. This button has a high confidence of being the correct target for this action. The other buttons listed are lower in confidence as they share similar names and could be mistaken."
+          },
+          "executedAt": "2026-01-25T08:47:39.792Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Toggle Visibility",
+                "exact": true
+              }
+            },
+            "mimicId": 4,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:47:39.792Z",
+        "lastPassedAt": "2026-01-25T08:47:39.792Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "820b87dea99d7b28",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:48:33.860Z",
+        "lastPassedAt": "2026-01-25T08:52:53.879Z",
+        "lastFailedAt": "2026-01-25T08:52:53.875Z",
+        "failureDetails": {
+          "failedStepIndex": 1,
+          "failedStepText": "click on \"Open Simple Modal\"",
+          "error": "Step: \"click on \"Open Simple Modal\"\"\nAction: → Clicking on Open Simple Modal button with left mouse button\n\nPlaywright command executed:\n  await page.getByRole(\"button\", { name: \"Open Simple Modal\", exact: true }).click();\n\nError:\nlocator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Open Simple Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    261 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
+        }
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "ae38642ed87b3cd5",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T09:08:09.623Z",
+        "lastPassedAt": "2026-01-25T09:15:16.362Z",
+        "lastFailedAt": "2026-01-25T09:15:16.348Z",
+        "failureDetails": {
+          "failedStepIndex": 1,
+          "failedStepText": "click on \"Tab 2\"",
+          "error": "Step: \"click on \"Tab 2\"\"\nAction: → Clicking on Tab button 'Tab 2' with left mouse button\n\nPlaywright command executed:\n  await page.getByRole(\"tab\", { name: \"Tab 2\", exact: true }).click();\n\nError:\nlocator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"9\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"tab-2\" role=\"tab\" data-mimic-id=\"9\" class=\"tab-button\" aria-selected=\"false\" onclick=\"switchTab(2, event)\" aria-controls=\"tab-content-2\" data-mimic-type=\"interactive\">Tab 2</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    263 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n"
+        }
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "399f4238441b22fa",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T09:36:20.783Z",
+        "lastPassedAt": "2026-01-25T09:37:21.362Z",
+        "lastFailedAt": "2026-01-25T09:37:21.360Z",
+        "failureDetails": {
+          "failedStepIndex": 1,
+          "failedStepText": "click on \"Start Wizard\"",
+          "error": "AI model call failed after 29337ms (tried both text-only and with image): No object generated: response did not match schema."
+        }
+      },
+      "version": "2.0.0"
     }
   ]
 }

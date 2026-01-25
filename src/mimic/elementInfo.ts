@@ -5,7 +5,7 @@
  * All DOM extraction logic is kept in browser context to avoid serialization issues.
  */
 
-import { Locator, Page } from '@playwright/test';
+import { Locator } from '@playwright/test';
 import { logger } from './logger.js';
 
 /**

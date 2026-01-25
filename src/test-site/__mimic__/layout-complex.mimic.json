@@ -67,46 +67,228 @@
     },
     {
       "testHash": "cb7680d023c0967d",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Open Simple Modal\"\nclick on \"Close\"",
+      "stepsByHash": {
+        "f35801657a7e004a": {
+          "stepHash": "f35801657a7e004a",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Simple Modal\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 3,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "click on 'Open Simple Modal'"
+          },
+          "executedAt": "2026-01-24T02:49:23.237Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Open Simple Modal",
+              "exact": true
+            },
+            "mimicId": 3
+          }
+        },
+        "94b628a5efc5fa3c": {
+          "stepHash": "94b628a5efc5fa3c",
+          "stepIndex": 1,
+          "stepText": "click on \"Close\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "Close button within the information overlay"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.85,
+                "description": "Open Simple Modal button"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.75,
+                "description": "Open Confirmation Dialog button"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.65,
+                "description": "Open Alert Dialog button"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.55,
+                "description": "Show Info Overlay button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step says 'click on \"Close\"', which implies a primary (left) click. The most likely element is the Close button within the information overlay, as it is interactively labeled and positioned in a logical place for closing an overlay."
+          },
+          "executedAt": "2026-01-24T02:49:23.237Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Close",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "f35801657a7e004a",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Simple Modal\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 3,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "click on 'Open Simple Modal'"
+          },
+          "executedAt": "2026-01-24T02:49:23.237Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Open Simple Modal",
+              "exact": true
+            },
+            "mimicId": 3
+          }
+        },
+        {
+          "stepHash": "94b628a5efc5fa3c",
+          "stepIndex": 1,
+          "stepText": "click on \"Close\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "Close button within the information overlay"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.85,
+                "description": "Open Simple Modal button"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.75,
+                "description": "Open Confirmation Dialog button"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.65,
+                "description": "Open Alert Dialog button"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.55,
+                "description": "Show Info Overlay button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step says 'click on \"Close\"', which implies a primary (left) click. The most likely element is the Close button within the information overlay, as it is interactively labeled and positioned in a logical place for closing an overlay."
+          },
+          "executedAt": "2026-01-24T02:49:23.237Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Close",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T19:44:17.799Z",
-        "lastPassedAt": "2026-01-23T13:32:20.415Z",
-        "lastFailedAt": "2026-01-23T13:32:20.336Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Simple Modal\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Open Simple Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    320 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
+        "lastPassedAt": "2026-01-24T02:49:23.239Z",
+        "lastFailedAt": null
       }
     },
     {
       "testHash": "99b1f0fed9f07611",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Open Confirmation Dialog\"",
+      "stepsByHash": {
+        "99b1f0fed9f07611": {
+          "stepHash": "99b1f0fed9f07611",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Confirmation Dialog\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 4,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Assert that the 'Open Confirmation Dialog' button is visible on the page."
+          },
+          "executedAt": "2026-01-24T02:49:47.630Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Open Confirmation Dialog",
+              "exact": true
+            },
+            "mimicId": 4
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "99b1f0fed9f07611",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Confirmation Dialog\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 4,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Assert that the 'Open Confirmation Dialog' button is visible on the page."
+          },
+          "executedAt": "2026-01-24T02:49:47.630Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Open Confirmation Dialog",
+              "exact": true
+            },
+            "mimicId": 4
+          }
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:43:37.090Z",
-        "lastPassedAt": "2026-01-23T13:43:06.896Z",
-        "lastFailedAt": "2026-01-23T13:43:06.894Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "Unknown base action type: assertion"
-        }
+        "lastPassedAt": "2026-01-24T02:49:47.631Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -153,14 +335,21 @@
           "executedAt": "2026-01-11T03:21:05.773Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "OK",
-              "exact": true,
-              "nth": 2
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "OK",
+                "exact": true
+              },
+              "next": {
+                "kind": "nth",
+                "body": "2"
+              }
             },
-            "mimicId": 14
-          }
+            "mimicId": 14,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         "abdfdd09326f45f4": {
           "stepHash": "abdfdd09326f45f4",
@@ -202,14 +391,21 @@
           "executedAt": "2026-01-11T03:21:05.773Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "OK",
-              "exact": true,
-              "nth": 2
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "OK",
+                "exact": true
+              },
+              "next": {
+                "kind": "nth",
+                "body": "2"
+              }
             },
-            "mimicId": 14
-          }
+            "mimicId": 14,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         }
       },
       "steps": [
@@ -253,14 +449,21 @@
           "executedAt": "2026-01-11T03:21:05.773Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "OK",
-              "exact": true,
-              "nth": 2
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "OK",
+                "exact": true
+              },
+              "next": {
+                "kind": "nth",
+                "body": "2"
+              }
             },
-            "mimicId": 14
-          }
+            "mimicId": 14,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         {
           "stepHash": "abdfdd09326f45f4",
@@ -302,14 +505,21 @@
           "executedAt": "2026-01-11T03:21:05.773Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "OK",
-              "exact": true,
-              "nth": 2
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "OK",
+                "exact": true
+              },
+              "next": {
+                "kind": "nth",
+                "body": "2"
+              }
             },
-            "mimicId": 14
-          }
+            "mimicId": 14,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         }
       ],
       "flags": {
@@ -320,58 +530,248 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:50:16.105Z",
-        "lastPassedAt": "2026-01-23T13:54:28.576Z",
-        "lastFailedAt": "2026-01-23T13:54:28.575Z",
+        "lastPassedAt": "2026-01-25T00:32:11.747Z",
+        "lastFailedAt": "2026-01-25T00:32:11.743Z",
         "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "AI model call failed after 34530ms (tried both text-only and with image): No object generated: response did not match schema."
+          "error": "Step: \"click on \"Open Confirmation Dialog\"\"\nAction: → Clicking on OK button in the Information Overlay with text 'OK' with left mouse button\n\nPlaywright command executed:\n  await page.locator('[data-mimic-id=\"14\"]').click();\n\nError:\nlocator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"14\"]')\u001b[22m\n"
         }
-      }
+      },
+      "version": "2.0.0"
     },
     {
       "testHash": "7883f9d66f6fb059",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Open Confirmation Dialog\"\nclick on \"Cancel\"",
+      "stepsByHash": {
+        "99b1f0fed9f07611": {
+          "stepHash": "99b1f0fed9f07611",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Confirmation Dialog\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 4,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Open Confirmation Dialog' button should be visible."
+          },
+          "executedAt": "2026-01-24T03:43:36.275Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Open Confirmation Dialog",
+              "exact": true
+            },
+            "mimicId": 4
+          }
+        },
+        "1661f5c333dfb93b": {
+          "stepHash": "1661f5c333dfb93b",
+          "stepIndex": 1,
+          "stepText": "click on \"Cancel\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "Close button within the Information Overlay"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.85,
+                "description": "Show Loading Overlay button"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.75,
+                "description": "Show Info Overlay button"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.65,
+                "description": "Open Confirmation Dialog button"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.55,
+                "description": "Open Simple Modal button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The 'Cancel' step is likely referring to the close button within the Information Overlay, as it's the only interactive element mentioned in the Gherkin step and has a high likelihood of being the target."
+          },
+          "executedAt": "2026-01-24T03:43:36.275Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Close",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "99b1f0fed9f07611",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Confirmation Dialog\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 4,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Open Confirmation Dialog' button should be visible."
+          },
+          "executedAt": "2026-01-24T03:43:36.275Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Open Confirmation Dialog",
+              "exact": true
+            },
+            "mimicId": 4
+          }
+        },
+        {
+          "stepHash": "1661f5c333dfb93b",
+          "stepIndex": 1,
+          "stepText": "click on \"Cancel\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 14,
+                "confidence": 0.95,
+                "description": "Close button within the Information Overlay"
+              },
+              {
+                "mimicId": 12,
+                "confidence": 0.85,
+                "description": "Show Loading Overlay button"
+              },
+              {
+                "mimicId": 13,
+                "confidence": 0.75,
+                "description": "Show Info Overlay button"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.65,
+                "description": "Open Confirmation Dialog button"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.55,
+                "description": "Open Simple Modal button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The 'Cancel' step is likely referring to the close button within the Information Overlay, as it's the only interactive element mentioned in the Gherkin step and has a high likelihood of being the target."
+          },
+          "executedAt": "2026-01-24T03:43:36.275Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Close",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T18:17:52.847Z",
-        "lastPassedAt": "2026-01-23T14:08:08.499Z",
-        "lastFailedAt": "2026-01-23T14:08:08.493Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Confirmation Dialog\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"4\" class=\"btn secondary\" onclick=\"openModal('modal2')\" data-mimic-type=\"interactive\">Open Confirmation Dialog</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  75 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
-        }
+        "lastPassedAt": "2026-01-24T03:43:36.278Z",
+        "lastFailedAt": null
       }
     },
     {
       "testHash": "623e7737cc2d49e9",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Open Alert Dialog\"",
+      "stepsByHash": {
+        "623e7737cc2d49e9": {
+          "stepHash": "623e7737cc2d49e9",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Alert Dialog\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 5,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Open Alert Dialog' button should be visible."
+          },
+          "executedAt": "2026-01-25T01:10:05.499Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Open Alert Dialog",
+                "exact": true
+              }
+            },
+            "mimicId": 5,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "623e7737cc2d49e9",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Alert Dialog\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 5,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Open Alert Dialog' button should be visible."
+          },
+          "executedAt": "2026-01-25T01:10:05.499Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Open Alert Dialog",
+                "exact": true
+              }
+            },
+            "mimicId": 5,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T19:03:58.488Z",
-        "lastPassedAt": "2026-01-23T14:17:13.407Z",
-        "lastFailedAt": "2026-01-23T14:17:13.404Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Alert Dialog\"",
-          "error": "Unknown base action type: assertion"
-        }
-      }
+        "lastPassedAt": "2026-01-25T01:10:05.501Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
     },
     {
       "testHash": "2bdb8507f2eb2f41",
@@ -417,14 +817,21 @@
           "executedAt": "2026-01-11T09:16:36.878Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "Actions",
-              "exact": true,
-              "nth": 4
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Actions",
+                "exact": true
+              },
+              "next": {
+                "kind": "nth",
+                "body": "4"
+              }
             },
-            "mimicId": 14
-          }
+            "mimicId": 14,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         "9dd7a4d793298afc": {
           "stepHash": "9dd7a4d793298afc",
@@ -466,14 +873,21 @@
           "executedAt": "2026-01-11T09:16:36.878Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "Actions",
-              "exact": true,
-              "nth": 4
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Actions",
+                "exact": true
+              },
+              "next": {
+                "kind": "nth",
+                "body": "4"
+              }
             },
-            "mimicId": 14
-          }
+            "mimicId": 14,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         }
       },
       "steps": [
@@ -517,14 +931,21 @@
           "executedAt": "2026-01-11T09:16:36.878Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "Actions",
-              "exact": true,
-              "nth": 4
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Actions",
+                "exact": true
+              },
+              "next": {
+                "kind": "nth",
+                "body": "4"
+              }
             },
-            "mimicId": 14
-          }
+            "mimicId": 14,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         {
           "stepHash": "9dd7a4d793298afc",
@@ -566,14 +987,21 @@
           "executedAt": "2026-01-11T09:16:36.878Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "Actions",
-              "exact": true,
-              "nth": 4
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Actions",
+                "exact": true
+              },
+              "next": {
+                "kind": "nth",
+                "body": "4"
+              }
             },
-            "mimicId": 14
-          }
+            "mimicId": 14,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         }
       ],
       "flags": {
@@ -584,14 +1012,13 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T19:22:33.312Z",
-        "lastPassedAt": "2026-01-23T14:33:29.972Z",
-        "lastFailedAt": "2026-01-23T14:33:29.970Z",
+        "lastPassedAt": "2026-01-25T01:22:48.402Z",
+        "lastFailedAt": "2026-01-25T01:22:48.399Z",
         "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Alert Dialog\"",
-          "error": "AI model call failed after 29774ms (tried both text-only and with image): No object generated: response did not match schema."
+          "error": "Step: \"click on \"Open Alert Dialog\"\"\nAction: → Clicking on Options button with text 'Actions' with left mouse button\n\nPlaywright command executed:\n  await page.locator('[data-mimic-id=\"14\"]').click();\n\nError:\nlocator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"14\"]')\u001b[22m\n"
         }
-      }
+      },
+      "version": "2.0.0"
     },
     {
       "testHash": "f0407f3f37eb2045",
@@ -664,46 +1091,206 @@
     },
     {
       "testHash": "14284dd840918348",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Actions Menu\"\nclick on the page body",
+      "stepsByHash": {
+        "f0407f3f37eb2045": {
+          "stepHash": "f0407f3f37eb2045",
+          "stepIndex": 0,
+          "stepText": "click on \"Actions Menu\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 6,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Actions Menu' button should be visible."
+          },
+          "executedAt": "2026-01-24T05:12:20.433Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Actions Menu",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        },
+        "a17b501e374065bc": {
+          "stepHash": "a17b501e374065bc",
+          "stepIndex": 1,
+          "stepText": "click on the page body",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": null,
+            "type": "url",
+            "expected": "http://127.0.0.1:3000/pages/layout-complex.html",
+            "normalizeDynamicContent": false,
+            "description": "Verify that the current page URL matches 'http://127.0.0.1:3000/pages/layout-complex.html'"
+          },
+          "executedAt": "2026-01-24T05:12:20.433Z"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "f0407f3f37eb2045",
+          "stepIndex": 0,
+          "stepText": "click on \"Actions Menu\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 6,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Actions Menu' button should be visible."
+          },
+          "executedAt": "2026-01-24T05:12:20.433Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Actions Menu",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        },
+        {
+          "stepHash": "a17b501e374065bc",
+          "stepIndex": 1,
+          "stepText": "click on the page body",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": null,
+            "type": "url",
+            "expected": "http://127.0.0.1:3000/pages/layout-complex.html",
+            "normalizeDynamicContent": false,
+            "description": "Verify that the current page URL matches 'http://127.0.0.1:3000/pages/layout-complex.html'"
+          },
+          "executedAt": "2026-01-24T05:12:20.433Z"
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T22:31:59.520Z",
-        "lastPassedAt": "2026-01-23T15:00:35.280Z",
-        "lastFailedAt": "2026-01-23T15:00:35.269Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Actions Menu\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"6\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"6\" data-mimic-type=\"interactive\" onclick=\"toggleDropdown('dropdown1')\">Actions Menu</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    276 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n"
-        }
+        "lastPassedAt": "2026-01-24T05:12:20.435Z",
+        "lastFailedAt": null
       }
     },
     {
       "testHash": "d8f9a1a1d6389bb2",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Actions Menu\"\nclick on \"Delete\"",
+      "stepsByHash": {
+        "f0407f3f37eb2045": {
+          "stepHash": "f0407f3f37eb2045",
+          "stepIndex": 0,
+          "stepText": "click on \"Actions Menu\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 6,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Ensure the 'Actions Menu' button is visible after clicking it"
+          },
+          "executedAt": "2026-01-24T05:39:52.879Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Actions Menu",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        },
+        "ddd3b56cb6a326d1": {
+          "stepHash": "ddd3b56cb6a326d1",
+          "stepIndex": 1,
+          "stepText": "click on \"Delete\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 6,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Actions Menu' button should be visible"
+          },
+          "executedAt": "2026-01-24T05:39:52.879Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Actions Menu",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "f0407f3f37eb2045",
+          "stepIndex": 0,
+          "stepText": "click on \"Actions Menu\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 6,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Ensure the 'Actions Menu' button is visible after clicking it"
+          },
+          "executedAt": "2026-01-24T05:39:52.879Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Actions Menu",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        },
+        {
+          "stepHash": "ddd3b56cb6a326d1",
+          "stepIndex": 1,
+          "stepText": "click on \"Delete\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 6,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Actions Menu' button should be visible"
+          },
+          "executedAt": "2026-01-24T05:39:52.879Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Actions Menu",
+              "exact": true
+            },
+            "mimicId": 6
+          }
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-11T07:36:16.061Z",
-        "lastPassedAt": "2026-01-23T15:49:19.248Z",
-        "lastFailedAt": "2026-01-23T15:49:19.211Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Actions Menu\"",
-          "error": "Unknown base action type: assertion"
-        }
+        "lastPassedAt": "2026-01-24T05:39:52.883Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -730,25 +1317,77 @@
     },
     {
       "testHash": "b2b8bfe2f639f3e9",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"More Options\"",
+      "stepsByHash": {
+        "b2b8bfe2f639f3e9": {
+          "stepHash": "b2b8bfe2f639f3e9",
+          "stepIndex": 0,
+          "stepText": "click on \"More Options\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 7,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Ensure that the 'More Options' button is visible on the page."
+          },
+          "executedAt": "2026-01-25T02:53:08.509Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "More Options",
+                "exact": true
+              }
+            },
+            "mimicId": 7,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "b2b8bfe2f639f3e9",
+          "stepIndex": 0,
+          "stepText": "click on \"More Options\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 7,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Ensure that the 'More Options' button is visible on the page."
+          },
+          "executedAt": "2026-01-25T02:53:08.509Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "More Options",
+                "exact": true
+              }
+            },
+            "mimicId": 7,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-23T16:19:33.644Z",
-        "lastPassedAt": "2026-01-23T16:36:27.826Z",
-        "lastFailedAt": "2026-01-23T16:36:27.824Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"More Options\"",
-          "error": "AI model call failed after 40875ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
-      }
+        "lastPassedAt": "2026-01-25T02:53:08.512Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
     },
     {
       "testHash": "ea17031c573ed491",
@@ -846,112 +1485,438 @@
     },
     {
       "testHash": "c672e3c38c4c5d9a",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Tab 2\"\nclick on \"Tab 1\"",
+      "stepsByHash": {
+        "ea17031c573ed491": {
+          "stepHash": "ea17031c573ed491",
+          "stepIndex": 0,
+          "stepText": "click on \"Tab 2\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/tab2"
+            },
+            "description": "Navigate to Tab 2"
+          },
+          "executedAt": "2026-01-25T03:32:12.937Z",
+          "selectorFormat": "playwright"
+        },
+        "b4d2fd467db836f3": {
+          "stepHash": "b4d2fd467db836f3",
+          "stepIndex": 1,
+          "stepText": "click on \"Tab 1\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/tab1",
+              "newWindow": false
+            },
+            "description": "Navigate to Tab 1"
+          },
+          "executedAt": "2026-01-25T03:32:12.937Z",
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "ea17031c573ed491",
+          "stepIndex": 0,
+          "stepText": "click on \"Tab 2\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/tab2"
+            },
+            "description": "Navigate to Tab 2"
+          },
+          "executedAt": "2026-01-25T03:32:12.937Z",
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "b4d2fd467db836f3",
+          "stepIndex": 1,
+          "stepText": "click on \"Tab 1\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/tab1",
+              "newWindow": false
+            },
+            "description": "Navigate to Tab 1"
+          },
+          "executedAt": "2026-01-25T03:32:12.937Z",
+          "selectorFormat": "playwright"
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-23T16:53:24.189Z",
-        "lastPassedAt": "2026-01-23T17:11:47.758Z",
-        "lastFailedAt": "2026-01-23T17:11:47.749Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Tab 2\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"9\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"tab-2\" role=\"tab\" data-mimic-id=\"9\" class=\"tab-button\" aria-selected=\"false\" onclick=\"switchTab(2, event)\" aria-controls=\"tab-content-2\" data-mimic-type=\"interactive\">Tab 2</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    210 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
+        "lastPassedAt": "2026-01-25T03:32:12.939Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
     },
     {
       "testHash": "596a49b591ac2669",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Tab 2\"\nclick on \"Action in Tab 2\"",
+      "stepsByHash": {
+        "ea17031c573ed491": {
+          "stepHash": "ea17031c573ed491",
+          "stepIndex": 0,
+          "stepText": "click on \"Tab 2\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 9,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Assert that Tab 2 is visible after clicking on it."
+          },
+          "executedAt": "2026-01-24T07:14:44.570Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "tab",
+              "name": "Tab 2",
+              "exact": true
+            },
+            "mimicId": 9
+          }
+        },
+        "d2a7eb8273483f55": {
+          "stepHash": "d2a7eb8273483f55",
+          "stepIndex": 1,
+          "stepText": "click on \"Action in Tab 2\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 11,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Assert that the button with marker ID 11 (Action in Tab 2) is visible."
+          },
+          "executedAt": "2026-01-24T07:14:44.570Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Action in Tab 1",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "ea17031c573ed491",
+          "stepIndex": 0,
+          "stepText": "click on \"Tab 2\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 9,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Assert that Tab 2 is visible after clicking on it."
+          },
+          "executedAt": "2026-01-24T07:14:44.570Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "tab",
+              "name": "Tab 2",
+              "exact": true
+            },
+            "mimicId": 9
+          }
+        },
+        {
+          "stepHash": "d2a7eb8273483f55",
+          "stepIndex": 1,
+          "stepText": "click on \"Action in Tab 2\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 11,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Assert that the button with marker ID 11 (Action in Tab 2) is visible."
+          },
+          "executedAt": "2026-01-24T07:14:44.570Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Action in Tab 1",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-23T17:18:19.606Z",
-        "lastPassedAt": "2026-01-23T17:34:02.585Z",
-        "lastFailedAt": "2026-01-23T17:34:02.582Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Tab 2\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"9\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"tab-2\" role=\"tab\" data-mimic-id=\"9\" class=\"tab-button\" aria-selected=\"false\" onclick=\"switchTab(2, event)\" aria-controls=\"tab-content-2\" data-mimic-type=\"interactive\">Tab 2</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    286 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
+        "lastPassedAt": "2026-01-24T07:14:44.583Z",
+        "lastFailedAt": null
       }
     },
     {
       "testHash": "566ecc7c79e96659",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Tab 3\"\nclick on \"Action in Tab 3\"",
+      "stepsByHash": {
+        "0f91241ae63592f0": {
+          "stepHash": "0f91241ae63592f0",
+          "stepIndex": 0,
+          "stepText": "click on \"Tab 3\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 10,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Tab 3' tab should be visible."
+          },
+          "executedAt": "2026-01-25T03:48:28.030Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "tab",
+              "options": {
+                "name": "Tab 3",
+                "exact": true
+              }
+            },
+            "mimicId": 10,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        "b4f7c44d16904a24": {
+          "stepHash": "b4f7c44d16904a24",
+          "stepIndex": 1,
+          "stepText": "click on \"Action in Tab 3\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 10,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The element with mimicId 10 should be visible."
+          },
+          "executedAt": "2026-01-25T03:48:28.030Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "tab",
+              "options": {
+                "name": "Tab 3",
+                "exact": true
+              }
+            },
+            "mimicId": 10,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "0f91241ae63592f0",
+          "stepIndex": 0,
+          "stepText": "click on \"Tab 3\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 10,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Tab 3' tab should be visible."
+          },
+          "executedAt": "2026-01-25T03:48:28.030Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "tab",
+              "options": {
+                "name": "Tab 3",
+                "exact": true
+              }
+            },
+            "mimicId": 10,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "b4f7c44d16904a24",
+          "stepIndex": 1,
+          "stepText": "click on \"Action in Tab 3\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 10,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The element with mimicId 10 should be visible."
+          },
+          "executedAt": "2026-01-25T03:48:28.030Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "tab",
+              "options": {
+                "name": "Tab 3",
+                "exact": true
+              }
+            },
+            "mimicId": 10,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-23T17:46:30.791Z",
-        "lastPassedAt": "2026-01-23T17:52:46.379Z",
-        "lastFailedAt": "2026-01-23T17:52:46.377Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Tab 3\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"10\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"tab-3\" role=\"tab\" class=\"tab-button\" data-mimic-id=\"10\" aria-selected=\"false\" onclick=\"switchTab(3, event)\" aria-controls=\"tab-content-3\" data-mimic-type=\"interactive\">Tab 3</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    187 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
+        "lastPassedAt": "2026-01-25T03:48:28.061Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
     },
     {
       "testHash": "b6e70660846204fe",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Section 1\"",
+      "stepsByHash": {
+        "b6e70660846204fe": {
+          "stepHash": "b6e70660846204fe",
+          "stepIndex": 0,
+          "stepText": "click on \"Section 1\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": null,
+            "type": "url",
+            "expected": "http://127.0.0.1:3000/pages/layout-complex.html",
+            "normalizeDynamicContent": false,
+            "description": "Current page URL"
+          },
+          "executedAt": "2026-01-25T03:59:06.435Z",
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "b6e70660846204fe",
+          "stepIndex": 0,
+          "stepText": "click on \"Section 1\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": null,
+            "type": "url",
+            "expected": "http://127.0.0.1:3000/pages/layout-complex.html",
+            "normalizeDynamicContent": false,
+            "description": "Current page URL"
+          },
+          "executedAt": "2026-01-25T03:59:06.435Z",
+          "selectorFormat": "playwright"
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-23T18:03:03.428Z",
-        "lastPassedAt": "2026-01-23T18:23:56.474Z",
-        "lastFailedAt": "2026-01-23T18:23:56.470Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Section 1\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"24\"]')\u001b[22m\n\u001b[2m    - locator resolved to <span data-mimic-id=\"24\" data-mimic-type=\"display\">Section 1</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    265 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
-      }
+        "lastPassedAt": "2026-01-25T03:59:06.438Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
     },
     {
       "testHash": "0471540367ceda0a",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Section 2\"",
+      "stepsByHash": {
+        "0471540367ceda0a": {
+          "stepHash": "0471540367ceda0a",
+          "stepIndex": 0,
+          "stepText": "click on \"Section 2\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 11,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Action in Tab 1' button should be visible."
+          },
+          "executedAt": "2026-01-24T08:34:33.858Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Action in Tab 1",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "0471540367ceda0a",
+          "stepIndex": 0,
+          "stepText": "click on \"Section 2\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 11,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Action in Tab 1' button should be visible."
+          },
+          "executedAt": "2026-01-24T08:34:33.858Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Action in Tab 1",
+              "exact": true
+            },
+            "mimicId": 11
+          }
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-23T18:31:46.458Z",
-        "lastPassedAt": "2026-01-23T18:40:15.765Z",
-        "lastFailedAt": "2026-01-23T18:40:15.763Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Section 2\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"27\"]')\u001b[22m\n\u001b[2m    - locator resolved to <span data-mimic-id=\"27\" data-mimic-type=\"display\">Section 2</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    206 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
-        }
+        "lastPassedAt": "2026-01-24T08:34:33.862Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -1000,46 +1965,132 @@
     },
     {
       "testHash": "eaad5fdae800bc7a",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Show Loading Overlay\"",
+      "stepsByHash": {
+        "eaad5fdae800bc7a": {
+          "stepHash": "eaad5fdae800bc7a",
+          "stepIndex": 0,
+          "stepText": "click on \"Show Loading Overlay\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 12,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Show Loading Overlay' button should be visible after clicking it."
+          },
+          "executedAt": "2026-01-24T09:40:29.705Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Show Loading Overlay",
+              "exact": true
+            },
+            "mimicId": 12
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "eaad5fdae800bc7a",
+          "stepIndex": 0,
+          "stepText": "click on \"Show Loading Overlay\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 12,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Show Loading Overlay' button should be visible after clicking it."
+          },
+          "executedAt": "2026-01-24T09:40:29.705Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Show Loading Overlay",
+              "exact": true
+            },
+            "mimicId": 12
+          }
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-23T19:44:19.332Z",
-        "lastPassedAt": "2026-01-23T19:55:49.326Z",
-        "lastFailedAt": "2026-01-23T19:55:49.315Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Show Loading Overlay\"",
-          "error": "AI model call failed after 37099ms (tried both text-only and with image): No object generated: response did not match schema."
-        }
+        "lastPassedAt": "2026-01-24T09:40:29.707Z",
+        "lastFailedAt": null
       }
     },
     {
       "testHash": "675e680ffd928e55",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Show Info Overlay\"",
+      "stepsByHash": {
+        "675e680ffd928e55": {
+          "stepHash": "675e680ffd928e55",
+          "stepIndex": 0,
+          "stepText": "click on \"Show Info Overlay\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 13,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Show Info Overlay' button should be visible after clicking it."
+          },
+          "executedAt": "2026-01-24T09:48:48.167Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Show Info Overlay",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "675e680ffd928e55",
+          "stepIndex": 0,
+          "stepText": "click on \"Show Info Overlay\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 13,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Show Info Overlay' button should be visible after clicking it."
+          },
+          "executedAt": "2026-01-24T09:48:48.167Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Show Info Overlay",
+              "exact": true
+            },
+            "mimicId": 13
+          }
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-23T19:57:07.601Z",
-        "lastPassedAt": "2026-01-23T20:14:15.623Z",
-        "lastFailedAt": "2026-01-23T20:14:15.462Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Show Info Overlay\"",
-          "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"13\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"13\" class=\"btn secondary\" data-mimic-type=\"interactive\" onclick=\"showOverlay('overlay2')\">Show Info Overlay</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    38 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n"
-        }
+        "lastPassedAt": "2026-01-24T09:48:48.169Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -1066,24 +2117,141 @@
     },
     {
       "testHash": "d98559b9f7489461",
-      "testText": "",
-      "steps": [],
-      "stepsByHash": {},
+      "testText": "click on \"Open Simple Modal\"\nclick on \"Close\"\nclick on \"Tab 2\"",
+      "stepsByHash": {
+        "f35801657a7e004a": {
+          "stepHash": "f35801657a7e004a",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Simple Modal\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 3,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Open Simple Modal' button should be visible."
+          },
+          "executedAt": "2026-01-24T10:27:06.890Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Open Simple Modal",
+              "exact": true
+            },
+            "mimicId": 3
+          }
+        },
+        "94b628a5efc5fa3c": {
+          "stepHash": "94b628a5efc5fa3c",
+          "stepIndex": 1,
+          "stepText": "click on \"Close\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 14,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Close' button should be visible."
+          },
+          "executedAt": "2026-01-24T10:27:06.890Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Close",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        },
+        "ea17031c573ed491": {
+          "stepHash": "ea17031c573ed491",
+          "stepIndex": 2,
+          "stepText": "click on \"Tab 2\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/tab2"
+            },
+            "description": "Navigate to Tab 2"
+          },
+          "executedAt": "2026-01-24T10:27:06.890Z"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "f35801657a7e004a",
+          "stepIndex": 0,
+          "stepText": "click on \"Open Simple Modal\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 3,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Open Simple Modal' button should be visible."
+          },
+          "executedAt": "2026-01-24T10:27:06.890Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Open Simple Modal",
+              "exact": true
+            },
+            "mimicId": 3
+          }
+        },
+        {
+          "stepHash": "94b628a5efc5fa3c",
+          "stepIndex": 1,
+          "stepText": "click on \"Close\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 14,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "The 'Close' button should be visible."
+          },
+          "executedAt": "2026-01-24T10:27:06.890Z",
+          "targetElement": {
+            "selector": {
+              "type": "role",
+              "role": "button",
+              "name": "Close",
+              "exact": true
+            },
+            "mimicId": 14
+          }
+        },
+        {
+          "stepHash": "ea17031c573ed491",
+          "stepIndex": 2,
+          "stepText": "click on \"Tab 2\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/tab2"
+            },
+            "description": "Navigate to Tab 2"
+          },
+          "executedAt": "2026-01-24T10:27:06.890Z"
+        }
+      ],
       "flags": {
-        "needsRetry": true,
-        "hasErrors": true,
+        "needsRetry": false,
+        "hasErrors": false,
         "troubleshootingEnabled": false,
         "skipSnapshot": false,
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-23T21:26:32.028Z",
-        "lastPassedAt": "2026-01-23T21:30:03.752Z",
-        "lastFailedAt": "2026-01-23T21:30:03.750Z",
-        "failureDetails": {
-          "failedStepIndex": 0,
-          "failedStepText": "click on \"Open Simple Modal\"",
-          "error": "Unknown base action type: assertion"
-        }
+        "lastPassedAt": "2026-01-24T10:27:06.892Z",
+        "lastFailedAt": null
       }
     },
     {
@@ -1129,6 +2297,29 @@
           "error": "locator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"3\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"btn\" data-mimic-id=\"3\" onclick=\"openModal('modal1')\" data-mimic-type=\"interactive\">Open Simple Modal</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    296 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m        - element is visible, enabled and stable\u001b[22m\n\u001b[2m        - scrolling into view if needed\u001b[22m\n\u001b[2m        - done scrolling\u001b[22m\n\u001b[2m        - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m      - retrying click action\u001b[22m\n\u001b[2m        - waiting 500ms\u001b[22m\n"
         }
       }
+    },
+    {
+      "testHash": "b961fa66b8779df3",
+      "testText": "",
+      "steps": [],
+      "stepsByHash": {},
+      "flags": {
+        "needsRetry": true,
+        "hasErrors": true,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T06:34:02.399Z",
+        "lastPassedAt": "2026-01-25T06:38:01.805Z",
+        "lastFailedAt": "2026-01-25T06:38:01.796Z",
+        "failureDetails": {
+          "failedStepIndex": 0,
+          "failedStepText": "click on \"Open Confirmation Dialog\"",
+          "error": "Step: \"click on \"Open Confirmation Dialog\"\"\nAction: → Clicking on Open Confirmation Dialog button with text 'Open Confirmation Dialog' with left mouse button\n\nPlaywright command executed:\n  await page.getByRole(\"button\", { name: \"Open Confirmation Dialog\", exact: true }).click();\n\nError:\nlocator.click: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-mimic-id=\"4\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-mimic-id=\"4\" class=\"btn secondary\" onclick=\"openModal('modal2')\" data-mimic-type=\"interactive\">Open Confirmation Dialog</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  71 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div id=\"overlay2\" class=\"overlay hidden\">…</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"overlay-content\">…</div> from <div id=\"overlay2\" class=\"overlay hidden\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n"
+        }
+      },
+      "version": "2.0.0"
     }
   ]
 }

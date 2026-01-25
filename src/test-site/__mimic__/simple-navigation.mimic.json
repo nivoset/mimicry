@@ -1,0 +1,1166 @@
+{
+  "tests": [
+    {
+      "testHash": "f1725db978620eac",
+      "testText": "click on \"Go to Forms Page\"",
+      "stepsByHash": {
+        "f1725db978620eac": {
+          "stepHash": "f1725db978620eac",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Forms Page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 5,
+                "confidence": 1,
+                "description": "Go to Forms Page link with text 'Go to Forms Page'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.8,
+                "description": "Forms link with text 'Forms'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.7,
+                "description": "Navigation link with text 'Navigation'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.6,
+                "description": "Go Back button"
+              },
+              {
+                "mimicId": 15,
+                "confidence": 0.5,
+                "description": "Go Forward button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly says 'click on \"Go to Forms Page\"'. This is a direct reference to the element with mimicId 5. The other elements are related to navigation but not specifically labeled as the target for clicking."
+          },
+          "executedAt": "2026-01-25T08:14:07.189Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Go to Forms Page",
+                "exact": true
+              }
+            },
+            "mimicId": 5,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "f1725db978620eac",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Forms Page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 5,
+                "confidence": 1,
+                "description": "Go to Forms Page link with text 'Go to Forms Page'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.8,
+                "description": "Forms link with text 'Forms'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.7,
+                "description": "Navigation link with text 'Navigation'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.6,
+                "description": "Go Back button"
+              },
+              {
+                "mimicId": 15,
+                "confidence": 0.5,
+                "description": "Go Forward button"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly says 'click on \"Go to Forms Page\"'. This is a direct reference to the element with mimicId 5. The other elements are related to navigation but not specifically labeled as the target for clicking."
+          },
+          "executedAt": "2026-01-25T08:14:07.189Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Go to Forms Page",
+                "exact": true
+              }
+            },
+            "mimicId": 5,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:14:07.189Z",
+        "lastPassedAt": "2026-01-25T08:14:07.189Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "3bf63876e993dd98",
+      "testText": "click on \"Go to Buttons Page\"",
+      "stepsByHash": {
+        "3bf63876e993dd98": {
+          "stepHash": "3bf63876e993dd98",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Buttons Page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 6,
+                "confidence": 0.95,
+                "description": "Go to Buttons Page link with text 'Go to Buttons Page'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.85,
+                "description": "Buttons link with text 'Buttons'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.75,
+                "description": "Home link with text 'Home'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.65,
+                "description": "Navigation link with text 'Navigation'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.55,
+                "description": "Forms link with text 'Forms'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly mentions 'Go to Buttons Page', which matches the text and role of several elements in the page structure, but element 6 (with mimicId=6) is the most directly relevant as it has the exact text."
+          },
+          "executedAt": "2026-01-25T08:14:35.869Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Go to Buttons Page",
+                "exact": true
+              }
+            },
+            "mimicId": 6,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "3bf63876e993dd98",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Buttons Page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 6,
+                "confidence": 0.95,
+                "description": "Go to Buttons Page link with text 'Go to Buttons Page'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.85,
+                "description": "Buttons link with text 'Buttons'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.75,
+                "description": "Home link with text 'Home'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.65,
+                "description": "Navigation link with text 'Navigation'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.55,
+                "description": "Forms link with text 'Forms'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly mentions 'Go to Buttons Page', which matches the text and role of several elements in the page structure, but element 6 (with mimicId=6) is the most directly relevant as it has the exact text."
+          },
+          "executedAt": "2026-01-25T08:14:35.869Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Go to Buttons Page",
+                "exact": true
+              }
+            },
+            "mimicId": 6,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:14:35.869Z",
+        "lastPassedAt": "2026-01-25T08:14:35.869Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "06c4e4566a3e7272",
+      "testText": "click on \"Go to Dynamic Content Page\"",
+      "stepsByHash": {
+        "06c4e4566a3e7272": {
+          "stepHash": "06c4e4566a3e7272",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Dynamic Content Page\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/dynamic-content"
+            },
+            "description": "Navigate to Dynamic Content Page in new window"
+          },
+          "executedAt": "2026-01-25T08:14:46.380Z",
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "06c4e4566a3e7272",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Dynamic Content Page\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/dynamic-content"
+            },
+            "description": "Navigate to Dynamic Content Page in new window"
+          },
+          "executedAt": "2026-01-25T08:14:46.380Z",
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:14:46.380Z",
+        "lastPassedAt": "2026-01-25T08:14:46.380Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "e0f43a4ef1678638",
+      "testText": "click on \"Go to Accessibility Page\"",
+      "stepsByHash": {
+        "e0f43a4ef1678638": {
+          "stepHash": "e0f43a4ef1678638",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Accessibility Page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 8,
+                "confidence": 1,
+                "description": "Link with text 'Go to Accessibility Page'"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.9,
+                "description": "Link with text 'Go to Forms Page'"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.8,
+                "description": "Link with text 'Go to Buttons Page'"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.7,
+                "description": "Link with text 'Go to Dynamic Content Page'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.6,
+                "description": "Button labeled 'Go Back'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly states 'click on 'Go to Accessibility Page''. There is a single link with this exact text and it has the marker ID 8 in the screenshot. Therefore, it is the most likely element being referred to by the Gherkin step."
+          },
+          "executedAt": "2026-01-25T08:15:44.595Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Go to Accessibility Page",
+                "exact": true
+              }
+            },
+            "mimicId": 8,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "e0f43a4ef1678638",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Accessibility Page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 8,
+                "confidence": 1,
+                "description": "Link with text 'Go to Accessibility Page'"
+              },
+              {
+                "mimicId": 5,
+                "confidence": 0.9,
+                "description": "Link with text 'Go to Forms Page'"
+              },
+              {
+                "mimicId": 6,
+                "confidence": 0.8,
+                "description": "Link with text 'Go to Buttons Page'"
+              },
+              {
+                "mimicId": 7,
+                "confidence": 0.7,
+                "description": "Link with text 'Go to Dynamic Content Page'"
+              },
+              {
+                "mimicId": 14,
+                "confidence": 0.6,
+                "description": "Button labeled 'Go Back'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly states 'click on 'Go to Accessibility Page''. There is a single link with this exact text and it has the marker ID 8 in the screenshot. Therefore, it is the most likely element being referred to by the Gherkin step."
+          },
+          "executedAt": "2026-01-25T08:15:44.595Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Go to Accessibility Page",
+                "exact": true
+              }
+            },
+            "mimicId": 8,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:15:44.595Z",
+        "lastPassedAt": "2026-01-25T08:15:44.595Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "e3a21ccc42655f0e",
+      "testText": "click on \"Page 1, Section Test\"",
+      "stepsByHash": {
+        "e3a21ccc42655f0e": {
+          "stepHash": "e3a21ccc42655f0e",
+          "stepIndex": 0,
+          "stepText": "click on \"Page 1, Section Test\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 9,
+                "confidence": 0.8,
+                "description": "Link with text 'Page 1, Section Test'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.7,
+                "description": "Link with text 'Navigation'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.6,
+                "description": "Link with text 'Forms'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.5,
+                "description": "Link with text 'Buttons'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.4,
+                "description": "Link with text 'Home'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly says to 'click on 'Page 1, Section Test''. This is a semantic match for the link labeled 'Page 1, Section Test' (Marker ID: 9). The default click type for any unspecified click action is primary (left click), so the clickType is set to 'primary'."
+          },
+          "executedAt": "2026-01-25T08:16:26.577Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Page 1, Section Test",
+                "exact": true
+              }
+            },
+            "mimicId": 9,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "e3a21ccc42655f0e",
+          "stepIndex": 0,
+          "stepText": "click on \"Page 1, Section Test\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 9,
+                "confidence": 0.8,
+                "description": "Link with text 'Page 1, Section Test'"
+              },
+              {
+                "mimicId": 2,
+                "confidence": 0.7,
+                "description": "Link with text 'Navigation'"
+              },
+              {
+                "mimicId": 3,
+                "confidence": 0.6,
+                "description": "Link with text 'Forms'"
+              },
+              {
+                "mimicId": 4,
+                "confidence": 0.5,
+                "description": "Link with text 'Buttons'"
+              },
+              {
+                "mimicId": 1,
+                "confidence": 0.4,
+                "description": "Link with text 'Home'"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step explicitly says to 'click on 'Page 1, Section Test''. This is a semantic match for the link labeled 'Page 1, Section Test' (Marker ID: 9). The default click type for any unspecified click action is primary (left click), so the clickType is set to 'primary'."
+          },
+          "executedAt": "2026-01-25T08:16:26.577Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Page 1, Section Test",
+                "exact": true
+              }
+            },
+            "mimicId": 9,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:16:26.577Z",
+        "lastPassedAt": "2026-01-25T08:16:26.577Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "25348f2d0dd7c2b5",
+      "testText": "click on \"Page 2, Filter Active\"",
+      "stepsByHash": {
+        "25348f2d0dd7c2b5": {
+          "stepHash": "25348f2d0dd7c2b5",
+          "stepIndex": 0,
+          "stepText": "click on \"Page 2, Filter Active\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 10,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Ensure that the 'Page 2, Filter Active' link is visible on the page."
+          },
+          "executedAt": "2026-01-25T08:16:49.345Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Page 2, Filter Active",
+                "exact": true
+              }
+            },
+            "mimicId": 10,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "25348f2d0dd7c2b5",
+          "stepIndex": 0,
+          "stepText": "click on \"Page 2, Filter Active\"",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": 10,
+            "type": "visible",
+            "expected": "true",
+            "normalizeDynamicContent": false,
+            "description": "Ensure that the 'Page 2, Filter Active' link is visible on the page."
+          },
+          "executedAt": "2026-01-25T08:16:49.345Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Page 2, Filter Active",
+                "exact": true
+              }
+            },
+            "mimicId": 10,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:16:49.345Z",
+        "lastPassedAt": "2026-01-25T08:16:49.345Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "d389c74e21fd2ee5",
+      "testText": "click on \"Settings Tab, List View\"",
+      "stepsByHash": {
+        "d389c74e21fd2ee5": {
+          "stepHash": "d389c74e21fd2ee5",
+          "stepIndex": 0,
+          "stepText": "click on \"Settings Tab, List View\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 11,
+                "confidence": 0.8,
+                "description": "Settings Tab, List View (link)"
+              },
+              {
+                "mimicId": 34,
+                "confidence": 0.7,
+                "description": "Navigation list"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.6,
+                "description": "Links with Parameters section"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.5,
+                "description": "Page 1, Section Test (link)"
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.4,
+                "description": "Simple Navigation Test Page heading"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"Settings Tab, List View\"' is explicit about clicking a specific element. Given the marker ID of 11 corresponds to the Settings Tab, List View link, it is the most likely target for this click action. The other options are less direct matches based on text and accessibility roles."
+          },
+          "executedAt": "2026-01-25T08:18:03.169Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Settings Tab, List View",
+                "exact": true
+              }
+            },
+            "mimicId": 11,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "d389c74e21fd2ee5",
+          "stepIndex": 0,
+          "stepText": "click on \"Settings Tab, List View\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 11,
+                "confidence": 0.8,
+                "description": "Settings Tab, List View (link)"
+              },
+              {
+                "mimicId": 34,
+                "confidence": 0.7,
+                "description": "Navigation list"
+              },
+              {
+                "mimicId": 22,
+                "confidence": 0.6,
+                "description": "Links with Parameters section"
+              },
+              {
+                "mimicId": 9,
+                "confidence": 0.5,
+                "description": "Page 1, Section Test (link)"
+              },
+              {
+                "mimicId": 17,
+                "confidence": 0.4,
+                "description": "Simple Navigation Test Page heading"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step 'click on \"Settings Tab, List View\"' is explicit about clicking a specific element. Given the marker ID of 11 corresponds to the Settings Tab, List View link, it is the most likely target for this click action. The other options are less direct matches based on text and accessibility roles."
+          },
+          "executedAt": "2026-01-25T08:18:03.169Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "link",
+              "options": {
+                "name": "Settings Tab, List View",
+                "exact": true
+              }
+            },
+            "mimicId": 11,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:18:03.169Z",
+        "lastPassedAt": "2026-01-25T08:18:03.169Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "899921b3faf52cba",
+      "testText": "click on \"Go to Forms Page\"\ngo back",
+      "stepsByHash": {
+        "f1725db978620eac": {
+          "stepHash": "f1725db978620eac",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Forms Page\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/forms"
+            },
+            "description": "Navigate to Forms Page"
+          },
+          "executedAt": "2026-01-25T08:18:25.533Z",
+          "selectorFormat": "playwright"
+        },
+        "8aaf5e76b6032ccb": {
+          "stepHash": "8aaf5e76b6032ccb",
+          "stepIndex": 1,
+          "stepText": "go back",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "goBack",
+            "params": {
+              "url": "/forms"
+            },
+            "description": "Go back to previous page in browser history"
+          },
+          "executedAt": "2026-01-25T08:18:25.533Z",
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "f1725db978620eac",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Forms Page\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/forms"
+            },
+            "description": "Navigate to Forms Page"
+          },
+          "executedAt": "2026-01-25T08:18:25.533Z",
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "8aaf5e76b6032ccb",
+          "stepIndex": 1,
+          "stepText": "go back",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "goBack",
+            "params": {
+              "url": "/forms"
+            },
+            "description": "Go back to previous page in browser history"
+          },
+          "executedAt": "2026-01-25T08:18:25.533Z",
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:18:25.533Z",
+        "lastPassedAt": "2026-01-25T08:18:25.533Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "fdf76a760a44cde9",
+      "testText": "click on \"Go to Buttons Page\"\ngo back\ngo forward",
+      "stepsByHash": {
+        "3bf63876e993dd98": {
+          "stepHash": "3bf63876e993dd98",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Buttons Page\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/buttons"
+            },
+            "description": "Navigate to Buttons Page"
+          },
+          "executedAt": "2026-01-25T08:19:09.602Z",
+          "selectorFormat": "playwright"
+        },
+        "8aaf5e76b6032ccb": {
+          "stepHash": "8aaf5e76b6032ccb",
+          "stepIndex": 1,
+          "stepText": "go back",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "goBack",
+            "params": {
+              "url": null,
+              "newWindow": false
+            },
+            "description": "Go back to previous page in browser history"
+          },
+          "executedAt": "2026-01-25T08:19:09.602Z",
+          "selectorFormat": "playwright"
+        },
+        "dcb30ce821d2045c": {
+          "stepHash": "dcb30ce821d2045c",
+          "stepIndex": 2,
+          "stepText": "go forward",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": null,
+            "type": "url",
+            "expected": "http://127.0.0.1:3000/pages/simple-navigation.html",
+            "normalizeDynamicContent": false,
+            "description": "The current URL should remain unchanged after going forward."
+          },
+          "executedAt": "2026-01-25T08:19:09.602Z",
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "3bf63876e993dd98",
+          "stepIndex": 0,
+          "stepText": "click on \"Go to Buttons Page\"",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/buttons"
+            },
+            "description": "Navigate to Buttons Page"
+          },
+          "executedAt": "2026-01-25T08:19:09.602Z",
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "8aaf5e76b6032ccb",
+          "stepIndex": 1,
+          "stepText": "go back",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "goBack",
+            "params": {
+              "url": null,
+              "newWindow": false
+            },
+            "description": "Go back to previous page in browser history"
+          },
+          "executedAt": "2026-01-25T08:19:09.602Z",
+          "selectorFormat": "playwright"
+        },
+        {
+          "stepHash": "dcb30ce821d2045c",
+          "stepIndex": 2,
+          "stepText": "go forward",
+          "actionKind": "assertion",
+          "actionDetails": {
+            "mimicId": null,
+            "type": "url",
+            "expected": "http://127.0.0.1:3000/pages/simple-navigation.html",
+            "normalizeDynamicContent": false,
+            "description": "The current URL should remain unchanged after going forward."
+          },
+          "executedAt": "2026-01-25T08:19:09.602Z",
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:19:09.602Z",
+        "lastPassedAt": "2026-01-25T08:19:09.602Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "192f5e13b3e3c02d",
+      "testText": "click on \"Refresh Page\"",
+      "stepsByHash": {
+        "192f5e13b3e3c02d": {
+          "stepHash": "192f5e13b3e3c02d",
+          "stepIndex": 0,
+          "stepText": "click on \"Refresh Page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 16,
+                "confidence": 0.8,
+                "description": "Refresh Page button with text 'Refresh Page'"
+              },
+              {
+                "mimicId": 25,
+                "confidence": 0.7,
+                "description": "Navigation Actions section containing buttons"
+              },
+              {
+                "mimicId": 34,
+                "confidence": 0.6,
+                "description": "Structure/Navigation bar containing links and actions"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.5,
+                "description": "Main heading of the page 'Simple Navigation Test Page'"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.4,
+                "description": "Current URL Information section"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies 'Refresh Page', which directly corresponds to a button labeled 'Refresh Page' with mimicId 16. The click type is determined as 'primary' based on the default behavior for 'click' without any modifier keys."
+          },
+          "executedAt": "2026-01-25T08:20:35.382Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Refresh Page",
+                "exact": true
+              }
+            },
+            "mimicId": 16,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "192f5e13b3e3c02d",
+          "stepIndex": 0,
+          "stepText": "click on \"Refresh Page\"",
+          "actionKind": "click",
+          "actionDetails": {
+            "candidates": [
+              {
+                "mimicId": 16,
+                "confidence": 0.8,
+                "description": "Refresh Page button with text 'Refresh Page'"
+              },
+              {
+                "mimicId": 25,
+                "confidence": 0.7,
+                "description": "Navigation Actions section containing buttons"
+              },
+              {
+                "mimicId": 34,
+                "confidence": 0.6,
+                "description": "Structure/Navigation bar containing links and actions"
+              },
+              {
+                "mimicId": 18,
+                "confidence": 0.5,
+                "description": "Main heading of the page 'Simple Navigation Test Page'"
+              },
+              {
+                "mimicId": 27,
+                "confidence": 0.4,
+                "description": "Current URL Information section"
+              }
+            ],
+            "clickType": "primary",
+            "modifiers": [],
+            "reasoning": "The Gherkin step specifies 'Refresh Page', which directly corresponds to a button labeled 'Refresh Page' with mimicId 16. The click type is determined as 'primary' based on the default behavior for 'click' without any modifier keys."
+          },
+          "executedAt": "2026-01-25T08:20:35.382Z",
+          "targetElement": {
+            "selector": {
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Refresh Page",
+                "exact": true
+              }
+            },
+            "mimicId": 16,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:20:35.382Z",
+        "lastPassedAt": "2026-01-25T08:20:35.382Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "4ae86f95f1d04cdf",
+      "testText": "click on \"Forms\" in the navigation menu",
+      "stepsByHash": {
+        "4ae86f95f1d04cdf": {
+          "stepHash": "4ae86f95f1d04cdf",
+          "stepIndex": 0,
+          "stepText": "click on \"Forms\" in the navigation menu",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/forms"
+            },
+            "description": "Navigate to forms in navigation menu"
+          },
+          "executedAt": "2026-01-25T08:20:52.087Z",
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "4ae86f95f1d04cdf",
+          "stepIndex": 0,
+          "stepText": "click on \"Forms\" in the navigation menu",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/forms"
+            },
+            "description": "Navigate to forms in navigation menu"
+          },
+          "executedAt": "2026-01-25T08:20:52.087Z",
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:20:52.087Z",
+        "lastPassedAt": "2026-01-25T08:20:52.087Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    },
+    {
+      "testHash": "0a30c68f8df55e54",
+      "testText": "click on \"Home\" in the navigation menu",
+      "stepsByHash": {
+        "0a30c68f8df55e54": {
+          "stepHash": "0a30c68f8df55e54",
+          "stepIndex": 0,
+          "stepText": "click on \"Home\" in the navigation menu",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/simple-navigation.html",
+              "newWindow": false
+            },
+            "description": "Navigate to Home in the navigation menu"
+          },
+          "executedAt": "2026-01-25T08:21:32.441Z",
+          "selectorFormat": "playwright"
+        }
+      },
+      "steps": [
+        {
+          "stepHash": "0a30c68f8df55e54",
+          "stepIndex": 0,
+          "stepText": "click on \"Home\" in the navigation menu",
+          "actionKind": "navigation",
+          "actionDetails": {
+            "type": "navigate",
+            "params": {
+              "url": "/pages/simple-navigation.html",
+              "newWindow": false
+            },
+            "description": "Navigate to Home in the navigation menu"
+          },
+          "executedAt": "2026-01-25T08:21:32.441Z",
+          "selectorFormat": "playwright"
+        }
+      ],
+      "flags": {
+        "needsRetry": false,
+        "hasErrors": false,
+        "troubleshootingEnabled": false,
+        "skipSnapshot": false,
+        "forceRegenerate": false,
+        "debugMode": false,
+        "createdAt": "2026-01-25T08:21:32.441Z",
+        "lastPassedAt": "2026-01-25T08:21:32.441Z",
+        "lastFailedAt": null
+      },
+      "version": "2.0.0"
+    }
+  ]
+}

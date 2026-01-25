@@ -8,14 +8,16 @@ import type { NavigationAction } from './schema/action.js';
 import type { ClickActionResult } from './schema/action.js';
 import type { FormActionResult } from './forms.js';
 import type { AssertionActionResult } from './assertions.js';
-import type { SelectorDescriptor } from './selectorTypes.js';
+import type { SelectorDescriptor, PlaywrightLocatorJson } from './selectorTypes.js';
 
 /**
  * Target element information using best selector with mimicId fallback
  */
 export interface MarkerTargetElement {
-  /** The best selector descriptor for the element (primary) */
-  selector: SelectorDescriptor;
+  /** The best selector descriptor for the element (primary) - supports both legacy and Playwright formats */
+  selector: SelectorDescriptor | PlaywrightLocatorJson;
+  /** Selector format indicator - 'legacy' for SelectorDescriptor, 'playwright' for PlaywrightLocatorJson */
+  selectorFormat?: 'legacy' | 'playwright';
   /** The mimic ID assigned to the element by the markers system (fallback) */
   mimicId: number;
 }
@@ -36,6 +38,8 @@ export interface SnapshotStep {
   actionDetails: NavigationAction | ClickActionResult | FormActionResult | AssertionActionResult;
   /** Target element information using marker ID (for click, form, and assertion actions) */
   targetElement?: MarkerTargetElement;
+  /** Selector format used in targetElement - 'legacy' for SelectorDescriptor, 'playwright' for PlaywrightLocatorJson */
+  selectorFormat?: 'legacy' | 'playwright';
   /** Timestamp when this step was executed */
   executedAt: string;
 }
@@ -62,6 +66,8 @@ export interface SnapshotFlags {
  * Complete snapshot of a test execution
  */
 export interface Snapshot {
+  /** Snapshot format version (e.g., "2.0.0") - optional for backward compatibility */
+  version?: string;
   /** Hash identifier for this test */
   testHash: string;
   /** Original test text (mimic template string) */

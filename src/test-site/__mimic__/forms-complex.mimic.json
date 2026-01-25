@@ -956,13 +956,17 @@
           "executedAt": "2026-01-23T12:13:51.023Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "First Name",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "First Name",
+                "exact": true
+              }
             },
-            "mimicId": 4
-          }
+            "mimicId": 4,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         "d3487857b47c8c95": {
           "stepHash": "d3487857b47c8c95",
@@ -981,13 +985,17 @@
           "executedAt": "2026-01-23T12:13:51.023Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "Last Name",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Last Name",
+                "exact": true
+              }
             },
-            "mimicId": 5
-          }
+            "mimicId": 5,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         "2b28751a1abdb56b": {
           "stepHash": "2b28751a1abdb56b",
@@ -1029,13 +1037,17 @@
           "executedAt": "2026-01-23T13:48:17.608Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "Next Step",
-              "exact": true
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Next Step",
+                "exact": true
+              }
             },
-            "mimicId": 24
-          }
+            "mimicId": 24,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         "82354b9a6bc4a5e1": {
           "stepHash": "82354b9a6bc4a5e1",
@@ -1054,13 +1066,17 @@
           "executedAt": "2026-01-23T12:13:51.023Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "Email Address",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Email Address",
+                "exact": true
+              }
             },
-            "mimicId": 20
-          }
+            "mimicId": 20,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         "ca1cf2275fa5e590": {
           "stepHash": "ca1cf2275fa5e590",
@@ -1079,13 +1095,17 @@
           "executedAt": "2026-01-23T12:13:51.023Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "Phone Number",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Phone Number",
+                "exact": true
+              }
             },
-            "mimicId": 21
-          }
+            "mimicId": 21,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         }
       },
       "steps": [
@@ -1108,13 +1128,17 @@
           "executedAt": "2026-01-23T12:13:51.023Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "First Name",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "First Name",
+                "exact": true
+              }
             },
-            "mimicId": 4
-          }
+            "mimicId": 4,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         {
           "stepHash": "d3487857b47c8c95",
@@ -1133,13 +1157,17 @@
           "executedAt": "2026-01-23T12:13:51.023Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "Last Name",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Last Name",
+                "exact": true
+              }
             },
-            "mimicId": 5
-          }
+            "mimicId": 5,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         {
           "stepHash": "82354b9a6bc4a5e1",
@@ -1158,13 +1186,17 @@
           "executedAt": "2026-01-23T12:13:51.023Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "Email Address",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Email Address",
+                "exact": true
+              }
             },
-            "mimicId": 20
-          }
+            "mimicId": 20,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         {
           "stepHash": "ca1cf2275fa5e590",
@@ -1183,13 +1215,17 @@
           "executedAt": "2026-01-23T12:13:51.023Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "Phone Number",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Phone Number",
+                "exact": true
+              }
             },
-            "mimicId": 21
-          }
+            "mimicId": 21,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         {
           "stepHash": "2b28751a1abdb56b",
@@ -1231,13 +1267,17 @@
           "executedAt": "2026-01-23T13:48:17.608Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "Next Step",
-              "exact": true
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Next Step",
+                "exact": true
+              }
             },
-            "mimicId": 24
-          }
+            "mimicId": 24,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         }
       ],
       "flags": {
@@ -1248,9 +1288,10 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T16:54:09.585Z",
-        "lastPassedAt": "2026-01-23T13:48:17.610Z",
+        "lastPassedAt": "2026-01-24T23:40:53.670Z",
         "lastFailedAt": null
-      }
+      },
+      "version": "2.0.0"
     },
     {
       "testHash": "a339480c404538c7",
@@ -2011,13 +2052,17 @@
           "executedAt": "2026-01-23T13:01:58.996Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "First",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "First",
+                "exact": true
+              }
             },
-            "mimicId": 4
-          }
+            "mimicId": 4,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         "4ae65a047e1607e7": {
           "stepHash": "4ae65a047e1607e7",
@@ -2036,13 +2081,17 @@
           "executedAt": "2026-01-23T13:01:58.996Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "Last Name",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Last Name",
+                "exact": true
+              }
             },
-            "mimicId": 5
-          }
+            "mimicId": 5,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         "2b28751a1abdb56b": {
           "stepHash": "2b28751a1abdb56b",
@@ -2084,13 +2133,17 @@
           "executedAt": "2026-01-23T13:01:58.996Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "Next Step",
-              "exact": true
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Next Step",
+                "exact": true
+              }
             },
-            "mimicId": 24
-          }
+            "mimicId": 24,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         "cc2250ccfe65588d": {
           "stepHash": "cc2250ccfe65588d",
@@ -2109,13 +2162,17 @@
           "executedAt": "2026-01-23T13:01:58.996Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "Email Address",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Email Address",
+                "exact": true
+              }
             },
-            "mimicId": 20
-          }
+            "mimicId": 20,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         }
       },
       "steps": [
@@ -2138,13 +2195,17 @@
           "executedAt": "2026-01-23T13:01:58.996Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "First",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "First",
+                "exact": true
+              }
             },
-            "mimicId": 4
-          }
+            "mimicId": 4,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         {
           "stepHash": "4ae65a047e1607e7",
@@ -2163,13 +2224,17 @@
           "executedAt": "2026-01-23T13:01:58.996Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "Last Name",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Last Name",
+                "exact": true
+              }
             },
-            "mimicId": 5
-          }
+            "mimicId": 5,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         {
           "stepHash": "cc2250ccfe65588d",
@@ -2188,13 +2253,17 @@
           "executedAt": "2026-01-23T13:01:58.996Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "textbox",
-              "name": "Email Address",
-              "exact": true
+              "kind": "role",
+              "body": "textbox",
+              "options": {
+                "name": "Email Address",
+                "exact": true
+              }
             },
-            "mimicId": 20
-          }
+            "mimicId": 20,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         },
         {
           "stepHash": "2b28751a1abdb56b",
@@ -2236,13 +2305,17 @@
           "executedAt": "2026-01-23T13:01:58.996Z",
           "targetElement": {
             "selector": {
-              "type": "role",
-              "role": "button",
-              "name": "Next Step",
-              "exact": true
+              "kind": "role",
+              "body": "button",
+              "options": {
+                "name": "Next Step",
+                "exact": true
+              }
             },
-            "mimicId": 24
-          }
+            "mimicId": 24,
+            "selectorFormat": "playwright"
+          },
+          "selectorFormat": "playwright"
         }
       ],
       "flags": {
@@ -2253,9 +2326,10 @@
         "forceRegenerate": false,
         "debugMode": false,
         "createdAt": "2026-01-10T17:23:08.024Z",
-        "lastPassedAt": "2026-01-23T13:01:58.998Z",
+        "lastPassedAt": "2026-01-25T00:07:53.524Z",
         "lastFailedAt": null
-      }
+      },
+      "version": "2.0.0"
     }
   ]
 }

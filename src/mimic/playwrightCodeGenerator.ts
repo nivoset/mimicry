@@ -5,16 +5,18 @@
  * for test annotations and documentation purposes.
  */
 
-import type { SelectorDescriptor } from './selectorTypes.js';
-import { jsonToStringOrRegex } from './selectorSerialization.js';
+import type { SelectorDescriptor, PlaywrightLocatorJson } from './selectorTypes.js';
+import { jsonToStringOrRegex, playwrightJsonToSelectorDescriptor } from './selectorSerialization.js';
 
 /**
- * Convert a SelectorDescriptor to a Playwright code string
+ * Convert a SelectorDescriptor or PlaywrightLocatorJson to a Playwright code string
  * 
  * Generates the equivalent Playwright locator code that would be used to select
- * the element described by the SelectorDescriptor.
+ * the element described by the selector.
  * 
- * @param descriptor - SelectorDescriptor to convert
+ * Supports both legacy SelectorDescriptor format and new PlaywrightLocatorJson format.
+ * 
+ * @param selector - SelectorDescriptor or PlaywrightLocatorJson to convert
  * @param baseVar - Base variable name to use (default: 'page')
  * @returns Playwright code string representing the locator
  * 
@@ -29,9 +31,13 @@ import { jsonToStringOrRegex } from './selectorSerialization.js';
  * ```
  */
 export function selectorToPlaywrightCode(
-  descriptor: SelectorDescriptor,
+  selector: SelectorDescriptor | PlaywrightLocatorJson,
   baseVar: string = 'page'
 ): string {
+  // Normalize to SelectorDescriptor format
+  const descriptor = 'type' in selector 
+    ? selector as SelectorDescriptor
+    : playwrightJsonToSelectorDescriptor(selector as PlaywrightLocatorJson);
   let code = baseVar;
   
   // Build base locator code based on selector type
