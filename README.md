@@ -187,30 +187,20 @@ import { test as base } from '@playwright/test';
 import { createMimic, type Mimic } from 'playwright-mimic';
 import { openai } from '@ai-sdk/openai';
 // or for Ollama: import { ollama } from 'ollama-ai-provider-v2';
-import { LanguageModel } from 'ai';
 
-// Configure your AI model
 const brains = openai('gpt-4o-mini');
-// or for Ollama: const brains = ollama('llama3.2') as LanguageModel;
+const eyes = brains; // optional: use a different model for visual analysis
 
 export * from '@playwright/test';
 
-// Extend Playwright's test with mimic fixture
 export const test = base.extend<{
   mimic: Mimic
 }>({
-  mimic: async ({ page }, use, testInfo) => {
-    const mimic = createMimic({
-      page,
-      brains,
-      // eyes is optional and may be removed in future versions
-      // If provided, can use a different model for visual analysis
-      testInfo,
-    });
-    await use(mimic);
-  }
+  mimic: createMimic({ brains, eyes }),
 });
 ```
+
+`createMimic({ brains, eyes })` returns a Playwright fixture that injects `page` and `testInfo` for you. Use it directly as the fixture value.
 
 ### 4. Write Your First Test
 
@@ -347,49 +337,65 @@ test('complete user registration', async ({ page, mimic }) => {
 
 ### Advanced: Direct API Usage
 
-If you need more control, you can use the `mimic` function directly:
+If you already have `page` and `testInfo` (e.g. outside the built-in fixture), use the full config:
 
 ```typescript
-import { mimic } from 'playwright-mimic';
+import { createMimic, mimic } from 'playwright-mimic';
 import { openai } from '@ai-sdk/openai';
 import { test } from '@playwright/test';
 
 test('custom usage', async ({ page, testInfo }) => {
   const brains = openai('gpt-4o-mini');
-  
-  await mimic(
-    'navigate to https://example.com\nclick on "Get Started"',
-    {
-      page,
-      brains,
-      // eyes is optional and may be removed in future versions
-      testInfo,
-    }
-  );
+  const run = createMimic({ page, brains, testInfo });
+
+  await run`navigate to https://example.com and click on "Get Started"`;
 });
+```
+
+Or call `mimic` directly with a string and config:
+
+```typescript
+await mimic(
+  'navigate to https://example.com\nclick on "Get Started"',
+  { page, brains, testInfo }
+);
 ```
 
 ## API Reference
 
 ### `createMimic(config)`
 
-Creates a mimic function that can be used as a template literal tag.
+Creates a mimic runner or a Playwright fixture, depending on the config.
 
-**Parameters:**
+**Fixture form** — use in `test.extend()` so `page` and `testInfo` are injected:
+
+- `config.brains` (required): Language model for reasoning (from AI SDK)
+- `config.eyes` (optional): Language model for visual analysis; defaults to `brains` when omitted
+
+**Example:** `mimic: createMimic({ brains, eyes })`
+
+**Returns:** A Playwright fixture function that provides a template-literal mimic to each test.
+
+---
+
+**Runner form** — use when you already have `page` and optional `testInfo`:
+
 - `config.page` (required): Playwright `Page` object
-- `config.brains` (required): Language model for reasoning (from `ai` SDK)
-- `config.eyes` (optional): Language model for visual analysis (may be removed in future versions)
-- `config.testInfo` (optional): Playwright `TestInfo` object for test tracking
+- `config.brains` (required): Language model for reasoning
+- `config.eyes` (optional): Language model for visual analysis; defaults to `brains`
+- `config.testInfo` (optional): Playwright `TestInfo` for attachments and tracing
 
-**Returns:** A function that accepts template literals
+**Example:** `const run = createMimic({ page, brains, testInfo }); await run\`…\`;`
+
+**Returns:** A function that accepts template literals (the mimic runner).
 
 ### `mimic(input, config)`
 
-Direct function call version.
+Direct function call when you have `page` and `testInfo` already.
 
 **Parameters:**
 - `input` (string): Newline-separated test steps
-- `config`: Same as `createMimic`
+- `config`: `{ page, brains, eyes?, testInfo? }` — same shape as the runner form of `createMimic`
 
 ## Snapshot Files
 

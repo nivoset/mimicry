@@ -20,7 +20,7 @@ const zFormActionResult = z.object({
   type: z.enum(['keypress', 'type', 'fill', 'select', 'uncheck', 'check', 'click', 'setInputFiles', 'clear']),
   params: z.object({
     value: z.string().describe("Value to set for the form update."),
-    modifiers: z.array(z.enum(['Alt', 'Control', 'Meta', 'Shift', 'none'])).describe("Optional modifier keys to use for the form update."),
+    modifiers: z.array(z.enum(['Alt', 'Control', 'Meta', 'Shift', 'none'])).optional().describe("Optional modifier keys to use for the form update. Omit this field if no modifier keys are needed."),
   }),
   /**
    * Human-readable description of the target form element for test annotations

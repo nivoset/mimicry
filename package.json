@@ -1,6 +1,6 @@
 {
   "name": "playwright-mimic",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "AI-powered browser testing framework that converts Gherkin or plain language tests into executable code, with self-repair capabilities when tests break due to code changes",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

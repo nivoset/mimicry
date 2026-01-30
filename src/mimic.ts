@@ -820,20 +820,23 @@ function trimTemplate(strings: TemplateStringsArray, ...values: any[]): string {
     .join('\n');
 }
 
-export const createMimic = (config: {
-  page: Page,
-  brains: LanguageModel,
-  eyes?: LanguageModel,
-  testInfo?: TestInfo,
-}) => {
-  // Extract test file path from TestInfo if available
-  // Pass full file path (not directory) to storage functions
-  const testFilePath = config.testInfo?.file || undefined;
+/** Fixture function type returned when createMimic is called with only { brains, eyes } */
+export type MimicFixture = (
+  deps: { page: Page },
+  use: (m: Mimic) => Promise<void>,
+  testInfo: TestInfo
+) => Promise<void>;
 
-  config.eyes = config.eyes ?? config.brains;
-  // Check troubleshoot mode
+/** Builds the Mimic runner (template fn) from a full config. Shared by both createMimic overloads. */
+function createMimicRunner(config: {
+  page: Page;
+  brains: LanguageModel;
+  eyes?: LanguageModel;
+  testInfo?: TestInfo;
+}): Mimic {
+  const testFilePath = config.testInfo?.file || undefined;
   const troubleshootMode = isTroubleshootMode();
-  
+
   return async (prompt: TemplateStringsArray, ...args: unknown[]) => {
     const lines = trimTemplate(prompt, ...args);
     return await mimic(lines, {
@@ -843,5 +846,45 @@ export const createMimic = (config: {
       ...(testFilePath ? { testFilePath } : {}),
       troubleshootMode,
     });
+  };
+}
+
+/**
+ * Create a Playwright fixture that injects page/testInfo and uses the given brains/eyes.
+ * Use as: test.extend({ mimic: createMimic({ brains, eyes }) })
+ */
+export function createMimic(config: {
+  brains: LanguageModel;
+  eyes?: LanguageModel;
+}): MimicFixture;
+
+/**
+ * Create a Mimic runner bound to a specific page and optional testInfo.
+ * Use when you already have page/testInfo (e.g. outside Playwright fixtures).
+ */
+export function createMimic(config: {
+  page: Page;
+  brains: LanguageModel;
+  eyes?: LanguageModel;
+  testInfo?: TestInfo;
+}): Mimic;
+
+export function createMimic(
+  config:
+    | { brains: LanguageModel; eyes?: LanguageModel }
+    | { page: Page; brains: LanguageModel; eyes?: LanguageModel; testInfo?: TestInfo }
+): Mimic | MimicFixture {
+  if ('page' in config && config.page) {
+    return createMimicRunner(config);
   }
+  const { brains, eyes } = config;
+  return async (deps: { page: Page }, use: (m: Mimic) => Promise<void>, testInfo: TestInfo) => {
+    const runner = createMimicRunner({
+      page: deps.page,
+      brains,
+      ...(eyes !== undefined && { eyes }),
+      testInfo,
+    });
+    await use(runner);
+  };
 }

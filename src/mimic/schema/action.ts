@@ -59,7 +59,7 @@ export const zMouseAction = z.object({
   params: z.object({
     button: zMouseButton.nullish().default("left").describe("Optional, mouse button to use, not needed for hover, for others it will be left click by default."),
     position: zPoint.nullish().describe("Optional relative offset inside the target element."),
-    modifiers: zModifierKeys.nullish().describe("Optional modifier keys to use, not needed for hover, for others it will be no modifiers by default."),
+    modifiers: zModifierKeys.optional().describe("Optional modifier keys to use, not needed for hover, for others it will be no modifiers by default. Omit this field if no modifier keys are needed."),
   }),
 });
 
@@ -67,7 +67,7 @@ export const zFormUpdateAction = z.object({
   type: zFormUpdateTypes,
   params: z.object({
     value: z.string().describe("Value to set for the form update."),
-    modifiers: zModifierKeys.nullish().describe("Optional modifier keys to use for the form update."),
+    modifiers: zModifierKeys.optional().describe("Optional modifier keys to use for the form update. Omit this field if no modifier keys are needed."),
   }),
 });
 
@@ -131,7 +131,7 @@ export const zClickActionResult = z.object({
   clickType: z
     .enum(["primary", "secondary", "tertiary", "double", "hover"])
     .describe("Click type determined from the Gherkin step"),
-  modifiers: zModifierKeys.nullish().describe("list of modifier keys to use for the click action."),
+  modifiers: zModifierKeys.optional().describe("Optional list of modifier keys to use for the click action. Omit this field if no modifier keys are needed."),
   /**
    * Brief explanation of the matching logic and reasoning
    */
