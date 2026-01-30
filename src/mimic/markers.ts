@@ -1,13 +1,42 @@
 /**
  * Marker Code Module
- * 
+ *
  * Provides functionality to add visual markers/badges to page elements
  * for debugging and element identification purposes.
  */
 
 import type { Page } from '@playwright/test';
-import sharp from 'sharp';
 import { logger } from './logger.js';
+
+/**
+ * Minimal type for Sharp usage (metadata + composite) so the file compiles when Sharp is not installed.
+ */
+type SharpLike = (input: Buffer) => {
+  metadata(): Promise<{ width?: number; height?: number }>;
+  composite(overlays: Array<{ input: Buffer; left: number; top: number }>): {
+    png(): { toBuffer(): Promise<Buffer> };
+  };
+};
+
+/** Optional Sharp instance; null when Sharp is not installed or fails to load. */
+let sharpImpl: SharpLike | null = null;
+let sharpLoadAttempted = false;
+
+/**
+ * Load Sharp dynamically. Returns Sharp instance or null if unavailable (optionalDependency not installed or native binary missing).
+ */
+async function loadSharp(): Promise<SharpLike | null> {
+  if (sharpLoadAttempted) return sharpImpl;
+  sharpLoadAttempted = true;
+  try {
+    const m = await import('sharp');
+    sharpImpl = m.default as SharpLike;
+    return sharpImpl;
+  } catch {
+    sharpImpl = null;
+    return null;
+  }
+}
 
 /**
  * Marker information returned from the browser
@@ -289,89 +318,172 @@ export interface MarkerElementInfo {
   nthOfType: number;
 }
 
+/** Marker circle size and radius (must match Sharp path and fallback). */
+const MARKER_SIZE = 12;
+const MARKER_RADIUS = MARKER_SIZE / 2;
+
+/** Type-to-color mapping for markers (interactive, display, structure). */
+const TYPE_COLORS: Record<MarkerInfo['type'], string> = {
+  interactive: '#3B82F6', // Blue
+  display: '#10B981',     // Green
+  structure: '#F59E0B'    // Orange
+};
+
+/**
+ * Draw colored markers on the screenshot using Playwright's browser canvas (fallback when Sharp is unavailable).
+ * Runs in the browser via page.evaluate: load screenshot as Image, draw on canvas, draw circles, return data URL.
+ *
+ * @param imageBuffer - The screenshot image buffer (PNG)
+ * @param markers - Array of marker information with positioning data
+ * @param page - Playwright Page for evaluate
+ * @returns Promise resolving to the modified image buffer with markers drawn
+ */
+async function drawMarkersOnScreenshotFallback(
+  imageBuffer: Buffer,
+  markers: MarkerInfo[],
+  page: Page
+): Promise<Buffer> {
+  logger.info('Sharp unavailable; using Playwright canvas fallback for marker drawing');
+  const screenshotBase64 = imageBuffer.toString('base64');
+  const markerPayload = markers.map((m) => ({ rect: m.rect, type: m.type }));
+
+  const dataUrl = await page.evaluate(
+    async ({
+      screenshotBase64: base64,
+      markers: markerList,
+      typeColors,
+      markerSize,
+      markerRadius
+    }: {
+      screenshotBase64: string;
+      markers: Array<{ rect: { x: number; y: number; width: number; height: number }; type: MarkerInfo['type'] }>;
+      typeColors: Record<string, string>;
+      markerSize: number;
+      markerRadius: number;
+    }) => {
+      return new Promise<string>((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            reject(new Error('Canvas 2d context not available'));
+            return;
+          }
+          ctx.drawImage(img, 0, 0);
+          const imageWidth = canvas.width;
+          const imageHeight = canvas.height;
+
+          for (const m of markerList) {
+            const { rect, type } = m;
+            const markerX = Math.max(
+              0,
+              Math.min(rect.x, imageWidth - markerSize)
+            );
+            const markerY = Math.max(
+              0,
+              Math.min(rect.y + rect.height / 2 - markerRadius, imageHeight - markerSize)
+            );
+            if (markerX < 0 || markerY < 0 || markerX >= imageWidth || markerY >= imageHeight) continue;
+
+            const color = typeColors[type] ?? '#3B82F6';
+            ctx.beginPath();
+            ctx.arc(markerX + markerRadius, markerY + markerRadius, markerRadius - 1, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.globalAlpha = 0.9;
+            ctx.fill();
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+
+          resolve(canvas.toDataURL('image/png'));
+        };
+        img.onerror = () => reject(new Error('Failed to load screenshot image'));
+        img.src = `data:image/png;base64,${base64}`;
+      });
+    },
+    {
+      screenshotBase64,
+      markers: markerPayload,
+      typeColors: TYPE_COLORS,
+      markerSize: MARKER_SIZE,
+      markerRadius: MARKER_RADIUS
+    }
+  );
+
+  const base64Data = dataUrl.replace(/^data:image\/png;base64,/, '');
+  return Buffer.from(base64Data, 'base64');
+}
+
 /**
  * Draw colored markers on the screenshot image
- * 
+ *
  * Draws colored circular markers at the left center of each element's bounding box.
- * Colors correspond to element types:
- * - Interactive: Blue (#3B82F6)
- * - Display: Green (#10B981)
- * - Structure: Orange (#F59E0B)
- * 
+ * Uses Sharp when available; otherwise uses Playwright canvas fallback (no other library added).
+ * Colors: Interactive #3B82F6, Display #10B981, Structure #F59E0B.
+ *
  * @param imageBuffer - The screenshot image buffer
  * @param markers - Array of marker information with positioning data
+ * @param page - Playwright Page (required for fallback when Sharp is unavailable)
  * @returns Promise resolving to the modified image buffer with markers drawn
  */
 async function drawMarkersOnScreenshot(
   imageBuffer: Buffer,
-  markers: MarkerInfo[]
+  markers: MarkerInfo[],
+  page: Page
 ): Promise<Buffer> {
-  const markerSize = 12; // Size of the marker circle in pixels
-  const markerRadius = markerSize / 2;
-  
-  // Color mapping for element types
-  const typeColors: Record<MarkerInfo['type'], string> = {
-    interactive: '#3B82F6', // Blue
-    display: '#10B981',     // Green
-    structure: '#F59E0B'    // Orange
-  };
-  
-  // Get image metadata to know dimensions
+  const sharp = await loadSharp();
+  if (sharp) {
+    return drawMarkersOnScreenshotWithSharp(imageBuffer, markers, sharp);
+  }
+  return drawMarkersOnScreenshotFallback(imageBuffer, markers, page);
+}
+
+/**
+ * Sharp path: draw markers using sharp metadata + composite.
+ */
+async function drawMarkersOnScreenshotWithSharp(
+  imageBuffer: Buffer,
+  markers: MarkerInfo[],
+  sharp: SharpLike
+): Promise<Buffer> {
   const metadata = await sharp(imageBuffer).metadata();
   const imageWidth = metadata.width || 0;
   const imageHeight = metadata.height || 0;
-  
-  // Create an overlay image for all markers
-  // We'll use SVG to draw circles, then composite them
-  const overlays: Array<{
-    input: Buffer;
-    left: number;
-    top: number;
-  }> = [];
-  
+
+  const overlays: Array<{ input: Buffer; left: number; top: number }> = [];
+
   for (const marker of markers) {
     const { rect, type } = marker;
-    
-    // Calculate left center position
-    // Left center means: x position is at the left edge, y is at vertical center
-    const markerX = Math.max(0, Math.min(rect.x, imageWidth - markerSize));
-    const markerY = Math.max(0, Math.min(rect.y + rect.height / 2 - markerRadius, imageHeight - markerSize));
-    
-    // Skip if marker is outside image bounds
+    const markerX = Math.max(0, Math.min(rect.x, imageWidth - MARKER_SIZE));
+    const markerY = Math.max(
+      0,
+      Math.min(rect.y + rect.height / 2 - MARKER_RADIUS, imageHeight - MARKER_SIZE)
+    );
     if (markerX < 0 || markerY < 0 || markerX >= imageWidth || markerY >= imageHeight) {
       continue;
     }
-    
-    // Create a colored circle SVG
-    const color = typeColors[type];
+    const color = TYPE_COLORS[type];
     const svg = `
-      <svg width="${markerSize}" height="${markerSize}" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="${markerRadius}" cy="${markerRadius}" r="${markerRadius - 1}" 
+      <svg width="${MARKER_SIZE}" height="${MARKER_SIZE}" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="${MARKER_RADIUS}" cy="${MARKER_RADIUS}" r="${MARKER_RADIUS - 1}"
                 fill="${color}" stroke="white" stroke-width="1" opacity="0.9"/>
       </svg>
     `;
-    
-    // Convert SVG to buffer
-    const markerBuffer = Buffer.from(svg);
-    
     overlays.push({
-      input: markerBuffer,
+      input: Buffer.from(svg),
       left: Math.round(markerX),
       top: Math.round(markerY)
     });
   }
-  
-  // Composite all markers onto the screenshot
+
   if (overlays.length > 0) {
-    const modifiedImage = await sharp(imageBuffer)
-      .composite(overlays)
-      .png()
-      .toBuffer();
-    
-    return modifiedImage;
+    return sharp(imageBuffer).composite(overlays).png().toBuffer();
   }
-  
-  // If no markers to draw, return original image
   return imageBuffer;
 }
 
@@ -390,9 +502,9 @@ export const captureScreenshot = async (page: Page): Promise<{ image: Buffer, ma
   const screenshotTime = performance.now() - start;
   logger.info({ screenshotTime }, `📸 [captureScreenshot] Screenshot captured in ${screenshotTime}ms (${(screenshotTime / 1000).toFixed(2)}s)`);
   
-  // Draw colored markers on the screenshot
+  // Draw colored markers on the screenshot (Sharp when available, else Playwright canvas fallback)
   const markerDrawStart = performance.now();
-  const imageWithMarkers = await drawMarkersOnScreenshot(image, markers);
+  const imageWithMarkers = await drawMarkersOnScreenshot(image, markers, page);
   const markerDrawTime = performance.now() - markerDrawStart;
   logger.info({ markerCount: markers.length, markerDrawTime }, `🎨 [captureScreenshot] Drew ${markers.length} markers on screenshot in ${markerDrawTime}ms (${(markerDrawTime / 1000).toFixed(2)}s)`);
   

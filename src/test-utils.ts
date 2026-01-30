@@ -11,7 +11,7 @@ export const brains = openai('gpt-4o-mini');
 export * from '@playwright/test';
 
 export const test = base.extend<{
-  mimic: Mimic
+  mimic: Mimic;
 }>({
   mimic: createMimic({ brains }),
 });
